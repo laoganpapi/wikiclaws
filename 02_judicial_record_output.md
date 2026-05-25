@@ -92,36 +92,38 @@ State cooperation. In February 2025 the second Trump administration issued Execu
 
 ## 11. National Universal-Jurisdiction Proceedings (Supplementary)
 
-National proceedings have been initiated in several jurisdictions. Brazilian federal authorities have been petitioned to open inquiries against Israeli soldiers transiting Brazilian territory. Belgian federal prosecutors have received complaints under Belgium's universal jurisdiction framework. Spanish complaints have been lodged before the Audiencia Nacional. None has produced an arrest or substantive judicial determination on genocide as of 25 May 2026.
+Brazilian federal authorities have been petitioned to open inquiries against Israeli soldiers transiting Brazilian territory. Belgian federal prosecutors have received universal-jurisdiction complaints. Spanish complaints have been lodged before the Audiencia Nacional. None has produced an arrest or substantive judicial determination on genocide as of 25 May 2026.
 
 ---
 
 ## Annex: State Interventions Table
 
-| State | Date filed | Statute basis | Status as of 25 May 2026 |
-|---|---|---|---|
-| Nicaragua | 8 Feb 2024 | Article 63 | Filed |
-| Colombia | 5 Apr 2024 | Article 63 | Filed |
-| Libya | 10 May 2024 | Article 63 | Filed |
-| Mexico | 28 May 2024 | Article 63 | Filed |
-| State of Palestine | 3 Jun 2024 | Articles 62 and 63 | Filed |
-| Spain | 28 Jun 2024 | Article 63 | Filed |
-| Türkiye | 7 Aug 2024 | Article 63 | Filed |
-| Chile | 12 Sep 2024 | Article 63 | Filed |
-| Maldives | 11 Oct 2024 | Article 63 | Filed |
-| Bolivia | 8 Nov 2024 | Article 63 | Filed |
-| Ireland | 14 Jan 2025 | Article 63 | Filed |
-| Cuba | 23 Jan 2025 | Article 63 | Filed |
-| Belize | 2025 (date to verify) | Article 63 | Filed |
-| Brazil | 2025 (date to verify) | Article 63 | Filed |
-| Comoros | 2025 (date to verify) | Article 63 | Filed |
-| Belgium | December 2025 | Article 63 | Filed |
-| Paraguay | 3 Mar 2026 | Article 63 | Filed |
-| Netherlands | 11 Mar 2026 | Article 63 | Filed |
-| Iceland | 11 Mar 2026 | Article 63 | Filed |
-| Namibia | 12 Mar 2026 | Article 63 | Filed |
-| Fiji | 12 Mar 2026 | Article 63 | Filed |
-| Hungary | 12 Mar 2026 | Article 63 | Filed (position reported as guarded toward applicant's construction) |
-| United States | 12 Mar 2026 | Article 63 | Filed (position reported to contest aspects of applicant's construction) |
+All entries are declarations of intervention under Article 63 unless noted. Status as of 25 May 2026: filed; admissibility rulings pending or partial.
 
-No state has been admitted as intervening in support of Israel as a co-respondent under Article 62. Admissibility rulings on Article 63 declarations are pending or partial as of 25 May 2026.
+| State | Date filed |
+|---|---|
+| Nicaragua | 8 Feb 2024 |
+| Colombia | 5 Apr 2024 |
+| Libya | 10 May 2024 |
+| Mexico | 28 May 2024 |
+| State of Palestine (Articles 62 and 63) | 3 Jun 2024 |
+| Spain | 28 Jun 2024 |
+| Türkiye | 7 Aug 2024 |
+| Chile | 12 Sep 2024 |
+| Maldives | 11 Oct 2024 |
+| Bolivia | 8 Nov 2024 |
+| Ireland | 14 Jan 2025 |
+| Cuba | 23 Jan 2025 |
+| Belize | 2025 (date to verify) |
+| Brazil | 2025 (date to verify) |
+| Comoros | 2025 (date to verify) |
+| Belgium | December 2025 |
+| Paraguay | 3 Mar 2026 |
+| Netherlands | 11 Mar 2026 |
+| Iceland | 11 Mar 2026 |
+| Namibia | 12 Mar 2026 |
+| Fiji | 12 Mar 2026 |
+| Hungary (position reported as guarded toward applicant) | 12 Mar 2026 |
+| United States (position reported to contest aspects of applicant) | 12 Mar 2026 |
+
+No state has been admitted as intervening in support of Israel under Article 62.
