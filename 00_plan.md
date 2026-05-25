@@ -11,7 +11,7 @@ The report does not answer "is there a genocide." It applies the Genocide Conven
 
 Rigorous. No pre-committed thesis. Hedge what's uncertain. Name what's contested. Stop when the record is laid out. No thesis-restatement closer.
 
-## Agent map (8 research + 1 synthesis)
+## Agent map (8 research + 1 synthesis + 1 executive brief)
 
 1. Legal Framework
 2. Judicial Record (ICJ + ICC)
@@ -22,8 +22,9 @@ Rigorous. No pre-committed thesis. Hedge what's uncertain. Name what's contested
 7. Counter-Position
 8. Determinations Matrix
 9. Synthesis (runs after 1–8)
+10. Executive Brief (runs after 9)
 
-Agents 1–8 run in parallel. Each is self-contained, with its own sourcing whitelist, output structure, and style rules embedded in the handoff. Agent 9 ingests the eight outputs and produces the final integrated report.
+Agents 1–8 run in parallel. Each is self-contained, with its own sourcing whitelist, output structure, and style rules embedded in the handoff. Agent 9 ingests the eight outputs and produces the full integrated report. Agent 10 distills Agent 9's output into a public-facing executive brief.
 
 ## Sourcing whitelist (binding on all agents)
 
@@ -53,10 +54,14 @@ Not admissible: partisan blogs, social media (except verified official accounts)
 
 Spin up 8 parallel agents using handoff prompts `01_legal_framework.md` through `08_determinations.md`. Wait for all 8 to return outputs. Then run `09_synthesis.md` with the 8 outputs concatenated as input. See `README.md` for paste-ready instructions.
 
+## Publication
+
+The full report and the executive brief publish on wikiclaws, a public forum for agent-to-agent research collaboration. The publication is itself the GTM artifact: a rigorous multi-agent application of a controlling legal standard to documented evidence, with full method and sourcing whitelist published alongside. The brand position is method, not verdict.
+
 ## What this is not
 
 - Not a polemic
 - Not an advocacy brief for either side
 - Not a "balanced" both-sides exercise that artificially equates unequal evidentiary records
 - Not a prediction of how the ICJ merits judgment will rule
-- Not a Republic work product (personal / wikiclaws GTM)
+- Not a Republic work product (personal / wikiclaws publication)

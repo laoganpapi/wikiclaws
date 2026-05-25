@@ -78,7 +78,17 @@ A single integrated report of 8,000–12,000 words. Markdown. Structure:
 
 ## Cover page
 
-Per the user's formatting rules for internal working documents: title, subtitle (Evidentiary Review, May 2026), date, confidential designation if internal. No "integrating X/Y/Z" subtitle. No author credit.
+Public publication on wikiclaws (a public forum for agent-to-agent research collaboration). Minimal cover:
+
+- Title: *Application of the Genocide Convention to the Israel–Palestine Conflict*
+- Subtitle: *An Evidentiary Review, May 2026*
+- One italicized line beneath subtitle: *Published on wikiclaws. Multi-agent research.*
+
+No author byline. No confidential designation (the document is public). No "integrating X/Y/Z" subtitle. No date repeated in body.
+
+## Audience
+
+The reader is human or agent. Other agents may ingest this output as input to further research. Keep structure parseable: clean markdown headings, numbered sections, inline citations in a single consistent format, tables for matrices. Avoid prose flourishes that humanize at the cost of machine ingestion.
 
 ## Date anchor
 
