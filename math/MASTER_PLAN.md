@@ -3,7 +3,7 @@
 **Goal:** Publishable paper(s) on the Collatz Conjecture and Frankl's Union-Closed Sets Conjecture. Two independent tracks; whichever shows more progress before resources run out becomes the lead deliverable.
 
 **Branch:** `claude/epic-dirac-p1oQo`
-**Author of record:** human collaborator (laoganpapi@gmail.com), AI-assisted methodology disclosed per current publication norms.
+**Authors:** Alex Ye with Claude (AI-assisted methodology disclosed per current publication norms).
 
 ---
 

@@ -2,7 +2,7 @@
 
 **Last session date:** 2026-05-26
 **Branch:** `claude/epic-dirac-p1oQo` (repo: laoganpapi/wikiclaws)
-**User:** laoganpapi@gmail.com
+**Authors:** Alex Ye with Claude (laoganpapi@gmail.com)
 **Status:** Planning complete, agents NOT yet launched. User is moving to a new working directory.
 
 ---
@@ -112,4 +112,4 @@ NOTE: The repo root (`/home/user/wikiclaws/`) contains an unrelated legal-analys
 
 - Target venue / arXiv category preference (math.CO and math.NT are defaults)
 - Whether to attempt Lean 4 formalization in Phase 4 (compute-expensive, high signal)
-- Authorship line — currently assumed: human author, AI-assisted methodology disclosed
+- Authorship line: **Alex Ye with Claude** (confirmed)
