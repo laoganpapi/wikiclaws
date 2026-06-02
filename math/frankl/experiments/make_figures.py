@@ -37,7 +37,7 @@ def fig_crossover():
     ax.plot(p, h_vec(u), label=r"$h(2p-p^2)$  (union coordinate)", lw=2)
     ax.plot(p, h_vec(p), label=r"$h(p)$  (single coordinate)", lw=2)
     ax.axvline(PSI, color="k", ls="--", alpha=0.7,
-               label=fr"$\psi=(3-\sqrt5)/2\approx{PSI:.5f}$")
+               label=fr"$\psi=(3-\sqrt{{5}})/2\approx{PSI:.5f}$")
     ax.set_xlabel("marginal $p$")
     ax.set_ylabel("entropy (nats)")
     ax.set_title("Crossover of union vs single-coordinate entropy at $p=\\psi$")
@@ -71,7 +71,7 @@ def fig_sawin_slack():
     ax.scatter([PSI], [0], color="red", zorder=5, label="equality point $(\\psi,\\psi)$")
     ax.set_xlabel("$p$")
     ax.set_ylabel(r"$G = h(\mathrm{union}) - \lambda[(1-q)h(p)+(1-p)h(q)]$")
-    ax.set_title(r"Sawin inequality slack $G\ge0$ (tight only at $p=q=\psi$)")
+    ax.set_title(r"Sawin inequality slack $G\geq 0$ (tight only at $p=q=\psi$)")
     ax.legend(fontsize=9)
     ax.grid(alpha=0.3)
     fig.tight_layout()

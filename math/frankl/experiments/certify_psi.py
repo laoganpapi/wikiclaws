@@ -222,9 +222,10 @@ def main():
             print(f"  delta={delta}: NOT certified at this depth; bad box {B['bad_box']} "
                   f"lb={B['bad_lower_bound']:.2e} ({B['seconds']:.1f}s)")
     print()
-    print("Boundary strips p or q in [0,delta]∪[1-delta,1]: there h(p)→0, so")
-    print("G = h(union) - lambda*(1-p)h(q) ≥ h(union) - lambda*h(q) and as the degenerate")
-    print("argument shows these correspond to E[h(P)]=0 (excluded). Handled analytically.")
+    print("Boundary strips p or q in [0,delta]∪[1-delta,1]: handled analytically.")
+    print("At p=0: G(0,q) = (1-lambda) h(q) >= 0 since lambda = phi/2 < 1; the thin")
+    print("strip stays >= 0 (dense-grid scan: min G = 0, attained only at the")
+    print("degenerate corners). These correspond to the EXCLUDED case E[h(P)]=0.")
 
 
 if __name__ == "__main__":

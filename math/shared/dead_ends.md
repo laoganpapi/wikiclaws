@@ -87,4 +87,58 @@ de Weger exponent $0.158$) + the verification bound $B$ + circuit averaging — 
 
 **Lesson:** TRAP — charging the joint objective $H(A\cup B,A\cap B)$ against a single $H(A)$ budget yields a *false* "improvement" of $0.4295$ (`single_letter.py` `v2_joint_ahsbudget_WRONG`, argmin at boundary $(0.035,0.035)$); a related per-family heuristic in `vector_analysis.py` produced a spurious "$0.5$". Both are budget-mismatch artifacts (Prop. 3 in the writeup). Any intersection-side idea MUST first exhibit a *provable* upper bound on the intersection-side entropy; none exists from union-closure alone.
 
+## 2026-06-02 — [track: frankl] — Vector 3: joint coupling+measure single-letter optimization plateaus at ψ; Liu 0.38271 not reproduced
+
+**Agent / author:** Vector-3 computational agent (AI), for Alex Ye
+**Time invested:** ~1 day formulation + compute.
+**Attack vector:** Survey §7.3+§7.7 / open problem B.7 — jointly optimize the
+dimension-free single-letter entropy program over (a) conditional-i.i.d.
+couplings with auxiliary $U$, $|U|\in\{2,4,8,16\}$, and (b) a Cambie-style
+reweighted base measure, aiming to beat Liu's numerical $0.38271$. Artifacts:
+`frankl/experiments/{opt_formulation.md, joint_opt.py, certify_psi.py,
+certificate_0.38197.md, results.md, verify_opt_formulation.py, figures/}`.
+
+**Why it failed (to beat ψ):**
+1. *Reweighting alone = free choice of the marginal law $\mu$ in the dim-free
+   limit*, over which the base i.i.d. program already optimizes; optimum is
+   exactly $\psi$ (closed form: crossover $h(2p-p^2)=h(p)\iff p=\psi$). No gain.
+2. *Auxiliary $U$ (faithfully reconstructed, "diagonal") gives no gain:* given
+   $U{=}j$, $(A_i,B_i)$ iid $\mathrm{Bern}(p_j)$ puts the single-letter $(P,Q)$ on
+   the diagonal $\{(p_j,p_j)\}$; (IV) becomes a mixture over the same per-point
+   crossover, threshold $\psi$ for every $|U|$. Confirmed $|U|\in\{2,4,8,16\}$.
+3. *Enlarging the coupling class is the WRONG direction:* a free off-diagonal
+   coupling LOWERS the certified threshold to $\approx0.359<\psi$, because a larger
+   class makes the feasibility inequality (IV) a weaker necessary condition.
+   Beating $\psi$ needs *added* constraints (the §7.2/B.6 chain-rule slack
+   $\Delta_2$), not a richer coupling. (Independently corroborated by the Vector-1
+   entry above: the AHS extremizer is the iid $\mathrm{Bern}(\psi)$ product, where
+   $\Delta_2=0$.)
+4. *Liu's exact functional inaccessible:* arXiv abs/pdf/ar5iv/mirrors all returned
+   HTTP 403 / host-not-in-allowlist. Two from-first-principles reconstructions of
+   his $I(C;U)/I(A;U)$ bookkeeping failed — one collapses (no gain), the other
+   (`conditional_U_functional(mode='liu_refund')`) admits a degenerate optimizer
+   with atoms at $p\in\{0,1\}$ driving the bound to $0$ (double-counts the refund).
+   No constant was claimed from it.
+
+**Counter-example (if any):** n/a (no false claim). The trap was that "minimize
+$E[P]$ over the feasible set" returns $0$ via the degenerate $\mu=\delta_0$; fixed
+by a threshold-via-bisection with non-degeneracy constraint $E[h(P)]>0$.
+
+**Pointer to artifacts:** as listed above; run log `data/joint_opt_run.txt`.
+
+**Verdict:** abandoned for the beat-0.38271 goal / partial-success: the
+sanity-floor $\psi$ IS reproduced and *certified* (closed form + mean-value-form
+interval arithmetic, `[0.01,0.99]^2`, min lower bound $+5\times10^{-9}$).
+
+**Lesson:** (i) The entropy-method improvement beyond $\psi$ is NOT reachable by
+generalizing the coupling/measure inside the feasibility inequality — that only
+weakens the bound; the lever is a *tighter lower bound on $H(A\cup B)$* capturing
+union-closure (§7.2). The literal "joint optimization over more couplings" reading
+of B.7 is a dead end; the live route is recapturing $\Delta_2$ at a non-i.i.d.
+(Liu) extremizer (same conclusion as Vector 1). (ii) Naive interval arithmetic on
+the 2-D Sawin inequality is hopeless (dependency blowup, ~60% spurious-negative
+boxes); the mean-value/centered extension is necessary & sufficient (seconds).
+(iii) Always reformulate "minimize the marginal" as a threshold problem with an
+explicit non-degeneracy constraint, else the empty-family law silently wins.
+
 *(append further entries above this line as approaches fail)*

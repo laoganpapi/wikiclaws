@@ -55,7 +55,17 @@ Living status of the Collatz & Frankl multi-agent research effort. Updated as ph
 | Frankl computational | Frankl | ⏳ running | Vector 3 (joint optimization + certification) |
 | Collatz Tao-density | Collatz | ✅ done | Vector A — conditional reduction (see below); [UNVERIFIED] pending red-team |
 | Collatz cycle-exclusion | Collatz | ✅ done | Did NOT beat m≤91 (PDF access blocked); corrected survey's bottleneck framing; found cheap improvement route |
-| Collatz experiments | Collatz | ⏸ pending toolkit | verification frontier + Syracuse tables |
+| Frankl computational | Frankl | ✅ done | Certified ψ=(3−√5)/2 (closed-form + interval arith); plateaus at ψ; richer couplings move WRONG way |
+
+**Phase 2 verdict: no proof, no improved constant.** Both Frankl agents independently converged: entropy method caps at ψ; only escape is recapturing Δ₂ at a non-product extremizer. Both Collatz tracks: honest negatives + one conditional theorem. ALL [UNVERIFIED] pending red-team.
+
+## Phase 3 — Verification & Decisive Experiments
+
+| Agent | Status | Target |
+|-------|--------|--------|
+| Collatz FFT experiment | ⏳ running | Resolve β=1-insufficient: push E_n diagnostic to n≈12 via FFT (isolated dir) |
+| Internal-logic red-team | ⏳ running | Adversarially re-derive all Phase 2 claims; flag novelty questions for primary-source pass |
+| Author-line fix | ✅ done | Removed Claude as co-author from both papers; AI disclosed via \thanks only |
 
 ## Phase 2 Findings (ALL [UNVERIFIED] until red-team + human review)
 
@@ -85,10 +95,17 @@ Recurring across ALL research agents: arXiv + every journal/PDF host return **HT
 - The concrete Collatz improvement (re-run with Laurent-2008 / B=2^71) is blocked on reading Hercher's explicit cycle-length function.
 **Action needed from user:** widen the environment's network policy to allow arXiv/journal access, or supply key PDFs manually. Until then, results stay [UNVERIFIED] at the primary-source level.
 
+### Frankl Vector 3 — computational optimization (results.md, certificate_0.38197.md)
+- **Certified ψ=(3−√5)/2≈0.3819660** two independent ways: closed-form (hand-verifiable) + interval arithmetic (mpmath.iv). Reproduced as sanity floor.
+- **Did NOT reproduce Liu 0.38271** (Liu's paper inaccessible; two from-scratch reconstructions of the conditional-U bookkeeping failed — one gains nothing, one degenerates to 0). No constant claimed from reconstruction.
+- **Plateaus exactly at ψ.** Key certified sub-result: enlarging the coupling class moves the threshold the WRONG way (down to ≈0.359) — a larger class weakens the feasibility necessary-condition. ⇒ the lever to beat ψ is NOT a richer coupling/measure (literal open-problem B.7) but a tighter H(A∪B) lower bound capturing union-closure (the Δ₂ chain-rule slack). **Independently corroborates the Vector-1 agent.**
+
 ## Honesty Ledger
-- No proof claims yet. Any constant improvement must pass: numerical validation on all small UC families → red-team → (Lean where feasible) → human review.
-- Realistic best case Frankl: a rigorously certified constant slightly above 0.38271, or a sharp account of why entropy methods plateau.
-- Realistic best case Collatz: verification frontier extension + structural observations; NOT a proof.
+- **Phase 2 produced NO proof and NO improved constant.** This is the expected outcome and is being reported as-is. Frankl best = ψ ≈ 0.382 (below Liu 0.38271). Collatz: no new cycle bound, one conditional theorem.
+- The strongest internal result — "entropy method caps at ψ, escape only via Δ₂ at non-product extremizer" — is corroborated by two independent agents BUT is **very likely already known** (Sawin/Cambie discussed the method's ceiling). Red-team must check prior art before any "new observation" claim. Do NOT inflate.
+- Two false-improvement artifacts (0.4295, 0.5) were caught and killed; logged in dead_ends.md so no later agent resurrects them.
+- Any constant improvement must pass: numerical validation → red-team → (Lean where feasible) → human review → primary-source verification.
+- Realistic deliverable now: a survey-with-reconstruction paper (Frankl) + a conditional-reduction note (Collatz), both honest about being expository/partial. NOT a proof of either conjecture.
 
 ## Next Decisions
 - Authorship: paper author = **Alex Ye**; Claude credited in AI-disclosure statement (no venue permits AI co-authorship).
