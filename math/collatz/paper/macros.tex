@@ -13,7 +13,8 @@
 \newcommand{\Cmap}{C}                       % accelerated Syracuse: C(n) = (3n+1)/2^{v_2(3n+1)}
 
 %--- Stopping times ---
-\newcommand{\stop}{\sigma}                  % stopping time (first n -> below n)
+% Note: \stop is a primitive LaTeX command, so we override with \renewcommand.
+\renewcommand{\stop}{\sigma}                % stopping time (first n -> below n)
 \newcommand{\totstop}{\sigma_\infty}        % total stopping time (first reach 1)
 \newcommand{\stoptime}[1]{\stop(#1)}
 \newcommand{\totstoptime}[1]{\totstop(#1)}
@@ -46,4 +47,4 @@
 \newcommand{\bigO}{O}
 \newcommand{\given}{\,|\,}
 \newcommand{\E}{\mathbb{E}}
-\newcommand{\Pr}{\mathbb{P}}
+\renewcommand{\Pr}{\mathbb{P}}

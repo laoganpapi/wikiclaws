@@ -1,0 +1,195 @@
+% main.tex --- Collatz Conjecture: survey and new observations
+% Authors: Alex Ye with Claude (Anthropic)
+% Branch: claude/epic-dirac-p1oQo
+
+\documentclass[11pt]{amsart}
+
+%--- Encoding & fonts ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+%--- Math packages ---
+\usepackage{amsmath, amssymb, amsthm, mathtools}
+\usepackage{bm}
+
+%--- Layout & utilities ---
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{microtype}
+\usepackage{enumitem}
+
+%--- Bibliography ---
+\usepackage[numbers,sort&compress]{natbib}
+
+%--- Local macros ---
+\input{macros.tex}
+
+%--- Theorem environments ---
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+%--- Title ---
+\title[On the Collatz Conjecture]{On the Collatz Conjecture: A Survey of Density Methods and New Observations}
+
+\author[A. Ye]{Alex Ye}
+\thanks{This work was carried out in collaboration with Claude, an AI assistant developed by Anthropic. AI involvement is disclosed per emerging norms (cf.\ AlphaProof, FunSearch). All theorems are human-verified.}
+\address{Independent researcher}
+\email{laoganpapi@gmail.com}
+
+\author[Claude]{Claude (Anthropic)}
+\address{Anthropic, San Francisco, CA}
+
+\date{\today}
+
+\begin{document}
+
+\begin{abstract}
+\TODO{Write abstract.} We survey the Collatz $3n+1$ problem with emphasis on
+density-based partial results, from Terras (1976) through Krasikov, Lagarias's
+canonical bibliography, and Tao's 2019 logarithmic-density framework. We give
+a unified exposition of the techniques, identify the gap between
+``almost all orbits reach almost bounded values'' and the full conjecture,
+and present \TODO{our contribution placeholder}.
+\end{abstract}
+
+\maketitle
+
+%======================================================================
+\section{Introduction}
+\label{sec:intro}
+
+\TODO{Open with the $3n+1$ map and a brief narrative.}
+
+The Collatz conjecture, posed informally by Lothar Collatz in 1937,
+asserts that the iteration
+\[
+   \T(n) = \begin{cases} n/2 & n \text{ even}, \\ 3n+1 & n \text{ odd}, \end{cases}
+\]
+eventually reaches $1$ for every positive integer $n$. Despite
+verification to $n \leq 2^{68}$~\cite{barina2020} and major partial results,
+the conjecture remains open. The current state-of-the-art density result
+is due to Tao~\cite{tao2019}, who showed that almost every orbit (in the
+sense of logarithmic density) attains values that are arbitrarily small
+relative to a chosen unbounded function.
+
+\TODO{State our contribution.}
+
+\paragraph{Organization.} Section~\ref{sec:notation} fixes notation following
+Lagarias~\cite{lagarias2010}. Section~\ref{sec:history} surveys pre-1990
+results. Section~\ref{sec:density} treats Terras--Krasikov--Lagarias density
+bounds. Section~\ref{sec:tao} reproduces Tao's 2019 framework. Section
+\ref{sec:computational} reports computational verification. Section
+\ref{sec:contribution} contains our contribution. Section~\ref{sec:open}
+lists open questions.
+
+%======================================================================
+\section{Notation and Preliminaries}
+\label{sec:notation}
+
+\TODO{Lock down notation following Lagarias 2010. Cross-reference with
+\texttt{shared/notation.md}.}
+
+\begin{definition}[Collatz map]
+The \emph{Collatz map} $\T : \nat \to \nat$ is
+\[
+   \T(n) = \begin{cases} n/2 & n \equiv 0 \pmod 2, \\
+                          3n+1 & n \equiv 1 \pmod 2. \end{cases}
+\]
+\end{definition}
+
+\begin{definition}[Stopping time]
+The \emph{stopping time} of $n$ is $\stoptime{n} = \min\{k \geq 1 : \Tit{k}(n) < n\}$,
+and the \emph{total stopping time} is
+$\totstoptime{n} = \min\{k \geq 0 : \Tit{k}(n) = 1\}$.
+\end{definition}
+
+\begin{definition}[Parity vector]
+The \emph{parity vector} of $n$ at length $k$ is
+$\pvk{k}{n} = (\Tit{0}(n) \bmod 2, \Tit{1}(n) \bmod 2, \ldots, \Tit{k-1}(n) \bmod 2) \in \{0,1\}^k$.
+\end{definition}
+
+\begin{conjecture}[Collatz, 1937]\label{conj:collatz}
+For every $n \in \nat$, there exists $k \geq 0$ with $\Tit{k}(n) = 1$.
+\end{conjecture}
+
+\TODO{Recall accelerated Syracuse map $\Cmap$, the 2-adic extension,
+and the conjecture's equivalent forms.}
+
+%======================================================================
+\section{History of the Conjecture}
+\label{sec:history}
+
+\TODO{Sketch the pre-1990 timeline; cite Lagarias bibliography.}
+
+%======================================================================
+\section{Density Results (Terras--Krasikov--Lagarias)}
+\label{sec:density}
+
+\TODO{Theorem statements and proof sketches:
+(i) Terras 1976 --- almost every $n$ has finite stopping time;
+(ii) Krasikov inequalities;
+(iii) Lagarias's exponent improvements.}
+
+%======================================================================
+\section{Tao's 2019 Framework}
+\label{sec:tao}
+
+\TODO{Lay out Tao's machinery:
+(i) syracuse random variables on $\Z_2$;
+(ii) PDE-style propagation of log-density;
+(iii) the ``almost bounded'' qualifier.}
+
+\begin{theorem}[Tao 2019, informal]
+For any function $f$ tending to infinity, $\Tit{k}(n) < f(n)$ for a
+set of $n$ of full logarithmic density.
+\end{theorem}
+
+\TODO{State precisely; reproduce the key Lemma; discuss the gap.}
+
+%======================================================================
+\section{Computational Verification}
+\label{sec:computational}
+
+\TODO{Survey verification frontier (Barina 2020 to $\approx 2^{68}$); report
+statistics from \texttt{collatz/experiments/}: stopping-time distributions,
+mod $2^k$ residue analysis, candidate invariants.}
+
+%======================================================================
+\section{Our Contribution}
+\label{sec:contribution}
+
+\TODO{Original observation/result. If only a survey + experiments, say so.}
+
+%======================================================================
+\section{Open Questions}
+\label{sec:open}
+
+\TODO{Curated list. Seeds:
+\begin{enumerate}[label=(Q\arabic*)]
+  \item Can Tao's log-density approach be upgraded to natural density?
+  \item Is there an exact invariant on residue classes mod $2^k$ that
+    distinguishes orbits that converge from any hypothetical divergent ones?
+  \item What automaton-theoretic obstructions exist?
+\end{enumerate}}
+
+%======================================================================
+\section*{Acknowledgments}
+
+\TODO{Thank reviewers; reiterate AI collaboration disclosure;
+mention any compute/funding sources.}
+
+%======================================================================
+\bibliographystyle{plainnat}
+\bibliography{bibliography}
+
+\end{document}
