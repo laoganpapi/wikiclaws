@@ -66,9 +66,15 @@ Living status of the Collatz & Frankl multi-agent research effort. Updated as ph
 | Collatz FFT experiment | ✅ done | E_n DIVERGES to n=15 (no turnover); cross-check passed; scalar-Esscher route obstructed; phase transition at s_c≈−0.4 |
 | Internal-logic red-team | ✅ done | 5/6 docs sound; 1 blocks-publication error found (Tao §6); novelty = biggest risk. See RED_TEAM_REPORT.md |
 | Author-line fix | ✅ done | Removed Claude as co-author from both papers; AI disclosed via \thanks only |
-| Frankl paper draft | ⏳ running | Integrate red-team-verified Frankl results; honest survey+reconstruction+negatives |
-| Frankl Δ₂ attack | ⏳ running | The one live lever: recapture Δ₂ at a non-product extremizer (likely fails) |
-| Collatz consolidate+draft | ⏳ running | Harden FFT (push n); clean obstruction writeup; draft Collatz paper |
+| Frankl paper draft | ✅ done | 14pp, compiles clean (exit 0, 0 undefined). 9 prior-art + 21 const-unverified markers. Claims NO improvement. |
+| Frankl Δ₂ attack | ✅ done | FAILED (clean): recapturing Δ₂ at non-product extremizer moves constant DOWN; best certified = ψ. Artifact re-caught & rejected. |
+| Collatz consolidate+draft | ✅ done | Obstruction doc written; FFT hardened to n=16/17 (divergence holds); paper compiles clean. |
+
+## Phase 3 verdict — DRAFTS COMPLETE, both papers compile
+- **Frankl paper**: honest survey + (3−√5)/2 reconstruction + two negatives + ψ certificate. No improved constant.
+- **Collatz paper**: honest survey + natural-density obstruction (TV≥1/6, doubly supported) + cycle reconstruction. No proof.
+- **Frankl Δ₂ attack** sharpened the ceiling result: recapturing Δ₂ provably backfires (c_aug ≤ ψ over all 29,723 families).
+- Net mathematical result of the whole effort: **no proof, no improved constant** — two honest expository+negative-result papers, all claims red-team-checked for internal soundness, all external facts flagged for the (blocked) primary-source pass.
 
 ### FFT verdict (Collatz Vector A) — corroborates red-team
 - n=2..6 cross-check PASS (matches independent DP to <1e-15). Reached n=15.
