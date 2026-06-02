@@ -144,8 +144,14 @@ User chose to **widen network policy**, but arXiv still returns 403 this session
 ## Phase 5 — Novel-angle attacks (per "keep attacking; new approaches")
 | Agent | Status | Angle |
 |-------|--------|-------|
-| Frankl polynomial method | ⏳ running | Croot–Lev–Pach / slice rank machinery (the cap-set route); genuinely orthogonal to entropy. |
+| Frankl polynomial method | ✅ done | Clean STRUCTURAL OBSTRUCTION (proved + verified): slice-rank(T_F) = \|F\|, vacuous against abundance. Diagnoses why cap-set machinery doesn't apply. |
 | Collatz digit-sum + 𝔽_p[T] | ⏳ running | Hamming-weight Lyapunov candidates + function-field analog cross-check (not 2-adic). |
+
+### Frankl polynomial method (polynomial_method.md) — proved obstruction
+- **Theorem 2.1:** slice-rank(T_F) = |F| (lower bound via identity submatrix on {(C,C):C∈F}; upper = standard CLP). Verified exactly: 1664/1664 at n≤4, 8561/8561 at n=5, zero deviations across fields 𝔽_{2,3,5,7}. The CLP-style slice-rank bound carries NO abundance information.
+- **Diagnosis:** cap-set works because (i) x+y+z=0 is non-determinative + (ii) indicator polynomial has fixed degree 2. Frankl: A∪B=C is fully determinative (transport-plan structure ⇒ unfolding rank = |F|); polynomial has degree Ω(n) per coordinate ⇒ rank bound is Ω(4ⁿ), vacuous against |F|≤2ⁿ.
+- Near-miss caught: a weak T_△ correlation with abundance — candidate inequality FALSIFIED by explicit counterexample. 0.43/0.5 trap not hit.
+- [NOVELTY UNVERIFIED] — needs prior-art check against Naslund / CLP successor literature next session. Tells the field where NOT to look (polynomial method is structurally inapplicable).
 
 Honest framing: "no one has tried" is unverifiable this session (arXiv 403). These are orthogonal to (a) every prior agent's angle and (b) the entropy/Tao paradigm. All claims flagged `[NOVELTY UNVERIFIED]`.
 
