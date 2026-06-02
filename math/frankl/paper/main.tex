@@ -412,8 +412,8 @@ $\mathsf S_3$.
 
 \subsection{Lower bound on \texorpdfstring{$\HH(A\cup B)$}{H(A cup B)}: the chain-rule reduction}
 \label{ssec:chain}
-Write $\Cup:=A\cup B$, with coordinates $C_i=A_i\vee B_i$. By the chain rule (E3),
-$\HH(\Cup)=\sum_i\HH(C_i\mid C_{<i})$. By (E4), conditioning on more can only
+Write $\Cu:=A\cup B$, with coordinates $C_i=A_i\vee B_i$. By the chain rule (E3),
+$\HH(\Cu)=\sum_i\HH(C_i\mid C_{<i})$. By (E4), conditioning on more can only
 reduce entropy:
 \begin{equation}\label{eq:cond-down}
    \HH(C_i\mid C_{<i})\;\ge\;\HH(C_i\mid C_{<i},A_{<i},B_{<i}).
@@ -422,7 +422,7 @@ Given $A_{<i},B_{<i}$, the prefix $C_{<i}=A_{<i}\vee B_{<i}$ is a deterministic
 function, so by (E6) it adds nothing:
 $\HH(C_i\mid C_{<i},A_{<i},B_{<i})=\HH(C_i\mid A_{<i},B_{<i})$. Hence
 \begin{equation}\label{eq:chainLB}
-   \HH(\Cup)\;\ge\;\sum_{i=1}^n \HH(C_i\mid A_{<i},B_{<i}).
+   \HH(\Cu)\;\ge\;\sum_{i=1}^n \HH(C_i\mid A_{<i},B_{<i}).
 \end{equation}
 Inequality~\eqref{eq:cond-down} is the only lossy step \emph{before} the
 one-variable inequality, with exact deficit
@@ -477,14 +477,14 @@ independence, $\E_{a,b}[(1-\beta)h(\alpha)]=\E_a[h(\alpha)]\cdot\E_b[1-\beta]
 using $\HH(B_i\mid B_{<i})=\HH(A_i\mid A_{<i})$. Summing over $i$, plugging into
 the chain-rule bound~\eqref{eq:chainLB}, and using $2\lam=\tfrac1{1-\psis}$,
 \begin{equation}\label{eq:assembled}
-   \HH(\Cup)\;\ge\;\frac{1}{1-\psis}\sum_{i=1}^n(1-p_i)\,\HH(A_i\mid A_{<i}).
+   \HH(\Cu)\;\ge\;\frac{1}{1-\psis}\sum_{i=1}^n(1-p_i)\,\HH(A_i\mid A_{<i}).
 \end{equation}
 Suppose for contradiction $\max_i p_i<\psis$. Then $1-p_i>1-\psis$ for all $i$, so
 \begin{equation}\label{eq:contra}
-   \HH(\Cup)\;>\;\sum_{i=1}^n\HH(A_i\mid A_{<i})\;\overset{\text{(E3)}}{=}\;\HH(A),
+   \HH(\Cu)\;>\;\sum_{i=1}^n\HH(A_i\mid A_{<i})\;\overset{\text{(E3)}}{=}\;\HH(A),
 \end{equation}
 unless $\HH(A)=\log m=0$, i.e.\ $m=1$, which we excluded. But~\eqref{eq:union-cap}
-says $\HH(\Cup)\le\HH(A)$, a contradiction. Hence $\max_i p_i\ge\psis$.
+says $\HH(\Cu)\le\HH(A)$, a contradiction. Hence $\max_i p_i\ge\psis$.
 
 \begin{remark}[Why the chain rule, not subadditivity, on the right]
 In~\eqref{eq:contra} we used the \emph{exact} chain rule
@@ -618,7 +618,7 @@ account of this well-understood ceiling, not a new theorem.% [PRIOR-ART CHECK PE
 
 The slack point $\mathsf S_2$ discards
 $\Dtwo=\sum_i\II(C_i;(A_{<i},B_{<i})\mid C_{<i})\ge 0$. The optimistic hope is to
-keep the exact identity $\HH(\Cup)=\sum_i\HH(C_i\mid A_{<i},B_{<i})+\Dtwo$, apply
+keep the exact identity $\HH(\Cu)=\sum_i\HH(C_i\mid A_{<i},B_{<i})+\Dtwo$, apply
 the per-coordinate inequality to the first sum, and let the extra $+\Dtwo$ force a
 contradiction for some $c>\psis$---perhaps recovering $\Dtwo$ via a Shearer- or
 Han-type submodular inequality, as suggested in the slack literature. We show this
@@ -675,7 +675,7 @@ chain places every coordinate's conditional law at this tight point with the
 coordinates independent (so that the chain-rule bound~\eqref{eq:chainLB} is itself
 tight); this is a product configuration, on which $\Dtwo=0$ by
 Lemma~\ref{lem:product}. Along this extremizer the optimistic bound
-$\HH(\Cup)\ge\tfrac1{1-c}\sum_i(1-p_i)\HH(A_i\mid A_{<i})+\Dtwo$ reduces verbatim
+$\HH(\Cu)\ge\tfrac1{1-c}\sum_i(1-p_i)\HH(A_i\mid A_{<i})+\Dtwo$ reduces verbatim
 to~\eqref{eq:assembled}, tight at $\psis$; thus $c_{V1}\le\psis$. The reverse
 $c_{V1}\ge\cAHS=\psis$ is immediate since adding $\Dtwo\ge 0$ can only help.
 \end{proof}
@@ -696,9 +696,9 @@ $\psis$ substantially.% [PRIOR-ART CHECK PENDING -- see RED_TEAM_REPORT.md]
 Shearer's lemma and Han's inequality are \emph{upper} bounds on $\HH(X)$ by
 marginal entropies; they tensorize and are tight on product distributions. Since
 the extremizer is a product (Proposition~\ref{prop:delta2}), any such inequality
-applied to $A$, to $\Cup$, or to $(A,B)$ is tight at the extremizer and
+applied to $A$, to $\Cu$, or to $(A,B)$ is tight at the extremizer and
 contributes no slack where it is needed. Moreover the proof needs a \emph{lower}
-bound on $\HH(\Cup)$ (to contradict $\HH(\Cup)\le\HH(A)$), whereas Shearer gives
+bound on $\HH(\Cu)$ (to contradict $\HH(\Cu)\le\HH(A)$), whereas Shearer gives
 an upper bound, and the Han lower-bound variant has the wrong sign because entropy
 is submodular. So a Shearer/Han bound in the required direction is not a generic
 entropy inequality; it would have to invoke union-closure, but the only
