@@ -141,6 +141,14 @@ User chose to **widen network policy**, but arXiv still returns 403 this session
 
 **ALL AGENTS COMPLETE (17 total across 4 phases).** CI flipped back to blocking (both papers compile).
 
+## Phase 5 — Novel-angle attacks (per "keep attacking; new approaches")
+| Agent | Status | Angle |
+|-------|--------|-------|
+| Frankl polynomial method | ⏳ running | Croot–Lev–Pach / slice rank machinery (the cap-set route); genuinely orthogonal to entropy. |
+| Collatz digit-sum + 𝔽_p[T] | ⏳ running | Hamming-weight Lyapunov candidates + function-field analog cross-check (not 2-adic). |
+
+Honest framing: "no one has tried" is unverifiable this session (arXiv 403). These are orthogonal to (a) every prior agent's angle and (b) the entropy/Tao paradigm. All claims flagged `[NOVELTY UNVERIFIED]`.
+
 ### Frankl lattice attack (lattice_attack.md) — honest negative + structural insight
 - **Proves no general bound from lattice invariants is possible.** The "universal-element cone" cone(G)={∅}∪{A∪{z}:A∈G,A≠∅} is union-closed, lattice-ISOMORPHIC to G (identical invariants) but has abundance 1−1/|L|. Verified: 0 failures over all 206 families at n≤4. Minimal witness: B₃ at abundance 0.5 vs cone at 0.875, same invariants.
 - Mechanism: abundance = max filter-density of ground-element fibres; the cone shows this labelling is FREE given L ⇒ invariants powerless. This is exactly why every known special-case result restricts the lattice CLASS, not an invariant.
