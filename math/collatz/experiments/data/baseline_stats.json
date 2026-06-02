@@ -1,0 +1,470 @@
+{
+  "N": 100000,
+  "max_sigma_inf": 221,
+  "argmax_sigma_inf": 77031,
+  "mean_sigma_inf": 71.88948,
+  "median_sigma_inf": 67.0,
+  "regression": {
+    "intercept": 0.9705137792216192,
+    "slope_natural_log": 6.745841188563273,
+    "R_squared": 0.04544476271458908,
+    "heuristic_slope": 6.952118993564416
+  },
+  "tau": {
+    "max": 135,
+    "argmax_n": 35655,
+    "mean": 3.4744547445474456,
+    "median": 1.0,
+    "heuristic_mean": 6.952118993564417
+  },
+  "log_descent_observable": {
+    "mean_r": 1.7467247904479322,
+    "median_r": 2.4094208396532033,
+    "std_r": 0.7541021444104088,
+    "heuristic_value": 1.0
+  },
+  "anomalies_per_decade": [
+    {
+      "n": 9,
+      "sigma_inf": 13,
+      "tau": 2,
+      "peak": 26,
+      "log_ratio": 5.916554973074443
+    },
+    {
+      "n": 7,
+      "sigma_inf": 11,
+      "tau": 7,
+      "peak": 26,
+      "log_ratio": 5.6528817660672575
+    },
+    {
+      "n": 6,
+      "sigma_inf": 6,
+      "tau": 1,
+      "peak": 8,
+      "log_ratio": 3.3486637593074837
+    },
+    {
+      "n": 3,
+      "sigma_inf": 5,
+      "tau": 4,
+      "peak": 8,
+      "log_ratio": 4.551196133134186
+    },
+    {
+      "n": 5,
+      "sigma_inf": 4,
+      "tau": 2,
+      "peak": 8,
+      "log_ratio": 2.4853397382384474
+    },
+    {
+      "n": 97,
+      "sigma_inf": 75,
+      "tau": 2,
+      "peak": 4616,
+      "log_ratio": 16.394478329325246
+    },
+    {
+      "n": 73,
+      "sigma_inf": 73,
+      "tau": 2,
+      "peak": 4616,
+      "log_ratio": 17.014494834721177
+    },
+    {
+      "n": 55,
+      "sigma_inf": 71,
+      "tau": 5,
+      "peak": 4616,
+      "log_ratio": 17.71751853867404
+    },
+    {
+      "n": 54,
+      "sigma_inf": 71,
+      "tau": 1,
+      "peak": 4616,
+      "log_ratio": 17.799018289168778
+    },
+    {
+      "n": 83,
+      "sigma_inf": 70,
+      "tau": 4,
+      "peak": 4616,
+      "log_ratio": 15.84125932863296
+    },
+    {
+      "n": 871,
+      "sigma_inf": 113,
+      "tau": 35,
+      "peak": 95498,
+      "log_ratio": 16.69216782606553
+    },
+    {
+      "n": 937,
+      "sigma_inf": 110,
+      "tau": 2,
+      "peak": 125252,
+      "log_ratio": 16.07556501782384
+    },
+    {
+      "n": 703,
+      "sigma_inf": 108,
+      "tau": 81,
+      "peak": 125252,
+      "log_ratio": 16.475075542404092
+    },
+    {
+      "n": 763,
+      "sigma_inf": 97,
+      "tau": 20,
+      "peak": 4616,
+      "log_ratio": 14.61446873736026
+    },
+    {
+      "n": 775,
+      "sigma_inf": 97,
+      "tau": 7,
+      "peak": 4616,
+      "log_ratio": 14.58018894602559
+    },
+    {
+      "n": 6171,
+      "sigma_inf": 165,
+      "tau": 58,
+      "peak": 487700,
+      "log_ratio": 18.905505997141717
+    },
+    {
+      "n": 9257,
+      "sigma_inf": 164,
+      "tau": 2,
+      "peak": 487700,
+      "log_ratio": 17.956593720979534
+    },
+    {
+      "n": 6943,
+      "sigma_inf": 162,
+      "tau": 54,
+      "peak": 487700,
+      "log_ratio": 18.314419436166983
+    },
+    {
+      "n": 7963,
+      "sigma_inf": 159,
+      "tau": 72,
+      "peak": 248588,
+      "log_ratio": 17.70096505517237
+    },
+    {
+      "n": 8959,
+      "sigma_inf": 156,
+      "tau": 69,
+      "peak": 248588,
+      "log_ratio": 17.14207747483803
+    },
+    {
+      "n": 77031,
+      "sigma_inf": 221,
+      "tau": 89,
+      "peak": 10966508,
+      "log_ratio": 19.641016925990687
+    },
+    {
+      "n": 52527,
+      "sigma_inf": 214,
+      "tau": 18,
+      "peak": 53179010,
+      "log_ratio": 19.688874197971696
+    },
+    {
+      "n": 78791,
+      "sigma_inf": 213,
+      "tau": 8,
+      "peak": 53179010,
+      "log_ratio": 18.89209976196642
+    },
+    {
+      "n": 60975,
+      "sigma_inf": 211,
+      "tau": 127,
+      "peak": 296639576,
+      "log_ratio": 19.150100005084013
+    },
+    {
+      "n": 87087,
+      "sigma_inf": 210,
+      "tau": 43,
+      "peak": 715868,
+      "log_ratio": 18.462085591783264
+    },
+    {
+      "n": 100000,
+      "sigma_inf": 85,
+      "tau": 1,
+      "peak": 100000,
+      "log_ratio": 7.383006192355281
+    }
+  ],
+  "progressive_records": [
+    {
+      "n": 1,
+      "sigma_inf": 0,
+      "tau": 0,
+      "peak": 1,
+      "log_ratio": 0.0
+    },
+    {
+      "n": 2,
+      "sigma_inf": 1,
+      "tau": 1,
+      "peak": 2,
+      "log_ratio": 1.4426950408889634
+    },
+    {
+      "n": 3,
+      "sigma_inf": 5,
+      "tau": 4,
+      "peak": 8,
+      "log_ratio": 4.551196133134186
+    },
+    {
+      "n": 6,
+      "sigma_inf": 6,
+      "tau": 1,
+      "peak": 8,
+      "log_ratio": 3.3486637593074837
+    },
+    {
+      "n": 7,
+      "sigma_inf": 11,
+      "tau": 7,
+      "peak": 26,
+      "log_ratio": 5.6528817660672575
+    },
+    {
+      "n": 9,
+      "sigma_inf": 13,
+      "tau": 2,
+      "peak": 26,
+      "log_ratio": 5.916554973074443
+    },
+    {
+      "n": 18,
+      "sigma_inf": 14,
+      "tau": 1,
+      "peak": 26,
+      "log_ratio": 4.84366758765671
+    },
+    {
+      "n": 25,
+      "sigma_inf": 16,
+      "tau": 2,
+      "peak": 44,
+      "log_ratio": 4.970679476476895
+    },
+    {
+      "n": 27,
+      "sigma_inf": 70,
+      "tau": 59,
+      "peak": 4616,
+      "log_ratio": 21.23891528795954
+    },
+    {
+      "n": 54,
+      "sigma_inf": 71,
+      "tau": 1,
+      "peak": 4616,
+      "log_ratio": 17.799018289168778
+    },
+    {
+      "n": 73,
+      "sigma_inf": 73,
+      "tau": 2,
+      "peak": 4616,
+      "log_ratio": 17.014494834721177
+    },
+    {
+      "n": 97,
+      "sigma_inf": 75,
+      "tau": 2,
+      "peak": 4616,
+      "log_ratio": 16.394478329325246
+    },
+    {
+      "n": 129,
+      "sigma_inf": 77,
+      "tau": 2,
+      "peak": 4616,
+      "log_ratio": 15.844232985391093
+    },
+    {
+      "n": 171,
+      "sigma_inf": 79,
+      "tau": 5,
+      "peak": 4616,
+      "log_ratio": 15.364677041166711
+    },
+    {
+      "n": 231,
+      "sigma_inf": 81,
+      "tau": 12,
+      "peak": 4616,
+      "log_ratio": 14.883091359085356
+    },
+    {
+      "n": 313,
+      "sigma_inf": 83,
+      "tau": 2,
+      "peak": 4616,
+      "log_ratio": 14.44432040562733
+    },
+    {
+      "n": 327,
+      "sigma_inf": 91,
+      "tau": 21,
+      "peak": 4616,
+      "log_ratio": 15.716861137906237
+    },
+    {
+      "n": 649,
+      "sigma_inf": 92,
+      "tau": 2,
+      "peak": 4616,
+      "log_ratio": 14.207544734836931
+    },
+    {
+      "n": 703,
+      "sigma_inf": 108,
+      "tau": 81,
+      "peak": 125252,
+      "log_ratio": 16.475075542404092
+    },
+    {
+      "n": 871,
+      "sigma_inf": 113,
+      "tau": 35,
+      "peak": 95498,
+      "log_ratio": 16.69216782606553
+    },
+    {
+      "n": 1161,
+      "sigma_inf": 115,
+      "tau": 2,
+      "peak": 95498,
+      "log_ratio": 16.29579103783179
+    },
+    {
+      "n": 2223,
+      "sigma_inf": 116,
+      "tau": 8,
+      "peak": 125252,
+      "log_ratio": 15.05200809940912
+    },
+    {
+      "n": 2463,
+      "sigma_inf": 132,
+      "tau": 21,
+      "peak": 125252,
+      "log_ratio": 16.9032797192592
+    },
+    {
+      "n": 2919,
+      "sigma_inf": 137,
+      "tau": 26,
+      "peak": 125252,
+      "log_ratio": 17.17007924711398
+    },
+    {
+      "n": 3711,
+      "sigma_inf": 150,
+      "tau": 37,
+      "peak": 240812,
+      "log_ratio": 18.250269609486278
+    },
+    {
+      "n": 6171,
+      "sigma_inf": 165,
+      "tau": 58,
+      "peak": 487700,
+      "log_ratio": 18.905505997141717
+    },
+    {
+      "n": 10971,
+      "sigma_inf": 169,
+      "tau": 8,
+      "peak": 487700,
+      "log_ratio": 18.166162044310276
+    },
+    {
+      "n": 13255,
+      "sigma_inf": 174,
+      "tau": 8,
+      "peak": 248588,
+      "log_ratio": 18.330975010212605
+    },
+    {
+      "n": 17647,
+      "sigma_inf": 176,
+      "tau": 73,
+      "peak": 5501708,
+      "log_ratio": 17.998999892486456
+    },
+    {
+      "n": 23529,
+      "sigma_inf": 178,
+      "tau": 2,
+      "peak": 5501708,
+      "log_ratio": 17.68330964005701
+    },
+    {
+      "n": 26623,
+      "sigma_inf": 194,
+      "tau": 65,
+      "peak": 53179010,
+      "log_ratio": 19.039149508935616
+    },
+    {
+      "n": 34239,
+      "sigma_inf": 196,
+      "tau": 92,
+      "peak": 9488096,
+      "log_ratio": 18.77193139070836
+    },
+    {
+      "n": 35655,
+      "sigma_inf": 204,
+      "tau": 135,
+      "peak": 20581856,
+      "log_ratio": 19.46259451189024
+    },
+    {
+      "n": 52527,
+      "sigma_inf": 214,
+      "tau": 18,
+      "peak": 53179010,
+      "log_ratio": 19.688874197971696
+    },
+    {
+      "n": 77031,
+      "sigma_inf": 221,
+      "tau": 89,
+      "peak": 10966508,
+      "log_ratio": 19.641016925990687
+    }
+  ],
+  "figures": {
+    "tau_histogram": "/home/user/wikiclaws/math/collatz/experiments/figures/baseline_tau_histogram.png",
+    "sigma_vs_logn": "/home/user/wikiclaws/math/collatz/experiments/figures/baseline_sigma_vs_logn.png",
+    "log_descent": "/home/user/wikiclaws/math/collatz/experiments/figures/baseline_log_descent.png"
+  },
+  "timing_seconds": {
+    "sigma_inf": 0.06694398499996623,
+    "tau": 0.05485728000007839,
+    "log_descent": 0.10409231599999202,
+    "regression": 0.005143500000031054,
+    "anomalies": 0.0013968539999495988,
+    "records": 0.01668860200004474
+  }
+}

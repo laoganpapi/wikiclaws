@@ -1,0 +1,77 @@
+{
+  "parity_search": {
+    "candidates": [
+      {
+        "m": 2,
+        "k": 1,
+        "n": 1,
+        "parity": [
+          1,
+          0
+        ],
+        "orbit_min": 1,
+        "orbit_max": 2,
+        "is_trivial": true
+      },
+      {
+        "m": 2,
+        "k": 1,
+        "n": 2,
+        "parity": [
+          0,
+          1
+        ],
+        "orbit_min": 1,
+        "orbit_max": 2,
+        "is_trivial": true
+      }
+    ],
+    "non_trivial_count": 0,
+    "elapsed_seconds": 0.3694536230000267
+  },
+  "orbit_search": {
+    "cycles": [],
+    "elapsed_seconds": 1.481993981999949
+  },
+  "negative_cycles": [
+    {
+      "start": -1,
+      "orbit": [
+        -1,
+        -1
+      ],
+      "closed": true,
+      "length": 1
+    },
+    {
+      "start": -5,
+      "orbit": [
+        -5,
+        -7,
+        -10,
+        -5
+      ],
+      "closed": true,
+      "length": 3
+    },
+    {
+      "start": -17,
+      "orbit": [
+        -17,
+        -25,
+        -37,
+        -55,
+        -82,
+        -41,
+        -61,
+        -91,
+        -136,
+        -68,
+        -34,
+        -17
+      ],
+      "closed": true,
+      "length": 11
+    }
+  ]
+}

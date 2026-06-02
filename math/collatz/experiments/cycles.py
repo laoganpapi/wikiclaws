@@ -209,6 +209,7 @@ def search_cycles_by_parity(max_m: int = 20,
         total_for_m = 0
         for k in candidates_k:
             for odd_positions in combinations(range(m), k):
+                total_for_m += 1
                 parity = [0] * m
                 for p in odd_positions:
                     parity[p] = 1
@@ -235,7 +236,6 @@ def search_cycles_by_parity(max_m: int = 20,
                         "orbit_max": max(orbit_set),
                         "is_trivial": is_trivial,
                     })
-                total_for_m += 1
         log(f"  m={m}: examined {total_for_m} parity sequences "
             f"with admissible k {candidates_k}; found {sum(1 for r in out if r['m']==m)} cycle(s)")
     return out

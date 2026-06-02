@@ -7,7 +7,10 @@ package "collatz_frankl" where
     ⟨`pp.unicode.fun, true⟩ -- pretty-prints `fun a ↦ b`
   ]
 
-require "leanprover-community" / "mathlib"
+-- Mathlib pulled from GitHub directly (Reservoir is not reachable in this
+-- sandbox; using the git URL avoids the lookup).
+require mathlib from git
+  "https://github.com/leanprover-community/mathlib4.git" @ "v4.31.0-rc1"
 
 @[default_target]
 lean_lib «Collatz» where

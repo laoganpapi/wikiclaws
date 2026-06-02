@@ -1,0 +1,8 @@
+{
+  "N": 100000,
+  "verified_count": 100000,
+  "max_sigma_inf": 221,
+  "argmax_n": 77031,
+  "elapsed_seconds": 0.598612806999995,
+  "throughput_n_per_sec": 167052.89100171364
+}
