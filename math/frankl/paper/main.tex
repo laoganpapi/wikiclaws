@@ -123,19 +123,23 @@ The modern era began with Gilmer~\cite{gilmer2022}, who broke the
 ``no constant'' barrier with a short information-theoretic argument: sampling
 two sets $A,B$ independently and uniformly from $\UC$ and comparing $H(A\cup B)$
 to $H(A)$, he proved that some element has abundance at least an absolute
-constant $\gilmer\approx 0.01$.% [CONSTANT UNVERIFIED vs primary source]
+constant $\gilmer\approx 0.01$.
+% [CONSTANT UNVERIFIED vs primary source]
 Within a week, four independent works~\cite{sawin2022,chaselovett2022,ahs2023,pebody2022}
 identified the sharp constant of Gilmer's method as
 \[
-   \psis \;=\; \golden \;\approx\; 0.3819660,% [CONSTANT UNVERIFIED vs primary source]
+   \psis \;=\; \golden \;\approx\; 0.3819660,
+% [CONSTANT UNVERIFIED vs primary source]
 \]
 the smaller root of $\psi^2-3\psi+1=0$. The peer-reviewed reference is
 Alweiss--Huang--Sellke (AHS)~\cite{ahs2023}. Subsequent work pushed the
 \emph{numerical} constant slightly higher by enriching the coupling: Yu's
-dimension-free reformulation~\cite{yu2023} certifies $\approx 0.38234$,% [CONSTANT UNVERIFIED vs primary source]
+dimension-free reformulation~\cite{yu2023} certifies $\approx 0.38234$,
+% [CONSTANT UNVERIFIED vs primary source]
 Cambie's survey-and-refinement~\cite{cambie2023} reaches the same value, and
 Liu's conditionally-i.i.d.\ coupling~\cite{liu2023} reaches
-$\approx 0.38271$,% [CONSTANT UNVERIFIED vs primary source]
+$\approx 0.38271$,
+% [CONSTANT UNVERIFIED vs primary source]
 the best published constant at the time of writing. All of these remain far
 below the conjectured $\target$.
 
@@ -182,7 +186,8 @@ in Gilmer/AHS. We therefore present this material as a self-contained account of
 a well-understood ceiling, not as a discovery, and we have marked every such
 sentence in the \LaTeX{} source with a \texttt{[PRIOR-ART CHECK PENDING]}
 comment so that a future revision can confirm priority against the primary
-sources.% [PRIOR-ART CHECK PENDING -- see RED_TEAM_REPORT.md]
+sources.
+% [PRIOR-ART CHECK PENDING -- see RED_TEAM_REPORT.md]
 
 \begin{remark}[Verification status]\label{rmk:verif}
 This manuscript was prepared with AI assistance (see the Declaration at the end).
@@ -274,7 +279,8 @@ ratio; and let $\lam:=\tfrac{1}{2(1-\psis)}=\tfrac{1}{2\sigm}=\phigr/2$. The
 identities
 \begin{equation}\label{eq:psi-id}
    (1-\psis)^2=\psis,\qquad \sigm^2=1-\sigm,\qquad 2\psis-\psis^2=1-\psis,\qquad
-   \lam=\phigr/2\approx 0.8090170% [CONSTANT UNVERIFIED vs primary source -- but algebraically exact above]
+   \lam=\phigr/2\approx 0.8090170
+% [CONSTANT UNVERIFIED vs primary source -- but algebraically exact above]
 \end{equation}
 are elementary consequences of $\psi^2-3\psi+1=0$ and are used repeatedly. (Here
 the value $0.8090170$ is exact arithmetic, not a literature citation.)
@@ -295,15 +301,18 @@ lattice $L$ with $|L|>1$ has a join-irreducible element below at most half the
 elements) and verified several lattice classes; Reinhold~\cite{reinhold2000}
 later settled lower semimodular lattices. Bruhn--Charbit--Schaudt--Telle%
 ~\cite{bruhn2015} gave an equivalent bipartite-graph formulation and proved
-several graph classes.% [CONSTANT UNVERIFIED vs primary source]
+several graph classes.
+% [CONSTANT UNVERIFIED vs primary source]
 
 Quantitatively, the early bounds were $o(1)$: Knill~\cite{knill1994} obtained an
-element of abundance $\gtrsim 1/\log_2|\UC|$, later refined by W\'ojcik.% [CITATION NEEDED -- Wojcik, Discrete Math. 199 (1999)]
+element of abundance $\gtrsim 1/\log_2|\UC|$, later refined by W\'ojcik.
+% [CITATION NEEDED -- Wojcik, Discrete Math. 199 (1999)]
 Reimer's average-set-size theorem~\cite{reimer2003} gives
 $\frac1{|\UC|}\sum_{A\in\UC}|A|\ge\tfrac12\log_2|\UC|$, sharp on power sets.
 Structural constant bounds were available only under restrictions:
 Balla--Bollob\'as--Eccles~\cite{bbe2013} for large families
-($|\UC|\ge\tfrac23\cdot2^n$),% [CONSTANT UNVERIFIED vs primary source]
+($|\UC|\ge\tfrac23\cdot2^n$),
+% [CONSTANT UNVERIFIED vs primary source]
 Karpas~\cite{karpas2017} for families of density near $\tfrac12$ (the first use
 of Boolean Fourier analysis here), and computer searches verifying small ground
 sets. None of these yields an unconditional positive constant for all
@@ -311,36 +320,42 @@ union-closed families.
 
 \subsection{Gilmer's breakthrough and the rush to $\golden$}
 Gilmer~\cite{gilmer2022} proved the first unconditional, dimension-free, constant
-lower bound $\cstar\ge\gilmer\approx 0.01$,% [CONSTANT UNVERIFIED vs primary source]
+lower bound $\cstar\ge\gilmer\approx 0.01$,
+% [CONSTANT UNVERIFIED vs primary source]
 by the entropy comparison we reconstruct in Section~\ref{sec:ahs}. He conjectured
 that the sharp form of his per-coordinate inequality should yield exactly
 $\psis=\golden$. Within a week this was confirmed independently by
 Sawin~\cite{sawin2022}, Chase--Lovett~\cite{chaselovett2022},
 Alweiss--Huang--Sellke~\cite{ahs2023}, and Pebody~\cite{pebody2022}; the
-peer-reviewed reference is AHS~\cite{ahs2023}.% [CONSTANT UNVERIFIED vs primary source]
+peer-reviewed reference is AHS~\cite{ahs2023}.
+% [CONSTANT UNVERIFIED vs primary source]
 Two features of this cluster are important for us:
 \begin{itemize}[leftmargin=1.4em]
 \item Chase--Lovett~\cite{chaselovett2022} prove the bound $\golden$ also for
 \emph{approximately} union-closed families and show it is \emph{optimal} there.
 This is strong evidence that, within the i.i.d.\ coupling, no constant exceeding
 $\psis$ can come out of the method without using union-closure beyond
-approximation.% [PRIOR-ART CHECK PENDING -- see RED_TEAM_REPORT.md]
+approximation.
+% [PRIOR-ART CHECK PENDING -- see RED_TEAM_REPORT.md]
 \item Sawin~\cite{sawin2022} explicitly notes that the constant $\golden$ is
 \emph{not} the limit of the entropy method, sketching a \emph{non}-i.i.d.\
 coupling that beats it by some $\delta>0$. The very form of this remark
-presupposes that the i.i.d.\ method is capped at $\psis$.% [PRIOR-ART CHECK PENDING -- see RED_TEAM_REPORT.md]
+presupposes that the i.i.d.\ method is capped at $\psis$.
+% [PRIOR-ART CHECK PENDING -- see RED_TEAM_REPORT.md]
 \end{itemize}
 
 \subsection{Beyond $\golden$: enriching the coupling}
 The improvements past $\golden$ all enrich the coupling.
 Yu~\cite{yu2023} recasts the method as a dimension-free convex program, bounds
 the auxiliary cardinalities (making it computable), and certifies
-$\approx 0.38234$.% [CONSTANT UNVERIFIED vs primary source]
+$\approx 0.38234$.
+% [CONSTANT UNVERIFIED vs primary source]
 Cambie~\cite{cambie2023} surveys the rush and reaches the same value via
 convex combinations of couplings, and also treats reweighted (Maxwell--Boltzmann)
 measures on $\UC$. Liu~\cite{liu2023} introduces an auxiliary variable $U$ and
 takes $A,B$ i.i.d.\ \emph{conditioned on} $U$; under numerically verified
-hypotheses this reaches $\approx 0.38271$,% [CONSTANT UNVERIFIED vs primary source]
+hypotheses this reaches $\approx 0.38271$,
+% [CONSTANT UNVERIFIED vs primary source]
 the best published value. These are the moves our negative results
 (Section~\ref{sec:negatives}) take as the boundary of the i.i.d.\ regime: each
 adds structure (a non-product coupling, recovered mutual information), which is
@@ -610,7 +625,8 @@ couplings precisely to escape the regime analysed here. Moreover we believe the
 qualitative conclusion---that the i.i.d.\ method is capped at $\psis$ and that
 enriching the coupling without adding constraints moves the bound the wrong
 way---is already understood by Sawin and Cambie; we present a self-contained
-account of this well-understood ceiling, not a new theorem.% [PRIOR-ART CHECK PENDING -- see RED_TEAM_REPORT.md]
+account of this well-understood ceiling, not a new theorem.
+% [PRIOR-ART CHECK PENDING -- see RED_TEAM_REPORT.md]
 \end{remark}
 
 \subsection{Vector 1: recapturing the chain-rule slack \texorpdfstring{$\Dtwo$}{Delta-2}}
@@ -689,7 +705,8 @@ balance; the standard reading of the Gilmer/AHS argument (dimension-free bound,
 product extremizer) supplies this, but we do not reprove it here. Our exact
 enumeration (Section~\ref{sec:computational}) corroborates the conclusion: $\Dtwo$
 is bounded away from $0$ only on families whose abundance already exceeds
-$\psis$ substantially.% [PRIOR-ART CHECK PENDING -- see RED_TEAM_REPORT.md]
+$\psis$ substantially.
+% [PRIOR-ART CHECK PENDING -- see RED_TEAM_REPORT.md]
 \end{remark}
 
 \paragraph{Shearer/Han cannot substitute.}
@@ -708,7 +725,8 @@ sharpens \emph{why} the method stalls: the one union-closure-specific entropy fa
 used, $A\cup B\in\UC$ in~\eqref{eq:union-cap}, is a zeroth-order (cardinality)
 constraint, while $\Dtwo$ is a correlation quantity that union-closure does
 \emph{not} lower-bound---it can be $0$ on product families while $\UC$ is
-union-closed.% [PRIOR-ART CHECK PENDING -- see RED_TEAM_REPORT.md]
+union-closed.
+% [PRIOR-ART CHECK PENDING -- see RED_TEAM_REPORT.md]
 
 \begin{remark}[The one live direction this exposes]\label{rmk:v1-live}
 Vector~1 fails \emph{within the i.i.d.\ coupling}. The numerics show $\Dtwo$ is
@@ -786,7 +804,8 @@ take more values, and have higher entropy, than $A$. The only honest bound is
 $\HH(A\cap B)\le\log|\UC^\cap|$, and $\log|\UC^\cap|$ is not controlled by
 $\log|\UC|=\HH(A)$. An explicit family with $\HH(A\cap B)>\HH(A)$ is exhibited by
 the enumeration of Section~\ref{sec:computational} (the ratio
-$\HH(A\cap B)/\HH(A)$ reaches $1.53$ for some $\UC$ with $n\le 5$).% [CONSTANT UNVERIFIED vs primary source -- this is our own computation; cross-checked by an independent enumeration]
+$\HH(A\cap B)/\HH(A)$ reaches $1.53$ for some $\UC$ with $n\le 5$).
+% [CONSTANT UNVERIFIED vs primary source -- this is our own computation; cross-checked by an independent enumeration]
 Hence $\mathcal L_\lambda\le\log m+\lambda\log|\UC^\cap|$, whose second term can
 exceed $\lambda\log m$ by an uncontrolled amount, while the per-coordinate lower
 bound grows only like $(1+\lambda)$ times the AHS numerator; the closing
@@ -807,10 +826,12 @@ the union entropy bound.
 If one (incorrectly) charges the joint objective $\HH(A\cup B,A\cap B)$ against
 the \emph{single} budget $\HH(A)$ with the AHS weighting, one obtains the apparent
 constant $1-\tfrac{1}{2\mu'}=0.429460$ with
-$\mu'=\inf\Hpair/[(1-\beta)h(\alpha)+(1-\alpha)h(\beta)]=0.87636$.% [CONSTANT UNVERIFIED vs primary source -- our own optimization value]
+$\mu'=\inf\Hpair/[(1-\beta)h(\alpha)+(1-\alpha)h(\beta)]=0.87636$.
+% [CONSTANT UNVERIFIED vs primary source -- our own optimization value]
 This is \emph{not} a valid bound: the tacit assumption $\HH(A\cup B,A\cap B)\le
 \HH(A)$ is false, failing on $402/412$ union-closed families at $n\le 4$ with
-excess up to $2.13$.% [CONSTANT UNVERIFIED vs primary source -- our own enumeration]
+excess up to $2.13$.
+% [CONSTANT UNVERIFIED vs primary source -- our own enumeration]
 \end{proposition}
 
 \begin{proof}
@@ -909,7 +930,8 @@ boxes; the centered form cancels the first-order dependency.
 Running the certifier at $80$-bit precision yields
 $G\ge 0$ on $[0.01,0.99]^2$ with minimum interval lower bound
 $+4.96\times10^{-9}$ ($4056$ boxes verified, $13$ exempt), and on
-$[0.02,0.98]^2$ with minimum interval lower bound $+4.43\times 10^{-9}$.% [CONSTANT UNVERIFIED vs primary source -- our own interval computation, independently reproduced in the red-team audit]
+$[0.02,0.98]^2$ with minimum interval lower bound $+4.43\times 10^{-9}$.
+% [CONSTANT UNVERIFIED vs primary source -- our own interval computation, independently reproduced in the red-team audit]
 Here ``exempt'' denotes a $10^{-3}$-radius neighborhood of the unique interior
 equality point $(\psis,\psis)$, where $G$ legitimately touches $0$ and so cannot
 be bounded strictly above $0$ by any positive-width box; that point is discharged
@@ -925,7 +947,8 @@ $\lam(1+10^{-3})$ makes it \emph{fail}, locating a real box near $(0.455,0.448)$
 with negative lower bound; with $\lam(1-10^{-3})$ it certifies the (weaker)
 inequality. Independently, perturbing the constant in the closed-form tangency
 ($\phi'(\sigm)=0$) up by $0.1\%$ makes $\phi<0$ just off the diagonal. Both confirm
-that $\psis$ is the exact threshold, not an artifact of the numerics.% [CONSTANT UNVERIFIED vs primary source -- our own stress test]
+that $\psis$ is the exact threshold, not an artifact of the numerics.
+% [CONSTANT UNVERIFIED vs primary source -- our own stress test]
 \end{remark}
 
 \subsection{Honesty note on scope}
@@ -951,7 +974,8 @@ joint law of $(A,B)$, with no Monte Carlo.
 \begin{proposition}[Exhaustive small-family checks]\label{prop:enum}
 Over all union-closed families on $\ground$ for $n\le 5$, enumerated as
 $S_n$-orbit representatives ($29{,}327$ orbits at $n=5$; $29{,}738$ in total for
-$n\le 5$),% [CONSTANT UNVERIFIED vs primary source -- our own enumeration count; the task brief's figure of 29,743 differs slightly and should be reconciled]
+$n\le 5$),
+% [CONSTANT UNVERIFIED vs primary source -- our own enumeration count; the task brief's figure of 29,743 differs slightly and should be reconciled]
 the following hold exactly (up to floating-point noise $\le 4.4\times 10^{-16}$):
 \begin{enumerate}[label=\textup{(\arabic*)},leftmargin=2.2em]
 \item \textbf{The Gilmer inequality holds on every family:}
@@ -972,7 +996,8 @@ abundance is $\approx 0.58$, far above $\psis$.
 \item \textbf{The intersection budget fails:} $\HH(A\cap B)\le\HH(A)$ is violated
 by $22{,}361$ of the $29{,}738$ families (ratio up to $1.53$); the joint
 $\HH(A\cup B,A\cap B)\le\HH(A)$ is violated by $402/412$ at $n\le 4$ (excess up to
-$2.13$).% [CONSTANT UNVERIFIED vs primary source -- our own enumeration]
+$2.13$).
+% [CONSTANT UNVERIFIED vs primary source -- our own enumeration]
 \end{enumerate}
 \end{proposition}
 
@@ -1011,7 +1036,8 @@ coupling moves the extremizer \emph{off} the product point, where our numerics
 show $\Dtwo>0$. Does the recaptured $\Dtwo$ at Liu's shifted extremizer add to
 Liu's $0.38271$? Both ingredients are individually available; their combination is
 untested and is, in our reading, the cleanest single open lever
-(Remark~\ref{rmk:v1-live}).% [PRIOR-ART CHECK PENDING -- see RED_TEAM_REPORT.md]
+(Remark~\ref{rmk:v1-live}).
+% [PRIOR-ART CHECK PENDING -- see RED_TEAM_REPORT.md]
 \item \textbf{An information inequality characterizing union-closure.} Is there an
 entropy inequality that holds \emph{iff} $\UC$ is union-closed, in the spirit of
 Shearer for graphs? Our analysis shows the obstruction precisely: the only

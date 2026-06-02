@@ -138,6 +138,9 @@ User chose to **widen network policy**, but arXiv still returns 403 this session
 - Authorship: paper author = **Alex Ye**; Claude credited in AI-disclosure statement (no venue permits AI co-authorship).
 - arXiv endorsement needed before first upload (math.CO / math.NT).
 
+## CI reminder
+- LaTeX paper-build job is **temporarily non-blocking** (`continue-on-error`) because WIP draft commits don't compile and CI runs on every push. **FLIP BACK to blocking** (remove that line in `.github/workflows/math-build.yml`) once both drafts are finalized and verified to build.
+
 ## Phase 3 Task Queue (after remaining Phase 2 agents finish)
 1. **Decisive Collatz FFT experiment**: push collision diagnostic E_n^(s*) to n≈10–14, test ξ-dependent tilts → resolve whether the "β=1 insufficient" negative finding is real or a small-n artifact. Write to collatz/experiments/syracuse_fft/ (isolated dir, no collision).
 2. **Fix survey.md errors** the cycle-exclusion agent caught: μ(log₂3) → two-log linear form (LMN); m-convention (circuits vs local minima). Propagate to open_problems.md.

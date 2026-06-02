@@ -89,16 +89,28 @@ def augmented_constant_iid_family(F, n: int | None = None) -> dict:
     The most-optimistic Δ₂-recapture certified constant for A,B i.i.d. uniform
     on the finite family F.
 
-    The honest augmented chain (theory/vector3_delta2_nonproduct.md §1):
-        H(C) = chain-LB + Δ₂,                       (exact identity)
-        chain-LB ≥ (1/(1−c)) · S,                   (Sawin per-coord, S = AHS numerator)
-        H(C) ≤ H(A) = log₂|F|.                      (union closure)
-      ⇒  (1/(1−c)) S + Δ₂ ≤ H(A).
-    The family "permits" (does not yet contradict) constant c as long as the
-    above is consistent with its own H(C); the per-family certified constant is
-        c_aug(F) = 1 − S / (H(C) − Δ₂) = 1 − S / chain-LB.
-    Recovering ALL of Δ₂ moves the comparison denominator from H(C) (the AHS
-    value, giving c_AHS) down to chain-LB (giving c_aug). Returns both, plus Δ₂.
+    The honest augmented chain (theory/vector3_delta2_nonproduct.md §1). Assume
+    for contradiction max_i p_i < c. Then the Sawin per-coordinate inequality
+    gives chain-LB ≥ (1/(1−c))·S with S = Σ_i (1−p_i) H(A_i|A_{<i}). Using the
+    EXACT identity H(C) = chain-LB + Δ₂ and the union-closure budget H(C) ≤ H(A):
+
+        (1/(1−c)) S + Δ₂  ≤  H(C)  ≤  H(A) = log₂|F|.                 (AUG)
+
+    A contradiction (⇒ max_i p_i ≥ c) is forced once the left side exceeds the
+    budget. The family therefore *permits* constant c (no contradiction yet) iff
+    (AUG) holds. The largest c it certifies solves (1/(1−c))S + Δ₂ = budget:
+
+        c_aug(F) = 1 − S / (budget − Δ₂).
+
+    Two honest budgets:
+      * budget = H(A)  (the real, provable union-closure budget)  → c_aug_HA.
+      * budget = H(C)  (the family's own union entropy; the value a *tight*
+        proof sees, since H(C)≤H(A))                              → c_aug_HC.
+    c_aug_HC ≤ c_aug_HA (H(C)≤H(A)), and c_AHS = 1 − S/H(C) is the Δ₂-DROPPED
+    baseline. KEY: subtracting Δ₂ from the denominator can only DECREASE the
+    denominator, hence DECREASE c_aug below the corresponding Δ₂-dropped value —
+    i.e. recapturing Δ₂ in this finite-family ledger pushes the certified
+    constant the WRONG way unless Δ₂=0. Returns all three + Δ₂.
     """
     Fl = list(F)
     if n is None:
@@ -107,6 +119,7 @@ def augmented_constant_iid_family(F, n: int | None = None) -> dict:
             u |= a
         n = u.bit_length()
     Hu = V.exact_entropy_union(Fl)
+    HA = V.exact_H_A(Fl)
     clb = V.chain_rule_lower_bound(Fl, n)
     d2 = Hu - clb
     m = len(Fl)
@@ -116,9 +129,15 @@ def augmented_constant_iid_family(F, n: int | None = None) -> dict:
         p_i = sum(1 for a in Fl if a & bit) / m
         S += (1.0 - p_i) * V.H_Ai_given_prefix(Fl, i)
     c_ahs = 1.0 - S / Hu if Hu > 1e-12 else 1.0
-    c_aug = 1.0 - S / clb if clb > 1e-12 else 1.0
-    return {"c_ahs": c_ahs, "c_aug": c_aug, "delta2": d2,
-            "H_union": Hu, "chain_lb": clb, "S": S, "abundance": V.abundance(Fl)}
+    den_HA = HA - d2
+    den_HC = Hu - d2  # == chain-LB
+    c_aug_HA = 1.0 - S / den_HA if den_HA > 1e-12 else 1.0
+    c_aug_HC = 1.0 - S / den_HC if den_HC > 1e-12 else 1.0
+    from uc_family import abundance as _abund
+    return {"c_ahs": c_ahs, "c_aug_HA": c_aug_HA, "c_aug_HC": c_aug_HC,
+            "c_aug": c_aug_HC, "delta2": d2,
+            "H_union": Hu, "H_A": HA, "chain_lb": clb, "S": S,
+            "abundance": _abund(Fl)}
 
 
 # ===========================================================================
@@ -246,13 +265,15 @@ def shared_u_augmented_constant(coupling: SharedUCoupling, n: int) -> dict:
     By exchangeability every coordinate has the same marginal p̄ = E[P] and the
     same conditional entropy profile, so we compute S_n exactly from the law.
 
-      c_AHS(block) = 1 − S_n / H(C),                 (drop Δ₂)
-      c_aug(block) = 1 − S_n / (H(C) − Δ₂)           (recapture ALL Δ₂)
-                   = 1 − S_n / chain-LB.
+      c_AHS(block) = 1 − S_n / H(C),                 (drop Δ₂, budget H(C))
+      c_aug(block) = 1 − S_n / (H(C) − Δ₂)           (recapture ALL Δ₂, budget H(C))
+                   = 1 − S_n / chain-LB,
+      c_aug_HA     = 1 − S_n / (H(A) − Δ₂)           (recapture ALL Δ₂, honest budget H(A)).
 
-    Returns both and Δ₂. (As n→∞ both → ψ; see `delta2_vs_budget_table`.)
+    Returns all three and Δ₂. (As n→∞ all → ψ; see `delta2_vs_budget_table`.)
     """
     HC = coupling.H_union(n)
+    HA = coupling.H_A(n)
     clb = coupling.chain_lb(n)
     d2 = HC - clb
     # S_n = Σ_i (1−p_i) H(A_i|A_{<i}). Compute exactly from the exchangeable law.
@@ -276,8 +297,11 @@ def shared_u_augmented_constant(coupling: SharedUCoupling, n: int) -> dict:
         S_n += (1.0 - p_i) * Hcond
     c_ahs = 1.0 - S_n / HC if HC > 1e-12 else 1.0
     c_aug = 1.0 - S_n / clb if clb > 1e-12 else 1.0
-    return {"n": n, "c_ahs": c_ahs, "c_aug": c_aug, "delta2": d2,
-            "H_union": HC, "chain_lb": clb, "S_n": S_n, "E_P": float(wk @ pk)}
+    den_HA = HA - d2
+    c_aug_HA = 1.0 - S_n / den_HA if den_HA > 1e-12 else 1.0
+    return {"n": n, "c_ahs": c_ahs, "c_aug": c_aug, "c_aug_HA": c_aug_HA,
+            "delta2": d2, "H_union": HC, "H_A": HA, "chain_lb": clb,
+            "S_n": S_n, "E_P": float(wk @ pk)}
 
 
 # ---------------------------------------------------------------------------
@@ -301,6 +325,7 @@ def delta2_vs_budget_table(coupling: SharedUCoupling, ns=(1, 2, 4, 8, 16, 32, 64
             "I_C_U": rep["I_C_U"],
             "c_ahs": aug["c_ahs"],
             "c_aug": aug["c_aug"],
+            "c_aug_HA": aug["c_aug_HA"],
         })
     return rows
 
@@ -435,13 +460,14 @@ def main(do_sweep: bool = True, sweep_nmax: int = 5):
     for label, cpl in couplings.items():
         print(f"\n  coupling [{label}]   (E[P]={cpl.E_P():.4f}, H(U)={cpl.H_U():.4f})")
         print(f"    {'n':>3} {'H(A)':>9} {'Δ₂':>8} {'Δ₂/H(A)':>9} {'Δ₂/n':>8} "
-              f"{'I(C;U)':>8} {'c_AHS':>9} {'c_aug':>9}")
+              f"{'I(C;U)':>8} {'c_AHS':>9} {'c_augHA':>9}")
         for row in delta2_vs_budget_table(cpl):
             print(f"    {row['n']:>3} {_fmt(row['H_A'])} {_fmt(row['delta2'],8,4)} "
                   f"{_fmt(row['delta2_over_HA'],9,5)} {_fmt(row['delta2_per_coord'],8,4)} "
-                  f"{_fmt(row['I_C_U'],8,4)} {_fmt(row['c_ahs'])} {_fmt(row['c_aug'])}")
-            if row["c_aug"] > best_caug:
-                best_caug = row["c_aug"]
+                  f"{_fmt(row['I_C_U'],8,4)} {_fmt(row['c_ahs'])} {_fmt(row['c_aug_HA'])}")
+            # The honest beat-ψ candidate is c_aug_HA (recapture Δ₂, real budget H(A)).
+            if row["c_aug_HA"] > best_caug:
+                best_caug = row["c_aug_HA"]
                 best_label = f"{label} n={row['n']}"
     print(f"\n  >>> best c_aug over ALL shared-U couplings & n tested: {best_caug:.6f}"
           f"  ({best_label})")
