@@ -1,6 +1,15 @@
 # Tao's Syracuse Framework, Made Explicit: Where Logarithmic Density Is Forced, and a Conditional Upgrade to Natural Density
 
-**Status:** `[unverified]` — theory draft, Step-1 (definitional) sanity check passed (see `experiments/verify_syracuse_rv.py`); Steps 2–4 of the verification protocol NOT yet performed.
+> ## ⚠️ ERRATUM (Phase 3 red-team, blocks-publication) — READ FIRST
+> The red-team audit (`/home/user/wikiclaws/math/RED_TEAM_REPORT.md`) found **Lemmas 6.1/6.2 are FALSE as written**, which **invalidates the conditional theorem (§5.2) in its stated form**:
+> - The Plancherel passage silently discards Fourier mass at frequencies with $3\mid\xi$. But the Syracuse law's projection mod 3 is permanently $(0,\tfrac13,\tfrac23)$ — **never uniform** (the tilt makes it worse, $\approx(0.27,0.73)$).
+> - Hence a non-vanishing share of the $\ell^2$ discrepancy sits at $3\mid\xi$; the displayed inequality fails numerically at $n=2,3$; and **$\mathrm{MIX}(\theta)$ — which controls only $3\nmid\xi$ — does NOT imply $\mathrm{TV}\to 0$.** In fact $\mathrm{TV}(\nu,U)\ge \tfrac16$ for all $n$, so $\nu$ can never converge to uniform in TV via this route.
+> - The $3^{n/2}$ Plancherel **exponent is correct**; the error is *which frequencies* $\mathrm{MIX}$ governs.
+> - Minor blemishes also noted: a "TV$\to\infty$" overstatement (TV $\le 1$), an $n=1$ Ramanujan-sum slip, a Lemma-2 typo.
+>
+> **What survives:** the honest negative bottom line (this route does not close the gap) and the localization of *where* log-density is forced (§4). The reframing — the mod-3 projection is a genuine *obstruction* to natural-density-via-TV — is arguably a cleaner negative result and will be rewritten in Phase 3 consolidation. Do not cite §5–6 as a positive conditional theorem.
+
+**Status:** `[unverified / lemmas 6.1–6.2 REFUTED]` — theory draft, Step-1 (definitional) sanity check passed; red-team (Step-2) REFUTED the §6 Plancherel lemmas; see erratum above.
 
 **Author:** Alex Ye (AI assistance disclosed separately).
 

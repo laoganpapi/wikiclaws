@@ -64,7 +64,7 @@ Living status of the Collatz & Frankl multi-agent research effort. Updated as ph
 | Agent | Status | Target |
 |-------|--------|--------|
 | Collatz FFT experiment | ⏳ running | Resolve β=1-insufficient: push E_n diagnostic to n≈12 via FFT (isolated dir) |
-| Internal-logic red-team | ⏳ running | Adversarially re-derive all Phase 2 claims; flag novelty questions for primary-source pass |
+| Internal-logic red-team | ✅ done | 5/6 docs sound; 1 blocks-publication error found (Tao §6); novelty = biggest risk. See RED_TEAM_REPORT.md |
 | Author-line fix | ✅ done | Removed Claude as co-author from both papers; AI disclosed via \thanks only |
 
 ## Phase 2 Findings (ALL [UNVERIFIED] until red-team + human review)
@@ -99,6 +99,23 @@ Recurring across ALL research agents: arXiv + every journal/PDF host return **HT
 - **Certified ψ=(3−√5)/2≈0.3819660** two independent ways: closed-form (hand-verifiable) + interval arithmetic (mpmath.iv). Reproduced as sanity floor.
 - **Did NOT reproduce Liu 0.38271** (Liu's paper inaccessible; two from-scratch reconstructions of the conditional-U bookkeeping failed — one gains nothing, one degenerates to 0). No constant claimed from reconstruction.
 - **Plateaus exactly at ψ.** Key certified sub-result: enlarging the coupling class moves the threshold the WRONG way (down to ≈0.359) — a larger class weakens the feasibility necessary-condition. ⇒ the lever to beat ψ is NOT a richer coupling/measure (literal open-problem B.7) but a tighter H(A∪B) lower bound capturing union-closure (the Δ₂ chain-rule slack). **Independently corroborates the Vector-1 agent.**
+
+## Red-Team Results (Phase 3) — see RED_TEAM_REPORT.md
+**5 of 6 documents internally sound** (re-derived by hand + independent code):
+- ✅ AHS (3−√5)/2 reconstruction — λ=φ/2 provably sharp; 0 violations on 4389 families.
+- ✅ Frankl Vector 1 (Δ₂≡0 at product extremizer) — confirmed independently.
+- ✅ Frankl Vector 2 + the 0.4295/0.5 artifacts — artifacts are genuine errors that do NOT leak into live claims.
+- ✅ ψ interval-arithmetic certificate — genuinely rigorous (certifies at true λ, FAILS when λ bumped 0.1%; not a rubber stamp).
+- ✅ Cycle-exclusion reconstruction — de Weger threshold verified exactly (largest soln K=29, none K≥32, checked to K=4999).
+
+**1 publication-blocking error** (now flagged with erratum in the doc):
+- ❌ Collatz Tao §6 Lemmas 6.1/6.2 are FALSE. They drop Fourier mass at 3|ξ, but the Syracuse law mod 3 is permanently (0,⅓,⅔). ⇒ TV(ν,U) ≥ 1/6 always; MIX(θ) (only 3∤ξ) does NOT give natural density. The **conditional theorem §5.2 is invalid as stated.** The 3^{n/2} exponent is fine; the error is *which* frequencies are controlled. **Reframe as a clean negative result** (mod-3 projection obstructs natural-density-via-TV) in Phase 3 consolidation.
+- Minor: TV→∞ overstatement, n=1 Ramanujan slip, Lemma-2 typo (all hedged in-doc).
+
+**Biggest risk = NOVELTY, not correctness.** The sound results are reconstructions or negatives. The "entropy caps at ψ" observation is very likely already in Sawin / Cambie. Prior-art check is the #1 blocker to any "new observation" framing — REQUIRES primary sources (blocked this session).
+
+## Network status
+User chose to **widen network policy**, but arXiv still returns 403 this session (policy is set at env creation; takes effect on a NEW session). ⇒ Primary-source verification + prior-art pass deferred to next session with open network. All constants/citations remain snippet-sourced this session.
 
 ## Honesty Ledger
 - **Phase 2 produced NO proof and NO improved constant.** This is the expected outcome and is being reported as-is. Frankl best = ψ ≈ 0.382 (below Liu 0.38271). Collatz: no new cycle bound, one conditional theorem.
