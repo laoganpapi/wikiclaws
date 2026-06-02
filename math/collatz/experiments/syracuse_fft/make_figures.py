@@ -58,7 +58,7 @@ def main():
     plt.xlabel("n")
     plt.ylabel(r"$E_n = \varphi(3^n)\,\mathrm{CP}_n - 1$   (log scale)")
     plt.title("Syracuse collision diagnostic $E_n$ vs $n$ (FFT, exact)\n"
-              r"$E_n\to 0$ is the natural-density requirement; $TV\le\frac12\sqrt{E_n}$")
+              r"$E_n\to 0$ is the natural-density requirement; $TV\leq\frac{1}{2}\sqrt{E_n}$")
     plt.grid(True, which="both", alpha=0.3)
     plt.legend(fontsize=8, loc="best")
     plt.tight_layout()

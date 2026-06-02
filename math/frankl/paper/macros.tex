@@ -28,12 +28,26 @@
 \newcommand{\gilmer}{c_{\text{Gilmer}}}             % Gilmer's constant ~0.01
 \newcommand{\golden}{\tfrac{3-\sqrt{5}}{2}}         % ~0.38
 \newcommand{\target}{\tfrac{1}{2}}                  % the conjectured 1/2
+\newcommand{\psis}{\psi}                            % psi = (3-sqrt5)/2
+\newcommand{\sigm}{\sigma}                          % sigma = 1-psi = 1/phi
+\newcommand{\lam}{\lambda}                          % lambda = 1/(2(1-psi)) = phi/2
+\newcommand{\phigr}{\varphi}                        % golden ratio
+\newcommand{\cAHS}{c_{\mathrm{AHS}}}                % the AHS constant
+\newcommand{\Dtwo}{\Delta_2}                        % chain-rule slack
+\newcommand{\Cup}{C}                                % C = A cup B
+\newcommand{\Hpair}{H_{\mathrm{pair}}}             % entropy of the (union,intersection) pair
 
 %--- Theorem-like environments are declared in main.tex via amsthm ---
 
 %--- Workflow markers ---
 \newcommand{\TODO}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
 \newcommand{\NOTE}[1]{\textcolor{blue}{\textbf{[NOTE: #1]}}}
+% Verification markers. These render as small bracketed flags in the PDF so a
+% reader/referee sees exactly which items still need primary-source checking,
+% and also appear as LaTeX comments (%) at each use site in the source.
+\newcommand{\priorart}{\textsuperscript{\textcolor{orange}{\,[prior-art check pending]}}}
+\newcommand{\constun}{\textsuperscript{\textcolor{orange}{\,[constant unverified]}}}
+\newcommand{\citeneeded}{\textcolor{red}{\textbf{[CITATION NEEDED]}}}
 
 %--- Misc shorthands ---
 \newcommand{\eps}{\varepsilon}
