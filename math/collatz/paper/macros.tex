@@ -1,0 +1,49 @@
+% macros.tex --- Notation and shortcuts for the Collatz paper
+% Authors: Alex Ye with Claude (Anthropic)
+
+%--- Lagarias-convention operators ---
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\val}{v}             % 2-adic valuation
+\DeclareMathOperator{\sgn}{sgn}
+
+%--- The Collatz map and iterates ---
+\newcommand{\T}{T}                          % Collatz / Syracuse map
+\newcommand{\Tit}[1]{T^{#1}}                % T^k
+\newcommand{\Cmap}{C}                       % accelerated Syracuse: C(n) = (3n+1)/2^{v_2(3n+1)}
+
+%--- Stopping times ---
+\newcommand{\stop}{\sigma}                  % stopping time (first n -> below n)
+\newcommand{\totstop}{\sigma_\infty}        % total stopping time (first reach 1)
+\newcommand{\stoptime}[1]{\stop(#1)}
+\newcommand{\totstoptime}[1]{\totstop(#1)}
+
+%--- Parity vector / Q-functions ---
+\newcommand{\pv}{Q}                         % parity vector / Q-function
+\newcommand{\pvk}[2]{Q_{#1}(#2)}            % first k entries of parity vector for n
+\newcommand{\trajectory}[1]{\mathcal{O}(#1)}% forward orbit
+
+%--- Density / measure ---
+\newcommand{\logdens}{\overline{d_{\log}}}  % logarithmic density (upper)
+\newcommand{\logdenslow}{\underline{d_{\log}}}
+\newcommand{\nat}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Zp}{\mathbb{Z}_p}              % p-adic integers
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+
+%--- Tao framework ---
+\newcommand{\TaoConst}{c}                   % the implicit constant in Tao 2019
+\newcommand{\logbound}{f(N)}                % function s.t. orbits go below f(N)
+
+%--- Workflow markers ---
+\newcommand{\TODO}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
+\newcommand{\NOTE}[1]{\textcolor{blue}{\textbf{[NOTE: #1]}}}
+
+%--- Misc shorthands ---
+\newcommand{\eps}{\varepsilon}
+\newcommand{\half}{\tfrac{1}{2}}
+\newcommand{\bigO}{O}
+\newcommand{\given}{\,|\,}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Pr}{\mathbb{P}}

@@ -1,0 +1,195 @@
+% main.tex --- Frankl Union-Closed Sets Conjecture: survey and new observations
+% Authors: Alex Ye with Claude (Anthropic)
+% Branch: claude/epic-dirac-p1oQo
+
+\documentclass[11pt]{amsart}
+
+%--- Encoding & fonts ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+%--- Math packages ---
+\usepackage{amsmath, amssymb, amsthm, mathtools}
+\usepackage{bm}
+
+%--- Layout & utilities ---
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{microtype}
+\usepackage{enumitem}
+
+%--- Bibliography: bibtex (amsart's natbib-style is most portable) ---
+\usepackage[numbers,sort&compress]{natbib}
+
+%--- Local macros ---
+\input{macros.tex}
+
+%--- Theorem environments ---
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+%--- Title ---
+\title[Union-Closed Sets Conjecture]{On the Union-Closed Sets Conjecture: A Survey and New Observations}
+
+\author[A. Ye]{Alex Ye\thanks{This work was carried out in collaboration with Claude, an AI assistant developed by Anthropic. AI involvement is disclosed per emerging norms (cf.\ AlphaProof, FunSearch). All theorems are human-verified.}}
+\address{Independent researcher}
+\email{laoganpapi@gmail.com}
+
+\author[Claude]{Claude (Anthropic)}
+\address{Anthropic, San Francisco, CA}
+
+\date{\today}
+
+\begin{document}
+
+\begin{abstract}
+\TODO{Write abstract once main contribution stabilizes.} We survey the recent
+entropy-method line of attack on Frankl's union-closed sets conjecture,
+beginning with Gilmer's 2022 breakthrough and tracing improvements by Sawin,
+Chase--Lovett, Alweiss--Huang--Sellke, and Cambie. We give a unified exposition
+of these techniques, identify the structural bottleneck preventing the
+current constant $\golden$ from reaching the conjectured $\target$, and
+present \TODO{our contribution placeholder}.
+\end{abstract}
+
+\maketitle
+
+%======================================================================
+\section{Introduction}
+\label{sec:intro}
+
+\TODO{Open with the statement of Frankl's conjecture and a one-paragraph
+narrative of the 2022--2025 entropy-method revival.}
+
+Frankl's union-closed sets conjecture, posed in 1979, asks whether every
+finite \UCfam\ $\UC$ other than $\{\emptyset\}$ contains an element of the
+ground set appearing in at least half of its members. Gilmer's 2022 work
+\cite{gilmer2022} broke a long impasse by introducing an entropy-based
+argument that achieved a positive density constant $\gilmer \approx 0.01$.
+A flurry of refinements~\cite{sawin2022, chaselovett2022, ahs2023,
+cambie2022} pushed the constant to $\golden \approx 0.38$.
+
+\TODO{State our main contribution one paragraph here once known.}
+
+\paragraph{Organization.} Section~\ref{sec:notation} fixes notation.
+Section~\ref{sec:history} reviews pre-Gilmer history. Section~\ref{sec:entropy}
+gives the Gilmer-style proof in detail. Section~\ref{sec:improvements} traces
+post-Gilmer refinements. Section~\ref{sec:contribution} contains our
+contribution. Section~\ref{sec:computational} reports computational
+experiments. Section~\ref{sec:open} lists open questions.
+
+%======================================================================
+\section{Notation and Preliminaries}
+\label{sec:notation}
+
+\TODO{Lock down notation. Cross-reference with \texttt{shared/notation.md}.}
+
+\begin{definition}[Union-closed family]
+A family $\UC \subseteq \powerset{\ground}$ is \emph{union-closed} if
+$A, B \in \UC$ implies $A \cup B \in \UC$.
+\end{definition}
+
+\begin{definition}[Abundance]
+For $i \in \ground$, the \emph{abundance} of $i$ in $\UC$ is
+\[
+   \abun_\UC(i) \;\coloneqq\; \frac{|\{A \in \UC : i \in A\}|}{|\UC|}.
+\]
+\end{definition}
+
+\begin{conjecture}[Frankl, 1979]\label{conj:frankl}
+For every finite union-closed family $\UC \neq \{\emptyset\}$, there exists
+$i \in \ground$ with $\abun_\UC(i) \geq \target$.
+\end{conjecture}
+
+\TODO{Recall Shannon entropy, conditional entropy, mutual information,
+KL divergence; fix conventions (nats vs.\ bits).}
+
+%======================================================================
+\section{History of the Conjecture}
+\label{sec:history}
+
+\TODO{Sketch the timeline: Frankl 1979 $\to$ Knill's bound $\to$ Reimer's
+average-size bound $\to$ pre-entropy partial results. See
+\texttt{frankl/literature/survey.md}.}
+
+%======================================================================
+\section{The Entropy Method (Gilmer-style)}
+\label{sec:entropy}
+
+\TODO{Reproduce Gilmer's argument in full. Key ideas:
+(1) sample two sets $A, B$ uniformly from $\UC$;
+(2) compare $\HH(A \cup B)$ to $\HH(A) + \HH(B)$;
+(3) use union-closure $A \cup B \in \UC$ to bound $\HH(A \cup B) \leq \log |\UC|$;
+(4) extract an element with high marginal abundance.}
+
+\begin{theorem}[Gilmer 2022, informal]
+There exists $\gilmer > 0$ such that every nontrivial union-closed family
+contains an element of abundance at least $\gilmer$.
+\end{theorem}
+
+\TODO{State and prove a clean version. Include the slack inequality.}
+
+%======================================================================
+\section{Improvements (Sawin / AHS / Cambie)}
+\label{sec:improvements}
+
+\TODO{Summarize each refinement; show how the constant climbed to
+$\golden$. Identify which step in each proof has slack.}
+
+\subsection{Sawin's refinement}
+\TODO{Sawin's blog post / paper; convexity tightening.}
+
+\subsection{Alweiss--Huang--Sellke}
+\TODO{Random restriction approach.}
+
+\subsection{Cambie's bound}
+\TODO{Optimization-based push to $\golden$.}
+
+%======================================================================
+\section{Our Contribution}
+\label{sec:contribution}
+
+\TODO{The original observation/result of this paper goes here. If it is
+``only'' a survey synthesis or computational study, state that honestly.}
+
+%======================================================================
+\section{Computational Experiments}
+\label{sec:computational}
+
+\TODO{Describe the verifier built in \texttt{frankl/experiments/}.
+Report data on small union-closed families, conjectured strengthenings
+tested, and extremal examples found.}
+
+%======================================================================
+\section{Open Questions}
+\label{sec:open}
+
+\TODO{Curated list. Suggested seeds:
+\begin{enumerate}[label=(Q\arabic*)]
+  \item Can the entropy method, alone, reach $\target$?
+  \item Is there a Renyi-entropy variant that breaks the convexity bottleneck?
+  \item Are there structural restrictions (e.g., separating families) where
+    a stronger bound is provable?
+\end{enumerate}}
+
+%======================================================================
+\section*{Acknowledgments}
+
+\TODO{Thank reviewers; reiterate AI collaboration disclosure;
+mention any compute/funding sources.}
+
+%======================================================================
+\bibliographystyle{plainnat}
+\bibliography{bibliography}
+
+\end{document}
