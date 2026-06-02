@@ -49,3 +49,92 @@ FFT W-recursion, n=2..14, descent-balance tilt s* = 0.438033
   11     1.240483e-05       0.464985     0.00407
   12     4.143097e-06       0.467874     0.00289
   13     1.382963e-06       0.469926     0.00205
+  14     4.614453e-07       0.471386     0.00146
+
+[scalar plateau]  s = -0.500  (E[a]=3.414)
+   n             CP_n            E_n          dE
+   2     1.849104e-01       0.109462         nan
+   3     6.295244e-02       0.133144     0.02368
+   4     2.115295e-02       0.142259     0.00912
+   5     7.073825e-03       0.145960     0.00370
+   6     2.361513e-03       0.147695     0.00174
+   7     7.877158e-04       0.148490     0.00079
+   8     2.626601e-04       0.148875     0.00039
+   9     8.756783e-05       0.149065     0.00019
+  10     2.919168e-05       0.149160     0.00009
+  11     9.730964e-06       0.149207     0.00005
+  12     3.243723e-06       0.149231     0.00002
+  13     1.081252e-06       0.149244     0.00001
+  14     3.604194e-07       0.149250     0.00001
+
+[scalar plateau]  s = -0.900  (E[a]=14.933)
+   n             CP_n            E_n          dE
+   2     1.674005e-01       0.004403         nan
+   3     5.580248e-02       0.004445     0.00004
+   4     1.860084e-02       0.004445     0.00000
+   5     6.200279e-03       0.004445     0.00000
+   6     2.066760e-03       0.004445     0.00000
+   7     6.889199e-04       0.004445     0.00000
+   8     2.296400e-04       0.004445     0.00000
+   9     7.654666e-05       0.004445     0.00000
+  10     2.551555e-05       0.004445     0.00000
+  11     8.505185e-06       0.004445     0.00000
+  12     2.835062e-06       0.004445     0.00000
+  13     9.450205e-07       0.004445    -0.00000
+  14     3.150068e-07       0.004445     0.00000
+
+[ndep_partial_esscher]  s_n = s* * (1 - 1/sqrt(n))  (-> s* slowly; exploratory)
+   n       s_n             CP_n            E_n          dE
+   2    0.1283     2.567889e-01       0.540734         nan
+   3    0.1851     1.177188e-01       1.118938     0.57820
+   4    0.2190     5.379075e-02       1.904700     0.78576
+   5    0.2421     2.448131e-02       2.965972     1.06127
+   6    0.2592     1.109940e-02       4.394307     1.42834
+   7    0.2725     5.016041e-03       6.313387     1.91908
+   8    0.2832     2.261299e-03       8.890924     2.57754
+   9    0.2920     1.017491e-03      12.351515     3.46059
+  10    0.2995     4.571533e-04      16.996295     4.64478
+  11    0.3060     2.051687e-04      23.230011     6.23372
+  12    0.3116     9.200396e-05      31.596450     8.36644
+  13    0.3165     4.123358e-05      42.826430    11.22998
+  14    0.3210     1.847271e-05      57.902947    15.07652
+
+[xi_best_envelope]  XI-A per-xi min over s in [-0.95,1.20] (22 pts), n=2..12  (NOTE: degenerate, see header)
+   n             CP_n            E_n          dE
+   2     1.668502e-01       0.001101         nan
+   3     5.561687e-02       0.001104     0.00000
+   4     1.853896e-02       0.001104     0.00000
+   5     6.179653e-03       0.001104     0.00000
+   6     2.059884e-03       0.001104     0.00000
+   7     6.866281e-04       0.001104     0.00000
+   8     2.288760e-04       0.001104     0.00000
+   9     7.629201e-05       0.001104     0.00000
+  10     2.543067e-05       0.001104     0.00000
+  11     8.476890e-06       0.001104    -0.00000
+  12     2.825630e-06       0.001104     0.00000
+
+[xi_v3_stratified]  XI-B s_L = s* for v_3(xi)<=n/2 else -0.5,  n=2..12
+   n             CP_n            E_n          dE
+   2     3.089343e-01       0.853606         nan
+   3     1.438288e-01       1.588918     0.73531
+   4     7.235828e-02       2.907347     1.31843
+   5     3.227076e-02       4.227864     1.32052
+   6     1.625271e-02       6.898819     2.67096
+   7     7.393623e-03       9.779902     2.88108
+   8     3.680910e-03      15.100301     5.32040
+   9     1.696963e-03      21.267550     6.16725
+  10     8.319176e-04      31.749269    10.48172
+  11     3.855878e-04      44.537147    12.78788
+  12     1.863512e-04      65.023121    20.48597
+
+[tilt sweep]  E_n(s) for n in {4,8,12}, s in [-0.95,0.6]
+
+Saved raw results -> /home/user/wikiclaws/math/collatz/experiments/syracuse_fft/data/En_results.json
+  wrote /home/user/wikiclaws/math/collatz/experiments/syracuse_fft/data/En_untilted.csv
+  wrote /home/user/wikiclaws/math/collatz/experiments/syracuse_fft/data/En_esscher_sstar.csv
+  wrote /home/user/wikiclaws/math/collatz/experiments/syracuse_fft/data/En_scalar_neg_m030.csv
+  wrote /home/user/wikiclaws/math/collatz/experiments/syracuse_fft/data/En_scalar_neg_m050.csv
+  wrote /home/user/wikiclaws/math/collatz/experiments/syracuse_fft/data/En_scalar_neg_m090.csv
+  wrote /home/user/wikiclaws/math/collatz/experiments/syracuse_fft/data/En_ndep_partial_esscher.csv
+  wrote /home/user/wikiclaws/math/collatz/experiments/syracuse_fft/data/En_xi_best_envelope.csv
+  wrote /home/user/wikiclaws/math/collatz/experiments/syracuse_fft/data/En_xi_v3_stratified.csv
