@@ -39,6 +39,7 @@ jobs:
             texlive-bibtex-extra \
             texlive-fonts-recommended \
             texlive-science \
+            lmodern \
             latexmk
 
       - name: Build Frankl paper
