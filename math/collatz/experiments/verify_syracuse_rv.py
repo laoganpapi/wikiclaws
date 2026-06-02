@@ -134,6 +134,36 @@ def char_fn_sup(law: Dict[int, Fraction], n: int) -> Tuple[float, int]:
     return best, arg
 
 
+def tilt_check() -> bool:
+    """
+    Verify the descent-balance tilt s* used in tao_syracuse_explicit.md eq (5.2).
+    Tilted geometric P_s(a=k) propto 2^{-k(1+s)} on k>=1 has mean 1/(1-2^{-(1+s)}).
+    s* solves E_{s*}[a] = log_2 3.  Doc claims r*=2^{-(1+s*)}=0.36907, s*~0.438.
+    """
+    import math
+
+    def Es(s: float) -> float:
+        r = 2.0 ** (-(1.0 + s))
+        return 1.0 / (1.0 - r)
+
+    target = math.log(3, 2)
+    r_star = 1.0 - 1.0 / target
+    s_star = -math.log2(r_star) - 1.0
+    ok = (
+        abs(Es(0.0) - 2.0) < 1e-12
+        and abs(Es(s_star) - target) < 1e-9
+        and abs(r_star - 0.36907) < 1e-4
+        and abs(s_star - 0.438) < 1e-3
+    )
+    print("\n[tilt s* check]")
+    print("  E_0[a] = %.6f (expect 2.0); target log_2 3 = %.6f" % (Es(0.0), target))
+    print("  r* = 2^{-(1+s*)} = %.6f (doc: 0.36907)" % r_star)
+    print("  s* = %.6f (doc: ~0.438)" % s_star)
+    print("  E_{s*}[a] = %.9f (expect = log_2 3 = %.9f)" % (Es(s_star), target))
+    print("  tilt check match: %s" % ok)
+    return ok
+
+
 def main() -> None:
     print("=" * 72)
     print("Syracuse random variable Syrac(Z/3^n Z): structural verification")
@@ -191,6 +221,8 @@ def main() -> None:
     print("                    decay only becomes visible at larger n (not reachable by brute force).")
     print("  (These small-n values are a definitional sanity check, NOT a test of the")
     print("   asymptotic Fourier bound, which lives at n -> infinity.)")
+
+    tilt_check()
 
 
 if __name__ == "__main__":

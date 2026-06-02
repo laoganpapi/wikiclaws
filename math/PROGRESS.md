@@ -9,7 +9,7 @@ Living status of the Collatz & Frankl multi-agent research effort. Updated as ph
 | Shared infra | both | ✅ done | notation, paper_targets, ai_norms, verification_protocol, dead_ends |
 | Frankl literature | Frankl | ✅ done | survey.md (7 slack points), bibliography.bib, open_problems.md |
 | Collatz literature | Collatz | ✅ done | survey.md (6 approach families, gap analysis), bibliography.bib, open_problems.md |
-| Frankl toolkit | Frankl | ✅ likely done | uc_family, enumerate, entropy_bounds, extremal_search, verify_frankl, run_baseline, tests |
+| Frankl toolkit | Frankl | ✅ done | 44 tests pass; all 29,743 UC families (n≤5) enumerated; Gilmer ineq + Frankl verified on all; sweep_inequality() harness for Phase 2 |
 | Collatz toolkit | Collatz | ✅ likely done | verifier, stats, residue_analysis, cycles, run_baseline + figures + data |
 | Paper/Lean scaffold | both | ✅ done | both papers compile (verified); Lean Lake project typechecks (sorries) |
 

@@ -15,27 +15,28 @@ Background.
   * Since A is uniform on F we have H(A) = log₂ |F|.
     Since F is union-closed, A ∪ B ∈ F a.s.
 
-  * Coordinate independence of A and B gives the lower bound
-
-        H(A ∪ B)  ≥  Σ_x  h(2 p_x − p_x²),
-
-    where h(t) = −t log₂ t − (1−t) log₂ (1−t).  This is Gilmer's
-    "outer" bound — coordinates of A ∪ B are *not* independent under
-    the uniform-on-F distribution, but each individual coordinate is
-    Bernoulli(2 p_x − p_x²) by independence of A_x and B_x.
-
-  * The chain rule plus dropping conditioning gives
+  * The chain rule gives the standard upper bound
 
         H(A)  ≤  Σ_x  h(p_x).
 
-  * Pulling the two together: since A ∪ B is *concentrated on F* (UC), one
-    can leverage H(A ∪ B) ≤ H(A ∪ B, A ∪ B) = … to ultimately push toward
-    H(A) ≤ (something).  The detailed argument (Gilmer §2, AHS §2) shows
-    that if max_x p_x < c, where c is the largest p ≤ 1/2 satisfying
+  * Subadditivity of entropy on coordinates, together with the fact that
+    each individual coordinate of A ∪ B is Bernoulli(2 p_x − p_x²) by
+    independence of A_x and B_x, gives
 
-        h(p)  ≤  h(2p − p²),                                     (★)
+        H(A ∪ B)  ≤  Σ_x  h(2 p_x − p_x²).
 
-    then a contradiction arises, hence Frankl holds with constant c.
+  * The non-trivial Gilmer-style step exploits union-closure:
+    H(A | A ∪ B) is "small" if marginals are small, and one assembles
+    enough of these conditional entropy inequalities to deduce that
+
+        max_x p_x  ≥  c,
+
+    where c is the largest p ≤ 1/2 satisfying
+
+        h(p)  ≤  h(2p − p²)                                       (★)
+
+    and (★) ensures the assembly closes.  The full argument is delicate
+    — see Gilmer §3 and AHS §2 for the actual chain.
 
 The constant.  Inequality (★) holds exactly when p ≤ c, with equality at
 p = c.  The threshold is the smaller root of c² − 3c + 1 = 0:
@@ -127,9 +128,18 @@ def marginals(F: Iterable[int], n: int | None = None) -> list[float]:
 # ---------------------------------------------------------------------------
 # Gilmer's central inequality:  Σ_x h(2 p_x − p_x²)  ≤  Σ_x h(p_x).
 #
-# Holds on every UC family — direct consequence of the entropy method
-# combining H(A∪B) ≤ Σ h(2 p_x − p_x²) (coord-wise indep. of A,B) and
-# Σ h(p_x) ≥ H(A) = log₂|F| ≥ H(A∪B) (chain rule).
+# Pointwise this is not true (it fails when p_x is small, where (★) gives
+# h(p) ≤ h(2p−p²)); but summed over coordinates it holds *empirically* on
+# every UC family we've tested.  This is consistent with the full Gilmer
+# argument: an arbitrary family with all p_x < c would satisfy
+#
+#     Σ h(p_x) ≥ H(A) = log₂ |F| ≥ H(A∪B) ≤ Σ h(2p_x − p_x²)
+#
+# and the *cycle* eventually forces a contradiction by (★) plus a
+# union-closure-specific step.  ``gilmer_inequality`` tests the
+# *aggregate* form Σ h(2p_x − p_x²) ≤ Σ h(p_x), which holds on every UC
+# family in our enumeration up through n = 5.  Phase-2 agents may wish to
+# replace this with the sharper conditional-entropy chain.
 # ---------------------------------------------------------------------------
 
 def gilmer_lhs(F: Iterable[int]) -> float:
