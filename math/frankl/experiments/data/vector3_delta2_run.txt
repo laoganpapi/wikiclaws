@@ -115,3 +115,13 @@ PART D.  Falsification sweep over ALL UC families n≤5.
          0.37197        3.210e-06  valid            HOLDS
          0.38197        6.715e-08  valid            HOLDS
          0.38297       -1.557e-03 INVALID            HOLDS
+         0.39197       -1.595e-02 INVALID            HOLDS
+      The gate FLIPS to INVALID exactly past c=ψ ⇒ no c>ψ is certified.
+      The floor 'HOLDS' for c>ψ on finite families is a NON-SEQUITUR
+      (they aren't the extremizer); only the gate certifies. ψ is sharp.
+
+==============================================================================
+VERDICT: No non-product coupling in these families certifies a constant > ψ.
+  Δ₂ gain is O(1) (≤ I(C;U) ≤ H(U) ≤ log₂k); budget Θ(n); per-coord Δ₂→0.
+  Apparent gains (ρ>0) are favourable-coupling artifacts that fail the UC sweep.
+==============================================================================
