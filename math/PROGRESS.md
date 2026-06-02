@@ -9,9 +9,14 @@ Living status of the Collatz & Frankl multi-agent research effort. Updated as ph
 | Shared infra | both | ✅ done | notation, paper_targets, ai_norms, verification_protocol, dead_ends |
 | Frankl literature | Frankl | ✅ done | survey.md (7 slack points), bibliography.bib, open_problems.md |
 | Collatz literature | Collatz | ✅ done | survey.md (6 approach families, gap analysis), bibliography.bib, open_problems.md |
-| Frankl toolkit | Frankl | ⏳ running | uc_family, enumerate, entropy_bounds, extremal_search, verify_frankl |
-| Collatz toolkit | Collatz | ⏳ running | verifier, stats, residue_analysis, cycles + figures |
-| Paper/Lean scaffold | both | ⏳ running | frankl+collatz main.tex, lean Lake project |
+| Frankl toolkit | Frankl | ✅ likely done | uc_family, enumerate, entropy_bounds, extremal_search, verify_frankl, run_baseline, tests |
+| Collatz toolkit | Collatz | ✅ likely done | verifier, stats, residue_analysis, cycles, run_baseline + figures + data |
+| Paper/Lean scaffold | both | ✅ done | both papers compile (verified); Lean Lake project typechecks (sorries) |
+
+### Infrastructure constraints discovered
+- **Lean/Mathlib is firewalled in-sandbox**: release.lean-lang.org, reservoir.lean-lang.org, and the Mathlib Azure binary cache all return 403. From-source Mathlib build ≈ 1–2 h. Scaffold ships conjecture statements against Lean core/stdlib only (`sorry`). ⇒ **Phase 4 Lean verification limited to statement-level formalization** unless network policy widens. Heavy-lemma formalization deferred.
+- **arXiv WebFetch blocked (403)** during literature work; surveys verified via search snippets + secondary sources, flagged `[PARTIAL]`/`[UNVERIFIED]` where uncertain.
+- CI LaTeX build fixed (added `lmodern`); both PDFs verified to compile with resolved citations.
 
 ## Key Phase 1 Findings
 
@@ -24,6 +29,13 @@ Living status of the Collatz & Frankl multi-agent research effort. Updated as ph
   1. Shearer-style chain rule recapturing discarded conditional mutual information.
   2. Intersection term H(A∩B) (never used; Reimer's bound is intersection-side).
   3. Joint optimization over couplings (larger |U|) + reweighted measure (how records were set).
+
+### Collatz — computational baseline (toolkit, N=10^7)
+- 10^7/10^7 verified to reach 1. Throughput ~1.05M n/s single-core (beat target ~100×).
+- Longest σ∞ = 429 at n=8,400,511 (peak ≈ 7.97×10^10). Max τ = 246 at n=8,088,063 (note: σ∞-record ≠ τ-record).
+- σ∞ OLS slope 6.9325 vs heuristic 2/log(4/3)=6.9521 (within 0.3%) — matches Tao-style random model.
+- No non-trivial cycle up to parity-length m=22 and orbit-following n≤10^6.
+- **Observation to vet for novelty (likely NOT novel):** Syracuse offset b(r) in T^k(n)=3^{a(r)}q+b(r) has b(r) mod 3 distributed exactly (0,1,2) → frequencies (1, (2^k−1)/3, 2(2^k−1)/3) for all even k≤20 (a rigid 1:2 ratio). Almost certainly derivable from the 3^a multiplier structure; flagged for red-team to confirm it is known before any writeup.
 
 ### Collatz — verified state of the art
 - Tao 2022 (Forum of Math Pi, arXiv:1909.03562): almost all orbits (LOG density) attain almost bounded values, via Syracuse random variables on (ℤ/3ⁿℤ)ˣ.
