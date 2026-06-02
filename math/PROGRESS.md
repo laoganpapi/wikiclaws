@@ -63,9 +63,19 @@ Living status of the Collatz & Frankl multi-agent research effort. Updated as ph
 
 | Agent | Status | Target |
 |-------|--------|--------|
-| Collatz FFT experiment | ⏳ running | Resolve β=1-insufficient: push E_n diagnostic to n≈12 via FFT (isolated dir) |
+| Collatz FFT experiment | ✅ done | E_n DIVERGES to n=15 (no turnover); cross-check passed; scalar-Esscher route obstructed; phase transition at s_c≈−0.4 |
 | Internal-logic red-team | ✅ done | 5/6 docs sound; 1 blocks-publication error found (Tao §6); novelty = biggest risk. See RED_TEAM_REPORT.md |
 | Author-line fix | ✅ done | Removed Claude as co-author from both papers; AI disclosed via \thanks only |
+| Frankl paper draft | ⏳ running | Integrate red-team-verified Frankl results; honest survey+reconstruction+negatives |
+| Frankl Δ₂ attack | ⏳ running | The one live lever: recapture Δ₂ at a non-product extremizer (likely fails) |
+| Collatz consolidate+draft | ⏳ running | Harden FFT (push n); clean obstruction writeup; draft Collatz paper |
+
+### FFT verdict (Collatz Vector A) — corroborates red-team
+- n=2..6 cross-check PASS (matches independent DP to <1e-15). Reached n=15.
+- Untilted E_n ≈ 0.31n (linear divergence); tilted s* E_n ≈ 0.92·1.434^n (EXPONENTIAL divergence) — the required tilt makes equidistribution worse.
+- **Phase transition at s_c≈−0.4:** E_n bounded only for s≲−0.45 (tail-fattening negative tilts), divergent for s≳−0.4. Drift-neutrality (E[a]=log₂3) and residue-spreading (E[a]≳3) incompatible under any scalar tilt.
+- Honest scope: does NOT touch β=1 (all E_n are 3^{o(n)}); shows β=1 insufficient *for the scalar-Esscher MIX route*; does NOT prove Collatz natural density fails. Numerics, not proof (n≈18–20 would harden).
+- ⇒ **Collatz contribution = doubly-supported NEGATIVE result** (analytic TV≥1/6 + numerical E_n divergence), replacing the refuted conditional theorem.
 
 ## Phase 2 Findings (ALL [UNVERIFIED] until red-team + human review)
 
