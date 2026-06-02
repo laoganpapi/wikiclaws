@@ -133,6 +133,18 @@ Recurring across ALL research agents: arXiv + every journal/PDF host return **HT
 ## Network status
 User chose to **widen network policy**, but arXiv still returns 403 this session (policy is set at env creation; takes effect on a NEW session). ⇒ Primary-source verification + prior-art pass deferred to next session with open network. All constants/citations remain snippet-sourced this session.
 
+## Phase 4 — Extended attacks (per "keep attacking")
+| Agent | Status | Verdict |
+|-------|--------|---------|
+| Collatz cycle from scratch | ✅ done | PROVISIONALLY no robust gain past m=91; new self-contained identity Λ=Σεⱼ + bound 0<Λ<m/B (verified). Corrected our "+1–3" prior to "+0.3, best case +1". |
+| Frankl lattice attack | ⏳ finishing | (deliverable lattice_attack.md committed; awaiting report) |
+
+### Collatz cycle bound (cycle_bound_attempt.md) — honest negative + a clean byproduct
+- Re-derived from scratch (no Hercher PDF): per-circuit identity, cycle equation, NEW telescoping identity Λ=N log2−K log3=Σⱼ log(1+(1−(2/3)^{aⱼ})/xⱼ) (verified to 1e−120), NEW citation-free bound 0<Λ<m/B (verified on 17,762 fixed points).
+- Reconstructs the lower-bound (Crandall) side; does NOT reproduce Hercher's upper bound F(m) — that single step needs his 403-blocked PDF. [PARTIAL-DERIV] now sharply localized.
+- **Corrected this project's own prior:** B=2^71 gives only ~+0.3 (m*∈{91,92}, best case +1), NOT the "+1 to +3" my brief assumed. Next convergent plateau needs B≥2^75.7. All [PROVISIONAL/UNVERIFIED vs Hercher 2023].
+- The telescoping identity + m/B bound are clean, self-contained additions to the Collatz paper's cycle section (pending verification pass).
+
 ## Honesty Ledger
 - **Phase 2 produced NO proof and NO improved constant.** This is the expected outcome and is being reported as-is. Frankl best = ψ ≈ 0.382 (below Liu 0.38271). Collatz: no new cycle bound, one conditional theorem.
 - The strongest internal result — "entropy method caps at ψ, escape only via Δ₂ at non-product extremizer" — is corroborated by two independent agents BUT is **very likely already known** (Sawin/Cambie discussed the method's ceiling). Red-team must check prior art before any "new observation" claim. Do NOT inflate.
