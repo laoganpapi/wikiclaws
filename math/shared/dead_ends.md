@@ -180,4 +180,34 @@ Plus the **certification gate**: the per-coordinate Sawin lower bound $(S_c)$ un
 
 **Lesson:** Abundance lives in the **labelling** of join-irreducibles by ground-set elements (precisely: each ground element `x` has a *fibre* `Fib(x)={A:x∈A}`, always a **filter** of `L`, principal `=↑m_x` iff `x∈m_x`; abundance = max filter-density of these fibres, eq. (1.1)). The cone shows this labelling is **free given `L`** — a fresh universal coordinate sends abundance to ≈1 without touching the lattice. So invariants are powerless, which is exactly why **every successful lattice result in the literature restricts the lattice CLASS** (distributive/modular/lower-semimodular — Poonen/Abe/Reinhold) rather than bounding an invariant: those classes **forbid the cone** (a universal element breaks (semi)modularity / the exchange axiom). The live next brick is the **upper-semimodular** class (open problem E.2; Reinhold's lsm proof does not dualize), attacked via the JI-filter/exchange structure with the cone structurally ruled out — NOT via any invariant.
 
+---
+
+## 2026-06-02 — [track: frankl] — polynomial method / slice rank (CLP / Ellenberg–Gijswijt / Tao 2016) on Frankl
+
+**Agent / author:** Alex Ye (with AI assistance disclosed). `[NOVELTY UNVERIFIED — possibly tried in Croot–Lev–Pach successor literature; check on next session.]`
+**Time invested:** ~1 session of code + theory.
+**Attack vector:** Encode each `A ⊆ [n]` as its indicator `x_A ∈ {0,1}^n`. The relation `A ∪ B = C` is per-coordinate `c_i = a_i + b_i − a_i b_i` (char ≠ 2). Build the 3-tensor `T_F(A,B,C) = 1{A ∪ B = C}` over `F × F × F` for a UC family `F`, and compute its slice rank (Tao 2016) over `𝔽_p` for `p ∈ {2,3,5,7}`. The hope (cap-set analogue): a polynomial-rank upper bound `|F| ≤ f(n, abundance)` decaying like `2.756^n`, by mimicking Croot–Lev–Pach: tensor low-degree expression + diagonal-on-set-of-interest ⇒ size bound.
+
+**Why it failed (the obstruction is structural and exact):**
+
+> **Theorem.** For every union-closed `F` and every field `𝔽`, `slice-rank(T_F) = |F|`. In particular, each unfolding matrix rank equals `|F|`, **independent of `F`'s structure** (and hence of abundance). Hence no abundance bound is extractable from the standard slice-rank machinery applied to `T_F`. ([`polynomial_method.md`](../frankl/theory/polynomial_method.md), Theorem 2.1 + Cor. 2.2.)
+
+The root cause is a *type mismatch* between cap-set and Frankl:
+* Cap-set's `x + y + z = 0` is **non-determinative** (for `(x,y)` there's a unique `z` that typically falls outside a cap-set), and the indicator polynomial `1 − (x_i+y_i+z_i)^2` has degree 2 *independent of `n`*. Tensor is diagonal on the cap-set; polynomial method gives `|S| ≤ 3 · M_n = O(2.756^n)`, well below `3^n`.
+* Frankl's `A ∪ B = C` is **fully determinative** (given `(A,B)`, `C := A ∪ B` is unique and always in `F` by closure), so `T_F` is a *transport plan* with each `(A,B)` mapped to one `C`. Unfolding rank along `C` is exactly `|F|` (the columns `{(C,C) : C ∈ F}` form an identity submatrix in the unfolding, since `T_F(C', C', C) = 1{C' ∪ C' = C} = δ_{C', C}`). The polynomial identity for the union indicator has per-coordinate degree ≥ 2 (each factor `(1 − (c_i − a_i − b_i + a_i b_i)^2)` is degree 4), so the polynomial-rank bound is `≥ \binom{2n}{n} = Ω(4^n)` — vacuous against `|F| ≤ 2^n`.
+
+Variant tensors (`T_∩`, `T_△`, `T_∪³` = 3-cover) were also tested. `T_∩` shares the obstruction (same identity-submatrix argument). `T_△` and `T_∪³` have non-trivial slice rank but **no useful inequality** to abundance survives; both candidates `sr/|F| ≤ 1 - abundance` and `sr/|F| ≥ 1 - abundance` are falsified on small explicit families (n=4 with abundance=0.8 has `sr_T△=0`; n=3 cube has `sr_T△/|F|=1.0 > 0.5 = 1-abundance`).
+
+**Counter-example (if any):** *All 416 UC orbit reps at n≤4 (|F|≥1), every prime in {2,3,5,7}* witness `slice-rank(T_F) = |F|`. 0 violations across 1664 (F, p) checks. Boolean cube `2^[n]` is the cleanest witness: `slice-rank = 2^n = |F|`, abundance = 1/2 — no information extracted. Data in `frankl/experiments/data/polymethod_n{0..4}.jsonl`.
+
+**Pointer to artifacts:**
+* `frankl/theory/polynomial_method.md` — full writeup (theorem-proof format, with the structural diagnosis in §4).
+* `frankl/experiments/polynomial_method.py` — slice-rank computations over `𝔽_p`.
+* `frankl/experiments/data/polymethod_n{0..4}.jsonl` — per-family raw data.
+* `frankl/experiments/data/polymethod_summary.txt` — human-readable summary.
+
+**Verdict:** **gap-not-closeable** from standard CLP / Ellenberg–Gijswijt / Tao slice rank applied to the natural Frankl tensor. The obstruction is exact, has an explicit construction (identity submatrix), is validated exhaustively at n≤4, and is **diagnosed structurally** (determinism + high per-coordinate polynomial degree, the two ingredients that defeat the CLP scheme). The only sub-direction worth a future pass is the *weighted partition rank* with a Boltzmann-style abundance weighting, plus a Fourier-side combination — neither produced a bound here.
+
+**Lesson:** **The polynomial method shrinks "sets where a low-degree algebraic relation has only trivial solutions." Frankl asks for a frequency lower bound on element appearances in a family closed under a high-degree, deterministic operation.** The two problem shapes are misaligned at the *type* level. Any future polynomial-method attack must (a) replace the deterministic `A ∪ B = C` by a non-determinative substitute (the 3-cover `A ∪ B ∪ C = [n]` is the cleanest candidate but produces no useful bound), AND (b) find a polynomial identity for the substitute relation of degree `o(n)` per coordinate. Neither lever has a candidate; the prior is "this paradigm does not transfer." If a future session finds it has been previously published, our role becomes: cite + record.
+
 *(append further entries above this line as approaches fail)*
