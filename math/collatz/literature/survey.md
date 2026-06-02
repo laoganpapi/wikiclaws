@@ -257,6 +257,8 @@ A direct extension of Simons–de Weger by tightening the Baker-type bounds.
 
 These methods provide strong constraints on cycles but say nothing about divergent orbits. They are also asymptotic in $m$: ruling out cycles for *all* $m$ simultaneously requires unconditional improvements in irrationality measure for $\log_2 3$ (Liouville-type effective bounds), which currently fall short.
 
+> **[CORRECTION FLAGGED — Phase 2, needs primary-source check]** The Phase 2 cycle-exclusion track contends this framing is inaccurate: the operative bottleneck in Simons–de Weger / Hercher is a **lower bound for a linear form in two logarithms** (Laurent–Mignotte–Nesterenko, leading constant $24.34\,D^4$), *not* the irrationality measure $\mu(\log_2 3)$. The two are different quantities; improving $\mu$ would not directly move the cycle bound. The reproduced operative inequality is "$0 < (K{+}S)\log 2 - K\log 3 < 2^{-0.158 K}$ has no solution for $K \ge 32$." This correction is itself snippet-sourced (primary PDFs were unreachable, HTTP 403) and must be verified against Simons–de Weger (2005) and Hercher (2023) before any writeup. See `collatz/theory/cycle_exclusion_explicit.md`.
+
 ---
 
 ## 8. Family (5): Generalizations and undecidability
@@ -393,9 +395,11 @@ Akin 2004 frames the question: find a function $V : \mathbb{Z}_2 \to \mathbb{R}_
 
 ### Vector C — Hybrid cycle-exclusion via $\log_2 3$ irrationality measure
 
-Steiner–Simons–de Weger–Hercher have pushed cycle exclusion to $m \le 91$ using Baker's theorem. The bottleneck is the effective irrationality measure of $\log_2 3$, currently $\le 5.something$ via Baker's method. Any unconditional improvement of the irrationality measure of $\log_2 3$ would automatically push cycle-exclusion to a much higher $m$. This is *not* a Collatz technique per se, but it would translate effort in Diophantine approximation into bigger $m$-bounds.
+Steiner–Simons–de Weger–Hercher have pushed cycle exclusion to $m \le 91$ using Baker's theorem.
 
-*Tools.* Effective transcendence theory; Padé approximants to $\log_2 3$; the LLL algorithm for finding sharper continued-fraction-style relations.
+> **[CORRECTION FLAGGED — Phase 2, needs primary-source check]** This vector was mis-stated. The bottleneck is **not** the irrationality measure $\mu(\log_2 3)$ but the leading constant in a **two-logarithm linear-form lower bound** (Laurent–Mignotte–Nesterenko, $24.34\,D^4$; possibly sharpened by Laurent 2008, *Acta Arith.* 133.4). The realistic, tractable improvement is therefore **not** "improve $\mu(\log_2 3)$" but: (i) substitute the sharper Laurent-2008 constant into Hercher's squeeze if he used LMN-1995, and (ii) re-run with the updated verification bound $B = 2^{71}$ (Barina 2025) instead of $3\cdot 2^{69}$, estimated to add $+1$–$3$ to the excludable $m$. Convention note: the "$m \le 68$" Simons–de Weger figure counts **circuits**; in Hercher's **local-minima** convention the comparable statements are $m \ge 76$ (S–dW) and $m \ge 92$ (Hercher). All snippet-sourced; verify against primary PDFs.
+
+*Tools.* Effective transcendence theory (linear forms in two logarithms); the LLL algorithm; updated computational verification bound $B$.
 
 *Expected impact.* Modest in scope (only rules out cycles of bounded $m$), but uses well-developed external techniques that may give immediate gains. Useful as a "low-risk" parallel branch alongside (A) and (B).
 
