@@ -6,10 +6,13 @@ package "collatz_frankl" where
   leanOptions := #[
     ⟨`pp.unicode.fun, true⟩ -- pretty-prints `fun a ↦ b`
   ]
-  -- add any additional package configuration options here
 
 require "leanprover-community" / "mathlib"
 
 @[default_target]
-lean_lib «CollatzFrankl» where
-  -- add any library configuration options here
+lean_lib «Collatz» where
+  -- The Collatz library
+
+@[default_target]
+lean_lib «Frankl» where
+  -- The Frankl library
