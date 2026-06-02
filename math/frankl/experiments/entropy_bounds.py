@@ -1,65 +1,77 @@
 """
 entropy_bounds.py — Gilmer's entropy method and its successors.
 
-Background (all of this is well-documented in the literature; see
-``literature/survey.md`` once written).
+This module implements the entropy primitives, the central one-variable
+inequality used in the Alweiss-Huang-Sellke / Chase-Lovett / Sawin
+proofs, and an experimental harness for plugging in candidate
+strengthenings.
 
-Gilmer's framework (arXiv:2211.09055).  Take A and B independent and
-identically distributed uniformly on a union-closed family F ⊆ 2^[n].
-Each element x ∈ [n] has *marginal* p_x = Pr[x ∈ A] = freq(x) / |F|.
-Since F is union-closed, A ∪ B is also in F, so
+Background.
 
-    H(A ∪ B)  ≤  H(A)  =  log₂ |F|.
+  * Gilmer's framework (arXiv:2211.09055). Take A and B i.i.d. uniformly on
+    a union-closed family F ⊆ 2^[n]. For each x ∈ [n] write
+    p_x = Pr[x ∈ A] = freq(F, x) / |F|.
 
-Computing H(A ∪ B) directly is hard, but Gilmer bounds it below by a
-*sum* of binary entropies of independent coordinates:
+  * Since A is uniform on F we have H(A) = log₂ |F|.
+    Since F is union-closed, A ∪ B ∈ F a.s.
 
-    H(A ∪ B)  ≥  Σ_x h(2 p_x − p_x²),
+  * Coordinate independence of A and B gives the lower bound
 
-where h(t) = −t log₂ t − (1−t) log₂(1−t) is the binary entropy.
+        H(A ∪ B)  ≥  Σ_x  h(2 p_x − p_x²),
 
-On the other hand, since A's coordinates are *not* independent under the
-uniform-on-F distribution, the chain rule gives
+    where h(t) = −t log₂ t − (1−t) log₂ (1−t).  This is Gilmer's
+    "outer" bound — coordinates of A ∪ B are *not* independent under
+    the uniform-on-F distribution, but each individual coordinate is
+    Bernoulli(2 p_x − p_x²) by independence of A_x and B_x.
 
-    H(A)  ≤  Σ_x h(p_x).
+  * The chain rule plus dropping conditioning gives
 
-Combining the two:
+        H(A)  ≤  Σ_x  h(p_x).
 
-    Σ_x h(2 p_x − p_x²)  ≤  Σ_x h(p_x).                       (*)
+  * Pulling the two together: since A ∪ B is *concentrated on F* (UC), one
+    can leverage H(A ∪ B) ≤ H(A ∪ B, A ∪ B) = … to ultimately push toward
+    H(A) ≤ (something).  The detailed argument (Gilmer §2, AHS §2) shows
+    that if max_x p_x < c, where c is the largest p ≤ 1/2 satisfying
 
-If every coordinate has p_x < c, where c is the threshold beyond which
-h(2t − t²) > 2 h(t) (so 2 h(t) ≤ h(2t − t²) ⇔ … no, see below), then (*)
-yields a contradiction, proving that *some* p_x ≥ c — i.e., some element
-is in at least a c-fraction of F.
+        h(p)  ≤  h(2p − p²),                                     (★)
 
-The critical constant.  The threshold c is the supremum of p ∈ (0, 1/2]
-with h(2p − p²) ≥ 2 h(p).  This c is also characterised algebraically
-as the smaller root of
+    then a contradiction arises, hence Frankl holds with constant c.
 
-    c² − 3c + 1 = 0,            i.e.       c = (3 − √5) / 2 ≈ 0.3819660.
+The constant.  Inequality (★) holds exactly when p ≤ c, with equality at
+p = c.  The threshold is the smaller root of c² − 3c + 1 = 0:
 
-Gilmer's original paper achieved c ≈ 0.01 by working through a weaker
-form of (*).  Alweiss-Huang-Sellke (arXiv:2211.11731), Chase-Lovett
-(arXiv:2211.11504), and Sawin (arXiv:2211.13139) all independently
-pushed the constant up to (3 − √5)/2.  Cambie (arXiv:2212.12500) and
-Yu (arXiv:2306.08824) shaved tiny further amounts; the current world
-record is around 0.3823 with no improvement having broken 0.39.
+        c = (3 − √5)/2 ≈ 0.3819660112501051.
 
-The "Frankl frontier" is c = 1/2.  The entropy method is bottlenecked
-by inequality (*) being tight near p_x = 1/2 along the *Bernoulli(1/2)*
-direction.
+Equivalently, c satisfies 2c − c² = 1 − c.  Gilmer's original paper
+achieved c ≈ 0.01 by working with a softer form of (★).  Alweiss-Huang-
+Sellke (arXiv:2211.11731), Chase-Lovett (arXiv:2211.11504), and Sawin
+(arXiv:2211.13139) independently used the sharp version of (★) to push the
+constant up to (3 − √5)/2.  Cambie (arXiv:2212.12500) and Yu (arXiv:
+2306.08824) eked out further small improvements (≈ 0.3823) by introducing
+correlation between A and B.  Frankl himself conjectured c = 1/2.
 
-What this module provides:
+Module contents.
 
 1. ``shannon_entropy(F)`` — H(A) for A uniform on F.
-2. ``gilmer_lhs / gilmer_rhs / gilmer_inequality(F)`` — both sides of (*).
-3. ``ahs_constant()`` — the constant (3-√5)/2 computed (not hard-coded).
-4. ``binary_entropy / binary_entropy_inequality_check`` — h(2p-p²) vs 2h(p).
-5. ``check_candidate_inequality(F, lhs, rhs)`` — plug in a conjectured
-   improved inequality and check it on F.  The Phase-2 theory agents will
-   use this to falsify or empirically support proposed strengthenings.
-6. ``sweep_inequality(inequality, n_max, …)`` — apply such a check to
-   every UC family up to size n_max, returning any counterexample found.
+2. ``marginals(F)`` — p_x = freq(F,x) / |F|.
+3. ``gilmer_lhs`` / ``gilmer_rhs`` / ``gilmer_inequality(F)`` — both sides
+   of the Gilmer inequality Σ_x h(2 p_x − p_x²) ≤ Σ_x h(p_x), which is
+   the entropy-method analogue of "H(A∪B) ≤ H(A)" for the *coordinate-wise
+   independent* model.  Holds on every UC family.
+4. ``ahs_constant()`` — c = (3-√5)/2, computed by bisection from c²-3c+1=0.
+5. ``binary_entropy_inequality_check(p)`` — (★) at a single point.
+6. ``sweep_inequality(inequality, n_max, …)`` — apply any candidate
+   "LHS ≤ RHS over UC families" inequality to every UC family on [n] for
+   n ≤ n_max.  This is the harness Phase-2 theory agents will plug into.
+
+Caveat.  The entropy *strategy* combines several inequalities (chain rule,
+union-closure, coordinate-wise independence).  The function
+``gilmer_inequality`` checks one *particular* inequality that follows from
+the strategy.  It is NOT the inequality whose tightening yields a proof of
+Frankl — that would require improving (★) above the threshold c.  Phase-2
+agents should treat the harness as a falsification tool: any proposed
+strengthening must survive a sweep, and any sweep failure is a definitive
+counterexample.
 """
 
 from __future__ import annotations
@@ -75,13 +87,9 @@ from uc_family import Family, frequencies, ground_set
 # Entropy primitives
 # ---------------------------------------------------------------------------
 
-LN2 = math.log(2.0)
-
-
 def binary_entropy(p: float) -> float:
-    """h(p) = -p log2 p - (1-p) log2 (1-p), with h(0) = h(1) = 0."""
+    """h(p) = −p log₂ p − (1−p) log₂(1−p), with h(0) = h(1) = 0."""
     if p <= 0.0 or p >= 1.0:
-        # Guard against tiny negative floats from arithmetic.
         if -1e-15 < p < 1.0 + 1e-15:
             return 0.0
         raise ValueError(f"binary_entropy requires p ∈ [0,1]; got {p}")
@@ -90,21 +98,17 @@ def binary_entropy(p: float) -> float:
 
 def shannon_entropy(F: Iterable[int]) -> float:
     """
-    H(A) for A uniform on F.  Since the distribution is uniform on |F|
-    atoms, H(A) = log2 |F| exactly.
+    H(A) for A uniform on F.
 
-    We expose this as a function (rather than inlining log2 |F|) so callers
-    can later swap in non-uniform distributions if desired.
+    Since the distribution is uniform on |F| atoms, H(A) = log₂ |F|.
+    Exposed as a function so callers can later swap in non-uniform
+    distributions on F (e.g. Cambie's dependent coupling).
     """
     F_list = list(F)
     if not F_list:
         return 0.0
     return math.log2(len(F_list))
 
-
-# ---------------------------------------------------------------------------
-# Gilmer inequality
-# ---------------------------------------------------------------------------
 
 def marginals(F: Iterable[int], n: int | None = None) -> list[float]:
     """p_x = freq(F, x) / |F| for x = 0, …, n-1."""
@@ -120,33 +124,28 @@ def marginals(F: Iterable[int], n: int | None = None) -> list[float]:
     return [f / m for f in freqs]
 
 
-def gilmer_lhs(F: Iterable[int]) -> float:
-    """
-    LHS of inequality (*):  Σ_x h(2 p_x − p_x²).
+# ---------------------------------------------------------------------------
+# Gilmer's central inequality:  Σ_x h(2 p_x − p_x²)  ≤  Σ_x h(p_x).
+#
+# Holds on every UC family — direct consequence of the entropy method
+# combining H(A∪B) ≤ Σ h(2 p_x − p_x²) (coord-wise indep. of A,B) and
+# Σ h(p_x) ≥ H(A) = log₂|F| ≥ H(A∪B) (chain rule).
+# ---------------------------------------------------------------------------
 
-    This is Gilmer's lower bound on H(A ∪ B) coming from coordinate-wise
-    independence of the union.  See arXiv:2211.09055, eq. (4) (with the
-    small adjustment in Alweiss-Huang-Sellke eq. (1.4)).
-    """
+def gilmer_lhs(F: Iterable[int]) -> float:
+    """LHS:  Σ_x h(2 p_x − p_x²) — coord-wise entropy of A ∪ B."""
     ps = marginals(F)
     total = 0.0
     for p in ps:
         q = 2.0 * p - p * p
-        # Numerical guards.
         q = max(0.0, min(1.0, q))
-        total += binary_entropy(q) if 0.0 < q < 1.0 else 0.0
+        if 0.0 < q < 1.0:
+            total += binary_entropy(q)
     return total
 
 
 def gilmer_rhs(F: Iterable[int]) -> float:
-    """
-    RHS of inequality (*):  Σ_x h(p_x).
-
-    This is the chain-rule upper bound on H(A) = log2 |F| obtained by
-    dropping conditioning — the *largest* the RHS can be.  Gilmer's
-    inequality is the assertion ``gilmer_lhs(F) ≤ gilmer_rhs(F)`` for
-    every UC family F.
-    """
+    """RHS:  Σ_x h(p_x) — chain-rule upper bound on H(A)."""
     ps = marginals(F)
     return sum(binary_entropy(p) for p in ps if 0.0 < p < 1.0)
 
@@ -157,11 +156,11 @@ class GilmerReport:
     n: int
     size: int
     marginals: tuple[float, ...]
-    H_A: float
-    lhs: float        # Σ h(2p - p^2)  (lower bound on H(A∪B))
-    rhs: float        # Σ h(p)         (upper bound on H(A))
-    holds: bool       # lhs ≤ rhs (true for UC families)
-    slack: float      # rhs - lhs
+    H_A: float          # log₂ |F|
+    lhs: float          # Σ h(2 p_x − p_x²)
+    rhs: float          # Σ h(p_x)
+    holds: bool         # lhs ≤ rhs (true for every UC family)
+    slack: float        # rhs - lhs
 
     def summary(self) -> str:
         return (
@@ -171,7 +170,12 @@ class GilmerReport:
 
 
 def gilmer_inequality(F: Iterable[int]) -> GilmerReport:
-    """Compute LHS and RHS of (*) and check it holds for F."""
+    """
+    Compute LHS, RHS of Gilmer's inequality and report whether it holds.
+
+    The inequality Σ h(2 p_x − p_x²) ≤ Σ h(p_x) must hold for every UC
+    family; it is implied by the entropy strategy (see module docstring).
+    """
     F_list = list(F)
     n = ground_set(frozenset(F_list))
     ps = marginals(F_list, n)
@@ -195,23 +199,20 @@ def gilmer_inequality(F: Iterable[int]) -> GilmerReport:
 
 
 # ---------------------------------------------------------------------------
-# The constant c = (3 - sqrt(5))/2  (computed, not hard-coded)
+# The AHS constant  c = (3 - √5)/2  (computed, not hard-coded)
 # ---------------------------------------------------------------------------
 
 def ahs_constant(tol: float = 1e-14) -> float:
     """
-    Compute c = (3 − √5)/2 by bisection on the fixed-point equation
-    (1 − p)^2 = p, equivalently p² − 3p + 1 = 0 with p ∈ (0, 1).
+    Compute c = (3 − √5)/2 as the smaller root of  c² − 3c + 1 = 0  in (0, 1/2).
 
-    This is the largest p ≤ 1/2 such that the entropy inequality
-    h(2p − p²) ≥ 2 h(p) bites along Bernoulli marginals; equivalently
-    it is the abundance threshold proved by Alweiss-Huang-Sellke.
+    Equivalently, c is the *largest* p ≤ 1/2 such that h(p) ≤ h(2p − p²).
+    This is the constant proved by Alweiss-Huang-Sellke / Chase-Lovett /
+    Sawin for Frankl's conjecture in the entropy framework.
 
-    We compute it from the algebraic characterisation rather than
-    hard-coding to verify the value emerges naturally.
+    Computed via bisection so the value emerges from its defining
+    equation, not from a literal constant in source.
     """
-    # f(p) = p^2 - 3p + 1, has roots (3 ± √5)/2.
-    # The smaller root lies in (0, 1/2).
     f = lambda p: p * p - 3.0 * p + 1.0
     lo, hi = 0.0, 0.5
     assert f(lo) > 0 and f(hi) < 0, "wrong bracketing"
@@ -226,27 +227,36 @@ def ahs_constant(tol: float = 1e-14) -> float:
 
 def binary_entropy_inequality_check(p: float) -> tuple[float, float, bool]:
     """
-    Return (h(2p - p^2), 2 h(p), holds), where ``holds`` reports whether
-    the AHS inequality h(2p - p²) ≥ 2 h(p) is satisfied at p.
+    Return (h(p), h(2p - p²), holds), where ``holds`` reports whether the
+    AHS key inequality
 
-    The inequality is true for all p ∈ [0, c], where c = (3 − √5)/2.
+        h(p)  ≤  h(2p − p²)                                       (★)
+
+    is satisfied at p ∈ (0, 1).
+
+    (★) holds for p ∈ (0, c] with equality at p = c = (3-√5)/2, and is
+    *violated* (strictly) for p ∈ (c, 1/2].  This is the single-variable
+    inequality whose proof (Sawin's calculus proof, Boppana's lemma-style
+    proof, or computer interval-arithmetic) underlies the (3-√5)/2 bound.
     """
+    if p <= 0.0 or p >= 1.0:
+        return 0.0, 0.0, True
     q = 2.0 * p - p * p
     q = max(0.0, min(1.0, q))
-    lhs = binary_entropy(q) if 0.0 < q < 1.0 else 0.0
-    rhs = 2.0 * binary_entropy(p) if 0.0 < p < 1.0 else 0.0
-    return lhs, rhs, lhs >= rhs - 1e-12
+    lhs = binary_entropy(p)
+    rhs = binary_entropy(q) if 0.0 < q < 1.0 else 0.0
+    return lhs, rhs, lhs <= rhs + 1e-12
 
 
 # ---------------------------------------------------------------------------
-# Pluggable candidate inequality harness
+# Pluggable candidate-inequality harness
 # ---------------------------------------------------------------------------
 
 Inequality = Callable[[Family], tuple[float, float]]
 """A candidate inequality: takes a family and returns (LHS, RHS).
 
-A proposed strengthening of Gilmer's inequality should satisfy LHS ≤ RHS
-on *every* union-closed family.  Phase-2 theory agents will plug their
+A proposed strengthening of Gilmer's framework should satisfy LHS ≤ RHS on
+*every* union-closed family.  Phase-2 theory agents will plug their
 candidate inequalities in here and call :func:`sweep_inequality` to look
 for counterexamples on small UC families.
 """
@@ -291,7 +301,7 @@ def sweep_inequality(
     Parameters
     ----------
     inequality
-        Callable returning (LHS, RHS); a violation is LHS > RHS + eps.
+        Callable returning (LHS, RHS).  A violation is LHS > RHS + eps.
     n_max
         Sweep n = 0 through n = n_max inclusive.
     max_size
@@ -338,26 +348,32 @@ def gilmer_inequality_pair(F: Family) -> tuple[float, float]:
     return gilmer_lhs(F), gilmer_rhs(F)
 
 
-def make_threshold_inequality(c: float) -> Inequality:
+def ahs_pointwise_inequality_pair(F: Family) -> tuple[float, float]:
     """
-    Return an inequality that *would* prove "Frankl with constant c":
+    Per-coordinate AHS inequality:  max_x h(p_x)  ≤  max_x h(2 p_x − p_x²).
 
-        LHS(F)  =  (number of elements with marginal < c) · |F| · 0
-        RHS(F)  =  log2 |F|
+    This is (★) coordinate-wise — *holds* only when max p_x ≤ c.  Useful
+    as a "Frankl threshold detector": any UC family violating this
+    inequality has max p_x > c, so it is *not* a counterexample to any
+    bound below c.
+    """
+    ps = marginals(F)
+    lhs = max((binary_entropy(p) for p in ps if 0 < p < 1), default=0.0)
+    rhs = max((binary_entropy(2*p - p*p) for p in ps if 0 < 2*p - p*p < 1),
+              default=0.0)
+    return lhs, rhs
 
-    That is, the inequality "max_x p_x ≥ c" expressed as LHS ≤ RHS.  This
-    is *not* a useful theorem-style inequality; rather it's a test fixture:
-    sweeping a candidate constant c lets us empirically locate the
-    minimum-abundance UC family at each n.
 
-    Use case: pass c just below 1/2 and look for "violations" — those
-    are extremal candidates with max-abundance below c.
+def make_abundance_threshold_inequality(c: float) -> Inequality:
+    """
+    Return an inequality "max_x p_x ≥ c", encoded as LHS = c, RHS = max p_x.
+
+    Use case: choose c = (3-√5)/2 to find UC families where every element
+    has abundance < c.  Any such family is below the AHS threshold.
     """
     def ineq(F: Family) -> tuple[float, float]:
         from uc_family import abundance as _abund
-        phi = _abund(F)
-        # Encode "phi >= c" as LHS = c, RHS = phi; violation iff phi < c.
-        return c, phi
+        return c, _abund(F)
     return ineq
 
 
@@ -375,5 +391,6 @@ __all__ = [
     "SweepResult",
     "sweep_inequality",
     "gilmer_inequality_pair",
-    "make_threshold_inequality",
+    "ahs_pointwise_inequality_pair",
+    "make_abundance_threshold_inequality",
 ]

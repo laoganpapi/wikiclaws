@@ -273,16 +273,24 @@ class TestEntropy:
         assert abs((1 - c) ** 2 - c) < 1e-10
 
     def test_binary_entropy_inequality_holds_below_constant(self):
+        """h(p) ≤ h(2p − p²) for p ∈ (0, c]."""
         c = ahs_constant()
         for p in [0.05, 0.1, 0.2, 0.3, 0.35, c - 1e-3]:
             lhs, rhs, holds = binary_entropy_inequality_check(p)
-            assert holds, f"h(2p-p²) >= 2 h(p) should hold at p={p}; got {lhs} vs {rhs}"
+            assert holds, f"h(p) ≤ h(2p-p²) should hold at p={p}; got h(p)={lhs} h(2p-p²)={rhs}"
+
+    def test_binary_entropy_inequality_equality_at_constant(self):
+        """h(p) = h(2p - p²) at p = c, since 2c - c² = 1 - c and h(p) = h(1-p)."""
+        c = ahs_constant()
+        lhs, rhs, holds = binary_entropy_inequality_check(c)
+        assert abs(lhs - rhs) < 1e-9, f"expected equality at p=c; got {lhs} vs {rhs}"
 
     def test_binary_entropy_inequality_fails_above_constant(self):
+        """h(p) > h(2p − p²) for p > c (strictly)."""
         c = ahs_constant()
         for p in [c + 1e-3, 0.42, 0.48, 0.5]:
             lhs, rhs, holds = binary_entropy_inequality_check(p)
-            assert not holds, f"h(2p-p²) >= 2 h(p) should fail at p={p}"
+            assert not holds, f"h(p) ≤ h(2p-p²) should fail at p={p}; got h(p)={lhs} h(2p-p²)={rhs}"
 
     def test_gilmer_inequality_on_uc_families(self):
         # Gilmer's inequality LHS ≤ RHS should hold for every UC family.
