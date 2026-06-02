@@ -25,12 +25,9 @@ jobs:
   build-papers:
     name: Build LaTeX papers
     runs-on: ubuntu-latest
-    # NOTE: non-blocking while the papers are actively drafted by agents.
-    # WIP commits of half-written .tex won't compile, and CI runs on every
-    # push -- so a red check here during drafting is noise, not signal. The
-    # job still runs and uploads PDFs when it succeeds. FLIP BACK to blocking
-    # (remove this line) once both drafts are finalized and verified to build.
-    continue-on-error: true
+    # Blocking again: both drafts are finalized and verified to compile
+    # (latexmk exit 0, 0 undefined refs/citations). A red check here now
+    # means a real regression in a paper.
     steps:
       - name: Checkout
         uses: actions/checkout@v4

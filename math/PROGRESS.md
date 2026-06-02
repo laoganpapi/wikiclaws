@@ -137,7 +137,15 @@ User chose to **widen network policy**, but arXiv still returns 403 this session
 | Agent | Status | Verdict |
 |-------|--------|---------|
 | Collatz cycle from scratch | ✅ done | PROVISIONALLY no robust gain past m=91; new self-contained identity Λ=Σεⱼ + bound 0<Λ<m/B (verified). Corrected our "+1–3" prior to "+0.3, best case +1". |
-| Frankl lattice attack | ⏳ finishing | (deliverable lattice_attack.md committed; awaiting report) |
+| Frankl lattice attack | ✅ done | NO invariant bound possible (proved); "cone" construction = sharp obstruction (abundance not a lattice invariant). One folklore-likely conditional bound. |
+
+**ALL AGENTS COMPLETE (17 total across 4 phases).** CI flipped back to blocking (both papers compile).
+
+### Frankl lattice attack (lattice_attack.md) — honest negative + structural insight
+- **Proves no general bound from lattice invariants is possible.** The "universal-element cone" cone(G)={∅}∪{A∪{z}:A∈G,A≠∅} is union-closed, lattice-ISOMORPHIC to G (identical invariants) but has abundance 1−1/|L|. Verified: 0 failures over all 206 families at n≤4. Minimal witness: B₃ at abundance 0.5 vs cone at 0.875, same invariants.
+- Mechanism: abundance = max filter-density of ground-element fibres; the cone shows this labelling is FREE given L ⇒ invariants powerless. This is exactly why every known special-case result restricts the lattice CLASS, not an invariant.
+- One conditional bound (tall lattices): abundance ≥ height(L)/|L|, 0 violations over 29,723 families — but [PRIOR-ART PENDING], likely folklore, NOT claimed new.
+- Best future direction: upper-semimodular lattices (Reinhold's lower-semimodular proof doesn't dualize; those classes forbid the cone).
 
 ### Collatz cycle bound (cycle_bound_attempt.md) — honest negative + a clean byproduct
 - Re-derived from scratch (no Hercher PDF): per-circuit identity, cycle equation, NEW telescoping identity Λ=N log2−K log3=Σⱼ log(1+(1−(2/3)^{aⱼ})/xⱼ) (verified to 1e−120), NEW citation-free bound 0<Λ<m/B (verified on 17,762 fixed points).
