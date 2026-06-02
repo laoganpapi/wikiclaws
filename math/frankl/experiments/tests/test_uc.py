@@ -346,5 +346,76 @@ class TestVerify:
             assert res.all_pass
 
 
+# ---------------------------------------------------------------------------
+# vector3_delta2_nonproduct — Δ₂ recapture at a non-product extremizer
+# ---------------------------------------------------------------------------
+
+class TestVector3Delta2NonProduct:
+    """Load-bearing invariants of the Δ₂-recapture obstruction (theory/
+    vector3_delta2_nonproduct.md)."""
+
+    def test_shared_u_delta2_le_ICU_and_per_coord_vanishes(self):
+        # Lemma 3: Δ₂ ≤ I(C;U); Cor 4: Δ₂/n → 0 (bounded by H(U)=O(1)).
+        from vector3_delta2_nonproduct import SharedUCoupling
+        cpl = SharedUCoupling([0.05, 0.2, 0.38, 0.5, 0.7, 0.9], [1 / 6] * 6)
+        HU = cpl.H_U()
+        for n in (2, 4, 8, 16):
+            d2 = cpl.delta2(n)
+            icu = cpl.I_C_U(n)
+            assert d2 >= -1e-9                      # Δ₂ ≥ 0
+            assert d2 <= icu + 1e-9                 # Lemma 3
+            assert icu <= HU + 1e-9                 # I(C;U) ≤ H(U)
+            assert d2 / n <= HU / n + 1e-12         # per-coord bound
+        # per-coordinate Δ₂ strictly shrinks for large n
+        assert cpl.delta2(32) / 32 < cpl.delta2(8) / 8
+
+    def test_shared_u_limit_is_diagonal_mixture(self):
+        # H(A)/n → E[h(p)], H(C)/n → E[h(u)] (the diagonal U-mixture); the gap
+        # decays like H(U)/n, so it shrinks as n grows and is O(H(U)/n).
+        from vector3_delta2_nonproduct import SharedUCoupling
+        cpl = SharedUCoupling([0.1, 0.3, 0.5, 0.7], [0.25] * 4)
+        HU = cpl.H_U()
+        r64, r256 = cpl.report(64), cpl.report(256)
+        gap64 = abs(r64["H_A_per"] - r64["E_h_p"])
+        gap256 = abs(r256["H_A_per"] - r256["E_h_p"])
+        assert gap256 < gap64                       # converging to the mixture
+        assert gap256 <= HU / 256 + 1e-9            # gap ≤ H(U)/n (H(A)=H(U)+nE[h])
+        assert abs(r256["H_union_per"] - r256["E_h_u"]) < 1.5e-2
+        assert r256["delta2_per"] < 1.5e-2          # Δ₂/n → 0
+
+    def test_recapture_moves_constant_wrong_way(self):
+        # Honest ledger: c_aug (budget H(C)) ≤ c_AHS, equality iff Δ₂=0.
+        from vector3_delta2_nonproduct import (SharedUCoupling,
+                                               shared_u_augmented_constant)
+        cpl = SharedUCoupling([0.1, 0.3, 0.5, 0.7], [0.25] * 4)
+        for n in (2, 4, 8):
+            d = shared_u_augmented_constant(cpl, n)
+            assert d["c_aug"] <= d["c_ahs"] + 1e-9     # wrong-way direction
+            assert d["delta2"] >= -1e-9
+
+    def test_budget_mismatch_artifact_is_one_half_on_powerset(self):
+        # The dishonest H(A)-budget ledger reproduces the documented 0.5 on 2^[2].
+        from vector3_delta2_nonproduct import augmented_constant_iid_family
+        F = frozenset(range(1 << 2))  # 2^[2]
+        d = augmented_constant_iid_family(F, 2)
+        assert abs(d["c_aug_HA"] - 0.5) < 1e-9          # the artifact
+        assert d["delta2"] < 1e-9                        # Δ₂=0 (product)
+        assert abs(d["c_aug_HC"] - d["c_ahs"]) < 1e-9    # honest == AHS when Δ₂=0
+
+    def test_certification_gate_flips_at_psi(self):
+        # The Sawin lower bound (S_c) is valid iff c ≤ ψ.
+        from vector3_delta2_nonproduct import sawin_lower_bound_min, PSI
+        assert sawin_lower_bound_min(PSI - 1e-2)[0] >= -1e-6   # valid below ψ
+        assert sawin_lower_bound_min(PSI)[0] >= -1e-6          # valid at ψ
+        assert sawin_lower_bound_min(PSI + 1e-2)[0] < -1e-4    # INVALID above ψ
+
+    def test_correlated_crossover_psi_at_rho_zero(self):
+        # ρ=0 gives exactly ψ; ρ>0 raises (the trap), ρ<0 lowers.
+        from vector3_delta2_nonproduct import correlated_crossover, PSI
+        assert abs(correlated_crossover(0.0) - PSI) < 1e-4
+        assert correlated_crossover(0.3) > PSI + 1e-2
+        assert correlated_crossover(-0.3) < PSI - 1e-2
+
+
 if __name__ == "__main__":
     sys.exit(pytest.main([__file__, "-v"]))

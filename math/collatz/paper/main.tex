@@ -1,6 +1,15 @@
-% main.tex --- Collatz Conjecture: survey and new observations
+% main.tex --- The Collatz Conjecture: Survey, a Natural-Density Obstruction,
+%               and Computational Notes.
 % Author: Alex Ye. AI assistance (Claude, Anthropic) disclosed via \thanks, not authorship.
-% Branch: claude/epic-dirac-p1oQo
+%
+% VERIFICATION / HONESTY POSTURE (see also the \thanks and Section "Verification status"):
+%  - This is an EXPOSITORY survey + one NEGATIVE result (a structural obstruction).
+%    It contains NO proof of the Collatz conjecture and NO claim that natural density
+%    fails -- only that a specific reduction (the scalar-Esscher mixing route) is obstructed.
+%  - Primary-source PDFs (arXiv, publisher) returned HTTP 403 in the working environment.
+%    Every external constant/attribution is therefore snippet-sourced and flagged
+%    "% [CONSTANT UNVERIFIED vs primary]". Novelty claims are flagged
+%    "% [PRIOR-ART CHECK PENDING]" and phrased defensively.
 
 \documentclass[11pt]{amsart}
 
@@ -19,6 +28,7 @@
 \usepackage{xcolor}
 \usepackage{microtype}
 \usepackage{enumitem}
+\usepackage{booktabs}
 
 %--- Bibliography ---
 \usepackage[numbers,sort&compress]{natbib}
@@ -35,14 +45,24 @@
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{example}[theorem]{Example}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
 \theoremstyle{remark}
 \newtheorem{remark}[theorem]{Remark}
 
 %--- Title ---
-\title[On the Collatz Conjecture]{On the Collatz Conjecture: A Survey of Density Methods and New Observations}
+\title[Collatz: survey, an obstruction, and notes]{The Collatz Conjecture: Survey, a Natural-Density Obstruction, and Computational Notes}
 
 \author[A. Ye]{Alex Ye}
-\thanks{This work was carried out in collaboration with Claude, an AI assistant developed by Anthropic. AI involvement is disclosed per emerging norms (cf.\ AlphaProof, FunSearch). All theorems are human-verified.}
+\thanks{This work was produced by Alex Ye, an AI research agent built on Anthropic's Claude;
+AI authorship is disclosed here rather than on the author line, following emerging norms for
+machine-assisted mathematics. \textbf{Verification status (read before citing):} this article is
+an expository survey together with one elementary \emph{negative} result. It contains no proof of
+the Collatz conjecture and no claim that natural density holds or fails. The negative result of
+Section~\ref{sec:obstruction} is elementary and has been re-derived independently
+(analytically and with two separate numerical implementations); its \emph{novelty} is unverified
+and is flagged accordingly. All external constants and attributions were assembled from secondary
+sources (primary PDFs were inaccessible during preparation) and are flagged in the source;
+they should be checked against the primary literature before any onward use.}
 \address{Independent researcher}
 \email{laoganpapi@gmail.com}
 
@@ -51,12 +71,23 @@
 \begin{document}
 
 \begin{abstract}
-\TODO{Write abstract.} We survey the Collatz $3n+1$ problem with emphasis on
-density-based partial results, from Terras (1976) through Krasikov, Lagarias's
-canonical bibliography, and Tao's 2019 logarithmic-density framework. We give
-a unified exposition of the techniques, identify the gap between
-``almost all orbits reach almost bounded values'' and the full conjecture,
-and present \TODO{our contribution placeholder}.
+We survey density-based approaches to the Collatz $3n+1$ problem, organized around the current
+state of the art: Tao's 2022 theorem that almost every orbit (in logarithmic density) attains
+almost bounded values. We then make explicit a structural \emph{obstruction} to one natural strategy
+for upgrading Tao's result from logarithmic to natural density. The strategy --- re-centering the
+Syracuse random walk by a single scalar Esscher (exponential) tilt and asking for total-variation
+equidistribution of the tilted Syracuse law --- cannot succeed, because the Syracuse law's projection
+modulo $3$ is permanently $(0,\tfrac13,\tfrac23)$, never uniform. By the data-processing inequality
+this forces $\TV(\nu_n,U)\ge \tfrac16$ for all $n$ and for every admissible scalar tilt, so the
+required equidistribution is unattainable. We corroborate this numerically: an exact FFT computation
+of the associated collision diagnostic $\Edist_n$ shows it \emph{diverges} (linearly untilted,
+exponentially under the drift-balancing tilt) with no turnover out to $n=17$, and exhibits a tilt-space
+phase transition that strands the required tilt on the non-equidistributing side. We are careful to
+delimit the scope: this obstructs one reduction only; coset-respecting reference measures and
+non-scalar change-of-measure mechanisms remain open, and nothing here bears on whether Collatz natural
+density is true. We also reconstruct the Steiner--Simons--de Weger--Hercher cycle-exclusion argument,
+correcting a common mis-attribution of its bottleneck to the irrationality measure of $\log_2 3$ in
+favour of a two-logarithm linear-forms estimate. We close with open questions.
 \end{abstract}
 
 \maketitle
@@ -65,125 +96,578 @@ and present \TODO{our contribution placeholder}.
 \section{Introduction}
 \label{sec:intro}
 
-\TODO{Open with the $3n+1$ map and a brief narrative.}
-
-The Collatz conjecture, posed informally by Lothar Collatz in 1937,
-asserts that the iteration
+The Collatz conjecture, attributed to Lothar Collatz (1937) and circulated also under the names
+of Kakutani, Ulam, Hasse, and Thwaites~\citep{lagarias1985}, concerns the map
 \[
-   \T(n) = \begin{cases} n/2 & n \text{ even}, \\ 3n+1 & n \text{ odd}, \end{cases}
+   \mathrm{Col}(n) = \begin{cases} n/2 & n \text{ even}, \\ 3n+1 & n \text{ odd}, \end{cases}
+   \qquad n \in \nat = \{1,2,3,\dots\}.
 \]
-eventually reaches $1$ for every positive integer $n$. Despite
-verification to $n \leq 2^{68}$~\cite{barina2020} and major partial results,
-the conjecture remains open. The current state-of-the-art density result
-is due to Tao~\cite{tao2019}, who showed that almost every orbit (in the
-sense of logarithmic density) attains values that are arbitrarily small
-relative to a chosen unbounded function.
+It asserts that iterating $\mathrm{Col}$ from any positive integer eventually reaches $1$.
+Despite verification to $n \le 2^{71}$~\citep{barina2021,barina2025} % [CONSTANT UNVERIFIED vs primary]
+and a sequence of deep partial results, the conjecture is open.
 
-\TODO{State our contribution.}
+It is convenient to work with the \emph{accelerated} (Syracuse-style) map
+\begin{equation}
+   \T(n) = \begin{cases} n/2 & n \equiv 0 \pmod 2, \\ (3n+1)/2 & n \equiv 1 \pmod 2, \end{cases}
+   \label{eq:Tmap}
+\end{equation}
+which folds the obligatory halving after each odd step into a single iteration, and to study the
+minimal orbit value $\Colmin(N) := \inf_{k \ge 0}\T^k(N)$. The conjecture is equivalent to
+$\Colmin(N) = 1$ for all $N$, which in turn is equivalent to the conjunction of two statements:
+\emph{there is no nontrivial cycle} and \emph{there is no divergent orbit}.
 
-\paragraph{Organization.} Section~\ref{sec:notation} fixes notation following
-Lagarias~\cite{lagarias2010}. Section~\ref{sec:history} surveys pre-1990
-results. Section~\ref{sec:density} treats Terras--Krasikov--Lagarias density
-bounds. Section~\ref{sec:tao} reproduces Tao's 2019 framework. Section
-\ref{sec:computational} reports computational verification. Section
-\ref{sec:contribution} contains our contribution. Section~\ref{sec:open}
-lists open questions.
+\paragraph{The state of the art.}
+The strongest ``almost all'' descent result is due to Tao~\citep{tao2022}: for any
+$f:\nat\to\R$ with $f(N)\to\infty$, one has $\Colmin(N)\le f(N)$ for a set of $N$ of full
+\emph{logarithmic} density. This improved the long-standing record exponents of
+Korec~\citep{korec1994} and Krasikov--Lagarias~\citep{krasikov2003}. Tao remarked, both in the
+paper and in a companion blog post~\citep{tao2020blog}, that the \emph{logarithmic}-density
+qualifier should plausibly be upgradable to \emph{natural} density via a finer equidistribution
+(``fine-scale mixing'') statement about the Syracuse random variables on $\Zthree{n}$; as of this
+writing no such upgrade has appeared.
+
+\paragraph{Contribution.}
+This article does two things.
+\begin{enumerate}[label=(\arabic*)]
+\item \textbf{Survey} (Sections~\ref{sec:notation}--\ref{sec:tao},
+\ref{sec:cycles},\ref{sec:computational}). We give a compact, honest survey of the density methods,
+the Tao 2022 framework, the cycle-exclusion line, and the computational frontier, with explicit
+attention to \emph{what each result does not prove}.
+\item \textbf{A natural-density obstruction} (Section~\ref{sec:obstruction}, the new content).
+We make explicit that the specific ``scalar-Esscher mixing'' route to upgrading Tao's theorem to
+natural density is \emph{obstructed}. The obstruction is elementary: the Syracuse random variable
+$X_n$ reduces mod $3$ to a fixed non-uniform law $(0,\tfrac13,\tfrac23)$ for every $n$
+(Lemma~\ref{lem:mod3}), whence
+\begin{equation}
+  \TV\big(\nu_n, U\big) \;\ge\; \tfrac16 \qquad \text{for all } n,
+  \label{eq:headline}
+\end{equation}
+and indeed $\TV(\nu_n^{(s)},U)>0$ uniformly for \emph{every} admissible scalar tilt $s$
+(Theorem~\ref{thm:obstruction}). Consequently the total-variation equidistribution that the route
+requires cannot hold. We corroborate this with an exact FFT computation of the collision diagnostic
+$\Edist_n=\tot(3^n)\CP_n-1$, which diverges with no turnover to $n=17$ and exhibits a phase
+transition in tilt space (Section~\ref{sec:numerics}). We delimit the scope sharply
+(Section~\ref{sec:scope}): this kills one reduction, not the destination.
+\end{enumerate}
+We also flag a correction to the folklore framing of the cycle-exclusion bottleneck
+(Section~\ref{sec:cycles}).
+
+\paragraph{Honesty posture.}
+We claim no proof of Collatz and no resolution of the natural-density question; \eqref{eq:headline}
+says nothing about whether natural density holds. We do not claim the mod-$3$ fact is new --- it is
+elementary and plausibly known to Tao or folklore --- only that we make it explicit \emph{as an
+obstruction to this reduction}. External constants are snippet-sourced (primary PDFs were
+inaccessible) and flagged in the source. See the title footnote.
+
+\paragraph{Organization.}
+Section~\ref{sec:notation} fixes notation. Section~\ref{sec:history} surveys the density results.
+Section~\ref{sec:tao} reproduces Tao's framework and localizes where logarithmic density is forced.
+Section~\ref{sec:obstruction} states and proves the obstruction; Section~\ref{sec:numerics} gives the
+numerical corroboration; Section~\ref{sec:scope} delimits scope. Section~\ref{sec:cycles}
+reconstructs cycle exclusion. Section~\ref{sec:computational} notes the computational frontier.
+Section~\ref{sec:open} lists open questions.
 
 %======================================================================
-\section{Notation and Preliminaries}
+\section{Notation and preliminaries}
 \label{sec:notation}
 
-\TODO{Lock down notation following Lagarias 2010. Cross-reference with
-\texttt{shared/notation.md}.}
+We follow Lagarias~\citep{lagarias1985,lagarias2010}. Throughout, $\nat=\{1,2,\dots\}$;
+$\val=\nu_2$ is the $2$-adic valuation and $\nu_3$ the $3$-adic valuation; $e(t):=e^{2\pi i t}$;
+$\log$ is natural; $\tot(3^n)=2\cdot3^{n-1}$ is Euler's totient.
 
-\begin{definition}[Collatz map]
-The \emph{Collatz map} $\T : \nat \to \nat$ is
-\[
-   \T(n) = \begin{cases} n/2 & n \equiv 0 \pmod 2, \\
-                          3n+1 & n \equiv 1 \pmod 2. \end{cases}
-\]
+\begin{definition}[Collatz and Syracuse maps]
+The accelerated Collatz map $\T$ is~\eqref{eq:Tmap}. The \emph{Syracuse map} on the odd integers is
+$\Syr(n) = (3n+1)/2^{\val(3n+1)}$, i.e.\ $\T$ run until the orbit is odd again.
 \end{definition}
 
-\begin{definition}[Stopping time]
-The \emph{stopping time} of $n$ is $\stoptime{n} = \min\{k \geq 1 : \Tit{k}(n) < n\}$,
-and the \emph{total stopping time} is
-$\totstoptime{n} = \min\{k \geq 0 : \Tit{k}(n) = 1\}$.
-\end{definition}
-
-\begin{definition}[Parity vector]
-The \emph{parity vector} of $n$ at length $k$ is
-$\pvk{k}{n} = (\Tit{0}(n) \bmod 2, \Tit{1}(n) \bmod 2, \ldots, \Tit{k-1}(n) \bmod 2) \in \{0,1\}^k$.
+\begin{definition}[Stopping times]
+The \emph{stopping time} is $\stoptime{n}=\min\{k\ge1:\T^k(n)<n\}$; the \emph{total stopping time}
+is $\totstoptime{n}=\min\{k\ge0:\T^k(n)=1\}$.
 \end{definition}
 
 \begin{conjecture}[Collatz, 1937]\label{conj:collatz}
-For every $n \in \nat$, there exists $k \geq 0$ with $\Tit{k}(n) = 1$.
+For every $n\in\nat$ there is $k\ge0$ with $\T^k(n)=1$; equivalently $\Colmin(n)=1$.
 \end{conjecture}
 
-\TODO{Recall accelerated Syracuse map $\Cmap$, the 2-adic extension,
-and the conjecture's equivalent forms.}
+The reduction to odd integers is standard: writing $\Syrmin(n):=\inf_{k\ge0}\Syr^k(n)$ for odd $n$,
+\begin{equation}
+   \Colmin(N) = \Syrmin\!\big(N/2^{\val(N)}\big),
+   \label{eq:colsyr}
+\end{equation}
+since the minimum of a $\T$-orbit is attained at an odd value (unless the orbit reaches $1$).
+Thus density statements about $\Colmin$ on $\nat$ reduce to density statements about $\Syrmin$ on
+the odds; we use this in Section~\ref{sec:tao}.
 
 %======================================================================
-\section{History of the Conjecture}
+\section{Density results: a survey}
 \label{sec:history}
 
-\TODO{Sketch the pre-1990 timeline; cite Lagarias bibliography.}
+We organize the ``almost all'' results by what they control.
+
+\paragraph{Finite stopping time (natural density $1$).}
+Terras~\citep{terras1976} and, independently, Everett~\citep{everett1977} proved that
+$\{n:\stoptime{n}<\infty\}$ has natural density $1$: almost every orbit dips below its start.
+The proof encodes the trajectory by its parity vector and applies a local central limit theorem to
+the (asymptotically Gaussian) count of odd steps. \emph{What it misses:} a density-$0$ set is
+unaddressed, and ``stopping time finite'' is far weaker than ``total stopping time finite.''
+
+\paragraph{Descent exponents.}
+Crandall~\citep{crandall1978} gave the first power lower bound $\#\{m\le x:\totstoptime{m}<\infty\}\ge x^c$.
+Korec~\citep{korec1994} % [CONSTANT UNVERIFIED vs primary]
+proved that for every $c>\log_4 3 = 0.7925\ldots$, almost every $n$ (natural density) has some
+iterate $\T^k(n)<n^c$. The exponent $\log_4 3$ is the balance point at which the factor-$3$ gain of an
+odd step is offset by the factor-$4$ loss of (on average) two halvings.
+
+\paragraph{Pre-image density.}
+Building on Krasikov's difference inequalities, Applegate--Lagarias~\citep{applegatelagarias1995} and
+Krasikov--Lagarias~\citep{krasikov2003} showed that for any fixed $a$ with $3\nmid a$, the number of
+$n\le x$ whose forward orbit meets $a$ is at least $x^{\gamma}$ with $\gamma>0.84$. This was the
+strongest unconditional density-of-descent result before Tao 2022. \emph{What it misses:} $x^{0.84}<x$
+is consistent with a positive-density set never reaching $1$.
+
+\paragraph{Heuristics and limit laws.}
+Lagarias--Weiss~\citep{lagariasweiss1992} model parities as fair coin flips, predicting
+$\totstoptime{n}\approx \gamma_{LW}\log n$ with $\gamma_{LW}=2/\log(4/3)\approx 6.95$, in striking
+agreement with computation, and predicting no cycles and no divergence. Sinai~\citep{sinai2003} turned
+the random-walk picture into rigorous limit laws --- but on $\Z_2$, not on $\nat$, and without
+addressing convergence.
+
+\paragraph{The $2$-adic conjugacy.}
+Bernstein--Lagarias~\citep{bernsteinlagarias1996} exhibit a continuous, Haar-measure-preserving
+conjugacy of $\T$ on $\Z_2$ with the shift; Akin~\citep{akin2004} % [CONSTANT UNVERIFIED vs primary]
+uses the fact that this conjugacy does not single out $\nat\subset\Z_2$ to explain why measure-respecting
+tools cannot, by themselves, detect the integers --- a structural reason the problem is hard.
 
 %======================================================================
-\section{Density Results (Terras--Krasikov--Lagarias)}
-\label{sec:density}
-
-\TODO{Theorem statements and proof sketches:
-(i) Terras 1976 --- almost every $n$ has finite stopping time;
-(ii) Krasikov inequalities;
-(iii) Lagarias's exponent improvements.}
-
-%======================================================================
-\section{Tao's 2019 Framework}
+\section{Tao's 2022 framework and where logarithmic density is forced}
 \label{sec:tao}
 
-\TODO{Lay out Tao's machinery:
-(i) syracuse random variables on $\Z_2$;
-(ii) PDE-style propagation of log-density;
-(iii) the ``almost bounded'' qualifier.}
-
-\begin{theorem}[Tao 2019, informal]
-For any function $f$ tending to infinity, $\Tit{k}(n) < f(n)$ for a
-set of $n$ of full logarithmic density.
+\subsection{The theorem}
+\begin{theorem}[\citealp{tao2022}]\label{thm:tao}
+For any $f:\nat\to\R$ with $f(N)\to\infty$, the failure set
+$E_f=\{N:\Colmin(N)>f(N)\}$ has logarithmic density zero:
+$\displaystyle \frac{1}{\log X}\sum_{N\le X,\,N\in E_f}\frac1N \to 0$ as $X\to\infty$.
 \end{theorem}
+The same holds for $\Syrmin$ on the odds, via~\eqref{eq:colsyr}. The function $f$ may grow as slowly
+as one likes. Theorem~\ref{thm:tao} leaves open: nontrivial cycles (any finite set has density $0$),
+divergent orbits from a density-$0$ set, and the upgrade of ``almost bounded'' ($\le f$) to
+``bounded'' ($\le C$).
 
-\TODO{State precisely; reproduce the key Lemma; discuss the gap.}
+\subsection{The Syracuse random variables}
+The combinatorial heart is a family of distributions on $\Zthree{n}$. Unwinding the affine action of
+$\T$ over $n$ Syracuse steps with $2$-adic valuations $a_j=\val\!\big(3\Syr^{j-1}(\cdot)+1\big)$ gives
+an offset that, randomized, becomes:
+
+\begin{definition}[Syracuse random variable; \citealp{tao2022,tao2020blog}]\label{def:syrac}
+Let $a_1,\dots,a_n$ be i.i.d.\ $\Geom$: $\PP(a=k)=2^{-k}$ for $k\ge1$ (mean $2$). The
+\emph{Syracuse random variable} on $\Zthree{n}$ is
+\begin{equation}
+  X_n := \Syrac(\Zthree{n}) = \sum_{j=1}^n 3^{\,n-j}\, 2^{-(a_j+a_{j+1}+\cdots+a_n)} \pmod{3^n},
+  \label{eq:syrac}
+\end{equation}
+where $2^{-1}\equiv (3^n+1)/2 \pmod{3^n}$. Its law $\nu_n$ is supported on the units $\Zthreex{n}$.
+\end{definition}
+
+Write $\charfn{n}(\xi)=\E\!\big[e(-\xi X_n/3^n)\big]$ for the characteristic function and
+\[
+   c_n := \min_{b\in\Zthree{n},\,3\nmid b}\PP(X_n=b).
+\]
+Tao~\citep{tao2020blog} proves submultiplicativity $c_{n_1+n_2-1}\ge c_{n_1}c_{n_2}$, so
+$\beta:=\lim_n \tfrac{-\log c_n}{n\log 3}\ge 1$ exists; the ``$\beta=1$'' heuristic is the conjecture
+$c_n=3^{-n+o(n)}$ (equidistribution at exponential \emph{order}). The technical engine of
+Theorem~\ref{thm:tao} is a \emph{superpolynomial} decay estimate
+\begin{equation}
+  |\charfn{n}(\xi)| \le C_A\, n^{-A}\quad(\forall A>0),\qquad \text{for } 3\nmid\xi,
+  \label{eq:taudecay}
+\end{equation}
+(Tao's Proposition~1.17), uniform in $\xi$ with $3\nmid\xi$. Crucially \eqref{eq:taudecay} is
+superpolynomial but \emph{not} exponential in $n$.
+
+\subsection{Where logarithmic density is forced}
+\label{subsec:localization}
+Two places in the transport scheme use a measure on $\nat$; only one is essential.
+
+\begin{lemma}[dyadic decomposition is measure-neutral]\label{lem:dyadic}
+Let $\mathcal P$ be a property of odd integers with $\{m \text{ odd}:\neg\mathcal P(m)\}$ of natural
+density $0$ among the odds. Then $\{N\in\nat:\neg\mathcal P(N/2^{\val(N)})\}$ has natural density $0$
+in $\nat$.
+\end{lemma}
+\begin{proof}
+Let $B=\{m\text{ odd}:\neg\mathcal P(m)\}$, $\#\{m\in B:m\le Y\}=o(Y)$. The bad set in $\nat$ is
+$\bigsqcup_{a\ge0}2^a B$, so
+$\#\{N\le X:\neg\mathcal P(N/2^{\val(N)})\}=\sum_{a=0}^{\lfloor\log_2 X\rfloor}\#\{m\in B:m\le X/2^a\}$.
+Fix $\eps>0$ and $Y_0$ with $\#\{m\in B:m\le Y\}\le \eps Y$ for $Y\ge Y_0$. Splitting the sum at
+$a^*=\lfloor\log_2(X/Y_0)\rfloor$: the terms $a\le a^*$ contribute $\le \sum_a \eps X/2^a\le 2\eps X$;
+the terms $a>a^*$ number $\le\log_2 X$, each $<Y_0$, totalling $o(X)$. Hence the bad count is
+$\le 2\eps X+o(X)$; let $\eps\to0$.
+\end{proof}
+
+So the entire log-vs-natural gap lives in the odd-integer (Syracuse) statement.
+The essential appearance is the stationarity of the sampling measure. On the log scale $u=\log N$, the
+first-passage Syracuse map acts as an approximate \emph{translation} $u\mapsto u-D_n$ by the random
+log-drift
+\begin{equation}
+  D_n=\Big(\sum_{j=1}^n a_j\Big)\log 2-n\log 3.
+  \label{eq:drift}
+\end{equation}
+Lebesgue measure in $u$ --- i.e.\ the \emph{logarithmic} measure $dN/N$ --- is translation-invariant,
+hence approximately stationary; this is why Tao obtains logarithmic density. Under \emph{natural}-density
+sampling $dN$, the density on the $u$-line is $e^u\,du$, which a translation multiplies by the
+Radon--Nikodym factor $e^{-D_n}$. Because $D_n$ in \eqref{eq:drift} is itself a function of the orbit ---
+correlated with the residue mod $3^n$ one is trying to equidistribute --- this factor couples
+size-distortion to residue. We record the consequence informally.
+
+\begin{remark}[localization of the obstruction]\label{rem:localization}
+Upgrading Theorem~\ref{thm:tao} to natural density requires controlling the \emph{joint} law of
+$(\,X_n,\ D_n\,)$ --- residue and drift --- strongly enough that the reweighting by $e^{-D_n}$ does not
+destroy equidistribution; the marginal residue control underlying~\eqref{eq:taudecay} is not by itself
+enough. This localization is consistent with Tao's own remark that the restriction to logarithmic
+density is ``mainly technical.''
+\end{remark}
+
+The natural attempt to act on Remark~\ref{rem:localization} --- discharge $e^{-D_n}$ by a single scalar
+exponential (Esscher) tilt of the valuation law and then ask for total-variation equidistribution of the
+tilted Syracuse law --- is exactly the route the next section shows to be obstructed.
 
 %======================================================================
-\section{Computational Verification}
+\section{A natural-density obstruction for the scalar-Esscher route}
+\label{sec:obstruction}
+
+This section is the article's new content. The result is a clean negative statement: the scalar-Esscher
+mixing route cannot deliver natural density, because of a permanent modulo-$3$ imbalance. The argument is
+elementary and self-contained.
+
+\subsection{The tilted law and the diagnostic}
+For a real tilt $s>-1$, let the \emph{$s$-tilted} Syracuse variable $X_n^{(s)}$ be defined
+by~\eqref{eq:syrac} with the valuations $a_j$ drawn i.i.d.\ from the exponentially tilted geometric law
+\begin{equation}
+   \PP_s(a=k)\propto 2^{-k(1+s)}=r^k,\qquad r=2^{-(1+s)}\in(0,1),\quad k\ge1,
+   \label{eq:tilt}
+\end{equation}
+which is geometric with ratio $r$ and mean $\E_s[a]=1/(1-r)$. The \emph{descent-balance tilt} $\Esstar$
+is the unique $s$ with $\E_s[a]=\log_2 3$ (so the multiplier $3^n 2^{-\sum a_j}$ has log-mean $0$ and
+natural-density sampling is, to leading order, stationary): solving $1/(1-r)=\log_2 3$ gives
+$r=1-1/\log_2 3=0.36907\ldots$ and
+\begin{equation}
+   \Esstar=-\log_2\!\big(1-1/\log_2 3\big)-1=0.438033\ldots
+   \label{eq:sstar}
+\end{equation}
+% [CONSTANT UNVERIFIED vs primary] -- s* is an internal definition, value reproduced numerically.
+Write $\nu_n^{(s)}=\mathrm{law}(X_n^{(s)})$, $U$ for the uniform law on the units $\Zthreex{n}$,
+$\CP_n=\sum_b\nu_n(b)^2=\|\nu_n\|_{\ell^2}^2$, and the \emph{collision diagnostic}
+\begin{equation}
+   \Edist_n:=\tot(3^n)\,\CP_n-1.
+   \label{eq:Endef}
+\end{equation}
+
+\subsection{The permanent modulo-3 imbalance}
+\begin{lemma}\label{lem:mod3}
+For every $n\ge1$ and every admissible tilt $s>-1$ (with $r=2^{-(1+s)}$),
+\[
+   \PP(X_n^{(s)}\equiv 0)=0,\qquad
+   \PP(X_n^{(s)}\equiv 1)=\frac{r}{1+r},\qquad
+   \PP(X_n^{(s)}\equiv 2)=\frac{1}{1+r}\pmod 3 .
+\]
+In particular, for the untilted law ($s=0$, $r=\tfrac12$) the projection is $(0,\tfrac13,\tfrac23)$,
+independent of $n$.
+\end{lemma}
+\begin{proof}
+Reduce~\eqref{eq:syrac} modulo $3$. For each $j<n$ the term carries a factor $3^{n-j}$ with
+$n-j\ge1$, hence $\equiv 0\pmod 3$; only the $j=n$ term survives, so
+$X_n \equiv 3^0\cdot 2^{-a_n} = 2^{-a_n}\pmod 3$. Since $2\equiv -1\pmod 3$, we get
+$2^{-a_n}\equiv(-1)^{a_n}\pmod 3$, which is $1$ if $a_n$ is even and $2$ if $a_n$ is odd, and never $0$.
+Under~\eqref{eq:tilt}, $\PP(a\text{ even})=\sum_{k\ge2,\text{ even}} r^k/\!\sum_{k\ge1}r^k
+=\tfrac{r^2/(1-r^2)}{r/(1-r)}=\tfrac{r}{1+r}$ and $\PP(a\text{ odd})=\tfrac{1}{1+r}$. Hence
+$\PP(X_n\equiv1)=\PP(a_n\text{ even})=\tfrac{r}{1+r}$ and $\PP(X_n\equiv2)=\PP(a_n\text{ odd})=\tfrac{1}{1+r}$.
+The dependence on $n$ collapsed to the single valuation $a_n$, so the law is the same at every $n$.
+\end{proof}
+
+\begin{remark}
+The projection equals the $n=1$ law for all $n$; the imbalance is frozen in at every level. It is
+uniform-on-units $(0,\tfrac12,\tfrac12)$ only in the limit $r\to1$, i.e.\ $s\to-1$ (the non-summable
+edge). At the descent-balance tilt $\Esstar$, $r=0.36907$ gives $(0,0.2696,0.7304)$ --- \emph{more}
+imbalanced than untilted. No admissible scalar tilt removes the imbalance.
+\end{remark}
+
+\subsection{Total variation is bounded below}
+\begin{lemma}[data-processing for total variation]\label{lem:dpi}
+For probability measures $\mu,\rho$ on a finite set $\Omega$ and any map $\pi:\Omega\to\Omega'$,
+$\TV(\pi_*\mu,\pi_*\rho)\le\TV(\mu,\rho)$.
+\end{lemma}
+\begin{proof}
+$\TV(\mu,\rho)=\sup_{A\subseteq\Omega}|\mu(A)-\rho(A)|$. For $B\subseteq\Omega'$,
+$|\pi_*\mu(B)-\pi_*\rho(B)|=|\mu(\pi^{-1}B)-\rho(\pi^{-1}B)|\le\TV(\mu,\rho)$; take the sup over $B$.
+\end{proof}
+
+\begin{theorem}[the scalar-Esscher route is obstructed]\label{thm:obstruction}
+For every $n\ge1$ and every admissible scalar tilt $s>-1$ (with $r=2^{-(1+s)}$),
+\begin{equation}
+   \TV\big(\nu_n^{(s)},\,U\big)\;\ge\;\frac{1-r}{2(1+r)}\;>\;0,
+   \label{eq:tiltbound}
+\end{equation}
+and in particular $\TV(\nu_n,U)\ge\tfrac16$ for the untilted law, for all $n$. Hence $\nu_n^{(s)}$ cannot
+converge to $U$ in total variation for any fixed scalar tilt.
+\end{theorem}
+\begin{proof}
+Apply Lemma~\ref{lem:dpi} with $\mu=\nu_n^{(s)}$, $\rho=U$, and $\pi=(\bmod\,3)$. By
+Lemma~\ref{lem:mod3}, $\pi_*\nu_n^{(s)}=\big(0,\tfrac{r}{1+r},\tfrac{1}{1+r}\big)$. The units
+$\Zthreex{n}$ split evenly between the classes $1$ and $2$ mod $3$ (exactly $3^{n-1}=\tot(3^n)/2$ in
+each), so $\pi_* U=(0,\tfrac12,\tfrac12)$. Therefore
+\[
+  \TV(\nu_n^{(s)},U)\ge\TV(\pi_*\nu_n^{(s)},\pi_* U)
+  =\tfrac12\!\left(\Big|\tfrac{r}{1+r}-\tfrac12\Big|+\Big|\tfrac{1}{1+r}-\tfrac12\Big|\right)
+  =\Big|\tfrac{1}{1+r}-\tfrac12\Big|=\frac{1-r}{2(1+r)} .
+\]
+For $s=0$, $r=\tfrac12$: $\tfrac{1-\frac12}{2(1+\frac12)}=\tfrac{1/2}{3}=\tfrac16$.
+\end{proof}
+
+The total-variation equidistribution required by the scalar-Esscher route --- i.e.\ a hypothesis of the
+form ``$\nu_n^{(s)}\to U$ in TV at a quantitative rate,'' which is what a Plancherel passage from
+exponential Fourier decay would deliver and what the natural-density transport would consume --- is
+therefore impossible. The only correct way to keep a TV statement is to compare $\nu_n$ not to
+uniform-on-units but to a measure that respects the coset structure mod $3$ (and its lifts); we return to
+this in Section~\ref{sec:scope}.
+
+\begin{remark}[the $\ell^2$-to-TV bridge]\label{rem:bridge}
+Since $\nu_n$ and $U$ are both supported on the $\tot(3^n)$ units, $\nu_n-U$ is supported there, so
+$\langle\nu_n,U\rangle=1/\tot(3^n)$, $\|\nu_n-U\|_{\ell^2}^2=\CP_n-1/\tot(3^n)$, and by Cauchy--Schwarz
+over the support,
+\begin{equation}
+  \TV(\nu_n,U)=\tfrac12\|\nu_n-U\|_{\ell^1}\le\tfrac12\sqrt{\tot(3^n)}\,\|\nu_n-U\|_{\ell^2}
+  =\tfrac12\sqrt{\Edist_n}.
+  \label{eq:l2tv}
+\end{equation}
+The factor $\sqrt{\tot(3^n)}\asymp 3^{n/2}$ is precisely why a natural-density upgrade through this
+bridge would need \emph{exponential} Fourier decay $|\charfn{n}(\xi)|\le 3^{-\theta n}$ ($\theta>\tfrac12$),
+not the superpolynomial \eqref{eq:taudecay}. But \eqref{eq:l2tv} only \emph{upper}-bounds TV: it cannot
+defeat the \emph{lower} bound \eqref{eq:tiltbound}. The diagnostic $\Edist_n$ is the full-ring $\ell^2$
+quantity; the obstruction \eqref{eq:tiltbound} lives in the mod-$3$ marginal. Section~\ref{sec:numerics}
+shows both fail together.
+\end{remark}
+
+%----------------------------------------------------------------------
+\section{Numerical corroboration: $\Edist_n$ diverges, and a phase transition}
+\label{sec:numerics}
+
+The obstruction of Section~\ref{sec:obstruction} is exact and $n$-independent. We complement it with an
+exact computation of the full-ring diagnostic $\Edist_n$ \eqref{eq:Endef}, which we find not only fails to
+vanish but \emph{diverges}, with no turnover, to the memory frontier.
+
+\paragraph{Method.}
+The law $\nu_n^{(s)}$ on $\Zthree{n}$ is computed exactly by a forward recursion
+$W_m=2^{-a_m}(W_{m-1}+3^{n-m})\pmod{3^n}$, $W_0=0$, $X_n=W_n$, in which the geometric average over $a_m$
+is, on each $3$-adic valuation shell (where multiply-by-$2^{-1}$ is a cyclic shift in the discrete log,
+$2$ being a primitive root mod $3^n$), a cyclic correlation evaluated by one FFT. This gives the exact
+law in $O(n\,3^n\log 3^n)$ time and $O(3^n)$ memory, with the geometric tail summed in closed form
+(no truncation). The implementation was cross-checked against an independent direct dynamic program for
+$2\le n\le 6$ (agreement $<10^{-15}$ in the law and exact in $\Edist_n$ at printed precision) and
+$\CP_n$ was independently cross-validated by Plancherel ($\CP_n=3^{-n}\sum_\xi|\charfn{n}(\xi)|^2$) at
+every $n$. Scripts and data accompany the project.
+
+\paragraph{Untilted ($s=0$): linear divergence.}
+$\Edist_n$ for $n=2,\dots,17$ is
+$0.429,0.736,1.046,1.356,1.667,1.977,2.288,2.599,2.911,3.223,3.535,3.848,4.162,4.476,4.790,5.103$,
+with constant successive differences $\approx0.312$ and the linear fit
+$\Edist_n\approx 0.3117\,n-0.2045$ (residual $<3\times10^{-3}$, $n\ge5$). So
+$\CP_n=3^{-n}\mathrm{poly}(n)$ --- exactly ``$\beta=1$ order'' with a linearly growing polynomial
+correction --- and by \eqref{eq:l2tv} the bound $\tfrac12\sqrt{\Edist_n}$ grows without bound.
+
+\paragraph{Descent-balance tilt ($s=\Esstar$): exponential divergence.}
+$\Edist_n^{(\Esstar)}$ for $n=2,\dots,17$ is
+$0.85,1.77,3.09,4.97,7.64,11.42,16.74,24.22,34.70,49.36,69.85,98.42,138.23,193.6,269.5,373.6$,
+fitting $\Edist_n^{(\Esstar)}\approx 0.92\cdot(1.434)^n$ (log-linear, $n\ge6$), the successive ratios
+declining slowly ($2.08\to1.39$) but staying firmly above $1$. There is \emph{no turnover and no sign of
+one} to $n=17$. The single scalar tilt that the natural-density transport requires makes equidistribution
+\emph{exponentially worse}.
+
+\begin{table}[t]
+\centering
+\begin{tabular}{@{}rrrrr@{}}
+\toprule
+$n$ & $\Edist_n$ (untilted) & ratio & $\Edist_n^{(\Esstar)}$ (tilt $\Esstar$) & ratio\\
+\midrule
+ 5 & 1.356 & --   & 4.97  & --   \\
+10 & 2.911 & --   & 34.70 & --   \\
+14 & 4.162 & 1.08 & 138.23& 1.40 \\
+15 & 4.476 & 1.08 & 193.6 & 1.40 \\
+16 & 4.790 & 1.07 & 269.5 & 1.39 \\
+17 & 5.103 & 1.07 & 373.6 & 1.39 \\
+\bottomrule
+\end{tabular}
+\caption{The collision diagnostic $\Edist_n$ diverges with no turnover to the memory frontier
+$n=17$ ($3^{17}\approx1.3\times10^8$; exact FFT computation, peak memory $\approx 9$\,GB at $n=17$).
+``ratio'' is $\Edist_n/\Edist_{n-1}$. Untilted: linear growth (ratio $\to1$, increments
+$\approx0.31$). Descent-balance tilt $\Esstar$: geometric growth (ratio $\to\approx1.4$).
+The required tilt makes equidistribution exponentially worse.}
+% [VALUES from committed scripts -- exact FFT computation, cross-checked vs direct DP and Plancherel]
+\label{tab:En}
+\end{table}
+
+\paragraph{A phase transition in tilt space.}
+Sweeping $\Edist_n(s)$ over $s>-1$ reveals a clean transition near $s_c\approx-0.4$ (mean valuation
+$\E[a]\approx3$): for $s\lesssim-0.45$ (tail \emph{fattened}, $\E[a]>2$) the diagnostic $\Edist_n$ is
+\emph{bounded} in $n$ and tends to $0$ as $s\to-1^+$ (e.g.\ $s=-0.9$ gives $\Edist_n=0.0044$, flat in
+$n$); for $s\gtrsim-0.4$ it \emph{grows} (linearly at $s=0$, exponentially at $\Esstar$). The two
+requirements are \emph{incompatible under any scalar tilt}:
+\begin{quote}
+\emph{mean-drift-neutrality} (needed for natural-density stationarity, Remark~\ref{rem:localization})
+wants $\E[a]=\log_2 3\approx1.585$, i.e.\ $\Esstar=+0.438$; \emph{residue-spreading} (needed for
+equidistribution, $\Edist_n\to0$) wants $\E[a]\gtrsim3$, i.e.\ $s\lesssim-0.45$. The required tilt
+$\Esstar$ lands firmly on the non-equidistributing side of $s_c$.
+\end{quote}
+Frequency-localized ($\nu_3(\xi)$-stratified) and $n$-dependent tilts were tested and do not change the
+picture ($\Edist_n$ still diverges, driven by the high-frequency strata where $\Esstar$ must be applied).
+
+\begin{remark}
+Consistency with Section~\ref{sec:obstruction}: the exact bound $\TV\ge\tfrac16$ lives in the mod-$3$
+marginal (the $3\mid\xi$ frequencies), whereas $\Edist_n$ is the full-ring $\ell^2$ excess (all
+frequencies). These are different quantities; the experiment shows they fail together --- the marginal
+is permanently imbalanced \emph{and} the full diagnostic diverges --- and the phase transition explains
+the mechanism: the unique scalar tilt that re-centers the drift is precisely the one that maximizes,
+rather than cancels, the residue collision. All of $\Edist_n$ here (even $\sim1.43^n\ll3^n$) is $3^{o(n)}$,
+hence consistent with $\beta=1$; the obstruction concerns the strictly stronger exact-leading-constant
+requirement $\Edist_n\to0$, not $\beta=1$.
+\end{remark}
+
+%----------------------------------------------------------------------
+\section{Scope of the obstruction}
+\label{sec:scope}
+
+We state precisely what is and is not obstructed.
+
+\paragraph{Obstructed (the result).}
+The route that discharges the natural-density Radon--Nikodym factor $e^{-D_n}$ by a \emph{single scalar}
+Esscher tilt and then obtains natural density from \emph{total-variation} convergence $\nu_n^{(s)}\to U$
+of the tilted Syracuse law toward uniform-on-units. By Theorem~\ref{thm:obstruction} this convergence is
+impossible for every scalar $s$; by Section~\ref{sec:numerics} the associated diagnostic diverges.
+
+\paragraph{Not obstructed (open).}
+\begin{enumerate}[label=(\roman*)]
+\item \emph{Coset-respecting reference.} Compare $\nu_n$ to the measure that is uniform \emph{within} the
+coset structure mod $3^k$ that the offset actually realizes, rather than to uniform-on-units. Then the
+mod-$3$ imbalance is built into the target and the TV lower bound \eqref{eq:tiltbound} vanishes by
+construction. Whether Tao's transport then closes in natural density is open; this is the natural next
+reduction and is \emph{not} settled here. (Tao's framework handles the coset part by a separate device,
+consistent with this.)
+\item \emph{Non-scalar change of measure.} A multi-parameter tilt, an operator- or $\xi$-dependent
+reweighting outside the scalar-geometric family, or a tilt acting on the joint $(X_n,D_n)$ law rather
+than the marginal valuation, is not covered by Theorem~\ref{thm:obstruction}.
+\item \emph{Mechanisms not factoring through this TV statement} are untouched.
+\end{enumerate}
+
+\paragraph{Says nothing about.}
+Whether Collatz natural density holds --- a failure of \emph{this reduction} is not evidence either way,
+and Theorem~\ref{thm:tao} is unaffected. Nor about the $\beta=1$ conjecture, which remains open and is
+consistent with all our data. In one line: \emph{this reduction is dead; the destination, and every other
+route to it, is alive.}
+
+\paragraph{Novelty.}
+% [PRIOR-ART CHECK PENDING]
+The mod-$3$ imbalance is elementary (it is literally the $n=1$ law) and is plausibly already known to Tao
+or folklore --- his Proposition~1.17 bounding only the $3\nmid\xi$ frequencies is \emph{consistent} with
+awareness that the coset part needs separate treatment. We therefore phrase the contribution defensively:
+\emph{we observe / make explicit} that this elementary fact obstructs the scalar-Esscher TV route, and we
+corroborate it numerically (the $\Edist_n$ divergence and the tilt-space phase transition, which we
+believe are not previously recorded \emph{in this packaging} --- also
+% [PRIOR-ART CHECK PENDING]
+pending a prior-art check). We do not claim to have discovered the mod-$3$ imbalance. Settling priority
+requires the primary sources~\citep{tao2022,tao2020blog}, which were inaccessible during preparation.
+
+%======================================================================
+\section{Cycle exclusion, and a correction to a folklore bottleneck}
+\label{sec:cycles}
+
+A separate line constrains nontrivial \emph{cycles}. A cycle of $\T$ with $K$ odd (``$o$-'') steps and
+total accelerated length $N=K+S$ satisfies the closed-form relation $x_0=\beta\,2^N/(2^N-3^K)$ with
+$\beta\in\Z[\tfrac12]_{>0}$, forcing $2^N>3^K$, i.e.
+\begin{equation}
+   \Lambda := N\log 2 - K\log 3 > 0,\qquad 2^N-3^K\approx 3^K\Lambda\ \text{ for small }\Lambda.
+   \label{eq:lambda}
+\end{equation}
+The strategy traps the cycle length $K$ between an upper bound from transcendence theory and a lower bound
+from the verified frontier.
+
+\begin{itemize}
+\item \textbf{Steiner~\citep{steiner1977}} ruled out nontrivial $1$-circuit cycles by bounding $K$ via
+Baker's theorem and clearing finitely many cases with the continued fraction of $\log_2 3$.
+% [CONSTANT UNVERIFIED vs primary]
+\item \textbf{Eliahou~\citep{eliahou1993}} proved the period of any nontrivial cycle is
+$301994\,a+17087915\,b+85137581\,c$ with $b\ge1$, $ac=0$, whence $\ge 1.7\times10^7$; these coefficients
+are numerators/denominators of convergents of $\log_2 3$.
+\item \textbf{Simons~\citep{simons2005}, Simons--de Weger~\citep{simonsdeweger2005}} excluded $m$-cycles
+for small $m$; \textbf{Hercher~\citep{hercher2023}} reached $m\le 91$. % [CONSTANT UNVERIFIED vs primary]
+\end{itemize}
+
+The operative transcendence input is a lower bound for the linear form in \emph{two} logarithms
+\eqref{eq:lambda}, supplied by Laurent--Mignotte--Nesterenko~\citep{lmn1995} (leading constant
+$24.34\,D^4$) and Laurent's interpolation-determinant method. % [CONSTANT UNVERIFIED vs primary]
+The cleanest packaged form is de Weger's, which we verified numerically:
+\begin{equation}
+   0<(K+S)\log2-K\log3<2^{-0.158\,K}\quad\text{has no solution for }K\ge32
+   \label{eq:deweger}
+\end{equation}
+(largest solution at $K=29$; none for $K\ge32$, checked to $K=4999$). % [CONSTANT UNVERIFIED vs primary]
+Combined with a lower bound on $K$ from Crandall's lemma and the verified frontier $B$, this yields the
+threshold $m^*$.
+
+\begin{remark}[correction to a folklore framing]\label{rem:cyclecorrection}
+% [PRIOR-ART CHECK PENDING]
+It is sometimes stated --- including in our own earlier survey notes --- that the bottleneck to pushing
+$m^*$ higher is the effective irrationality measure $\mu(\log_2 3)$. This is at best imprecise: the
+published proofs obtain the upper bound on $K$ from the \emph{two-logarithm} estimate~\eqref{eq:lambda},
+in which the heights of $2$ and $3$ enter \emph{separately}, and never use $\mu(\log_2 3)$. The lever for
+improvement is therefore (a) a sharper two-log constant (e.g.\ Laurent~\citep{laurent2008}, if it improves
+on $24.34$ in the relevant window --- value unverified here), (b) a larger verified frontier $B$, or
+(c) sharper circuit averaging (where Hercher made his gain), not $\mu(\log_2 3)$. Whether some \emph{other}
+argument could route through $\mu(\log_2 3)$ is open. We flag this as a correction to be confirmed against
+the primary sources~\citep{simons2005,hercher2023,lmn1995,laurent2008}.
+\end{remark}
+
+Cycle exclusion says nothing about divergent orbits, and ruling out cycles for \emph{all} $m$ would
+require Diophantine input (a Lang--Waldschmidt-type two-log bound) far beyond current technology.
+
+%======================================================================
+\section{Computational frontier}
 \label{sec:computational}
 
-\TODO{Survey verification frontier (Barina 2020 to $\approx 2^{68}$); report
-statistics from \texttt{collatz/experiments/}: stopping-time distributions,
-mod $2^k$ residue analysis, candidate invariants.}
+Convergence has been verified to $n\le 2^{71}$~\citep{barina2025} % [CONSTANT UNVERIFIED vs primary]
+(Barina 2021~\citep{barina2021} reached $2^{68}$ and introduced the hierarchical-sieve speedup that made
+the extension feasible). Computation rules out cycles and divergent trajectories below the frontier, but
+is by construction silent above it. Its theoretical roles are to remove low-lying obstructions, to
+calibrate the Lagarias--Weiss heuristic, and to feed cycle-exclusion lower bounds. Our own computations
+are confined to the exact small-$n$ Syracuse laws of Section~\ref{sec:numerics} (an analysis tool, not a
+verification of the conjecture).
 
 %======================================================================
-\section{Our Contribution}
-\label{sec:contribution}
-
-\TODO{Original observation/result. If only a survey + experiments, say so.}
-
-%======================================================================
-\section{Open Questions}
+\section{Open questions}
 \label{sec:open}
 
-\TODO{Curated list. Seeds:
 \begin{enumerate}[label=(Q\arabic*)]
-  \item Can Tao's log-density approach be upgraded to natural density?
-  \item Is there an exact invariant on residue classes mod $2^k$ that
-    distinguishes orbits that converge from any hypothetical divergent ones?
-  \item What automaton-theoretic obstructions exist?
-\end{enumerate}}
+\item \textbf{Coset-respecting natural density.} Does comparing the Syracuse law to a coset-respecting
+reference (Section~\ref{sec:scope}(i)) --- rather than uniform-on-units --- let Tao's transport close in
+natural density? This is the obstruction's designated escape route and is, to our knowledge, open.
+\item \textbf{Non-scalar change of measure.} Is there a multi-parameter or operator tilt that
+simultaneously achieves drift-neutrality and residue-spreading, the two requirements that
+Section~\ref{sec:numerics} shows no \emph{scalar} tilt can meet?
+\item \textbf{$\beta=1$.} Prove $c_n=3^{-n+o(n)}$ (Tao's equidistribution heuristic). Our results neither
+establish nor contradict it.
+\item \textbf{Exact-leading-constant equidistribution.} Characterize the (necessarily non-scalar, or
+coset-respecting) sense in which $\Edist_n\to0$ \emph{could} hold, given that no scalar tilt achieves it.
+\item \textbf{Cycle exclusion.} Confirm Remark~\ref{rem:cyclecorrection} against the primary sources and,
+if the two-log constant of~\citep{laurent2008} improves on~\citep{lmn1995} in the cycle window, re-run the
+Simons--de Weger--Hercher squeeze with it and with the updated frontier $B=2^{71}$.
+\item \textbf{Divergent orbits.} Rule out divergence unconditionally --- the half of the conjecture that
+density methods, including Tao's, do not address.
+\end{enumerate}
 
 %======================================================================
 \section*{Acknowledgments}
-
-\TODO{Thank reviewers; reiterate AI collaboration disclosure;
-mention any compute/funding sources.}
+This article was produced by Alex Ye, an AI research agent built on Anthropic's Claude; the AI
+involvement is disclosed in the title footnote rather than on the author line. We thank the authors of
+the works surveyed here. We reiterate the verification posture of the title footnote: this is an
+expository survey plus one elementary negative result, with no claimed proof of the Collatz conjecture,
+and with all external constants and attributions flagged in the source as pending confirmation against
+primary sources.
 
 %======================================================================
 \bibliographystyle{plainnat}

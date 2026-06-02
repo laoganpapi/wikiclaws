@@ -46,6 +46,35 @@ from __future__ import annotations
 import numpy as np
 
 
+def _powers_of_2_mod(ML: int, sub_mod: int) -> np.ndarray:
+    """
+    Vectorized  [2^t mod sub_mod  :  t = 0 .. ML-1]  with no int64 overflow.
+
+    Computed by a blocked cumulative product:  pick a block length B with
+    (sub_mod-1) * 2^B < 2^63, take the base-2 cumprod within the block (<=2^B),
+    scale by the running value `cur`, reduce mod sub_mod, then advance `cur` by
+    2^B.  Drop-in replacement for the O(ML) Python loop `cur=(cur*2)%sub_mod`;
+    verified identical to it for sub_mod = 3^1..3^10 (see tests).  This makes the
+    GroupStructure build O(ML / B) numpy ops instead of O(ML) Python iterations,
+    which is what lets n reach 16-17 in reasonable wall time.
+    """
+    out = np.empty(ML, dtype=np.int64)
+    B = 60
+    while sub_mod > 1 and (1 << B) >= (2 ** 63) // sub_mod:
+        B -= 1
+    if B < 1:
+        B = 1
+    base_cum = np.left_shift(np.int64(1), np.arange(B, dtype=np.int64))  # [1,2,..,2^(B-1)]
+    cur = 1
+    t = 0
+    while t < ML:
+        L = min(B, ML - t)
+        out[t:t + L] = (cur * base_cum[:L]) % sub_mod
+        cur = int((cur * (1 << L)) % sub_mod)
+        t += L
+    return out
+
+
 # ----------------------------------------------------------------------------
 # Precomputed group structure on Z/3^n:  valuation shells + discrete logs
 # ----------------------------------------------------------------------------
@@ -69,19 +98,7 @@ class GroupStructure:
         modulus = 3 ** n
         self.modulus = modulus
         self.inv2 = (modulus + 1) // 2
-
-        # valuation of every element (vectorized): val[x] = #times 3 | x
-        val = np.zeros(modulus, dtype=np.int64)
-        x = np.arange(modulus, dtype=np.int64)
-        nonzero = x.copy()
-        nonzero[0] = 1  # avoid infinite loop on 0; handled separately
-        rem = nonzero.copy()
-        for _ in range(n):
-            divisible = (rem % 3 == 0)
-            val += divisible
-            rem = np.where(divisible, rem // 3, rem)
-        val[0] = n
-        self.val = val
+        self._val = None  # computed lazily (only the xi-dependent schemes need it)
 
         # shells in dlog order (vectorized via modular cumulative products)
         # shell L = { 3^L * 2^t mod 3^n : t=0..M_L-1 }, ML = 2*3^{n-L-1}
@@ -91,16 +108,9 @@ class GroupStructure:
             sub_mod = 3 ** (n - L)           # shell ~ (Z/sub_mod)^x scaled by 3^L
             ML = 2 * 3 ** (n - L - 1)         # = phi(sub_mod) = ord(2 mod sub_mod)
             mult3 = 3 ** L
-            # powers of 2 mod sub_mod for t=0..ML-1, then scale by 3^L (mod modulus)
-            p2 = np.empty(ML, dtype=np.int64)
-            cur = 1
-            # iterative modular power is O(ML) ints but cheap; vectorize via doubling
-            # use Python-int loop only over log-sized doublings is awkward; ML loop is
-            # fine in numpy by repeated mult is still O(ML). Do it with a tight loop
-            # over a numpy out using object-free int64 (safe: products < sub_mod*2).
-            for t in range(ML):
-                p2[t] = cur
-                cur = (cur * 2) % sub_mod
+            # powers of 2 mod sub_mod for t=0..ML-1, then scale by 3^L (mod modulus).
+            # Vectorized blocked cumprod (was an O(ML) Python loop); identical output.
+            p2 = _powers_of_2_mod(ML, sub_mod)
             idx = (mult3 * p2) % modulus
             self.shell_idx.append(idx)
             self.M.append(ML)
@@ -110,6 +120,23 @@ class GroupStructure:
 
         # roll amounts cache (3^{n-m} for m=1..n)
         self.add_const = [pow(3, n - m, modulus) for m in range(1, n + 1)]
+
+    @property
+    def val(self) -> np.ndarray:
+        """
+        3-adic valuation v_3(x) for every x in Z/3^n (v_3(0):=n).  Computed lazily
+        and assembled directly from the already-known valuation shells (shell L has
+        v_3 == L), which is O(3^n) memory writes -- far cheaper than n full-array
+        modulo passes.  Only the xi-dependent (v_3-stratified) schemes consult this;
+        the scalar E_n large-n runs never touch it, so they pay nothing for it.
+        """
+        if self._val is None:
+            v = np.empty(self.modulus, dtype=np.int64)
+            for L in range(self.n):
+                v[self.shell_idx[L]] = L
+            v[0] = self.n
+            self._val = v
+        return self._val
 
 
 def geom_kernel_dlog(ML: int, s: float) -> np.ndarray:

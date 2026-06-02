@@ -32,12 +32,11 @@ WHAT THIS FILE DOES
        H(A),  H(C),  chain-LB = Σ_i H(C_i|A_{<i},B_{<i}),  Δ₂ = H(C) − chain-LB,
    and the augmented certified constant, and watch them as n → ∞.
 
-3. `correlated_bernoulli_threshold`: the correlated-Bernoulli coupling (single p,
+3. `correlated_crossover`: the correlated-Bernoulli coupling (single p,
    pair-correlation ρ). Shows the TRAP: ρ>0 *appears* to raise the threshold above
    ψ, but that is choosing a favourable (non-i.i.d.) coupling — NOT a necessary
    condition valid for every UC family (an UC family sampled i.i.d. has ρ=0). The
-   companion `validate_via_sweep` confirms the only inequalities that survive a
-   full UC sweep are the ones whose threshold is ≤ ψ.
+   certification gate `sawin_lower_bound_min` rejects every c>ψ regardless.
 
 4. `augmented_inequality_pair(F)` + a sweep over all UC families n≤5: the
    FALSIFICATION test. Every candidate augmented inequality must satisfy LHS≤RHS
@@ -102,14 +101,23 @@ def augmented_constant_iid_family(F, n: int | None = None) -> dict:
 
         c_aug(F) = 1 − S / (budget − Δ₂).
 
-    Two honest budgets:
-      * budget = H(A)  (the real, provable union-closure budget)  → c_aug_HA.
-      * budget = H(C)  (the family's own union entropy; the value a *tight*
-        proof sees, since H(C)≤H(A))                              → c_aug_HC.
-    c_aug_HC ≤ c_aug_HA (H(C)≤H(A)), and c_AHS = 1 − S/H(C) is the Δ₂-DROPPED
-    baseline. KEY: subtracting Δ₂ from the denominator can only DECREASE the
-    denominator, hence DECREASE c_aug below the corresponding Δ₂-dropped value —
-    i.e. recapturing Δ₂ in this finite-family ledger pushes the certified
+    Choice of budget — THIS IS THE BUDGET-MISMATCH TRAP (dead_ends.md, 2026-06-02
+    Vector 2: the false 0.4295 / 0.5):
+      * budget = H(C)  → c_aug_HC. The CORRECT per-family ledger. H(C) is the
+        entropy that actually appears in the tight chain; at the asymptotic
+        extremizer H(C)=H(A) per coordinate, so this is the faithful object.
+        c_aug_HC = 1 − S/chain-LB.
+      * budget = H(A)  → c_aug_HA. **ARTIFACT — DO NOT TRUST.** On finite families
+        H(A) > H(C) (union closure concentrates mass: e.g. 2^[2] has H(A)=2 bits
+        but H(C)=1.6226 bits). Putting the LARGER H(A) in the denominator inflates
+        the constant spuriously (2^[2] → exactly 0.5). The gap H(A)−H(C) is the
+        union-closure slack that VANISHES per-coordinate asymptotically; treating
+        it as headroom for Δ₂ double-counts. This reproduces the documented 0.5 /
+        0.43 budget-mismatch and is reported ONLY to flag it as the trap.
+
+    c_AHS = 1 − S/H(C) is the Δ₂-DROPPED baseline. KEY (honest ledger, c_aug_HC):
+    subtracting Δ₂ from the denominator can only DECREASE it, hence DECREASE
+    c_aug_HC below c_AHS — recapturing Δ₂ in this finite ledger moves the certified
     constant the WRONG way unless Δ₂=0. Returns all three + Δ₂.
     """
     Fl = list(F)
@@ -345,29 +353,11 @@ def correlated_union_p(p: float, rho: float) -> float:
     return 1.0 - p00
 
 
-def correlated_bernoulli_threshold(rho: float, grid: int = 20000) -> float:
-    """
-    Largest p ≤ 1/2 with h(union) ≤ h(p) for the correlated pair at correlation
-    ρ — the 'single-letter crossover' this coupling would (illegitimately, for
-    ρ≠0) certify. ρ=0 ⇒ ψ. ρ>0 ⇒ >ψ (the trap); ρ<0 ⇒ <ψ.
-    """
-    last = 0.0
-    for p in np.linspace(1e-4, 0.5, grid):
-        u = correlated_union_p(p, rho)
-        if h(u) <= h(p) + 1e-12:
-            last = p
-        else:
-            # crossover is the largest p where it still holds; for ρ≥0 holding is
-            # an interval [p*, 0.5]; we want its left endpoint p*.
-            if last > 0.0:
-                return float(p)  # first p where it flips back to violated above p*
-    return float(last)
-
-
 def correlated_crossover(rho: float, grid: int = 200000) -> float:
-    """The crossover p* where h(union)=h(p) for the correlated pair (the value
-    the coupling 'looks like' to the single-letter test). Returns the unique
-    p*∈(0,1/2)."""
+    """The crossover p* where h(union)=h(p) for the correlated pair at correlation
+    ρ — the 'single-letter crossover' this coupling would (illegitimately, for
+    ρ≠0) certify. Returns the unique p*∈(0,1/2). ρ=0 ⇒ ψ; ρ>0 ⇒ >ψ (the trap);
+    ρ<0 ⇒ <ψ."""
     prev_sign = None
     prev_p = 1e-4
     for p in np.linspace(1e-4, 0.5, grid):
@@ -400,13 +390,47 @@ def augmented_inequality_pair(F) -> tuple[float, float]:
     return V.exact_entropy_union(F), V.exact_H_A(F)
 
 
+def sawin_lower_bound_min(c: float, n_grid: int = 600) -> tuple[float, tuple[float, float]]:
+    """
+    THE REAL CERTIFICATION GATE. The augmented bound assembles, under the
+    contradiction hypothesis max_i p_i < c, the per-coordinate lower bound
+
+        h(union_p(p,q))  ≥  (1/(2(1−c))) · [ (1−q) h(p) + (1−p) h(q) ]      (S_c)
+
+    (the Sawin/AHS inequality with constant 1/(2(1−c))). The method certifies c
+    ONLY IF (S_c) holds for ALL (p,q) ∈ [0,1]² — otherwise chain-LB ≥ (1/(2(1−c)))S
+    is not a valid inequality and the whole augmented lower bound collapses. We
+    return min_{p,q} G_c(p,q) with G_c = LHS − RHS of (S_c); (S_c) holds iff this
+    is ≥ 0. It is ≥ 0 for c ≤ ψ and < 0 for c > ψ (ψ is sharp).
+
+    *** This is why the family-level sweep of the floor inequality is MISLEADING:
+    the floor (1/(2(1−c)))S + Δ₂ ≤ H(A) may hold numerically on small finite
+    families for c > ψ (they are not the extremizer), yet the per-coordinate lower
+    bound it relies on is already INVALID for c > ψ. Certification is gated by
+    (S_c) on ALL (p,q), not by the floor holding on a finite family list. ***
+    """
+    lam = 1.0 / (2.0 * (1.0 - c))
+    best = math.inf
+    arg = (0.5, 0.5)
+    grid = np.linspace(1e-3, 1.0 - 1e-3, n_grid)
+    for p in grid:
+        hp = h(p)
+        for q in grid:
+            g = h(union_p(p, q)) - lam * ((1 - q) * hp + (1 - p) * h(q))
+            if g < best:
+                best = g
+                arg = (float(p), float(q))
+    return best, arg
+
+
 def ahs_plus_delta2_floor_pair(c: float):
     """
-    Candidate 'improved floor' inequality at level c, encoding the augmented
-    lower bound:  (1/(1−c)) S + Δ₂ ≤ H(A) as LHS ≤ RHS, where
-        LHS = (1/(1−c)) S + Δ₂,   RHS = H(A).
-    If this holds on ALL UC families for some c > ψ, that would certify c. (It
-    does NOT for c>ψ — the sweep finds violations; that is the whole verdict.)
+    The family-level 'improved floor' (1/(2(1−c)))S + Δ₂ ≤ H(A), exposed as
+    LHS ≤ RHS for `sweep_inequality`. **A `HOLDS on all` result here at c > ψ does
+    NOT certify c** — see `sawin_lower_bound_min`: the per-coordinate lower bound
+    underlying this floor is invalid for c > ψ, so the floor holding on a finite
+    family list is a non-sequitur (the families simply aren't the extremizer). We
+    retain this only to *exhibit* the trap side-by-side with the real gate.
     """
     def ineq(F) -> tuple[float, float]:
         Fl = list(F)
@@ -423,7 +447,7 @@ def ahs_plus_delta2_floor_pair(c: float):
             p_i = sum(1 for a in Fl if a & bit) / m
             S += (1.0 - p_i) * V.H_Ai_given_prefix(Fl, i)
         d2 = V.delta2(Fl, n)
-        lhs = S / (1.0 - c) + d2
+        lhs = S / (2.0 * (1.0 - c)) + d2
         rhs = V.exact_H_A(Fl)
         return lhs, rhs
     return ineq
@@ -455,23 +479,30 @@ def main(do_sweep: bool = True, sweep_nmax: int = 5):
         "k=6 spread":     SharedUCoupling([0.05, 0.2, 0.38, 0.5, 0.7, 0.9], [1 / 6] * 6),
         "k=3 near-ψ":     SharedUCoupling([0.30, 0.3819660, 0.46], [1 / 3] * 3),
     }
-    best_caug = -math.inf
+    print("  Columns: c_AHS = drop Δ₂ (baseline);  c_aug = recapture Δ₂ with the")
+    print("  HONEST budget H(C) (= 1−S/chain-LB);  [c_augHA] = recapture with budget")
+    print("  H(A) — the BUDGET-MISMATCH ARTIFACT (inflates to ~0.5; see dead_ends).")
+    best_caug = -math.inf      # honest: max c_aug_HC
     best_label = None
+    best_artifact = -math.inf  # the trap value, reported only to flag it
     for label, cpl in couplings.items():
         print(f"\n  coupling [{label}]   (E[P]={cpl.E_P():.4f}, H(U)={cpl.H_U():.4f})")
-        print(f"    {'n':>3} {'H(A)':>9} {'Δ₂':>8} {'Δ₂/H(A)':>9} {'Δ₂/n':>8} "
-              f"{'I(C;U)':>8} {'c_AHS':>9} {'c_augHA':>9}")
+        print(f"    {'n':>3} {'H(A)':>9} {'Δ₂':>8} {'Δ₂/n':>8} {'I(C;U)':>8} "
+              f"{'c_AHS':>9} {'c_aug':>9} {'[c_augHA]':>10}")
         for row in delta2_vs_budget_table(cpl):
             print(f"    {row['n']:>3} {_fmt(row['H_A'])} {_fmt(row['delta2'],8,4)} "
-                  f"{_fmt(row['delta2_over_HA'],9,5)} {_fmt(row['delta2_per_coord'],8,4)} "
-                  f"{_fmt(row['I_C_U'],8,4)} {_fmt(row['c_ahs'])} {_fmt(row['c_aug_HA'])}")
-            # The honest beat-ψ candidate is c_aug_HA (recapture Δ₂, real budget H(A)).
-            if row["c_aug_HA"] > best_caug:
-                best_caug = row["c_aug_HA"]
+                  f"{_fmt(row['delta2_per_coord'],8,4)} {_fmt(row['I_C_U'],8,4)} "
+                  f"{_fmt(row['c_ahs'])} {_fmt(row['c_aug'])} {_fmt(row['c_aug_HA'],10)}")
+            if row["c_aug"] > best_caug:
+                best_caug = row["c_aug"]
                 best_label = f"{label} n={row['n']}"
-    print(f"\n  >>> best c_aug over ALL shared-U couplings & n tested: {best_caug:.6f}"
+            best_artifact = max(best_artifact, row["c_aug_HA"])
+    print(f"\n  >>> best HONEST c_aug (budget H(C)) over all couplings & n: {best_caug:.6f}"
           f"  ({best_label})")
-    print(f"  >>> Δ(ψ) = {best_caug - PSI:+.2e}   (negative or ~resolution ⇒ NO gain)")
+    print(f"  >>> Δ(ψ) = {best_caug - PSI:+.2e}   "
+          f"(c_aug ≤ c_AHS always: recapture moves the WRONG way; both →ψ as n→∞)")
+    print(f"  >>> [artifact] max c_augHA (H(A) budget) = {best_artifact:.6f} "
+          f"— the 0.43–0.5 budget-mismatch, NOT a bound.")
 
     # ---- PART 2b: the per-coordinate limit is the U-mixture (diagonal) ----
     print("\n" + "-" * 78)
@@ -486,6 +517,19 @@ def main(do_sweep: bool = True, sweep_nmax: int = 5):
     print("  The single-letter (P,Q) sits on the DIAGONAL {(p_j,p_j)}; the augmented")
     print("  feasibility is a mixture over the SAME per-point crossover ⇒ threshold ψ.")
 
+    # ---- PART B': the obstruction survives k→∞ (full de Finetti class) ----
+    print("\n  B'. Does letting k grow with n (H(U)~log k→∞) rescue Δ₂/n?  NO:")
+    print(f"      {'n=k':>5} {'H(U)':>7} {'Δ₂':>8} {'Δ₂/n':>9} {'c_AHS':>8} {'c_aug':>9}")
+    for k in (2, 4, 8, 16, 32):
+        p = np.linspace(0.15, 0.62, k)
+        wk = np.ones(k) / k
+        cpl_k = SharedUCoupling(p, wk)
+        d = shared_u_augmented_constant(cpl_k, k)
+        print(f"      {k:>5} {cpl_k.H_U():>7.3f} {d['delta2']:>8.4f} {d['delta2'] / k:>9.5f} "
+              f"{d['c_ahs']:>8.5f} {d['c_aug']:>9.5f}")
+    print("      For ANY exchangeable (de Finetti) coupling the latent mixing param is")
+    print("      1-dimensional ⇒ I(C;latent)=O(log n) ⇒ Δ₂/n=O(log n/n)→0. Whole class capped.")
+
     # ---- PART 3: the trap ----
     print("\n" + "-" * 78)
     print("PART C.  The TRAP — correlated-Bernoulli coupling (choosing a coupling).")
@@ -498,8 +542,8 @@ def main(do_sweep: bool = True, sweep_nmax: int = 5):
                  else "loss (enlarged class)"))
         print(f"    {rho:>+6.2f} {xo:>14.5f}  {xo - PSI:>+8.4f}   {note}")
     print("  ρ>0 'beats' ψ only by FORCING positive A–B correlation — an i.i.d. sample")
-    print("  from a UC family has ρ=0. It is NOT a lower bound valid for all UC families;")
-    print("  PART D's sweep rejects every inequality whose threshold exceeds ψ.")
+    print("  from a UC family has ρ=0, and the budget H(A) presupposes A⟂B. It is NOT a")
+    print("  valid necessary condition; PART D's gate (S_c) rejects every c>ψ.")
 
     # ---- PART 1 (re-confirm): i.i.d. augmented constant over all UC families ----
     if do_sweep:
@@ -537,28 +581,31 @@ def main(do_sweep: bool = True, sweep_nmax: int = 5):
                             > worst_at_floor):
                         worst_at_floor = d["delta2"] / max(d["H_union"], 1e-12)
         print(f"  families checked: {nfam}")
-        print(f"  min c_AHS                       (drop Δ₂)         = {min_cahs:.6f}")
-        print(f"  min c_aug, budget H(A)          (recapture Δ₂)    = {min_caug_HA:.6f}"
-              f"   Δ(ψ)={min_caug_HA - PSI:+.2e}")
-        print(f"  min c_aug, budget H(C)          (recapture Δ₂)    = {min_caug_HC:.6f}"
+        print(f"  min c_AHS              (drop Δ₂, baseline)          = {min_cahs:.6f}")
+        print(f"  min c_aug  HONEST      (recapture Δ₂, budget H(C))  = {min_caug_HC:.6f}"
               f"   Δ(ψ)={min_caug_HC - PSI:+.2e}")
         print(f"  ⇒ recapturing Δ₂ does NOT lift the worst-case constant above ψ "
-              f"(both ≤ AHS floor + resolution).")
+              f"(c_aug ≤ c_AHS ≤ floor+resolution).")
+        print(f"  [min c_augHA budget H(A) = {min_caug_HA:.6f} — BUDGET-MISMATCH ARTIFACT "
+              f"(0.43–0.5), not a bound]")
         print(f"  max Δ₂/H(C) among families within 5e-3 of the AHS floor: "
               f"{worst_at_floor:.4e}  (→0 as c_AHS→ψ : ANTICORRELATION)")
-        min_caug = min(min_caug_HA, min_caug_HC)
+        min_caug = min_caug_HC
 
-        # D2: the candidate improved-floor inequality at c slightly above ψ MUST fail.
-        print("\n  Candidate 'improved floor' (1/(1−c))S + Δ₂ ≤ H(A) at c just above ψ:")
-        for c in [PSI, PSI + 1e-3, PSI + 1e-2]:
+        # D2: THE REAL CERTIFICATION GATE vs the misleading floor sweep, side by side.
+        print("\n  D2. Certification gate — validity of the per-coordinate Sawin lower")
+        print("      bound (S_c) at level c  vs  the (misleading) family floor sweep:")
+        print(f"      {'c':>10} {'min G_c (gate)':>16} {'gate':>6}   {'floor sweep':>14}")
+        for c in [PSI - 1e-2, PSI, PSI + 1e-3, PSI + 1e-2]:
+            mn, _ = sawin_lower_bound_min(c)
+            gate = "valid" if mn >= -1e-6 else "INVALID"
             res = sweep_inequality(ahs_plus_delta2_floor_pair(c), sweep_nmax)
-            total = sum(r.families_checked for r in res.values())
             viol = sum(len(r.counterexamples) for r in res.values())
-            verdict = "HOLDS on all" if viol == 0 else f"{viol} VIOLATIONS"
-            print(f"    c={c:.6f} (ψ{c - PSI:+.0e}):  {verdict}  "
-                  f"(checked {total} families)")
-        print("  The floor inequality holds at c=ψ and FAILS for c>ψ ⇒ the augmented")
-        print("  certified constant is exactly ψ on the enumerated families.")
+            floor = "HOLDS" if viol == 0 else f"{viol} viol"
+            print(f"      {c:>10.5f} {mn:>16.3e} {gate:>6}   {floor:>14}")
+        print("      The gate FLIPS to INVALID exactly past c=ψ ⇒ no c>ψ is certified.")
+        print("      The floor 'HOLDS' for c>ψ on finite families is a NON-SEQUITUR")
+        print("      (they aren't the extremizer); only the gate certifies. ψ is sharp.")
 
     print("\n" + "=" * 78)
     print("VERDICT: No non-product coupling in these families certifies a constant > ψ.")

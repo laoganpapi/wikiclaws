@@ -22,6 +22,7 @@ data tables that go into the paper.
 | `extremal_search.py`  | Find UC families minimising the maximum element abundance.    |
 | `entropy_bounds.py`   | Shannon entropy, Gilmer's inequality, the (3-√5)/2 constant, and a generic candidate-inequality sweep harness. |
 | `verify_frankl.py`    | Direct verification of Frankl on all UC families with n ≤ 5.  |
+| `vector3_delta2_nonproduct.py` | Vector-3 test of Δ₂-recapture at a NON-PRODUCT extremizer (shared-`U` conditionally-i.i.d. coupling + correlated-Bernoulli): proves the lever does not beat ψ (theory/vector3_delta2_nonproduct.md). |
 | `run_baseline.py`     | End-to-end smoke run; writes a JSON snapshot to `data/`.      |
 | `tests/test_uc.py`    | pytest suite for every module above.                          |
 
