@@ -111,7 +111,7 @@
           ]
         }
       ],
-      "compute_seconds": 6.711800006087287e-05
+      "compute_seconds": 0.00014295099992978066
     },
     {
       "k": 8,
@@ -234,7 +234,7 @@
       ],
       "plot_a": "/home/user/wikiclaws/math/collatz/experiments/figures/residue_a_k8.png",
       "plot_b": "/home/user/wikiclaws/math/collatz/experiments/figures/residue_b_k8.png",
-      "compute_seconds": 0.0002959280000141007
+      "compute_seconds": 0.00033281299999998737
     },
     {
       "k": 12,
@@ -365,7 +365,7 @@
       ],
       "plot_a": "/home/user/wikiclaws/math/collatz/experiments/figures/residue_a_k12.png",
       "plot_b": "/home/user/wikiclaws/math/collatz/experiments/figures/residue_b_k12.png",
-      "compute_seconds": 0.005689592999942761
+      "compute_seconds": 0.005889296999953331
     },
     {
       "k": 16,
@@ -442,7 +442,91 @@
       },
       "plot_a": "/home/user/wikiclaws/math/collatz/experiments/figures/residue_a_k16.png",
       "plot_b": "/home/user/wikiclaws/math/collatz/experiments/figures/residue_b_k16.png",
-      "compute_seconds": 0.1525350619999699
+      "compute_seconds": 0.11846877599998606
+    },
+    {
+      "k": 20,
+      "num_residues": 1048576,
+      "a_histogram": [
+        1,
+        20,
+        190,
+        1140,
+        4845,
+        15504,
+        38760,
+        77520,
+        125970,
+        167960,
+        184756,
+        167960,
+        125970,
+        77520,
+        38760,
+        15504,
+        4845,
+        1140,
+        190,
+        20,
+        1
+      ],
+      "a_histogram_binomial_check": {
+        "expected_binomial": [
+          1,
+          20,
+          190,
+          1140,
+          4845,
+          15504,
+          38760,
+          77520,
+          125970,
+          167960,
+          184756,
+          167960,
+          125970,
+          77520,
+          38760,
+          15504,
+          4845,
+          1140,
+          190,
+          20,
+          1
+        ],
+        "matches": true,
+        "max_diff": 0
+      },
+      "odd_density": 0.5,
+      "min_b": 0,
+      "max_b": 3486784400,
+      "mean_b": 530033.4204244614,
+      "median_b": 21140.0,
+      "b_mod_3": {
+        "b_mod_3_counts": [
+          1,
+          349525,
+          699050
+        ],
+        "expected_uniform": 349525,
+        "max_dev_from_uniform": 349524
+      },
+      "c_offset": {
+        "sampled": true,
+        "sample_size": 1000000,
+        "c_min": "0",
+        "c_max": "1936053869"
+      },
+      "descent": {
+        "k": 20,
+        "threshold_a": 12.618595071429148,
+        "descent_fraction": 0.8684120178222656,
+        "random_model_probability": 0.8684120178222656,
+        "match": true
+      },
+      "plot_a": "/home/user/wikiclaws/math/collatz/experiments/figures/residue_a_k20.png",
+      "plot_b": "/home/user/wikiclaws/math/collatz/experiments/figures/residue_b_k20.png",
+      "compute_seconds": 2.2841791190001004
     }
   ],
   "tao_descent_table": [
@@ -472,6 +556,13 @@
       "threshold_a": 10.094876057143319,
       "descent_fraction": 0.8949432373046875,
       "random_model_probability": 0.8949432373046875,
+      "match": true
+    },
+    {
+      "k": 20,
+      "threshold_a": 12.618595071429148,
+      "descent_fraction": 0.8684120178222656,
+      "random_model_probability": 0.8684120178222656,
       "match": true
     }
   ]

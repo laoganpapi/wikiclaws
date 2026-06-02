@@ -1,8 +1,8 @@
 {
-  "N": 100000,
-  "verified_count": 100000,
-  "max_sigma_inf": 221,
-  "argmax_n": 77031,
-  "elapsed_seconds": 0.598612806999995,
-  "throughput_n_per_sec": 167052.89100171364
+  "N": 10000000,
+  "verified_count": 10000000,
+  "max_sigma_inf": 429,
+  "argmax_n": 8400511,
+  "elapsed_seconds": 9.555839841999955,
+  "throughput_n_per_sec": 1046480.4941631468
 }
