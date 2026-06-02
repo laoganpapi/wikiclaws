@@ -31,4 +31,26 @@ Append a new H2 section with the template below. Entries are append-only; do not
 
 ## Entries
 
-*(none yet — append above this line as approaches fail)*
+## 2026-06-02 — [collatz] — Cycle exclusion (Vector C): three dead ends — see `collatz/theory/dead_ends.md`
+
+**Agent / author:** Alex Ye (AI-assisted).
+**Time invested:** ~4 hours theory + source verification.
+**Attack vector:** Improve Hercher's $m\le 91$ cycle-exclusion bound, per Vector C.
+**Why it failed (summary; full entries in `collatz/theory/dead_ends.md`):**
+1. *Improving $\mu(\log_2 3)$ does not help* — structural: the cycle proof needs an
+   exponential-in-$K$ lower bound on the two-log form $\Lambda=N\log2-K\log3$ to cap the
+   cycle length from above; the (polynomial) irrationality measure gives only a lower bound on $K$.
+   Corrects `survey.md` §7.5/§11 and `open_problems.md` D.1/D.2.
+2. *Mis-framed Step-1 check (C5 v1)* — compared bound magnitudes instead of decay direction;
+   caught and corrected (Step-1 self-error).
+3. *Computing a concrete $m^\*>91$ here* — blocked: all academic PDF hosts returned HTTP 403,
+   so Hercher's explicit $F(m,\log B)$ and the Laurent-2008 constant were unavailable.
+**Counter-example (if any):** n/a (1 and 3 structural/blocked; 2 = the FALSE check output).
+**Pointer to artifacts:** `collatz/theory/cycle_exclusion_explicit.md`,
+`collatz/experiments/verify_cycle_exclusion.py`, `collatz/experiments/verify_cycle_exclusion_log.md`,
+`collatz/theory/dead_ends.md` (Vector C section).
+**Verdict:** (1) gap-not-closeable via that route; (2) falsified-then-corrected; (3) abandoned-in-environment.
+**Lesson:** The cycle-exclusion lever is the **two-log linear-forms estimate** (const $24.34D^4$ /
+de Weger exponent $0.158$) + the verification bound $B$ + circuit averaging — not $\mu(\log_2 3)$.
+
+*(append further entries above this line as approaches fail)*

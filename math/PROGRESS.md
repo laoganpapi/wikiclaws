@@ -53,9 +53,17 @@ Living status of the Collatz & Frankl multi-agent research effort. Updated as ph
 |-------|-------|--------|--------|
 | Frankl analytic | Frankl | ⏳ running | Vectors 1 & 2 (Shearer chain rule, intersection term) |
 | Frankl computational | Frankl | ⏳ running | Vector 3 (joint optimization + certification) |
-| Collatz Tao-density | Collatz | ⏳ running | Vector A (log→natural density, conditional reduction) |
+| Collatz Tao-density | Collatz | ✅ done | Vector A — conditional reduction (see below); [UNVERIFIED] pending red-team |
 | Collatz cycle-exclusion | Collatz | ⏳ running | Vector C (push m past 91) |
 | Collatz experiments | Collatz | ⏸ pending toolkit | verification frontier + Syracuse tables |
+
+## Phase 2 Findings (ALL [UNVERIFIED] until red-team + human review)
+
+### Collatz Vector A — Tao log→natural density (tao_syracuse_explicit.md)
+- **Conditional theorem:** exponential Fourier-decay bound MIX(θ), θ>½, on the *tilted* Syracuse characteristic function ⇒ Tao's theorem in natural density. Hypothesis MIX(θ) is open and strictly stronger than Tao's β=1 conjecture.
+- **Unconditional (claimed, needs check):** (a) log-density is forced by stationarity of the sampling measure under the multiplicative first-passage map (Prop 4.2), NOT the dyadic step (Lemma 4.1 shows that's measure-neutral); (b) the obstruction is quantified as a 3^{n/2} Plancherel loss (Lemma 6.2, proved in full).
+- **Negative finding — DO NOT TRUST YET:** numerics on n≤6 suggest β=1 is insufficient (collision diagnostic E_n diverges ~0.31n untilted; tilted is worse). Agent itself flags this may be a small-n artifact. **Decisive test required:** push E_n^(s*) to n≈10–14 via FFT + test ξ-dependent tilts. Until then this is a conjecture, not a result.
+- Transport steps are at "research-announcement rigor," not formalization-ready. Red-team against the actual Tao paper is mandatory.
 
 ## Honesty Ledger
 - No proof claims yet. Any constant improvement must pass: numerical validation on all small UC families → red-team → (Lean where feasible) → human review.
@@ -63,6 +71,11 @@ Living status of the Collatz & Frankl multi-agent research effort. Updated as ph
 - Realistic best case Collatz: verification frontier extension + structural observations; NOT a proof.
 
 ## Next Decisions
-- Launch Collatz Phase 2 agents once Collatz literature + toolkit land.
 - Authorship: paper author = **Alex Ye**; Claude credited in AI-disclosure statement (no venue permits AI co-authorship).
 - arXiv endorsement needed before first upload (math.CO / math.NT).
+
+## Phase 3 Task Queue (after remaining Phase 2 agents finish)
+1. **Decisive Collatz FFT experiment**: push collision diagnostic E_n^(s*) to n≈10–14, test ξ-dependent tilts → resolve whether the "β=1 insufficient" negative finding is real or a small-n artifact. Write to collatz/experiments/syracuse_fft/ (isolated dir, no collision).
+2. **Red-team agents** (one per track): independently check every claimed lemma against sources; hunt for errors, prior art, and overstatement. Mandatory before any writeup.
+3. **Paper drafting**: integrate verified findings into the LaTeX skeletons. Survey-with-results framing; do not inflate conditional/partial results.
+4. Reconcile strategic_attack_vectors.md hypotheses against what Phase 2 actually found.

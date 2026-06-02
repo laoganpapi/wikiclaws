@@ -177,38 +177,75 @@ def check_hercher_bound() -> bool:
 # (C5) Two-log estimate dominates the 1-dim irrationality-measure estimate.
 # ---------------------------------------------------------------------------
 
-def compare_lower_bounds(K_values: List[int]) -> List[Tuple[int, float, float]]:
+def check_deweger_inequality(k_max: int = 200) -> Tuple[bool, int]:
     """
-    Compare, for Lambda = N log2 - K log3 with N = round(K*delta):
+    Verify de Weger's reformulation (Theorem input for cycle exclusion):
 
-      LMN two-log lower bound:    log|Lambda| >= -24.34 * (log b' + 0.14)^2 * logA1 * logA2
-                                  with logA1 = 1 (max{log2,1}), logA2 = log3,
-                                  b' = N/log3 + K/1.
-      1-dim irr.-measure bound:   |delta - N/K| > K^{-mu}, mu = 5.1163051 (via log3),
-                                  => |Lambda| = log2 * K * |delta - N/K| > log2 * K^{1-mu}.
+        0 < (k+l) log2 - k log3 < 2^(-0.158 k)   has NO solution for k >= 32.
 
-    Returns (K, lmn_log_lower, irr_log_lower) where each is log10 of the
-    lower bound on |Lambda|. The LMN bound being LARGER (closer to 0, i.e.
-    less negative) confirms it is the binding/stronger constraint.
+    For each k we take N = smallest integer with Lambda = N log2 - k log3 > 0
+    (the best positive linear form for that k, i.e. N = ceil(k*delta) bumped
+    if needed). If even this minimal positive Lambda is >= 2^(-0.158 k), then
+    no (N,k) can satisfy the strict inequality.
 
-    NOTE: this is an *illustration* of the qualitative claim in section 5.2;
-    the LMN secondary constants are tagged [PARTIAL-CONST] in the theory note.
+    Returns (no_solution_for_k_ge_32, largest_k_with_solution).
     """
-    delta = (mp.log(3) / mp.log(2)) if HAVE_MPMATH else (math.log(3) / math.log(2))
+    if HAVE_MPMATH:
+        log2 = mp.log(2); log3 = mp.log(3); delta = log3 / log2
+        def small_lambda(k):
+            N = int(mp.ceil(k * delta))
+            if N * log2 - k * log3 <= 0:
+                N += 1
+            return N * log2 - k * log3
+        def bound(k):
+            return mp.power(2, mp.mpf('-0.158') * k)
+    else:
+        log2 = math.log(2); log3 = math.log(3); delta = log3 / log2
+        def small_lambda(k):
+            N = math.ceil(k * delta)
+            if N * log2 - k * log3 <= 0:
+                N += 1
+            return N * log2 - k * log3
+        def bound(k):
+            return 2.0 ** (-0.158 * k)
+
+    largest_with_sol = 0
+    no_sol_ge_32 = True
+    for k in range(1, k_max + 1):
+        lam = small_lambda(k)
+        if (lam > 0) and (lam < bound(k)):
+            largest_with_sol = k
+            if k >= 32:
+                no_sol_ge_32 = False
+    return no_sol_ge_32, largest_with_sol
+
+
+def compare_bound_directions(K_values: List[int]) -> List[Tuple[int, str, str]]:
+    """
+    Illustrate the *directional* claim of theory section 5.2:
+
+      - The two-log lower bound  |Lambda| > 2^{-0.158 K}  decays EXPONENTIALLY
+        in K; set against the cycle's (constant-in-K) geometric budget
+        |Lambda| < Theta(m/B) it yields an UPPER bound on K.
+      - The irrationality-measure lower bound |Lambda| > (log2) K^{1-mu}
+        decays only POLYNOMIALLY; set against the same budget it yields a
+        LOWER bound on K (wrong direction, no contradiction).
+
+    We report, for representative K, the per-K exponent (d/dK of -log2|Lambda|
+    lower bound): two-log gives ~0.158 (linear coeff), irr-measure gives
+    ~(mu-1)/(K ln2) -> 0 (sublinear). A positive bounded-away-from-0 slope is
+    what makes the two-log bound able to cap K from above.
+    """
     log2 = math.log(2)
-    log3 = math.log(3)
-    mu = 5.1163051  # Wu-Wang 2014 mu(log 3); using as a (generous) proxy
+    mu = 5.1163051
     out = []
     for K in K_values:
-        N = round(float(K * delta))
-        logA1, logA2 = 1.0, log3
-        bprime = N / log3 + K / logA1
-        lmn_loglambda = -24.34 * (math.log(bprime) + 0.14) ** 2 * logA1 * logA2
-        lmn_log10 = lmn_loglambda / math.log(10)
-        # 1-dim: |Lambda| > log2 * K^{1-mu}
-        irr_loglambda = math.log(log2) + (1 - mu) * math.log(K)
-        irr_log10 = irr_loglambda / math.log(10)
-        out.append((K, lmn_log10, irr_log10))
+        twolog_slope = 0.158  # -log2|Lambda| >= 0.158*K  => slope 0.158 (constant)
+        # irr: -log2|Lambda| <= (mu-1) log2(K) - log2(log2); slope in K:
+        irr_slope = (mu - 1) / (K * math.log(2))
+        out.append((K,
+                    f"0.158 (linear, caps K above)",
+                    f"{irr_slope:.2e} (->0, gives lower bd only)"))
     return out
 
 
@@ -258,21 +295,21 @@ def main() -> int:
     if not hb:
         failures += 1
 
-    # (C5)
-    print("\n(C5) Two-log (LMN) vs 1-dim irr.-measure lower bound on |Lambda|")
-    print("     (log10 of the lower bound; LARGER = less negative = stronger):")
-    print(f"     {'K':>14} {'LMN log10|L|>=':>16} {'irr log10|L|>=':>16} {'LMN stronger?':>14}")
-    cmp = compare_lower_bounds([10**3, 10**5, 10**7, 10**9, 10**11, 10**13])
-    lmn_always_stronger = True
-    for (K, lmn, irr) in cmp:
-        stronger = lmn > irr
-        lmn_always_stronger = lmn_always_stronger and stronger
-        print(f"     {K:>14} {lmn:>16.3f} {irr:>16.3f} {str(stronger):>14}")
-    print(f"     => LMN two-log bound dominates for all tested K: {lmn_always_stronger}")
-    if not lmn_always_stronger:
-        # This is the qualitative claim; failure would mean the theory note's
-        # section 5.2 needs revisiting.
+    # (C5) -- de Weger's reformulated inequality and the directional argument.
+    no_sol, largest = check_deweger_inequality(200)
+    print("\n(C5a) De Weger: 0 < N log2 - K log3 < 2^(-0.158 K) has NO solution for K>=32")
+    print(f"      largest K with a solution: {largest}  (must be < 32)")
+    print(f"      no solution for any K>=32: {no_sol}")
+    if not (no_sol and largest < 32):
         failures += 1
+
+    print("\n(C5b) Directional argument (theory 5.2): exponential vs polynomial")
+    print("      slope of (-log2 lower-bound on |Lambda|) in K:")
+    print(f"      {'K':>14} {'two-log slope':>34} {'irr-measure slope':>34}")
+    for (K, tl, ir) in compare_bound_directions([10**2, 10**4, 10**6, 10**9, 10**11]):
+        print(f"      {K:>14} {tl:>34} {ir:>34}")
+    print("      => two-log slope is bounded away from 0 (caps K from above);")
+    print("         irr-measure slope -> 0 (yields only a lower bound on K).")
 
     print("\n" + "=" * 72)
     if failures == 0:

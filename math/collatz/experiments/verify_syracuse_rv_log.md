@@ -43,13 +43,18 @@ exact small-$n$ values that the asymptotic statements specialize to. We verify:
    - Solve $\EE_{s^*}[a]=\log_2 3$: $r^*=2^{-(1+s^*)}=1-1/\log_2 3=0.369070$, $s^*=0.438033$.
    - **Result:** $\EE_{s^*}[a]=1.584962501=\log_2 3$ to machine precision. **Match: True.**
 
-## Additional arithmetic verified inline (not in the committed script run, but checked)
+5. **Collision excess $E_n=\varphi(3^n)\mathrm{CP}_n-1$ (theory doc §6.4) — the key finding.**
+   - **Untilted ($s=0$):** $E_n = 0.111,0.429,0.736,1.046,1.356,1.667$ for $n=1..6$; successive differences $\approx0.31$ constant $\Rightarrow$ $E_n\approx0.31n$ **linear** $\Rightarrow$ TV $\to\infty$. So $\mathrm{CP}_n=3^{-n}\mathrm{poly}(n)$: $\beta=1$ order, but NOT exact-leading-constant. **$\beta=1$ is necessary but provably insufficient for natural density.**
+   - **Tilted ($s=s^*$):** $E_n^{(s^*)} = 0.212,0.854,1.772,3.090,4.972,7.643$; differences $0.64,0.92,1.32,1.88,2.67$ **increasing** $\Rightarrow$ super-linear, and **larger than untilted at every $n$.** The descent-balance tilt makes equidistribution *worse* at small $n$ (it thins the valuation tail, concentrating mass / raising collision probability). **Sobering negative finding**: no small-$n$ evidence that $\mathrm{MIX}(\theta)$ holds; possibility that natural density fails structurally is live (see theory §6.4 readings (i)/(ii)/(iii)).
+
+## Additional arithmetic verified inline
 
 - **Lemma 6.2 Plancherel factor.** $\#\{\xi:3\nmid\xi\}=\varphi(3^n)=2\cdot3^{n-1}=\tfrac23\,3^n$ (confirmed for $n=3,5,10$). The $\ell^2\to$ TV passage costs $\sqrt{\varphi(3^n)}\sim 3^{n/2}$, so the natural-density threshold is $\theta>\tfrac12$. **Confirmed.**
+- **Sup Fourier ratio** $\sup_{3\nmid\xi}|\widehat\nu_n|$ (untilted): $0.577,\dots,0.076$ for $n=1..7$; per-step ratio *rising* ($0.65\to0.79$), drifting above $3^{-1/4}$, consistent with effective exponent $\theta\lesssim\tfrac14<\tfrac12$ — corroborates the collision finding.
 
 ## Pass criterion
 
-Zero failures on all constructed test cases (Def 2.1 at $n=1$; submultiplicativity on $n\le5$; tilt $s^*$). **PASSED** for the definitional/finite content. The asymptotic hypotheses remain (necessarily) untested by computation and are handled by the structural derivation in the theory doc + the §6 reduction.
+Zero failures on all constructed test cases (Def 2.1 at $n=1$; submultiplicativity on $n\le5$; tilt $s^*$). **PASSED** for the definitional/finite content. The collision study is a *diagnostic* (not a pass/fail check): it produced the §6.4 negative finding, which is itself a verified-by-computation result. The asymptotic hypotheses remain (necessarily) untested by computation and are handled by the structural derivation + the §6 reduction.
 
 ## Caveats
 

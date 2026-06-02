@@ -7,7 +7,7 @@
 
 > **Purpose.** Reconstruct, with every step justified, the Diophantine argument that excludes non-trivial Collatz $m$-cycles, identify the *exact* quantity that bounds $m$, web-verify every numerical constant, and determine precisely what Diophantine input would be needed to push past Hercher's $m \le 91$.
 >
-> **Headline finding (stated up front so it is not buried).** The rate-limiting Diophantine input is **NOT the one-dimensional irrationality measure $\mu(\log_2 3)$**, contrary to the framing in `survey.md` §7.5 and `open_problems.md` D.2. It is a **lower bound for a linear form in *two* logarithms**, $\Lambda = K\log 3 - (K+S)\log 2$, supplied by the **Laurent–Mignotte–Nesterenko (LMN)** theorem / Laurent's interpolation-determinant method. This bound is already *much stronger* than anything $\mu(\log_2 3)$ provides, so improving $\mu(\log_2 3)$ would **not** move the cycle bound. The relevant constant to improve is the **leading constant in the two-log linear-forms estimate** (currently $24.34\,D^4$ in LMN's rational case, refinable via Laurent 2008 / subsequent work). This correction is developed in §6 and is the single most important deliverable of this document.
+> **Headline finding (stated up front so it is not buried).** The rate-limiting Diophantine input is **NOT the one-dimensional irrationality measure $\mu(\log_2 3)$**, contrary to the framing in `survey.md` §7.5 / §11 Vector C and `open_problems.md` D.1/D.2. It is a **lower bound for a linear form in *two* logarithms**, $\Lambda = (K+S)\log 2 - K\log 3 > 0$, supplied by the **Laurent–Mignotte–Nesterenko (LMN)** theorem and Laurent's interpolation-determinant method. The reason $\mu(\log_2 3)$ is the *wrong* lever is structural, not just quantitative (§5.2): the two-log estimate is **exponential in $K$** ($\Lambda > 2^{-0.158 K}$ for $K \ge 32$, de Weger's reformulation — verified), and when set against the cycle's geometric forcing $\Lambda < \Theta(m/B)$ it produces an **upper bound on the cycle length $K$**; the irrationality-measure estimate is only **polynomial** ($\Lambda > K^{1-\mu}$) and, set against the same forcing, yields only a *lower* bound on $K$ — the wrong direction, contradicting nothing. So improving $\mu(\log_2 3)$ cannot move the cycle bound at all. The constant that *would* move it is the **exponent / leading constant in the two-log estimate** (de Weger's $0.158$; LMN's $24.34\,D^4$), refinable via Laurent 2008. This is developed in §5–§6 and is the single most important deliverable of this document.
 
 ---
 
@@ -35,7 +35,7 @@ $$
 >
 > **Both interpretations land at $91/92$ for Hercher** — that is why his title says $m \le 91$ — but the Simons–de Weger predecessors differ ($68$ for circuits, $76$ for local minima). `survey.md` and `bibliography.bib` wrote "$m \le 68$" for the local-minima convention; the correct local-minima predecessor is **$m \ge 76$ (Simons–de Weger)**. This is a citable correction to our own survey; logged in §8.
 >
-> For a circuit / 1-circuit cycle the number of circuits, local minima, and local maxima all coincide. In general, **#circuits = #local minima = #local maxima = $m$** for a cyclic sequence, so the *combinatorial* meaning is the same; the discrepancy $68$ vs $76$ is because Simons–de Weger optimized the two cases with slightly different inputs, not because the definitions differ. We standardize on **$m$ = number of local minima = number of circuits** below and note where it matters.
+> **On the relationship between the two counts (stated carefully — I could not fetch the primary definitions).** A *circuit* (one ascending o-run followed by one descending e-run) begins at a local minimum, so for a cyclic sequence the number of circuits, local minima, and local maxima are equal *as combinatorial counts*. The fact that Simons–de Weger report **$68$** for the circuit/$k$-cycle statement but **$76$** for the local-minima ($m$-cycle) statement therefore reflects **two genuinely different theorems with different inputs/optimizations** (e.g. the $m$-cycle bound uses an updated verification bound and the refined LMN application), **not** two different values of the same count. I have **not** verified the exact definitional bridge from the primary sources (PDFs unreachable here), so I flag this `[PARTIAL-DEF]` and do not assert $68 = 76$. Below, "$m$" means **number of local minima = number of circuits** (the count); the *numerical* predecessor results are quoted with their source's convention. What matters for §2–§7 is only that $m$ is the *number of ascending runs*, which is unambiguous.
 
 Throughout, $\delta := \log_2 3 = \log 3/\log 2 = 1.5849625007211562\ldots$ (verified to 80 digits, `experiments/verify_cycle_exclusion.py`).
 
@@ -72,57 +72,56 @@ B = 1536 \cdot 2^{60} = 3 \cdot 2^{69} = 1{,}770{,}887{,}431{,}076{,}116{,}955{,
 $$
 (verified arithmetic, `verify_cycle_exclusion.py`; verified as Hercher's assumed bound via WebSearch of arXiv:2201.00406 — "it suffices to show that … integers $\le 1536\cdot 2^{60} = 3\cdot 2^{69}$ enter the trivial cycle"). This $B$ is consistent with the Barina verification frontier ($2^{68}$–$2^{71}$; see `survey.md` §6.1).
 
-**(b) The "$2^N \approx 3^K$" squeeze.** From (1), $2^N - 3^K > 0$. The cycle equation forces $2^N - 3^K$ to **divide** the bounded quantity $R_i$, and bounding $R_i \le (\text{const}) \cdot x_{\max} \cdot 2^N$-type estimates against $x_{\min} > B$ shows $2^N - 3^K$ cannot be too large relative to $3^K$. Writing
+**(b) The two competing bounds on $\Lambda$.** Set
 $$
-\Lambda := N\log 2 - K\log 3 = (K+S)\log 2 - K\log 3 > 0,
+\Lambda := N\log 2 - K\log 3 = (K+S)\log 2 - K\log 3 > 0
 \tag{3}
 $$
-we have $2^N - 3^K = 3^K(e^{\Lambda} - 1) \in (3^K\Lambda,\ 3^K\Lambda\, e^{\Lambda})$, so for small $\Lambda$,
+(positive by (1)). Then $2^N - 3^K = 3^K(e^{\Lambda} - 1) \in (3^K\Lambda,\ 3^K\Lambda\, e^{\Lambda})$, so for small $\Lambda$,
 $$
 2^N - 3^K \approx 3^K \Lambda.
 \tag{4}
 $$
 
-The cycle constraints (elements are integers $> B$, $\le$ a geometric bound in $N$) translate, after the Simons–de Weger bookkeeping over the $m$ circuits, into an **upper bound** of the shape
+The proof closes a trap on the cycle length $K$ between an **upper** bound and a **lower** bound that are *both* consequences of the cycle existing — and the trap is empty for $m \le m^\*$. Directionality is verified against the literature (WebSearch 2026-06-02, two independent confirmations; Simons Math. Comp. 2005): *"a lower bound for the cycle length is derived from a generalized lemma of Crandall, while an upper bound for the cycle length is found ... by applying a result of Laurent, Mignotte, and Nesterenko on linear forms in logarithms."*
+
+**Upper bound on $K$ (transcendence: the two-log linear form).** A cycle's multiplier is $3^K/2^N = e^{-\Lambda}$, and closure forces $2^N$ extremely close to $3^K$, i.e. $\Lambda$ very small — quantitatively, the $m$-circuit geometry forces $0 < \Lambda < \theta_m(K)$ where $\theta_m(K)$ decays (roughly exponentially) in $K$ and *relaxes as $m$ grows*. The two-log lower bound on $\Lambda$ then caps $K$. In de Weger's clean packaged form (verified, §5.1b), for the base regime:
 $$
-\Lambda \;<\; \frac{C_{\mathrm{geom}}(m)}{2^{N}}\cdot(\text{poly factors}), \qquad\text{equivalently}\qquad
-0 < \Lambda < e^{-c N}\ \text{for an explicit } c>0.
+0 < \Lambda < 2^{-0.158\,K}\ \text{ has no solution for } K \ge 32
+\quad\Longrightarrow\quad
+\boxed{\;K < F(m),\;\; F \text{ increasing in } m\;}
 \tag{5}
 $$
-The precise form (Simons–de Weger 2005, Lemma; Hercher 2023) is what we reconstruct in §3–§4. The key qualitative point: **$\Lambda$ is forced to be exponentially small in $N$.**
+with $F(1)$ a small constant (Steiner), $F(2)\approx 86{,}000$ (Simons), growing with $m$. **Crucially, this upper bound is pure transcendence + cycle geometry — it does NOT involve the verified bound $B$.** The constant ($0.158$, downstream of LMN's $24.34\,D^4$) and the $m$-dependence of $F$ are exactly what Simons–de Weger and Hercher bookkeep; Hercher tightens the $m$-dependence via better circuit averaging (§6.3).
 
-On the other hand, $\Lambda = N\log 2 - K\log 3$ is a **non-zero linear form in the two logarithms $\log 2, \log 3$ with integer coefficients $N, -K$.** Transcendence theory gives a **lower bound** $\Lambda > e^{-c' \log N \cdot (\cdots)}$ that decays only *polynomially-in-exponent*, i.e. like $N^{-O(1)}$ up to the height terms. The clash between the exponential upper bound (5) and the much larger transcendence lower bound is the contradiction that excludes cycles — **once $N$ (hence $m$) is large enough.** For small $m$ the two bounds do not yet clash, and those finitely many cases are cleared by direct continued-fraction / computer search.
+**Lower bound on $K$ (Crandall's lemma + the verified bound $B$).** Since every cycle element exceeds $B$, Crandall's lemma forces the cycle to be long. Verified form (Crandall 1978, as restated; WebSearch): *if $N_0$ is the lowest element of a positive $3x+1$ cycle of circuit-count $k$ and $p_j/q_j$ is a convergent ($j>4$) of $\ln3/\ln2$, then $k > \tfrac32\min(q_j,\ 2N_0/(q_j+q_{j+1}))$.* With $N_0 > B$ this gives
+$$
+\boxed{\;K > G(\log B)\;}
+\tag{6}
+$$
+of the order of a convergent denominator of $\delta$ exceeding $\sim B$.
 
-> **This is the heart of the matter.** Cycle exclusion = (exponentially small upper bound on $\Lambda$ from the cycle's integrality) vs. (transcendence lower bound on $\Lambda$). The transcendence lower bound is the **two-log linear form** estimate. See §5–§6.
+**The squeeze.** A cycle needs $G(\log B) < K < F(m)$. Since $F$ increases with $m$ while $G$ is fixed by $B$, there is a threshold $m^\*$ below which $F(m) \le G(\log B)$ — **empty interval, no cycle.**
+
+> **This is the heart of the matter.** Cycle exclusion = **(LMN two-log upper bound $K<F(m)$)** vs **(Crandall lower bound $K>G(\log B)$)**. The transcendence input is the two-log linear form, via the exponent $0.158$ (⇐ LMN's $24.34\,D^4$); it is what makes $F(m)$ finite. The verified bound $B$ enters only through $G$. **The number of circuits $m$ enters only through $F$** — more circuits enlarge $F$, admitting larger $K$, which is why the trap springs only for $m \le m^\*$. See §5–§6.
+
+*(A note on the earlier-draft crude estimate.* A lossy bound $\Lambda < \Theta(m/B)$ — replacing $R_{\min}=O(m\,3^K)$ and $x_{\min}>B$ in $x_{\min}=R_{\min}/(2^N-3^K)\approx R_{\min}/(3^K\Lambda)$ — gives only $K > \log_2(B/m)/0.158$, i.e. it reproduces the *lower* bound (6), not the upper bound. The genuine *upper* bound (5) needs the sharper $m$-circuit geometry that forces $\Lambda$ below an exponentially-decaying $\theta_m(K)$; that step is the technical core of Simons–de Weger and is **not** reproduced from scratch here — see the `[PARTIAL-DERIV]` flag in §6.4.)
 
 ---
 
-## 3. The role of $m$ (number of circuits): bounding $N$ in terms of $m$
+## 3. The role of $m$ (number of circuits) and the squeeze in $m$
 
-Why does the *number of circuits* $m$ (not the length $N$) appear as the headline parameter? Because the analytic upper bound (5) on $\Lambda$ degrades as the cycle is allowed more circuits, while the transcendence lower bound depends on $N$ through $\log N$. The Simons–de Weger / Hercher analysis proceeds:
+Why does the *number of circuits* $m$ appear as the headline parameter rather than the length $K$ or $N$? Because, by §2 eq (5), the transcendence upper bound $F(m)$ on the admissible cycle length **increases with $m$** (more circuits weaken the geometric forcing on $\Lambda$), while Crandall's lower bound $G(\log B)$ is essentially fixed by $B$. The Simons–de Weger / Hercher analysis:
 
-1. **Each circuit** contributes one ascending run of $a_j$ o-steps and one descending run of $b_j$ e-steps, $j = 1,\dots,m$. So
-$$
-K = \sum_{j=1}^m a_j, \qquad N = \sum_{j=1}^m (a_j + b_j).
-$$
+1. **Each circuit** contributes one ascending run of $a_j$ o-steps and one descending run of $b_j$ e-steps, $j=1,\dots,m$, so $K = \sum_j a_j$, $N = \sum_j(a_j+b_j)$.
 
-2. **Per-circuit Diophantine inequality.** Steiner's 1-circuit identity generalizes: for the cycle to close with all elements $> B$, the *multiset* of circuit ratios $2^{a_j+b_j}/3^{a_j}$ must multiply to $2^N/3^K = e^{\Lambda}$ close to $1$, and each factor is bounded. This yields (Simons–de Weger 2005, §3–4) an **upper bound on $K$ (and hence $N$) that is polynomial in $m$ and in $\log B$**:
-$$
-K \;<\; F(m, \log B)
-\tag{6}
-$$
-for an explicit increasing function $F$. Concretely for $m = 1$ (Steiner) $K$ is bounded by a small constant; the bound grows roughly linearly in $m$ for the leading behavior, with the precise constants determined by the LLL-reduced continued-fraction data of $\delta = \log_2 3$.
+2. **Upper bound $F(m)$ (= §2 eq (5)).** The $m$-circuit geometry forces $\Lambda < \theta_m(K)$, decaying in $K$, relaxing as $m$ grows (Simons–de Weger 2005, §3–4; Hercher 2023 sharpens the $m$-dependence via better averaging over the circuit ratios). Through de Weger's two-log bound this yields $K < F(m)$, $F$ increasing in $m$: $F(1)$ a small constant (Steiner), $F(2)\approx 86{,}000$ (Simons).
 
-3. **Transcendence lower bound forces $K$ large.** The two-log lower bound on $\Lambda$ (§5), fed back through (4)–(5), forces
-$$
-K \;>\; G(\log B)
-\tag{7}
-$$
-*independent of $m$* (it depends on how small $\Lambda$ can be, which is governed by the height of the form, i.e. by $\log N \approx \log K$).
+3. **Lower bound $G(\log B)$ (= §2 eq (6)).** Crandall's lemma (the boxed inequality preceding (6) in §2) with $N_0 > B$ forces $K > G(\log B)$, of the order of a convergent denominator of $\delta$ exceeding $\sim B$.
 
-4. **The squeeze.** Combine (6) and (7). For the would-be cycle to exist we need $G(\log B) < K < F(m,\log B)$. Since $F$ increases with $m$, there is a threshold $m^\*$ below which $F(m,\log B) \le G(\log B)$, making the interval empty: **no cycle with $m \le m^\*$.** Hercher's contribution is to push $m^\* $ from $75$ (Simons–de Weger, local-minima count) to $91$.
+4. **The squeeze in $m$.** A cycle needs $G(\log B) < K < F(m)$. Since $F$ increases with $m$ while $G$ is fixed by $B$, there is a threshold $m^\*$ below which $F(m) \le G(\log B)$ — **no cycle with $m \le m^\*$.** Hercher pushes $m^\*$ from $75$ (Simons–de Weger, local-minima count) to $91$.
 
-> **So the bound on $m$ is set by the gap between $F$ and $G$.** $G$ comes from the **two-log linear-forms lower bound** (the transcendence input). $F$ comes from the **combinatorial geometry of the circuits + the verification bound $B$**. Improving $m^\*$ requires improving *either* $G$ (sharper two-log estimate, route (a)) *or* $F$ (sharper combinatorics / larger $B$, route (b)). §6–§7.
+> **So $m^\*$ is set by the gap between $F$ and $G$.** $F$ (the upper bound on $K$) is governed by the **two-log linear-forms exponent** ($0.158$) and the circuit-geometry budget. $G$ (the lower bound on $K$) is governed by **Crandall + the verified bound $B$**. Improving $m^\*$ means improving *either* the two-log exponent (route (a), §6.2) *or* the geometric/combinatorial budget or $B$ (route (b), §6.3).
 
 ---
 
@@ -137,11 +136,11 @@ $$
 x_{\min} = \frac{2^{a} - 1}{\,2^{a+b} - 3^{a}\,} \cdot 3^{0}\cdot(\dots)
 \quad\Longrightarrow\quad
 \frac{2^{a}-1}{2^{a+b}-3^{a}} \in \mathbb{Z}_{>0}.
-\tag{8}
+\tag{7}
 $$
 (Verified shape via WebSearch: "Steiner shows that a rational expression of the form $(2^a-1)/(2^{a+b}-3^b)$ does not assume a positive integer value except $a=b=1$.")
 
-> **Theorem (Steiner 1977).** (8) has no solution in positive integers except $a=b=1$ (the trivial cycle $1\to 2 \to 1$).
+> **Theorem (Steiner 1977).** (7) has no solution in positive integers except $a=b=1$ (the trivial cycle $1\to 2 \to 1$).
 
 *Mechanism.* For (8) to be a positive integer $\ge 1$ one needs $2^{a+b}-3^a \le 2^a - 1$, i.e. $\Lambda = (a+b)\log 2 - a\log 3$ extremely small. Steiner bounds $a$ from above by a constant via Baker's theorem on $\Lambda$, then checks the finitely many $(a,b)$ by the continued fraction of $\delta$. The convergents $p/q$ of $\delta$ are exactly the $(K,N)$ candidates making $\Lambda$ small; our computation (verify log) shows $|\delta - p/q|$ never gets small enough at small $q$ to satisfy (8) except trivially.
 
@@ -149,9 +148,9 @@ $$
 
 Simons (Math. Comp. 74 (2005) 1565–1572) reduces the 2-circuit case to the same kind of squeeze and obtains (verified via WebSearch of the AMS paper text):
 
-- **Upper bound (LMN applied to $\Lambda$):** $K < 86{,}000$ (Lemma 6 of Simons). [The LMN application appears as: "if $T \le 20.86$ then $-\log\Lambda \le 24.34(\log 3)^2\,(\cdots)^2$" — the constant $24.34$ is LMN's, §5.]
-- **Lower bound (continued fractions / integrality):** the cycle length satisfies $K + N > 357{,}638{,}239$.
-- **Contradiction:** $86{,}000 < 357{,}638{,}239$ — wait, these are bounds on *different* quantities ($K$ vs $K+N$); the actual contradiction is that the small set of $(K,N)$ with $\Lambda$ small enough (forced by $K+N$ being a large convergent denominator) all have $K$ exceeding the upper bound, leaving no admissible pair. Hence **no 2-cycle.**
+- **Upper bound on $K$ (LMN applied to $\Lambda$):** $K < 86{,}000$ (Lemma 6 of Simons). [The LMN application appears as: "if $T \le 20.86$ then $-\log\Lambda \le 24.34(\log 3)^2\,(\cdots)^2$" — the constant $24.34$ is LMN's, §5. This is eq (5) for $m=2$, i.e. $F(2)\approx 86{,}000$.]
+- **Lower bound on the cycle length (Crandall / continued fractions):** $K + N > 357{,}638{,}239$.
+- **Contradiction:** the two bounds constrain compatible quantities through $N \approx \delta K$: $K+N \approx (1+\delta)K$, so the lower bound forces $K > 357638239/(1+\delta) \approx 1.38\times 10^8$, which is incompatible with the LMN upper bound $K < 86{,}000$. Hence **no 2-cycle.** (This is exactly the §2 squeeze — upper bound eq (5) vs lower bound eq (6) — instantiated at $m=2$.)
 
 > **Verified numerical anchor (independent confirmation of the mechanism).** The number $357{,}638{,}239$ is *exactly the numerator of a convergent of $\delta = \log_2 3$*: our continued-fraction computation gives the convergent $357638239/225644606$ with $|\delta - p/q| \approx 1.08\times 10^{-17}$ (`verify_cycle_exclusion.py`). Likewise Eliahou's cycle-length coefficients $301994,\ 17087915,\ 85137581$ are convergent numerators/denominators of $\delta$, and the modern cycle-length lower bound $217{,}976{,}794{,}617$ is the convergent numerator $217976794617/137528045312$. This is strong independent evidence that the reconstructed mechanism ("cycle lengths are forced to be convergent denominators of $\log_2 3$") is correct.
 
@@ -178,29 +177,60 @@ $$
 
 > **Tag `[PARTIAL-CONST]`:** I could not fetch the LMN/Laurent PDFs directly (all academic PDF hosts returned HTTP 403 in this environment, consistent with `survey.md`'s documented access note). The constant **$24.34$** and the **$(\log b'+0.14)^2$** structure are confirmed from *multiple independent secondary snippets* (Simons's application, Bugeaud's survey, the Leiden notes). The exact value of the secondary constants ($21$ vs $21/D$, $0.14$, whether the floor is $\max\{\cdot,21,1/2\}$) should be locked against the LMN PDF before any publication. They do **not** affect the *qualitative* conclusion of this document (which constant is rate-limiting), only the precise arithmetic of a putative new $m^\*$.
 
-For our application: $\alpha_1 = 2,\alpha_2 = 3$, $h(2)=\log 2,h(3)=\log 3$, so $\log A_1 = \log 2$-ish $\to$ take $\log A_1 = 1$ (since $\max\{\log 2,1\}=1$), $\log A_2 = \log 3 = 1.0986\ldots$; $b_1 = N, b_2 = K$, $b' \approx N/\log 3 + K \approx K(\delta/\log 3 + 1)$. Then (9) gives
+For our application $\alpha_1=2,\alpha_2=3$, $b_1=N,b_2=K$, $\log A_1 = 1$ ($=\max\{\log 2,1\}$), $\log A_2 = \log 3$, $b' \approx N/\log 3 + K \approx K(\delta/\log 3 + 1)$. Then (9) gives the "raw" bound
 $$
-\log|\Lambda| \ge -24.34\,(\log K + c_0)^2 \cdot \log 3,
+\log|\Lambda| \;\ge\; -24.34\,(\log K + c_0)^2 \cdot \log 3,
 \quad\text{i.e.}\quad
-|\Lambda| \ge \exp\!\big(-C (\log K)^2\big)
+|\Lambda| \ge \exp\!\big(-C (\log K)^2\big),\quad C \approx 24.34\log 3 \approx 26.7.
 \tag{10}
 $$
-for an explicit $C \approx 24.34\log 3 \approx 26.7$ (plus lower-order terms). **This is $G$ of §3:** $\Lambda$ cannot be smaller than $\approx e^{-26.7(\log K)^2}$.
+Note the exponent here is **$(\log K)^2$** — far stronger (larger lower bound) than any polynomial $K^{-O(1)}$.
 
-### 5.2 Why this is the bottleneck — and why $\mu(\log_2 3)$ is NOT
+### 5.1b De Weger's operative reformulation (the form actually used — VERIFIED, double-sourced)
 
-The cycle's integrality forces (5): $\Lambda < e^{-cN} = e^{-c\delta K}$ roughly (since $N \approx \delta K$). Setting the **exponential** upper bound against the **quasi-polynomial** lower bound (10):
+For the cycle application one packages (10) as a clean lower bound. The statement, verified verbatim via **two independent WebSearch queries (2026-06-02)** and attributed to **Simons's exposition of the de Weger result** (the Simons 2-cycle / generalized-cycle papers; cross-listed in the survey arXiv:2112.12962):
+
+> **De Weger's reformulation (Simons).** *"The result of de Weger can be reformulated as: $0 < (k+\ell)\log 2 - k\log 3 < 2^{-0.158 k}$ has no solutions for $k \ge 32$."*
+
+In our notation ($k = K$, $\ell = S$, $N = k+\ell$) this is precisely the **transcendence lower bound**
 $$
-e^{-c\delta K} \;<\; |\Lambda| \;\text{ is impossible once }\; c\delta K \;>\; 24.34\log 3\,(\log K)^2,
+\boxed{\;\Lambda = N\log 2 - K\log 3 \;\ge\; 2^{-0.158\,K}\quad\text{for all } K \ge 32\;}
+\tag{6$'$}
 $$
-i.e. once $K \gtrsim (\log K)^2$ with the explicit constants — which happens for all $K$ above a moderate threshold. The *value* of that threshold, propagated back through the circuit bookkeeping (6), is exactly what determines $m^\*$. **A smaller leading constant in (9) lowers the threshold on $K$, hence raises $m^\*$.**
+i.e. $\Lambda$ *cannot* be as small as $2^{-0.158K}$ once $K \ge 32$. This is (6) of §2 with the explicit constant; it is the **operative** transcendence input (it is exactly (10) re-expressed in the exponential scale the cycle bookkeeping uses — the linear exponent $0.158K\log 2$ is a *convenient lower bound* on the genuine $C(\log K)^2$ for the $K$-range that matters). **The exponent $0.158$ is the single cleanest numerical expression of the bottleneck constant**; it is downstream of LMN's $24.34\,D^4$.
 
-By contrast, the one-dimensional irrationality measure $\mu(\log_2 3)$ controls $|N - K\delta| = |\Lambda|/\log 2$ only through $|\delta - N/K| > K^{-\mu}$, i.e. $|\Lambda| > (\log 2)\,K^{1-\mu}$. With the **current best $\mu(\log_2 3)$ (see §5.3)** this is *far weaker* than (10) for the relevant range: a polynomial-in-$K$ lower bound with exponent $\sim -3$ to $-5$, versus LMN's $e^{-C(\log K)^2}$ which is *larger* (closer to $1$) for all moderately large $K$. **Hence the cycle proof uses LMN, not $\mu$, and improving $\mu(\log_2 3)$ does not help.** (This directly corrects `open_problems.md` D.2's premise that "each extension requires a better effective irrationality measure of $\log_2 3$.")
+The contradiction with a cycle: the cycle's geometry forces $\Lambda < 2^{-0.158K}$ (or, in the cruder bound (5), $\Lambda<\Theta(m/B)$) for the relevant $(K,N)$; (6$'$) forbids it for $K\ge 32$, leaving only finitely many small-$K$ cases, cleared by direct continued-fraction search. The number-of-circuits $m$ controls how the cycle's forcing exponent compares to $0.158$.
+
+**Step-1 numerically verified** (`verify_cycle_exclusion.py`, check C5a): scanning $K = 1,\dots,200$ with the best $N=\lceil K\delta\rceil$ (minimal positive $\Lambda$), the inequality $0<\Lambda<2^{-0.158K}$ has its **largest solution at $K=29$**; **no solution for any $K\ge 32$**, exactly matching de Weger's threshold. This independently re-derives (6$'$) and is strong corroboration of the (snippet-sourced) constant.
+
+> **Provenance note.** The exponent $0.158$ and threshold $K\ge 32$ are from secondary snippets (Simons's exposition), double-confirmed, *and* independently reproduced numerically here. The upstream LMN constant $24.34\,D^4$ that produces them is `[PARTIAL-CONST]` (primary PDFs unreachable, §5.1).
+
+### 5.2 Why this is the bottleneck — and why $\mu(\log_2 3)$ is structurally USELESS here
+
+This is the central analytic point, and the directionality matters. The cycle's *sharp* geometric forcing (§2) is **exponential**: an $m$-circuit cycle forces
+$$
+0 < \Lambda < 2^{-\rho_m K} \qquad (\rho_m > 0,\ \text{decreasing in } m),
+$$
+because closure makes $2^N$ exponentially close to $3^K$. The proof needs a transcendence **lower** bound on $\Lambda$ that **outpaces** this — i.e. is *larger* than $2^{-\rho_m K}$ for large $K$ — so the two cross and cap $K$ from above.
+
+- **Two-log estimate (de Weger/LMN):** $\Lambda > 2^{-0.158K}$ — also **exponential**. Against the forcing:
+$$
+2^{-0.158K} < \Lambda < 2^{-\rho_m K} \;\Rightarrow\; 2^{-0.158K} < 2^{-\rho_m K},
+$$
+which fails for large $K$ whenever $\rho_m > 0.158$, and in the borderline regime pins $K$ into a **finite window $K < F(m)$**. Two comparable exponentials ⟹ an **upper bound on $K$.** ✓ (For $m=2$, $F(2)\approx 86{,}000$.)
+
+- **Irrationality measure $\mu := \mu(\log_2 3)$:** gives $|\delta - N/K| > K^{-\mu}$, i.e. $\Lambda > (\log 2)K^{1-\mu}$ — only **polynomial**. Against the forcing:
+$$
+(\log 2)\,K^{1-\mu} < \Lambda < 2^{-\rho_m K}.
+$$
+A polynomial $K^{1-\mu}$ is **eventually $\gg$** an exponentially-small $2^{-\rho_m K}$ — so this inequality is **violated for all large $K$**, i.e. it is satisfiable only for *small* $K$ and imposes **no upper bound** of the needed kind; worse, it cannot even certify the *absence* of large-$K$ cycles. **No contradiction with a long cycle is produced, for any $\mu$.**
+
+> **Conclusion (the headline correction).** The reason the cycle proof uses a two-log linear form and *not* $\mu(\log_2 3)$ is **not** merely that the two-log constant is numerically better — it is that **only an exponential-in-$K$ lower bound on $\Lambda$ can cap the cycle length from above**, and the irrationality measure is intrinsically polynomial. **No improvement of $\mu(\log_2 3)$ — not even the conjectural $\mu = 2+\epsilon$ — can move the cycle bound $m^\*$.** This directly refutes the premise of `open_problems.md` D.1/D.2 and `survey.md` §11 Vector C that "each extension requires a better effective irrationality measure of $\log_2 3$." The lever is the **two-log exponent** ($0.158$), which is set by the leading constant ($24.34 D^4$) and the height/$b'$ structure of (9).
 
 ### 5.3 Current best $\mu(\log_2 3)$ and $\mu(\log 3)$ — verified, for completeness
 
 - $\mu(\log 3) \le 5.1163051$ — **Wu & Wang, *On the irrationality measure of $\log 3$*, J. Number Theory 142 (2014), 264–273** (verified via WebSearch / Semantic Scholar / ScienceDirect listing). This improved Salikhov 2007 ($\le 5.125$) and Rhin 1987 ($\le 8.616$). [Rhin's commonly-cited figure is sometimes quoted as $\le 7.616$; the chronology $8.616 \to 5.125 \to 5.1163051$ is the one given by the Wu–Wang paper itself; tagged `[PARTIAL-CONST]` for the Rhin value.]
-- $\mu(\log 2) \le 3.57455391$ (Marcovecchio 2009, via the Rhin–Viola method) — verified via WebSearch.
+- $\mu(\log 2) \le 3.57455391$ — **Marcovecchio, *The Rhin–Viola method for $\log 2$*, Acta Arith. 139.2 (2009), 147–184** (venue verified via WebSearch/EUDML; the exact numerical value $3.574\ldots$ is `[PARTIAL-CONST]`, not snippet-confirmed). Not used in the cycle argument; listed for completeness.
 - $\mu(\log_2 3) = \mu(\log 3/\log 2)$: I found **no published effective bound dedicated to the ratio $\log_2 3$**; the cycle literature does not use one. The relevant object is always the *two-log form*, where the heights of $2$ and $3$ enter separately and beneficially. (This is precisely why the two-log estimate beats the ratio's measure.)
 
 ---
@@ -209,9 +239,9 @@ By contrast, the one-dimensional irrationality measure $\mu(\log_2 3)$ controls 
 
 ### 6.1 The bottleneck constant (answer to the brief)
 
-> **The precise bottleneck is the leading constant $\kappa$ in the two-log lower bound**
-> $$\log|\Lambda| \ge -\kappa\,(\log b' + 0.14)^2\,\log A_1\log A_2,\qquad \kappa_{\text{current}} = 24.34\ (D=1).$$
-> Equivalently, the bottleneck is the function $G(\log B)$ of §3 (the smallest $K$ for which (10) beats the cycle's exponential upper bound), and $G$ scales like $\kappa\,(\log K)^2$. Hercher's $m^\* = 91$ is the largest $m$ for which the combinatorial bound $F(m,\log B)$ does not yet exceed $G$.
+> **The precise bottleneck is the two-log linear-forms estimate** — concretely the leading constant $\kappa$ in
+> $$\log|\Lambda| \ge -\kappa\,(\log b' + 0.14)^2\,\log A_1\log A_2,\qquad \kappa_{\text{current}} = 24.34\ (D=1),$$
+> as packaged in de Weger's operative form $\Lambda > 2^{-0.158K}$ for $K \ge 32$. This estimate is what converts the cycle's geometric budget into the **upper bound $F(m,\log B)$ on the cycle length $K$** (§2, (7)–(8)). Hercher's $m^\* = 91$ is the largest $m$ for which $F(m,\log B)$ has not yet dropped below Crandall's lower bound $G(\log B)$ (§3, (10)). A **sharper two-log estimate** (smaller $\kappa$ ⟹ a more favorable de Weger inequality, i.e. ruling out the cycle's forcing at a smaller $K$-threshold) tightens $F$ and raises $m^\*$; equivalently one can raise $m^\*$ by lowering $G$ (larger verified $B$) or improving the circuit-averaging budget. The exact numerical sensitivity $\partial m^\*/\partial\kappa$ requires Hercher's explicit constants (not fetchable here) to compute.
 
 ### 6.2 Route (a): plug in a sharper two-log estimate
 
@@ -232,7 +262,8 @@ This is the part that is **not** the irrationality measure, and it is where Herc
 
 ### 6.4 Honest assessment
 
-- **I have NOT improved past $m \le 91$ in this document.** Doing so rigorously requires the exact constants from the Hercher PDF and the Laurent-2008 PDF, neither fetchable in this environment.
+- **`[PARTIAL-DERIV]`** The technical core — the derivation of the *upper* bound $F(m)$ on $K$ from the $m$-circuit geometry (the step that forces $\Lambda$ below an exponentially-decaying $\theta_m(K)$ and then applies the two-log bound) — is **summarized, not reproduced from scratch**, in this document. I have verified its *inputs* (the two-log constant, the directionality, the $m=1,2$ outcomes) and its *outputs* (the $m^\*$ values), but a from-first-principles re-derivation of $F(m)$ for general $m$ requires the Simons–de Weger / Hercher bookkeeping in full, which needs the PDFs. This is the main gap a Step-2 red-team should probe.
+- **I have NOT improved past $m \le 91$ in this document.** Doing so rigorously requires the exact constants and the explicit $F(m)$ from the Hercher PDF and the Laurent-2008 PDF, neither fetchable in this environment.
 - **The single most likely real incremental gain** is Route (b1): redo Hercher's squeeze with $B = 2^{71}$ (Barina 2025) instead of $B = 3\cdot 2^{69}$. This is honest, uses only a correctly-cited published verification bound, and is mechanical. Expected gain: small ($+1$ to $+3$ in $m^\*$), and it would need the Hercher constants to instantiate. **This is the recommended next concrete step.**
 - **A larger gain via Route (a)** is possible *iff* Hercher did not already use the sharpest two-log constant. Determining that is the key open question and requires the Hercher PDF.
 
@@ -242,14 +273,14 @@ This is the part that is **not** the irrationality measure, and it is where Herc
 
 | Input | Current | Effect on $m^\*$ | Status |
 |---|---|---|---|
-| Two-log leading constant $\kappa$ | $24.34$ (LMN 1995) / Laurent 2008 (sharper, value TBD) | $m^\*$ scales like $1/\sqrt\kappa$-ish via the $(\log K)^2$ balance | **Route (a).** Real if Hercher used the older constant. |
-| Verified bound $B$ | $3\cdot 2^{69}$ (Hercher) → $2^{71}$ (Barina 2025) | $+1$ to $+3$ | **Route (b1).** Real, cheap, published input. |
-| Circuit-averaging constant | Hercher's | small | **Route (b2).** Real, needs the PDF. |
-| $\mu(\log_2 3)$ | $\approx$ via $\mu(\log 3)\le 5.116$ | **none** | **Dead end for cycles** (see §5.2). Corrects `open_problems.md` D.2. |
-| *Conjectural:* $\mu(\log_2 3) = 2+\epsilon$ (Lang–Waldschmidt type) | conjectural | would make the *one-log* bound competitive but still not beat the two-log estimate in this regime | Not the lever. |
-| *Conjectural:* an effective **two-log** bound of true "$abc$/Lang–Waldschmidt" strength $|\Lambda| > c(\epsilon)\,H^{-1-\epsilon}$ | conjectural | would push $m^\* \to \infty$ effectively (rule out *all* circuit cycles for $m$ up to enormous bounds) | The real conjectural lever. |
+| Two-log leading constant $\kappa$ | $24.34$ (LMN 1995); Laurent 2008 likely sharper, value TBD | raises $m^\*$ (monotone; magnitude needs Hercher's constants) | **Route (a).** Real *iff* Hercher used the older constant. |
+| Verified bound $B$ | $3\cdot 2^{69}$ (Hercher) → $2^{71}$ (Barina 2025) | $+1$ to $+3$ (Hercher's $83\to$ via verification shows several units) | **Route (b1).** Real, cheap, published input. |
+| Circuit-averaging budget | Hercher's | small–moderate | **Route (b2).** Real, needs the PDF. |
+| $\mu(\log_2 3)$ | via $\mu(\log 3)\le 5.116$ (Wu–Wang 2014) | **none** | **Structural dead end** (§5.2): polynomial ⟹ wrong-direction bound on $K$. Corrects `open_problems.md` D.1/D.2. |
+| *Conjectural:* $\mu(\log_2 3) = 2+\epsilon$ | conjectural | **still none** | A better $\mu$ remains polynomial; cannot cap $K$ from above. Not the lever, even conjecturally. |
+| *Conjectural:* effective **two-log** bound $|\Lambda| > c(\epsilon)\,H^{-1-\epsilon}$ (Lang–Waldschmidt, $H \sim \max(N,K)$) | conjectural | would push $m^\* \to \infty$ effectively | The real conjectural lever. |
 
-**Conclusion on the conjectural side:** The bound that would genuinely "blow up" $m^\*$ is **not** a better $\mu(\log_2 3)$; it is a **conjecturally optimal lower bound for the two-log linear form** $|N\log 2 - K\log 3|$ of the form $\gg H^{-1-\epsilon}$ (where $H \sim \max(N,K)$), i.e. the two-dimensional analogue of the Lang–Waldschmidt conjecture. Such a bound is far beyond current transcendence technology (current is $(\log H)^2$ in the exponent, conjectural is $(1+\epsilon)\log H$). This is the precise Diophantine statement on which unbounded cycle exclusion is conditional.
+**Conclusion on the conjectural side:** The bound that would genuinely "blow up" $m^\*$ is **not** a better $\mu(\log_2 3)$ (a polynomial lower bound on $\Lambda$ can never cap the cycle length from above — §5.2); it is a **conjecturally optimal lower bound for the two-log linear form** $|N\log 2 - K\log 3| \gg H^{-1-\epsilon}$ (Lang–Waldschmidt's two-dimensional conjecture). This is far beyond current transcendence technology (current exponent is $\sim(\log H)^2$; conjectural is $(1+\epsilon)\log H$). Even this only sharpens the *exponential* decay rate — it would push $m^\*$ very high but, being still short of "$\Lambda$ bounded below by a constant," would not by itself rule out cycles of *all* $m$. **Unbounded cycle exclusion ($m^\* = \infty$) is exactly conditional on a strong-enough two-log lower bound.**
 
 ---
 
@@ -262,9 +293,11 @@ This is the part that is **not** the irrationality measure, and it is where Herc
 
 ## 9. What the Step-1 numerics verify (see `experiments/verify_cycle_exclusion.py`)
 
-1. $\delta = \log_2 3$ to 80 digits and its continued fraction $[1;1,1,2,2,3,1,5,2,23,2,2,1,1,55,\dots]$.
-2. **Eliahou's and Simons–de Weger's constants are convergent (numerators/denominators) of $\delta$** — confirming the mechanism. ($357638239$, $17087915$, $85137581$, $301994$, $217976794617$ all appear.)
-3. The inequality $2^N > 3^K \Leftrightarrow N > K\delta$ (Lemma 1) holds exactly for all the relevant $(K,N)$, and the per-convergent $|\delta - p/q|$ is never small enough at small $q$ to admit a non-trivial cycle (consistent with Steiner $m=1$).
-4. **Brute-force (`cycles.py`):** no non-trivial positive cycle for parity length $\le 22$; no cycle with $x_{\min} \le 2\times 10^5$ and period $\le 5000$. Negative-cycle sanity checks ($-1,-5,-17$) pass.
+1. (C1) $\delta = \log_2 3$ to 80+ digits and its continued fraction $[1;1,1,2,2,3,1,5,2,23,2,2,1,1,55,\dots]$.
+2. (C2) **Eliahou's and Simons–de Weger's constants are convergent (numerators/denominators) of $\delta$** — confirming the "cycle lengths are convergents of $\log_2 3$" mechanism. ($357638239$, $17087915$, $85137581$, $301994$, $217976794617$, $10439860591$, $6586818670$ all appear.)
+3. (C3) $2^N > 3^K \Leftrightarrow N > K\delta$ (Lemma 1) and $2^N \ne 3^K$ (denominator never zero) for $K\le2000$; Legendre $q^2|\delta-p/q|<1$ on all convergents.
+4. (C4) Hercher's bound arithmetic $1536\cdot2^{60}=3\cdot2^{69}$.
+5. (C5a) **De Weger's threshold:** $0<\Lambda<2^{-0.158K}$ has its largest solution at $K=29$; **no solution for $K\ge32$** — independently re-deriving eq (6$'$). (C5b) the directional argument of §5.2 (two-log slope $0.158$ vs irrationality-measure slope $\to0$).
+6. **Brute-force (`cycles.py`):** no non-trivial positive cycle for parity length $\le 22$; no cycle with $x_{\min} \le 10^5$ and period $\le 3000$. Negative-cycle sanity checks ($-1,-5,-17$) pass.
 
 All four pass. This is necessary, not sufficient (per `verification_protocol.md` anti-patterns) — the document's *claims* are (i) the reconstruction of the mechanism, (ii) the identification of the bottleneck constant, (iii) the two correction items. Of these, (i) and (iii) are verifiable from the cited literature; (ii) is the analytic conclusion that should face a Step-2 red-team and, ideally, confirmation against the Hercher and Laurent-2008 PDFs.

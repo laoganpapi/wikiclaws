@@ -1,8 +1,10 @@
-# Dead Ends — Vector A (log → natural density), Collatz theory track
+# Dead Ends — Collatz theory track (Vectors A and C)
 
-**Purpose.** Append-only record of sub-approaches tried while attacking the
-upgrade of Tao 2022 from logarithmic to natural density, that did NOT work.
-Companion to `shared/dead_ends.md` (project-wide) and `theory/tao_syracuse_explicit.md`.
+**Purpose.** Append-only record of sub-approaches that did NOT work. Vector A
+entries (upgrade of Tao 2022 from logarithmic to natural density) come first;
+**Vector C entries (cycle exclusion) are appended at the bottom.**
+Companion to `shared/dead_ends.md` (project-wide), `theory/tao_syracuse_explicit.md`
+(Vector A), and `theory/cycle_exclusion_explicit.md` (Vector C).
 
 Read before re-attempting any of these.
 
@@ -107,3 +109,125 @@ $\EE_{s^*}[a]=\log_2 3$ (the Korec balance point). This is why $\mathrm{MIX}(\th
 for the tilted law: it is not a cosmetic change, it is forced by drift-neutrality. A pleasant
 by-product: the same constant $\log_2 3$ that governs Korec's descent exponent reappears as
 the unique natural-density-stationary tilt — a small unification, not a coincidence.
+
+---
+
+## 2026-06-02 — [collatz] — "Hope that the descent-balance tilt $s^*$ restores TV-equidistribution of the Syracuse law"
+
+**Agent / author:** Alex Ye (AI-assisted).
+**Time invested:** ~2 hours theory + compute.
+**Attack vector:** Having reduced the natural-density upgrade to $E_n^{(s^*)}:=\varphi(3^n)\mathrm{CP}_n^{(s^*)}-1\to0$
+(exact-leading-constant equidistribution of the *tilted* Syracuse law; eq (6.4) of
+`tao_syracuse_explicit.md`), and having found the *untilted* law fails this ($E_n\sim0.31n\to\infty$),
+the natural hope was: the descent-balance tilt $s^*$ (which removes the mean log-drift) would
+re-center the distribution and restore $E_n^{(s^*)}\to0$. Verify numerically.
+
+**Why it failed:** Computed $E_n^{(s^*)}=0.212,0.854,1.772,3.090,4.972,7.643$ ($n=1..6$,
+`verify_syracuse_rv.py:collision_study`): grows **super-linearly** and is **larger** than the
+untilted $E_n$ at every $n$. Mechanism: the tilt $s^*\approx0.438$ *thins* the geometric tail
+(lowers $\EE[a]$ from $2$ to $\log_23$), concentrating the valuations $a_j$ and *lowering the
+entropy* of the multiplier $2^{-\sum a_j}$, which *raises* the collision probability. Drift-
+neutrality (needed for natural-density *stationarity*) and high entropy (needed for residue
+*equidistribution*) pull in opposite directions under a single scalar tilt. So at small $n$
+the tilt makes equidistribution strictly worse.
+
+**Counter-example (if any):** The tilted excess values above; explicit and reproducible.
+**Pointer to artifacts:** `tao_syracuse_explicit.md` §6.4 (tilted finding + readings (i)/(ii)/(iii)),
+`experiments/verify_syracuse_rv.py` (`collision_study`), `verify_syracuse_rv_log.md` item 5.
+**Verdict:** abandoned at small $n$ — NOT a refutation (the requirement is asymptotic; small-$n$
+growth could reverse), but it kills the easy optimism and is logged as a genuine negative datum.
+**Lesson:** Do not assume drift-neutrality implies equidistribution — they are *different* and here
+*antagonistic* properties. The single-scalar Esscher tilt of §5.1 is likely too crude; the right
+object may be a $\xi$- or $n$-dependent tilt, or natural density may genuinely fail (reading (iii)),
+which would redirect effort to Vector B. Decisive test: push $E_n^{(s^*)}$ to $n\sim10$–$14$ by FFT.
+
+---
+---
+
+# VECTOR C — Cycle exclusion (Diophantine approximation)
+
+Companion: `theory/cycle_exclusion_explicit.md`, `experiments/verify_cycle_exclusion.py`.
+
+---
+
+## 2026-06-02 — [collatz] — "Improve $m^\*$ by improving the irrationality measure of $\log_2 3$"
+
+**Agent / author:** Alex Ye (AI-assisted).
+**Time invested:** ~2 hours of theory + source verification.
+**Attack vector:** The brief, `survey.md` §11 (Vector C), and `open_problems.md` D.1/D.2
+all frame cycle exclusion as rate-limited by the *effective irrationality measure
+$\mu(\log_2 3)$*. Plan: find the best post-2023 bound on $\mu$ (e.g. via $\mu(\log 3)\le5.116$,
+Wu–Wang 2014) and plug it in to raise the excludable number of circuits $m$.
+
+**Why it failed (structural, not quantitative):** Reconstructing the argument
+(`cycle_exclusion_explicit.md` §2, §5.2) shows the proof does not use $\mu(\log_2 3)$
+and cannot benefit from it. The cycle forces an **upper** bound on $\Lambda=N\log2-K\log3$
+that is essentially **constant in $K$** ($\Lambda<\Theta(m/B)$). To contradict it one needs a
+lower bound on $\Lambda$ that **decays in $K$** fast enough to cross below the budget — i.e. an
+**upper bound on the cycle length $K$.** The two-log estimate (Laurent/LMN; de Weger's form
+$\Lambda>2^{-0.158K}$ for $K\ge32$) decays exponentially and does this. The irrationality
+measure gives only $\Lambda>(\log2)K^{1-\mu}$ — polynomial — which against the constant budget
+yields $K>(cB/m)^{1/(\mu-1)}$, a **lower** bound on $K$: wrong direction, contradicting nothing,
+for **every** $\mu$ including the conjectural $\mu=2+\epsilon$.
+
+**Counter-example (if any):** `verify_cycle_exclusion.py` C5b — two-log lower bound on
+$-\log_2|\Lambda|$ has slope $0.158$ in $K$ (bounded away from 0, caps $K$ above); the
+irrationality-measure slope $(\mu-1)/(K\ln2)\to0$. Only the former bites.
+
+**Pointer to artifacts:** `cycle_exclusion_explicit.md` §5.2, §7, §8; `verify_cycle_exclusion.py` C5.
+**Verdict:** prior-art / gap-not-closeable via this route. Improving $\mu(\log_2 3)$ is a genuine
+dead end for cycle exclusion.
+**Lesson:** The lever is the **two-log linear-forms estimate** (leading constant $24.34D^4$ /
+de Weger exponent $0.158$), or the combinatorial circuit-budget, or the verification bound $B$ —
+NOT the one-dimensional irrationality measure. `survey.md` §7.5/§11 and `open_problems.md` D.1/D.2
+are wrong on this and should be corrected (`cycle_exclusion_explicit.md` §8).
+
+---
+
+## 2026-06-02 — [collatz] — Mis-framed Step-1 check (C5 v1): "two-log bound is numerically larger than the $\mu$ bound"
+
+**Agent / author:** Alex Ye (AI-assisted).
+**Time invested:** ~30 min.
+**Attack vector:** First draft of `verify_cycle_exclusion.py` C5 tried to confirm "two-log is the
+binding constraint" by comparing magnitudes $\log_{10}|\Lambda|_{\text{LMN}}$ vs
+$\log_{10}|\Lambda|_{\mu}$ at the optimal convergent, expecting LMN to be larger.
+
+**Why it failed:** Returned FALSE (the $\mu$ figure was larger at the convergent), aborting Step 1.
+The *check* was wrong, not the literature: the relevant question is not "which lower bound is larger
+at the optimal $N/K$" but "which decays fast enough in $K$ to cap the cycle length" (directionality).
+A larger-magnitude but wrong-shape (polynomial) bound is useless.
+
+**Counter-example (if any):** The FALSE output itself: at $K=10^3$, LMN $\log_{10}|\Lambda|\gtrsim-732$
+vs per-convergent $\mu$ figure $\sim-12.5$; misreading this as "$\mu$ stronger" was the error.
+
+**Pointer to artifacts:** `verify_cycle_exclusion_log.md` (Run 1 note); `verify_cycle_exclusion.py`
+(rewritten C5a/C5b).
+**Verdict:** falsified (the check), then corrected — C5 now tests de Weger's actual inequality
+($K\ge32$ threshold, largest solution at $K=29$) and the slope/direction; both pass.
+**Lesson:** When a Step-1 check fails, decide whether the *claim* or the *check* is wrong before
+touching the theory. Here a sloppy check encoded a sloppy claim; fixing both resolved it. Textbook
+`verification_protocol.md` anti-pattern caught.
+
+---
+
+## 2026-06-02 — [collatz] — Computing a concrete new $m^\*>91$ inside this environment
+
+**Agent / author:** Alex Ye (AI-assisted).
+**Time invested:** ~1 hour (mostly fighting source access).
+**Attack vector:** Instantiate the corrected squeeze with (i) Barina's $B=2^{71}$ instead of
+Hercher's $3\cdot2^{69}$, and/or (ii) the Laurent-2008 two-log constant instead of LMN-1995, to
+claim $m^\*\ge92$.
+
+**Why it failed (incomplete, not falsified):** Both need the **explicit function $F(m,\log B)$ and
+constants from Hercher's paper** (arXiv:2201.00406 / JIS) and the **explicit improved constant from
+Laurent 2008** (Acta Arith. 133.4). Every academic PDF host (arXiv + mirrors, JIS/uwaterloo, AMS,
+ScienceDirect, ResearchGate, EUDML, matwbn, Leiden, Wikipedia) returned **HTTP 403** to both WebFetch
+and sandboxed `curl`; only WebSearch snippets were available. Without Hercher's $F$ and the Laurent-2008
+constant, a new $m^\*$ can only be asserted, not derived — which the ABSOLUTE RULES forbid.
+
+**Counter-example (if any):** n/a (blocked, not false).
+**Pointer to artifacts:** `cycle_exclusion_explicit.md` §6.4, §7.
+**Verdict:** abandoned-in-environment (source access). The route is real; recommended next step when
+PDFs are reachable: re-run Hercher's squeeze with $B=2^{71}$, an estimated honest $+1$ to $+3$ in $m^\*$.
+**Lesson:** A correctly-cited published Diophantine input is required to claim a number. We have the
+mechanism and the bottleneck identification (solid deliverables) but not a new bound.

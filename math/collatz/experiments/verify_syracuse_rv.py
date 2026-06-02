@@ -50,28 +50,34 @@ def inv_pow2_mod(m: int, modulus: int) -> int:
     return pow(inv2, m, modulus)
 
 
-def syracuse_law(n: int, a_max: int = 40) -> Tuple[Dict[int, Fraction], Fraction]:
+def syracuse_law(n: int, a_max: int = 40, s: float = 0.0
+                 ) -> Tuple[Dict[int, Fraction], Fraction]:
     """
-    Exact law of Syrac(Z/3^n Z) over the truncated geometric support a_j in [1, a_max].
+    Exact law of Syrac_s(Z/3^n Z) over the truncated support a_j in [1, a_max].
 
     Uses the closed form
-        Syrac = sum_{j=1}^{n} 3^{n-j} * 2^{-(a_j + ... + a_n)}   (mod 3^n).
-    Let S_j = a_j + a_{j+1} + ... + a_n  (a partial *suffix* sum).  Then
-        Syrac = sum_{j=1}^{n} 3^{n-j} * inv2(S_j) mod 3^n.
-    We build the distribution of the vector of contributions by DP from j=n
-    down to j=1, tracking (current residue mod 3^n) as we add each term, where
-    S_j = a_j + S_{j+1}.  We carry the running suffix-sum's *exponent class*
-    only through inv2, so we track (residue, S_current) — but S can be large,
-    so instead we track residue and accumulate by conditioning on a_j directly.
+        Syrac = sum_{j=1}^{n} 3^{n-j} * 2^{-(a_j + ... + a_n)}   (mod 3^n),
+    with a_1..a_n i.i.d. from the s-TILTED geometric (s=0 -> plain Geom(2)):
+        P_s(a=k) propto 2^{-k(1+s)},  k>=1     (eq (5.1) of the theory doc).
+    For s != 0 the pmf weights are floats (we still track residues exactly).
 
-    Returns (law, trunc_mass) where law maps residue -> probability (Fraction),
-    and trunc_mass is the total probability mass retained (1 - truncation loss).
+    Let S_j = a_j + a_{j+1} + ... + a_n  (a partial *suffix* sum).  We DP from
+    j=n down to j=1, tracking (residue mod 3^n, current suffix exponent S_j),
+    since S_{j-1} = a_{j-1} + S_j is needed for the next term's inv2.
+
+    Returns (law, trunc_mass): law maps residue -> probability, trunc_mass is
+    the retained probability mass (1 - truncation loss).  When s=0 the weights
+    are exact Fractions; when s!=0 they are floats.
     """
     modulus = 3 ** n
-    half = Fraction(1, 2)
-    # geom pmf on [1, a_max]
-    geom = {k: half ** k for k in range(1, a_max + 1)}
-    retained = sum(geom.values())  # < 1 by tail 2^{-a_max}
+    if s == 0.0:
+        half = Fraction(1, 2)
+        geom = {k: half ** k for k in range(1, a_max + 1)}
+    else:
+        # tilted geometric weights (unnormalized here; normalized via retained)
+        ratio = 2.0 ** (-(1.0 + s))
+        geom = {k: ratio ** k for k in range(1, a_max + 1)}
+    retained = sum(geom.values())  # < total mass; we renormalize by it downstream
 
     # DP from j = n down to j = 1.
     # State after processing terms j, j+1, ..., n is:
@@ -79,9 +85,11 @@ def syracuse_law(n: int, a_max: int = 40) -> Tuple[Dict[int, Fraction], Fraction
     #   - the current suffix exponent  E = S_j = a_j + ... + a_n
     # We need E to form S_{j-1} = a_{j-1} + E for the next (outer) term.
     # dist: dict[(R, E)] -> prob.  E can be up to n*a_max; that's fine for small n.
-    dist: Dict[Tuple[int, int], Fraction] = {(0, 0): Fraction(1)}
+    # init weight is 1 (int): multiplies cleanly with either Fraction or float weights.
+    zero = Fraction(0) if s == 0.0 else 0.0
+    dist: Dict[Tuple[int, int], object] = {(0, 0): 1}
     for j in range(n, 0, -1):
-        new: Dict[Tuple[int, int], Fraction] = {}
+        new: Dict[Tuple[int, int], object] = {}
         coeff = pow(3, n - j, modulus)
         for (R, E), p in dist.items():
             for k, pk in geom.items():
@@ -89,12 +97,12 @@ def syracuse_law(n: int, a_max: int = 40) -> Tuple[Dict[int, Fraction], Fraction
                 term = (coeff * inv_pow2_mod(S_j, modulus)) % modulus
                 R2 = (R + term) % modulus
                 key = (R2, S_j)
-                new[key] = new.get(key, Fraction(0)) + p * pk
+                new[key] = new.get(key, zero) + p * pk
         dist = new
 
-    law: Dict[int, Fraction] = {}
+    law: Dict[int, object] = {}
     for (R, _E), p in dist.items():
-        law[R] = law.get(R, Fraction(0)) + p
+        law[R] = law.get(R, zero) + p
     total = sum(law.values())
     return law, total
 
@@ -132,6 +140,38 @@ def char_fn_sup(law: Dict[int, Fraction], n: int) -> Tuple[float, int]:
             best = m
             arg = xi
     return best, arg
+
+
+def collision_excess(law: Dict[int, object], n: int) -> float:
+    """
+    E_n := phi(3^n) * CP_n - 1, where CP_n = sum_b law[b]^2 is the collision
+    probability (renormalized law assumed).  E_n = 0 iff law is uniform on units.
+    By Lemma 6.1/eq (6.4), TV(law, U) <= (1/2) sqrt(E_n).  The natural-density
+    upgrade needs E_n -> 0; beta=1 only gives E_n = 3^{o(n)} (can -> infinity).
+    """
+    phi = 2 * 3 ** (n - 1)
+    cp = sum(float(p) * float(p) for p in law.values())
+    return phi * cp - 1.0
+
+
+def collision_study(n_max: int = 6, s: float = 0.0, a_max: int = 36) -> None:
+    """
+    Print E_n for n=1..n_max for the s-tilted law.  s=0 -> untilted (the §6.4
+    finding: E_n ~ 0.31 n, linear growth, so TV -> infinity).  s=s* (descent-
+    balance) -> the decisive open experiment of §7: does E_n^{(s*)} stay bounded?
+    """
+    tag = "UNTILTED (s=0)" if s == 0.0 else f"TILTED (s={s:.4f})"
+    print(f"\nCollision excess  E_n = phi(3^n)*CP_n - 1   [{tag}]")
+    print("  (E_n -> 0 needed for natural density; beta=1 only gives E_n = 3^{o(n)})")
+    print("  %-3s %-16s %-12s %-12s" % ("n", "phi*CP_n", "E_n", "E_n - E_{n-1}"))
+    prev = None
+    for n in range(1, n_max + 1):
+        law, tot = syracuse_law(n, a_max=a_max, s=s)
+        law = {b: float(p) / float(tot) for b, p in law.items()}
+        E = collision_excess(law, n)
+        diff = (E - prev) if prev is not None else float("nan")
+        print("  %-3d %-16.6f %-12.6f %-12.6f" % (n, E + 1.0, E, diff))
+        prev = E
 
 
 def tilt_check() -> bool:
@@ -222,7 +262,18 @@ def main() -> None:
     print("  (These small-n values are a definitional sanity check, NOT a test of the")
     print("   asymptotic Fourier bound, which lives at n -> infinity.)")
 
-    tilt_check()
+    ok_tilt = tilt_check()
+
+    # ----- The §6.4 collision-probability finding + §7 decisive experiment.
+    import math as _m
+    s_star = -_m.log2(1 - 1 / _m.log(3, 2)) - 1.0  # descent-balance tilt ~ 0.438
+    collision_study(n_max=6, s=0.0)        # untilted: E_n ~ 0.31 n (TV -> inf)
+    collision_study(n_max=6, s=s_star)     # tilted: the open question -- does E_n stay bounded?
+    print("\nINTERPRETATION (see tao_syracuse_explicit.md §6.4, §7):")
+    print("  Untilted E_n grows ~linearly  => TV(nu_n,U) -> infinity, so beta=1 (exponential")
+    print("    ORDER) is NECESSARY but NOT SUFFICIENT for the natural-density upgrade.")
+    print("  Tilted E_n: if it stays bounded/decays, the drift-tilt mechanism is vindicated;")
+    print("    if it also grows, natural density may fail structurally (-> reconsider Vector B).")
 
 
 if __name__ == "__main__":
