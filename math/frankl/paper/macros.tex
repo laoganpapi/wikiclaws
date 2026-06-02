@@ -1,0 +1,42 @@
+% macros.tex --- Notation and shortcuts for the Frankl paper
+% Authors: Alex Ye with Claude (Anthropic)
+
+%--- Common math operators ---
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\img}{img}
+\DeclareMathOperator{\rank}{rank}
+
+%--- Probability / information theory ---
+\newcommand{\E}{\mathbb{E}}         % expectation
+\newcommand{\Pr}{\mathbb{P}}        % probability
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\HH}{\operatorname{H}}  % Shannon entropy
+\newcommand{\II}{\operatorname{I}}  % mutual information
+\newcommand{\KL}{\operatorname{D}}  % Kullback-Leibler divergence
+\newcommand{\Renyi}{\operatorname{H}_\alpha} % Renyi entropy
+
+%--- Union-closed setup ---
+\newcommand{\UC}{\mathcal{F}}                       % a union-closed family
+\newcommand{\UCfam}{union-closed family}
+\newcommand{\abun}{\operatorname{abun}}             % abundance of an element
+\newcommand{\Frankl}{\textsc{Frankl}}               % Frankl conjecture marker
+\newcommand{\ground}{[n]}                           % ground set
+\newcommand{\powerset}[1]{2^{#1}}                   % powerset
+
+%--- Constants in the literature ---
+\newcommand{\gilmer}{c_{\text{Gilmer}}}             % Gilmer's constant ~0.01
+\newcommand{\golden}{\tfrac{3-\sqrt{5}}{2}}         % ~0.38
+\newcommand{\target}{\tfrac{1}{2}}                  % the conjectured 1/2
+
+%--- Theorem-like environments are declared in main.tex via amsthm ---
+
+%--- Workflow markers ---
+\newcommand{\TODO}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
+\newcommand{\NOTE}[1]{\textcolor{blue}{\textbf{[NOTE: #1]}}}
+
+%--- Misc shorthands ---
+\newcommand{\eps}{\varepsilon}
+\newcommand{\half}{\tfrac{1}{2}}
+\newcommand{\bigO}{O}
+\newcommand{\given}{\,|\,}
