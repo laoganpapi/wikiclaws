@@ -51,6 +51,7 @@ from collections.abc import Iterator
 from itertools import permutations
 
 from uc_family import Family, ground_set, relabel, union_closure
+from _canonical import canonical_form_fast
 
 
 def _powerset_masks(n: int) -> list[int]:
@@ -138,7 +139,7 @@ def all_uc_families(
         # DFS with canonical-form keying.  ``visited`` stores canonical
         # representatives; whenever we extend, we canonicalise the child
         # before checking membership.
-        canonical = _canonical_form_via_sig
+        canonical = canonical_form_fast
         start: Family = frozenset()
         visited: set[Family] = {start}
         stack: list[Family] = [start]

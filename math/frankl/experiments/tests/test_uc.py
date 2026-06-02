@@ -181,6 +181,7 @@ class TestCanonical:
         assert out == family_from_sets([[1], [0, 1]])
 
     def test_canonical_form_invariant_under_relabel(self):
+        # uc_family.canonical_form (brute force) — slower but used as reference.
         F = family_from_sets([[0], [0, 1], [0, 1, 2]])
         cf = canonical_form(F, 3)
         for perm in [[0, 1, 2], [1, 0, 2], [2, 1, 0], [0, 2, 1]]:
@@ -190,6 +191,30 @@ class TestCanonical:
         F1 = family_from_sets([[], [0], [0, 1]])         # chain
         F2 = family_from_sets([[], [0], [1], [0, 1]])    # square
         assert canonical_form(F1, 2) != canonical_form(F2, 2)
+
+    def test_canonical_form_fast_orbit_invariant(self):
+        # canonical_form_fast (used by the enumerator) — must be a true orbit invariant.
+        from _canonical import canonical_form_fast
+        F = family_from_sets([[0, 1], [0, 2]])
+        cf = canonical_form_fast(F, 3)
+        from itertools import permutations
+        for perm in permutations(range(3)):
+            assert canonical_form_fast(relabel(F, list(perm)), 3) == cf
+
+    def test_canonical_form_fast_agrees_with_brute_on_orbit_count(self):
+        # canonical_form_fast may pick a *different* canonical rep than canonical_form,
+        # but the number of orbits they identify must agree.
+        from _canonical import canonical_form_fast
+        from enumerate import all_uc_families
+        n = 3
+        fast_orbits = set()
+        brute_orbits = set()
+        for F in all_uc_families(n, dedupe_isomorphic=False):
+            if not F:
+                continue
+            fast_orbits.add(canonical_form_fast(F, n))
+            brute_orbits.add(canonical_form(F, n))
+        assert len(fast_orbits) == len(brute_orbits)
 
 
 # ---------------------------------------------------------------------------

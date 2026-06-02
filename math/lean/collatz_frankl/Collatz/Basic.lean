@@ -5,33 +5,35 @@
 
   Authors: Alex Ye with Claude (Anthropic).
   Branch: claude/epic-dirac-p1oQo.
--/
 
-import Mathlib.Data.Nat.Basic
-import Mathlib.Logic.Function.Iterate
+  NOTE: this file is deliberately written against Lean core + the
+  pre-built `Init` library so that it typechecks without a full
+  Mathlib build. Once Mathlib is available locally
+  (`lake build` or `lake exe cache get`), the comments below indicate
+  the natural Mathlib upgrade paths.
+-/
 
 namespace Collatz
 
 /-- The Collatz map `T : ℕ → ℕ`:
     `T n = n / 2`   if `n` is even,
     `T n = 3 n + 1` if `n` is odd. -/
-def T (n : ℕ) : ℕ :=
+def T (n : Nat) : Nat :=
   if n % 2 = 0 then n / 2 else 3 * n + 1
 
-@[simp] lemma T_even {n : ℕ} (h : n % 2 = 0) : T n = n / 2 := by
-  unfold T; simp [h]
-
-@[simp] lemma T_odd {n : ℕ} (h : n % 2 = 1) : T n = 3 * n + 1 := by
-  unfold T
-  have h0 : n % 2 ≠ 0 := by omega
-  simp [h0]
+/-- Iterate `T` a given number of times.  Once Mathlib is available,
+    this can be replaced by `Function.iterate` from
+    `Mathlib.Logic.Function.Iterate` (notation: `T^[k]`). -/
+def Titer (n : Nat) : Nat → Nat
+  | 0 => n
+  | k + 1 => T (Titer n k)
 
 /-- "Collatz holds for `n`": the orbit of `n` under `T` eventually reaches `1`. -/
-def CollatzHolds (n : ℕ) : Prop :=
-  ∃ k : ℕ, T^[k] n = 1
+def CollatzHolds (n : Nat) : Prop :=
+  ∃ k : Nat, Titer n k = 1
 
 /-- The Collatz conjecture: `CollatzHolds n` for every positive integer `n`. -/
-theorem collatz_conjecture : ∀ n : ℕ, 0 < n → CollatzHolds n := by
+theorem collatz_conjecture : ∀ n : Nat, 0 < n → CollatzHolds n := by
   sorry
 
 end Collatz
