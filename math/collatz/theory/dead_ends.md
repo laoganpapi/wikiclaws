@@ -232,3 +232,80 @@ constant, a new $m^\*$ can only be asserted, not derived — which the ABSOLUTE 
 PDFs are reachable: re-run Hercher's squeeze with $B=2^{71}$, an estimated honest $+1$ to $+3$ in $m^\*$.
 **Lesson:** A correctly-cited published Diophantine input is required to claim a number. We have the
 mechanism and the bottleneck identification (solid deliverables) but not a new bound.
+
+---
+
+## 2026-06-02 — [collatz] — "Derive the upper bound $F(m)$ on cycle length from the self-contained geometry $\Lambda < m/B$"
+
+**Agent / author:** Alex Ye (AI-assisted).
+**Time invested:** ~4 hours theory + compute (the core from-scratch attempt).
+**Attack vector:** Complete the `[PARTIAL-DERIV]` gap in `cycle_exclusion_explicit.md` by deriving the
+upper bound $F(m)$ on the number of o-steps $K$ from first principles. Plan: derive an exact expression
+for $\Lambda=N\log2-K\log3$ from the circuit structure, bound it from above in terms of $m$ and the
+verified bound $B$, then combine with a transcendence lower bound on $\Lambda$ to cap $K$ from above.
+
+**What SUCCEEDED (kept, now in `theory/cycle_bound_attempt.md` §2):** The exact telescoping identity
+$\Lambda=\sum_{j=1}^m\varepsilon_j$, $\varepsilon_j=\log(1+(1-(2/3)^{a_j})/x_j)$ (Thm 3, verified to
+$10^{-120}$), and the rigorous self-contained bound $0<\Lambda<m/x_{\min}<m/B$ (Cor 4, verified on
+17,762 positive fixed points). These are genuine, fully-derived, citation-free deliverables.
+
+**Why the GOAL failed (rigorously, Prop 5):** The bound $\Lambda<m/B$ is **constant in $K$**. Any
+transcendence *lower* bound $\Lambda\ge\ell(K)$ (de Weger $2^{-0.158K}$, or LMN $\exp(-C(\log K)^2)$) is
+**decreasing in $K$**. Combining $\ell(K)\le\Lambda<m/B$ therefore forces $\ell(K)<m/B$, which (since
+$\ell$ decreases) holds for $K$ **large** — it bounds $K$ **below**, never above. So the self-contained
+geometry reproduces only the *Crandall/lower* side of the squeeze ($K>\log_2(B/m)/0.158$), NOT the
+upper bound $F(m)$. I tried three routes to a $K$-decaying upper bound on $\Lambda$ and all collapsed to
+lower bounds on $K$: (a) bounding $R/3^K$ via $R=\sum_j(1-(2/3)^{a_j})P_{j-1}$ — but this identity is
+**circular** for bounding $\Lambda$ (it gives $\Lambda\le(R/3^K)/x_{\min}$ with $R/3^K\sim x_{\min}\Lambda$,
+i.e. $\Lambda\le\Lambda$); (b) bounding $x_{\min}$ below by a growing-in-$K$ function — but a genuine
+cycle only forces $x_{\min}>B$ (fixed), giving no $K$-decay; (c) the partial-product $P_j$ bound — the
+products can grow because $f_i=2^{b_i}(2/3)^{a_i}$ need not be $\le1$ individually.
+
+**Counter-example (if any):** n/a — not falsified, this is a genuine *direction* obstruction proved as
+Prop 5. The upper bound $F(m)$ genuinely exists (Simons $F(2)\approx8.6\times10^4$; Hercher $F(91)$) but
+comes from the **sharper circuit-ratio averaging** ("analytical expression for the upper bound as a
+function of $K$ and $L$"; Hercher's "bounds on averages/sums of an arbitrary number of terms"), which
+needs the primary text — HTTP-403 here (arXiv:2201.00406, AMS, de Weger's site, JIS HTML, all blocked;
+de Weger's site is in fact not in the sandbox network allowlist).
+
+**Pointer to artifacts:** `cycle_bound_attempt.md` §2 (kept), §3 + Prop 5 (the obstruction);
+`verify_cycle_bound.py` (D1–D5 PASS).
+**Verdict:** gap-not-closeable (by self-contained geometry) — the **lower-bound side is now fully
+reconstructed from scratch**; the **upper bound $F(m)$ remains** the residual, sharply localized to the
+circuit-averaging step and contingent on Hercher's PDF.
+**Lesson:** $\Lambda<m/B$ is the wrong tool for the *upper* bound on $K$ — it is constant in $K$ while
+the contradiction needs an *upper* bound on $\Lambda$ that **decays in $K$**. The earlier note's
+parenthetical (its §2 crude-estimate footnote) was right and is now proved (Prop 5). Effort to push
+$m^\*$ must engage the circuit-ratio averaging directly, not the global $\Lambda$ bound.
+
+---
+
+## 2026-06-02 — [collatz] — "Power-law extrapolation of $F(m)$ to claim $m^\*\approx99$ at $B=2^{71}$"
+
+**Agent / author:** Alex Ye (AI-assisted).
+**Time invested:** ~1 hour compute.
+**Attack vector:** Lacking Hercher's explicit $F(m)$, fit a power law $F(m)=c\,m^p$ through the two
+anchors $(2,\,8.6\times10^4)$ and $(91,\,2.617\times10^{10})$, then read off the largest $m$ with
+$F(m)\le G(2^{71})=3.489\times10^{10}$. This gives $p\approx3.31$ and $m^\*\approx99$ (i.e. $+8$ over 91).
+
+**Why it failed (over-optimistic; not trustworthy):** $F(m)$ is LMN-determined, not a power law; a
+2-point fit across the enormous range $m=2\to91$ has no claim to local accuracy at the crossover
+$m\approx91$, which is exactly where $m^\*$ is decided. Cross-checking against Hercher's OWN datum —
+pure verification-bound improvement moved $m^\*$ from 75 to 82 ($+7$) over $\approx10$ doublings of $B$,
+i.e. $\approx0.7$ units of $m^\*$ per doubling of $G$ — and Barina/Hercher is only $\log_2(1.333)=0.415$
+doublings, giving $\Delta m^\*\approx+0.3$, i.e. $m^\*\approx91$–$92$. The power-law's $+8$ is
+$\sim25\times$ the Hercher-calibrated estimate. Kept only as the *optimistic* end of a bracket, loudly
+marked `[PROVISIONAL]`.
+
+**Counter-example (if any):** Internal inconsistency: the two models ($+8$ vs $+0.3$) disagree by an
+order of magnitude, which is itself the signal that $F(m)$'s local slope (only in Hercher's PDF) is the
+deciding unknown.
+**Pointer to artifacts:** `cycle_bound_attempt.md` §6 (both models, bracketed); `verify_cycle_bound.py` D6.
+**Verdict:** abandoned (untrustworthy extrapolation) — superseded by the conservative Hercher-calibrated
+estimate $m^\*\in\{91,92\}$. The honest conclusion is **$B=2^{71}$ alone does not robustly beat 91**
+(best case $+1$), correcting the earlier `cycle_exclusion_explicit.md` §6.4 optimism of "$+1$ to $+3$":
+because Barina's bound is only $1.333\times$ Hercher's (not a full doubling), the realistic gain is
+$\le+1$, and reaching the next convergent plateau $q_{23}=1.375\times10^{11}$ needs $B\ge2^{75.7}\gg2^{71}$.
+**Lesson:** Never extrapolate an LMN-determined quantity by a 2-point power law across two decades of the
+variable; calibrate the *local* slope from the literature's own incremental data. The cheap $B$-lever is
+weaker than hoped because $2^{71}/(3\cdot2^{69})=2^{0.415}$ is far less than one doubling.

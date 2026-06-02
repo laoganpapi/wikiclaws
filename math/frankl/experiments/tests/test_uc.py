@@ -417,5 +417,124 @@ class TestVector3Delta2NonProduct:
         assert correlated_crossover(-0.3) < PSI - 1e-2
 
 
+class TestLatticeAttack:
+    """Lattice-structural view (lattice.py, lattice_cone.py): invariants and the
+    abundance-is-not-a-lattice-invariant obstruction."""
+
+    def test_known_lattice_invariants(self):
+        import lattice as Lat
+        from uc_family import family_from_sets
+        B2 = family_from_sets([[], [0], [1], [0, 1]])
+        M3 = family_from_sets([[], [0, 1], [0, 2], [1, 2], [0, 1, 2]])
+        N5 = family_from_sets([[], [0], [0, 1], [1, 2], [0, 1, 2]])
+        iB2, iM3, iN5 = Lat.invariants(B2), Lat.invariants(M3), Lat.invariants(N5)
+        # B2 distributive; M3 modular non-distributive; N5 non-modular
+        assert iB2.distributive and iB2.modular
+        assert iM3.modular and not iM3.distributive
+        assert (not iN5.modular) and (not iN5.distributive)
+        # M3 is semimodular both ways; N5 neither
+        assert iM3.lower_semimodular and iM3.upper_semimodular
+        assert (not iN5.lower_semimodular) and (not iN5.upper_semimodular)
+
+    def test_join_irreducibles_are_unique_lower_cover(self):
+        import lattice as Lat
+        from uc_family import family_from_sets
+        # chain: every non-bottom element is join-irreducible
+        C = family_from_sets([[], [0], [0, 1], [0, 1, 2]])
+        els, _, _ = Lat.as_lattice(C)
+        assert len(Lat.join_irreducibles(els)) == 3
+        # B3: exactly the 3 atoms are join-irreducible
+        B3 = family_from_sets([[], [0], [1], [2], [0, 1], [0, 2], [1, 2], [0, 1, 2]])
+        els3, _, _ = Lat.as_lattice(B3)
+        assert len(Lat.join_irreducibles(els3)) == 3
+
+    def test_poonen_statement_holds_small(self):
+        # min over JIs of |↑j| ≤ |L|/2 on every UC family n≤4.
+        import lattice as Lat
+        from enumerate import all_uc_families
+        for n in range(5):
+            for F in all_uc_families(n):
+                if len(F) < 2:
+                    continue
+                els, _, _ = Lat.as_lattice(F)
+                pj = Lat.poonen_min_filter(els)[1]
+                assert pj <= len(els) / 2 + 1e-12
+
+    def test_cone_is_lattice_iso_and_pushes_abundance_up(self):
+        # The obstruction engine: cone(G) ≅ G (lattice), abundance = 1 − 1/|L|.
+        from lattice_cone import cone, boolean_pair
+        from lattice_minab import exact_lattice_iso
+        import lattice as Lat
+        from uc_family import abundance
+        for k in range(1, 5):
+            low, high = boolean_pair(k)
+            assert exact_lattice_iso(low, high)          # same abstract lattice
+            assert Lat.invariants(low) == Lat.invariants(high)  # identical invariants
+            assert abs(abundance(low) - 0.5) < 1e-12     # cube at 1/2
+            assert abs(abundance(high) - (1 - 1.0 / (1 << k))) < 1e-12
+
+    def test_cone_construction_exhaustive_small(self):
+        # (C1) UC, (C2) lattice-iso, (C3) abundance=1−1/|L| over all G, n≤3.
+        from lattice_cone import check_construction
+        total, bad = check_construction(3)
+        assert total > 0 and bad == []
+
+    def test_abundance_not_determined_by_invariants(self):
+        # Two UC families, identical LatticeInvariants, different abundance.
+        import lattice as Lat
+        from uc_family import family_from_sets, abundance
+        F1 = family_from_sets([[], [0], [1], [2], [0, 1], [0, 2], [1, 2], [0, 1, 2]])
+        F2 = family_from_sets([[], [0, 3], [1, 3], [2, 3], [0, 1, 3], [0, 2, 3],
+                               [1, 2, 3], [0, 1, 2, 3]])
+        assert Lat.invariants(F1) == Lat.invariants(F2)
+        assert abs(abundance(F1) - 0.5) < 1e-12
+        assert abs(abundance(F2) - 0.875) < 1e-12
+
+    def test_boolean_lattices_stay_at_half(self):
+        # B_k has abundance exactly 1/2 with #JI=k, width=C(k,⌊k/2⌋) → ∞:
+        # no monotone function of coarse invariants can exceed 1/2.
+        import lattice as Lat
+        from lattice_parametric import boolean
+        from uc_family import abundance
+        for k in range(1, 7):
+            F = boolean(k)
+            inv = Lat.invariants(F)
+            assert abs(abundance(F) - 0.5) < 1e-12
+            assert inv.n_join_irred == k
+
+    def test_height_lower_bound(self):
+        # abundance ≥ height/|L| on every UC family n≤4, via the explicit
+        # longest-chain-atom witness; certifies Frankl for tall lattices.
+        import lattice as Lat
+        from enumerate import all_uc_families
+        from uc_family import abundance
+        certified_tall = 0
+        for n in range(5):
+            for F in all_uc_families(n):
+                if len(F) < 2:
+                    continue
+                els, _, _ = Lat.as_lattice(F)
+                nL = len(els)
+                x, freq_x, h = Lat.height_lower_bound_witness(F)
+                assert freq_x >= h                       # witness valid
+                assert abundance(F) >= h / nL - 1e-12    # the inequality
+                if 2 * h >= nL:                          # tall ⇒ Frankl certified
+                    assert abundance(F) >= 0.5 - 1e-12
+                    certified_tall += 1
+        assert certified_tall > 0
+
+    def test_height_bound_tight_on_chains(self):
+        # The height bound is TIGHT on chains: abundance = height/|L|.
+        import lattice as Lat
+        from lattice_parametric import chain
+        from uc_family import abundance
+        for h in range(1, 7):
+            F = chain(h)
+            els, _, _ = Lat.as_lattice(F)
+            _, freq_x, hh = Lat.height_lower_bound_witness(F)
+            assert hh == h
+            assert abs(abundance(F) - h / len(els)) < 1e-12
+
+
 if __name__ == "__main__":
     sys.exit(pytest.main([__file__, "-v"]))

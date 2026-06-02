@@ -204,6 +204,61 @@ def height(elements: list[int]) -> int:
     return max(longest_down(x) for x in elements)
 
 
+def longest_chain(elements: list[int]) -> list[int]:
+    """A longest chain bottom = c_0 ⋖ c_1 ⋖ … ⋖ c_h = top (as a list of masks)."""
+    below = cover_relation(elements)
+    memo: dict[int, tuple[int, list[int]]] = {}
+
+    def lc(x: int) -> tuple[int, list[int]]:
+        if x in memo:
+            return memo[x]
+        if not below[x]:
+            memo[x] = (0, [x])
+            return memo[x]
+        best = max((lc(z) for z in below[x]), key=lambda t: t[0])
+        memo[x] = (best[0] + 1, best[1] + [x])
+        return memo[x]
+
+    top = elements[-1]
+    return lc(top)[1]
+
+
+def height_lower_bound_witness(F: Iterable[int]) -> tuple[int, int, int]:
+    """
+    Return (x, freq_x, height) certifying the structural inequality
+
+        abundance(F) ≥ height(L) / |L|
+
+    Proof (elementary, lattice-structural — NOT entropy):
+      Take a longest chain ∅ = c_0 ⋖ c_1 ⋖ … ⋖ c_h = T in L (length h = height).
+      Pick any ground element x ∈ c_1 (c_1 is an atom, nonempty). Since
+      c_1 ⊆ c_2 ⊆ … ⊆ c_h, x ∈ c_i for every i ≥ 1, so x lies in at least h
+      members of F. Hence max_x freq(x) ≥ h, i.e. abundance ≥ h/|L|.
+
+    Whenever 2·height ≥ |L| (a "tall" lattice) this gives abundance ≥ 1/2,
+    recovering Frankl for that class (chains, and more generally any lattice whose
+    longest chain covers at least half the elements).
+
+    [PRIOR-ART CHECK PENDING] This is elementary and almost surely folklore /
+    subsumed by chain-condition results (e.g. Colbert 2024 for short chains, and
+    Frankl-for-chains is classical). Recorded as an internal sanity certificate,
+    NOT claimed novel.
+    """
+    S = frozenset(F)
+    elements, _, _ = as_lattice(S)
+    if len(elements) <= 1:
+        return (-1, 0, 0)
+    h = height(elements)
+    chain = longest_chain(elements)
+    if len(chain) < 2:
+        return (-1, 0, 0)
+    c1 = chain[1]                      # first atom on the chain (nonempty)
+    x = (c1 & -c1).bit_length() - 1    # some element of c1
+    bit = 1 << x
+    freq_x = sum(1 for A in S if A & bit)
+    return (x, freq_x, h)
+
+
 def width(elements: list[int]) -> int:
     """
     Width = size of the largest antichain. Computed exactly via Dilworth /
@@ -407,7 +462,13 @@ class LatticeInvariants:
 
 
 def invariants(F: Iterable[int]) -> LatticeInvariants:
-    """Compute the bundle of lattice invariants for union-closed F."""
+    """
+    Compute the bundle of lattice invariants for union-closed F.
+
+    Optimised: the cover relation and the meet table are each computed ONCE and
+    shared across all the semimodularity / (dis)modularity tests, rather than
+    rebuilt per-property. join = OR is free.
+    """
     S = frozenset(F)
     elements, bottom, top = as_lattice(S)
     n_L = len(elements)
@@ -415,19 +476,105 @@ def invariants(F: Iterable[int]) -> LatticeInvariants:
     if n_L <= 1:
         return LatticeInvariants(n_L, n_F, 0, 1, 0, 0, 0, n_L,
                                  True, True, True, True)
+
+    below = cover_relation(elements)
+    cover_set = {(x, y) for y, xs in below.items() for x in xs}
+
+    def covers(x: int, y: int) -> bool:
+        return (x, y) in cover_set
+
+    # meet table (shared). O(|L|^3) once.
+    meet = _meet_table(elements)
+    # join is OR; validate union-closure once.
+    elem_set = set(elements)
+
+    bottom_e = elements[0]
+    top_e = elements[-1]
+    # join-irreducibles / meet-irreducibles / atoms from covers
+    above: dict[int, list[int]] = {x: [] for x in elements}
+    for (x, y) in cover_set:
+        above[x].append(y)
+    jis = [y for y in elements if y != bottom_e and len(below[y]) == 1]
+    mis = [x for x in elements if x != top_e and len(above[x]) == 1]
+    atms = [y for y in elements if below[y] == [bottom_e]]
+
+    # Poonen min filter over JIs
+    if jis:
+        pmin = min(sum(1 for x in elements if leq(j, x)) for j in jis)
+    else:
+        pmin = n_L
+
+    # union-closure guard (join = OR must land in L)
+    for a in elements:
+        for b in elements:
+            if (a | b) not in elem_set:
+                raise ValueError("family not union-closed")
+
+    # distributivity: a ∧ (b ∨ c) = (a∧b) ∨ (a∧c) for all triples
+    distributive = True
+    for a in elements:
+        for b in elements:
+            for c in elements:
+                lhs = meet[(a, b | c)]
+                rhs = meet[(a, b)] | meet[(a, c)]
+                if lhs != rhs:
+                    distributive = False
+                    break
+            if not distributive:
+                break
+        if not distributive:
+            break
+
+    # modularity: a ≤ c ⇒ a ∨ (b∧c) = (a∨b) ∧ c
+    modular = True
+    for a in elements:
+        for c in elements:
+            if not leq(a, c):
+                continue
+            for b in elements:
+                lhs = a | meet[(b, c)]
+                rhs = meet[(a | b, c)]
+                if lhs != rhs:
+                    modular = False
+                    break
+            if not modular:
+                break
+        if not modular:
+            break
+
+    # lower semimodular: a∧b ⋖ a ⟹ b ⋖ a∨b
+    lsm = True
+    for a in elements:
+        for b in elements:
+            m = meet[(a, b)]
+            if covers(m, a) and not covers(b, a | b):
+                lsm = False
+                break
+        if not lsm:
+            break
+    # upper semimodular: a ⋖ a∨b ⟹ a∧b ⋖ b
+    usm = True
+    for a in elements:
+        for b in elements:
+            if covers(a, a | b) and not covers(meet[(a, b)], b):
+                usm = False
+                break
+        if not usm:
+            break
+
     return LatticeInvariants(
         n_L=n_L,
         n_F=n_F,
         height=height(elements),
         width=width(elements),
-        n_join_irred=len(join_irreducibles(elements)),
-        n_meet_irred=len(meet_irreducibles(elements)),
-        n_atoms=len(atoms(elements)),
-        poonen_min_filter=poonen_min_filter(elements)[1],
-        distributive=is_distributive(elements),
-        modular=is_modular(elements),
-        lower_semimodular=is_lower_semimodular(elements),
-        upper_semimodular=is_upper_semimodular(elements),
+        n_join_irred=len(jis),
+        n_meet_irred=len(mis),
+        n_atoms=len(atms),
+        poonen_min_filter=pmin,
+        distributive=distributive,
+        modular=modular,
+        lower_semimodular=lsm,
+        upper_semimodular=usm,
     )
 
 
@@ -443,6 +590,8 @@ __all__ = [
     "principal_filter_size",
     "poonen_min_filter",
     "height",
+    "longest_chain",
+    "height_lower_bound_witness",
     "width",
     "is_distributive",
     "is_modular",

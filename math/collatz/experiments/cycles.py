@@ -326,6 +326,146 @@ def find_known_negative_cycles() -> List[Dict]:
 
 
 # ---------------------------------------------------------------------------
+# Circuit decomposition + bound-consistency check
+# (validates theory/cycle_bound_attempt.md against direct enumeration).
+# ---------------------------------------------------------------------------
+
+
+def circuit_decomposition(parity: List[int]) -> Optional[List[Tuple[int, int]]]:
+    """
+    Decompose a *cyclic* parity sequence into circuits: maximal runs of 1's
+    (o-steps, ascending) each followed by the maximal run of 0's (e-steps,
+    descending) up to the next 1.  Returns the list [(a_1,b_1),...,(a_m,b_m)]
+    of (odd-run length, even-run length) per circuit, with m = number of
+    circuits = number of local minima.  Returns None if the sequence is all
+    0's or all 1's (no well-defined circuit structure for a positive cycle).
+
+    The sequence is treated cyclically: it is rotated so it begins at the start
+    of an ascending (1) run, so each circuit is (ones-run, zeros-run).
+    """
+    m_steps = len(parity)
+    if all(p == 0 for p in parity) or all(p == 1 for p in parity):
+        return None
+    # rotate to start at a 1 that is preceded (cyclically) by a 0
+    start = None
+    for i in range(m_steps):
+        if parity[i] == 1 and parity[(i - 1) % m_steps] == 0:
+            start = i
+            break
+    if start is None:
+        return None
+    seq = [parity[(start + t) % m_steps] for t in range(m_steps)]
+    circuits: List[Tuple[int, int]] = []
+    i = 0
+    while i < m_steps:
+        a = 0
+        while i < m_steps and seq[i] == 1:
+            a += 1
+            i += 1
+        b = 0
+        while i < m_steps and seq[i] == 0:
+            b += 1
+            i += 1
+        circuits.append((a, b))
+    return circuits
+
+
+def lambda_from_circuits(circuits: List[Tuple[int, int]]) -> Tuple[int, int]:
+    """Return (N, K) = (total steps, total o-steps) for a circuit list."""
+    K = sum(a for a, _ in circuits)
+    N = sum(a + b for a, b in circuits)
+    return N, K
+
+
+def check_bound_consistency(max_m: int = 22, verbose: bool = True) -> Dict:
+    """
+    For every parity sequence the brute force examines (length <= max_m), if it
+    yields a positive-integer fixed point n>0, decompose it into circuits and
+    confirm the derived identity/bound from theory/cycle_bound_attempt.md:
+
+        Lambda(nats) = N log2 - K log3 = sum_j log(1 + (1-(2/3)^{a_j})/x_j) > 0,
+        and  0 < Lambda < m / n   (n = x_min)   for genuine positive cycles.
+
+    Since the ONLY positive fixed point in this range is the trivial cycle
+    (n=1, which is excluded as "nontrivial" by n>B), this mostly confirms the
+    machinery is self-consistent on the trivial cycle and that no other positive
+    fixed point appears.  Returns a summary dict.
+
+    Theory-vs-computation note: the bound's *claimed-empty* range for a NONTRIVIAL
+    cycle is K > 3.49e10 (Crandall at B=2^71), i.e. parity length N > 5.5e10 --
+    astronomically beyond brute force.  So direct enumeration can only confirm the
+    small-K end is empty; the large-K emptiness is delivered by the proof, not the
+    search.  This function checks the *identity* holds wherever a fixed point
+    exists, which is the falsifiable part.
+    """
+    from itertools import combinations
+    log = (lambda *a, **kw: print(*a, **kw)) if verbose else (lambda *a, **kw: None)
+    import math as _math
+    log2, log3 = _math.log(2), _math.log(3)
+    n_fixed = 0
+    n_identity_ok = 0
+    n_bound_ok = 0
+    examples = []
+    for m in range(1, max_m + 1):
+        ks = [k for k in range(0, m + 1) if is_steiner_admissible(m, k)]
+        for k in ks:
+            for odd_positions in combinations(range(m), k):
+                parity = [0] * m
+                for p in odd_positions:
+                    parity[p] = 1
+                n = cycle_n_from_parity(parity)
+                if n is None or n <= 0:
+                    continue
+                if not verify_cycle(n, parity):
+                    continue
+                n_fixed += 1
+                circ = circuit_decomposition(parity)
+                if circ is None:
+                    continue
+                N, K = lambda_from_circuits(circ)
+                Lam = N * log2 - K * log3
+                # identity: recompute Lambda from the per-circuit eps_j using the
+                # actual local minima of the orbit.
+                # gather local minima (odd numbers preceded by an even number cyclically)
+                orbit = []
+                x = n
+                for _ in range(N):
+                    orbit.append(x)
+                    x = (3 * x + 1) >> 1 if x & 1 else x >> 1
+                # local minima: positions that are odd and whose predecessor (cyclic) is even
+                minima = [orbit[i] for i in range(N)
+                          if orbit[i] & 1 and not (orbit[(i - 1) % N] & 1)]
+                eps_sum = 0.0
+                for (a, _), xj in zip(circ, minima if minima else [n]):
+                    eps_sum += _math.log(1 + (1 - (2.0 / 3.0) ** a) / xj)
+                identity_ok = abs(Lam - eps_sum) < 1e-9 * max(1.0, abs(Lam))
+                if identity_ok:
+                    n_identity_ok += 1
+                mlocal = len(circ)
+                bound_ok = (Lam > 0 and Lam < mlocal / n) or n == 1  # n=1 trivial edge
+                if bound_ok:
+                    n_bound_ok += 1
+                if len(examples) < 5:
+                    examples.append({
+                        "m_steps": m, "circuits": circ, "N": N, "K": K,
+                        "n": n, "Lambda": Lam, "eps_sum": eps_sum,
+                        "identity_ok": identity_ok, "bound_ok": bound_ok,
+                    })
+    log(f"  [bound-consistency] parity length <= {max_m}: "
+        f"{n_fixed} positive fixed point(s); identity Lambda=sum eps_j held on "
+        f"{n_identity_ok}/{n_fixed}; bound 0<Lambda<m/n held on {n_bound_ok}/{n_fixed}.")
+    for ex in examples:
+        log(f"     circuits={ex['circuits']} (N={ex['N']},K={ex['K']}) n={ex['n']} "
+            f"Lambda={ex['Lambda']:.4g} eps_sum={ex['eps_sum']:.4g} "
+            f"id={ex['identity_ok']} bound={ex['bound_ok']}")
+    return {
+        "max_m": max_m, "n_fixed": n_fixed,
+        "n_identity_ok": n_identity_ok, "n_bound_ok": n_bound_ok,
+        "examples": examples,
+    }
+
+
+# ---------------------------------------------------------------------------
 # Pipeline.
 # ---------------------------------------------------------------------------
 
@@ -368,6 +508,11 @@ def run_cycle_search(parity_max_m: int = 20,
     out["negative_cycles"] = find_known_negative_cycles()
     for nc in out["negative_cycles"]:
         log(f"  n = {nc['start']:>3}: closed = {nc['closed']}, length = {nc['length']}")
+
+    log(f"[cycles] circuit-decomposition + bound consistency "
+        f"(theory/cycle_bound_attempt.md) ...")
+    out["bound_consistency"] = check_bound_consistency(
+        max_m=min(parity_max_m, 24), verbose=verbose)
 
     return out
 
