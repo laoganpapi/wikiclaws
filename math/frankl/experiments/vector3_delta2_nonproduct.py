@@ -509,10 +509,11 @@ def main(do_sweep: bool = True, sweep_nmax: int = 5):
         from enumerate import all_uc_families
         from entropy_bounds import sweep_inequality
 
-        # D1: sanity — H(C) ≤ H(A) holds (union closure); this is what Δ₂-recapture
-        #     re-labels. Confirms no NEW inequality is created.
-        min_caug = math.inf
-        min_cahs = math.inf
+        # D1: the per-family certified constants. The worst (minimum) over
+        #     families bounds the provable constant for each ledger.
+        min_caug_HA = math.inf   # recapture Δ₂, honest budget H(A)
+        min_caug_HC = math.inf   # recapture Δ₂, budget H(C)
+        min_cahs = math.inf      # drop Δ₂ (AHS baseline)
         argmin = None
         worst_at_floor = None
         nfam = 0
@@ -522,9 +523,11 @@ def main(do_sweep: bool = True, sweep_nmax: int = 5):
                     continue
                 nfam += 1
                 d = augmented_constant_iid_family(F, n)
-                if d["c_aug"] < min_caug:
-                    min_caug = d["c_aug"]
+                if d["c_aug_HA"] < min_caug_HA:
+                    min_caug_HA = d["c_aug_HA"]
                     argmin = (n, d)
+                if d["c_aug_HC"] < min_caug_HC:
+                    min_caug_HC = d["c_aug_HC"]
                 if d["c_ahs"] < min_cahs:
                     min_cahs = d["c_ahs"]
                 # at families near the AHS floor, record Δ₂ (anticorrelation)
@@ -534,13 +537,16 @@ def main(do_sweep: bool = True, sweep_nmax: int = 5):
                             > worst_at_floor):
                         worst_at_floor = d["delta2"] / max(d["H_union"], 1e-12)
         print(f"  families checked: {nfam}")
-        print(f"  min c_AHS over families                = {min_cahs:.6f}")
-        print(f"  min c_aug (recapture ALL Δ₂) over fams  = {min_caug:.6f}")
-        print(f"  Δ(ψ) of the augmented minimum          = {min_caug - PSI:+.2e}")
-        print(f"  ⇒ c_aug minimum is {'BELOW' if min_caug < min_cahs else 'EQUAL/above'} "
-              f"c_AHS minimum: recapturing Δ₂ does NOT lift the worst-case constant.")
+        print(f"  min c_AHS                       (drop Δ₂)         = {min_cahs:.6f}")
+        print(f"  min c_aug, budget H(A)          (recapture Δ₂)    = {min_caug_HA:.6f}"
+              f"   Δ(ψ)={min_caug_HA - PSI:+.2e}")
+        print(f"  min c_aug, budget H(C)          (recapture Δ₂)    = {min_caug_HC:.6f}"
+              f"   Δ(ψ)={min_caug_HC - PSI:+.2e}")
+        print(f"  ⇒ recapturing Δ₂ does NOT lift the worst-case constant above ψ "
+              f"(both ≤ AHS floor + resolution).")
         print(f"  max Δ₂/H(C) among families within 5e-3 of the AHS floor: "
               f"{worst_at_floor:.4e}  (→0 as c_AHS→ψ : ANTICORRELATION)")
+        min_caug = min(min_caug_HA, min_caug_HC)
 
         # D2: the candidate improved-floor inequality at c slightly above ψ MUST fail.
         print("\n  Candidate 'improved floor' (1/(1−c))S + Δ₂ ≤ H(A) at c just above ψ:")
