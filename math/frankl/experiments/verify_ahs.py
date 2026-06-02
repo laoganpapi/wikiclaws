@@ -207,7 +207,7 @@ def delta2(F, n: int | None = None) -> float:
     The chain-rule slack S_2:  H(A∪B) − Σ_i H(C_i | A_<i,B_<i)  ≥ 0.
     Equivalently Σ_i I(C_i ; (A_<i,B_<i) | C_<i).
     """
-    return exact_entropy_union(F, ) - chain_rule_lower_bound(F, n)
+    return exact_entropy_union(F) - chain_rule_lower_bound(F, n)
 
 
 def marginals_exact(F, n: int | None = None) -> list[float]:

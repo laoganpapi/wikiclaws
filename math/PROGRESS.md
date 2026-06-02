@@ -51,10 +51,10 @@ Living status of the Collatz & Frankl multi-agent research effort. Updated as ph
 
 | Agent | Track | Status | Target |
 |-------|-------|--------|--------|
-| Frankl analytic | Frankl | ⏳ running | Vectors 1 & 2 (Shearer chain rule, intersection term) |
+| Frankl analytic | Frankl | ✅ done | Vectors 1 & 2 both FAILED (rigorous negative results); no improvement claimed |
 | Frankl computational | Frankl | ⏳ running | Vector 3 (joint optimization + certification) |
 | Collatz Tao-density | Collatz | ✅ done | Vector A — conditional reduction (see below); [UNVERIFIED] pending red-team |
-| Collatz cycle-exclusion | Collatz | ⏳ running | Vector C (push m past 91) |
+| Collatz cycle-exclusion | Collatz | ✅ done | Did NOT beat m≤91 (PDF access blocked); corrected survey's bottleneck framing; found cheap improvement route |
 | Collatz experiments | Collatz | ⏸ pending toolkit | verification frontier + Syracuse tables |
 
 ## Phase 2 Findings (ALL [UNVERIFIED] until red-team + human review)
@@ -64,6 +64,26 @@ Living status of the Collatz & Frankl multi-agent research effort. Updated as ph
 - **Unconditional (claimed, needs check):** (a) log-density is forced by stationarity of the sampling measure under the multiplicative first-passage map (Prop 4.2), NOT the dyadic step (Lemma 4.1 shows that's measure-neutral); (b) the obstruction is quantified as a 3^{n/2} Plancherel loss (Lemma 6.2, proved in full).
 - **Negative finding — DO NOT TRUST YET:** numerics on n≤6 suggest β=1 is insufficient (collision diagnostic E_n diverges ~0.31n untilted; tilted is worse). Agent itself flags this may be a small-n artifact. **Decisive test required:** push E_n^(s*) to n≈10–14 via FFT + test ξ-dependent tilts. Until then this is a conjecture, not a result.
 - Transport steps are at "research-announcement rigor," not formalization-ready. Red-team against the actual Tao paper is mandatory.
+
+### Frankl Vectors 1 & 2 — both FAILED (rigorous negatives)
+- Best certified = ψ=(3−√5)/2≈0.381966 (AHS baseline reconstructed from scratch). Does NOT beat Liu 0.38271. No improvement claimed.
+- V1 (Shearer recapture): discarded term Δ₂ ≡ 0 at the AHS *product* extremizer ⇒ recapturing it gains nothing there. Empirical anticorrelation: large Δ₂ ⟺ already-high abundance.
+- V2 (intersection term): no valid budget — H(A∩B) ≤ H(A) is FALSE for UC families (22,361/29,738 violations, ratio up to 1.53). Union-closure's asymmetry (A∪B∈F, A∩B∉F) is exactly the obstruction.
+- ⚠️ Agent caught + discarded TWO artifacts (false "0.4295", buggy "0.5") as budget-mismatch traps. Logged so no later agent resurrects them.
+- Live follow-up: recapture Δ₂ at Liu's *non-product* extremizer (Δ₂>0 there) — only route that escapes the V1 obstruction.
+
+### Collatz Vector C — cycle exclusion (cycle_exclusion_explicit.md)
+- Did NOT beat m≤91 (Hercher PDF + Laurent-2008 constant unreachable; 403 wall). Reproduced the Steiner–Simons–de Weger–Hercher squeeze; checker confirms largest solution at K=29, none for K≥32.
+- **Corrects our own survey.md error:** bottleneck is a *two-log linear form* (Laurent–Mignotte–Nesterenko, const 24.34·D⁴), NOT μ(log₂3). Also: "m≤68" is the circuit count; local-minima convention is m≥76 (S–dW) / m≥92 (Hercher). ⇒ survey.md §7.5/§11 + open_problems.md D.1/D.2 must be fixed.
+- Cheapest improvement route: re-run squeeze with B=2^71 (Barina 2025) vs 3·2^69 ⇒ est. +1–3 in m*. Tractable Phase 3 task IF the primary PDFs become reachable.
+- Constants tagged [PARTIAL-CONST] (snippet-sourced); F(m) derivation [PARTIAL-DERIV]; "μ useless" claim [CLAIM-UNVERIFIED].
+
+## ⚠️ Structural blocker: network policy
+Recurring across ALL research agents: arXiv + every journal/PDF host return **HTTP 403**. Consequences:
+- Citations & numerical constants are **snippet-sourced, not primary-verified** — unacceptable for final submission (arXiv's anti-slop policy bans unchecked refs). Must be resolved before any external release.
+- Lean **Mathlib** unreachable ⇒ only statement-level formalization possible.
+- The concrete Collatz improvement (re-run with Laurent-2008 / B=2^71) is blocked on reading Hercher's explicit cycle-length function.
+**Action needed from user:** widen the environment's network policy to allow arXiv/journal access, or supply key PDFs manually. Until then, results stay [UNVERIFIED] at the primary-source level.
 
 ## Honesty Ledger
 - No proof claims yet. Any constant improvement must pass: numerical validation on all small UC families → red-team → (Lean where feasible) → human review.
@@ -76,6 +96,7 @@ Living status of the Collatz & Frankl multi-agent research effort. Updated as ph
 
 ## Phase 3 Task Queue (after remaining Phase 2 agents finish)
 1. **Decisive Collatz FFT experiment**: push collision diagnostic E_n^(s*) to n≈10–14, test ξ-dependent tilts → resolve whether the "β=1 insufficient" negative finding is real or a small-n artifact. Write to collatz/experiments/syracuse_fft/ (isolated dir, no collision).
-2. **Red-team agents** (one per track): independently check every claimed lemma against sources; hunt for errors, prior art, and overstatement. Mandatory before any writeup.
+2. **Fix survey.md errors** the cycle-exclusion agent caught: μ(log₂3) → two-log linear form (LMN); m-convention (circuits vs local minima). Propagate to open_problems.md.
+3. **Red-team agents** (one per track): independently check every claimed lemma against sources; hunt for errors, prior art, and overstatement. Mandatory before any writeup. Special focus: re-derive the Tao "β=1 insufficient" negative finding at larger n; stress-test the Frankl Δ₂≡0-at-extremizer claim.
 3. **Paper drafting**: integrate verified findings into the LaTeX skeletons. Survey-with-results framing; do not inflate conditional/partial results.
 4. Reconcile strategic_attack_vectors.md hypotheses against what Phase 2 actually found.

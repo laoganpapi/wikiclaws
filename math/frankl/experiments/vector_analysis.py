@@ -1,6 +1,17 @@
 """
 vector_analysis.py — End-to-end numerical analysis of Attack Vectors 1 and 2.
 
+⚠️  CAVEAT (read before trusting any number here): the per-family "certified
+    constant" diagnostics below (ahs_certified_constant, v1_*, v2_*) are HEURISTIC
+    proxies of the form `1 - numerator/budget`. They are useful for RELATIVE
+    comparison and for locating worst-case families, and the AHS/V1 columns are
+    meaningful because their budgets are honest. BUT the V2-λ proxy uses the
+    family's TRUE H(A∩B) as if it were a provable budget, which it is NOT
+    (H(A∩B) ≰ H(A) for union-closed F — see verify_ahs.py / theory/vector2).
+    Consequently the V2-λ column can report a spurious "improvement" (e.g. 0.5);
+    that is a budget-mismatch artifact, NOT a valid bound. The RIGOROUS object is
+    the single-letter optimization in `single_letter.py`. See dead_ends.md.
+
 For each union-closed family F (A,B iid uniform on F), we compute the *actual*
 certifiable abundance constant that each proof strategy would yield IF its
 single-letter inequality were sharp, by directly evaluating the family-level

@@ -159,24 +159,25 @@ all frame cycle exclusion as rate-limited by the *effective irrationality measur
 $\mu(\log_2 3)$*. Plan: find the best post-2023 bound on $\mu$ (e.g. via $\mu(\log 3)\le5.116$,
 Wu–Wang 2014) and plug it in to raise the excludable number of circuits $m$.
 
-**Why it failed (structural, not quantitative):** Reconstructing the argument
-(`cycle_exclusion_explicit.md` §2, §5.2) shows the proof does not use $\mu(\log_2 3)$
-and cannot benefit from it. The cycle forces an **upper** bound on $\Lambda=N\log2-K\log3$
-that is essentially **constant in $K$** ($\Lambda<\Theta(m/B)$). To contradict it one needs a
-lower bound on $\Lambda$ that **decays in $K$** fast enough to cross below the budget — i.e. an
-**upper bound on the cycle length $K$.** The two-log estimate (Laurent/LMN; de Weger's form
-$\Lambda>2^{-0.158K}$ for $K\ge32$) decays exponentially and does this. The irrationality
-measure gives only $\Lambda>(\log2)K^{1-\mu}$ — polynomial — which against the constant budget
-yields $K>(cB/m)^{1/(\mu-1)}$, a **lower** bound on $K$: wrong direction, contradicting nothing,
-for **every** $\mu$ including the conjectural $\mu=2+\epsilon$.
+**Why it failed (what is solidly verified):** Reconstructing the argument
+(`cycle_exclusion_explicit.md` §2, §5.1, double-confirmed via WebSearch) shows the published
+Steiner–Simons–de Weger–Hercher proofs **do not use $\mu(\log_2 3)$ at all**: the *upper* bound
+on cycle length comes from the **two-log linear-forms estimate** (Laurent/LMN; de Weger's form
+$\Lambda>2^{-0.158K}$ for $K\ge32$), and the *lower* bound from **Crandall's lemma**. So the
+constant that bounds $m^\*$ is the two-log estimate's leading constant ($24.34\,D^4$ / de Weger
+exponent $0.158$) plus the circuit budget plus $B$ — improving $\mu(\log_2 3)$ touches none of
+these. **Intuition (flagged `[CLAIM-UNVERIFIED]` in §5.2):** a one-dimensional measure gives only
+a *polynomial* lower bound $\Lambda>K^{1-\mu}$ vs the two-log *linear-in-exponent* bound, which is
+plausibly why it cannot substitute; but I did **not** rigorously prove "a $\mu$-route is impossible"
+(the cycle's own forcing on $\Lambda$ is $K$-dependent, making the naive comparison delicate).
 
-**Counter-example (if any):** `verify_cycle_exclusion.py` C5b — two-log lower bound on
-$-\log_2|\Lambda|$ has slope $0.158$ in $K$ (bounded away from 0, caps $K$ above); the
-irrationality-measure slope $(\mu-1)/(K\ln2)\to0$. Only the former bites.
+**Counter-example (if any):** n/a. (`verify_cycle_exclusion.py` C5b illustrates the
+exponential-vs-polynomial decay-rate gap; it supports the intuition but is not a proof of impossibility.)
 
-**Pointer to artifacts:** `cycle_exclusion_explicit.md` §5.2, §7, §8; `verify_cycle_exclusion.py` C5.
-**Verdict:** prior-art / gap-not-closeable via this route. Improving $\mu(\log_2 3)$ is a genuine
-dead end for cycle exclusion.
+**Pointer to artifacts:** `cycle_exclusion_explicit.md` §5.1–§5.2, §7, §8; `verify_cycle_exclusion.py` C5.
+**Verdict:** prior-art — the published method does not use $\mu(\log_2 3)$, so improving it is not the
+route Vector C should pursue. (Not claiming a $\mu$-route is provably impossible; claiming it is not
+the lever the proofs use.)
 **Lesson:** The lever is the **two-log linear-forms estimate** (leading constant $24.34D^4$ /
 de Weger exponent $0.158$), or the combinatorial circuit-budget, or the verification bound $B$ —
 NOT the one-dimensional irrationality measure. `survey.md` §7.5/§11 and `open_problems.md` D.1/D.2

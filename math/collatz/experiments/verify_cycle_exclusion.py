@@ -244,8 +244,8 @@ def compare_bound_directions(K_values: List[int]) -> List[Tuple[int, str, str]]:
         # irr: -log2|Lambda| <= (mu-1) log2(K) - log2(log2); slope in K:
         irr_slope = (mu - 1) / (K * math.log(2))
         out.append((K,
-                    f"0.158 (linear, caps K above)",
-                    f"{irr_slope:.2e} (->0, gives lower bd only)"))
+                    f"0.158 (linear in K)",
+                    f"{irr_slope:.2e} (->0; polynomial)"))
     return out
 
 
@@ -303,13 +303,15 @@ def main() -> int:
     if not (no_sol and largest < 32):
         failures += 1
 
-    print("\n(C5b) Directional argument (theory 5.2): exponential vs polynomial")
+    print("\n(C5b) Decay-rate comparison (theory 5.2 intuition; [CLAIM-UNVERIFIED]):")
     print("      slope of (-log2 lower-bound on |Lambda|) in K:")
-    print(f"      {'K':>14} {'two-log slope':>34} {'irr-measure slope':>34}")
+    print(f"      {'K':>14} {'two-log slope':>26} {'irr-measure slope':>26}")
     for (K, tl, ir) in compare_bound_directions([10**2, 10**4, 10**6, 10**9, 10**11]):
-        print(f"      {K:>14} {tl:>34} {ir:>34}")
-    print("      => two-log slope is bounded away from 0 (caps K from above);")
-    print("         irr-measure slope -> 0 (yields only a lower bound on K).")
+        print(f"      {K:>14} {tl:>26} {ir:>26}")
+    print("      => two-log bound: exponent linear in K (slope ~0.158, bounded away from 0);")
+    print("         irr-measure bound: exponent polynomial (slope -> 0).")
+    print("      This SUPPORTS, but does not prove, that the two-log estimate is the")
+    print("      operative tool; the published proofs use it, not mu(log_2 3).")
 
     print("\n" + "=" * 72)
     if failures == 0:
