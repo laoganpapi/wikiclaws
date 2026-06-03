@@ -210,8 +210,8 @@ class Model:
         return mats
 
 
-def feasible_at(model, t, iters=8000, damp=0.92, seed=0):
-    """Alternating projection to convergence; return final min-eig and eq_res."""
+def feasible_at(model, t, iters=1200, damp=0.85, seed=0):
+    """Alternating projection; return final min block eigenvalue (>=~0 => feasible)."""
     rng = np.random.default_rng(seed)
     y = 0.25 + 0.05 * rng.standard_normal(model.nmono)
     y = model.project_affine(y)
@@ -240,39 +240,42 @@ def feasible_at(model, t, iters=8000, damp=0.92, seed=0):
     return min_eig
 
 
-def certified_lb(model, lo=0.0, hi=1.0, tol=2e-3):
-    """Binary search smallest t with the relaxation feasible (max_i freq_i<=t*M).
-    The certified abundance lower bound is this smallest feasible t -- the best
-    bound the relaxation proves.  Frankl <=> lb = 0.5 exactly for the cube."""
-    # feasible(t) monotone increasing in t.  Find threshold.
-    for _ in range(9):
-        mid = 0.5 * (lo + hi)
-        me = feasible_at(model, mid, iters=3000)
-        if me > -3e-3:   # feasible
-            hi = mid
-        else:
-            lo = mid
-        if hi - lo < tol:
-            break
-    return 0.5 * (lo + hi)
+def probe_t(model, tvals):
+    """Return {t: min_eig} feasibility signal.  min_eig>=~0 => feasible (relaxation
+    too weak to refute abundance<=t).  Strongly negative & stable => infeasible."""
+    out = {}
+    for t in tvals:
+        # take the best (largest) min-eig over a couple of seeds: feasibility is
+        # existential, so the least-negative run is the trustworthy one.
+        me = max(feasible_at(model, t, seed=s) for s in (0, 1))
+        out[t] = me
+    return out
 
 
 def main():
-    print("=" * 74)
-    print("Certified abundance lower bound from level-d incidence pseudo-moments")
-    print("(smallest t s.t. relaxation 'max_i freq_i <= t*|F|' is PSD-feasible)")
-    print("Barrier predicts: every variant -> 1/2 (cube saturates).  Higher level")
-    print("escapes IFF full-incidence d=2 certifies lb strictly > freq-sym d=1.")
-    print("=" * 74)
+    import sys
+    print("=" * 74, flush=True)
+    print("Incidence pseudo-moment feasibility of 'max_i freq_i <= t*|F|' at level d.", flush=True)
+    print("min_eig ~ 0 => FEASIBLE (relaxation can't refute abundance=t => no cert).", flush=True)
+    print("min_eig << 0 (stable) => INFEASIBLE (degree-2d certificate of abundance>t).", flush=True)
+    print("Frankl threshold t=1/2.  Escape IFF full-incidence d=2 refutes a t that", flush=True)
+    print("freq-SYM d=1 cannot.  Cube saturation: both must be FEASIBLE at t=1/2.", flush=True)
+    print("=" * 74, flush=True)
+    tvals = [0.5, 0.49, 0.45, 0.40]
     for n in (2, 3):
-        print(f"\n##### n={n} #####")
+        print(f"\n##### n={n} #####", flush=True)
         for level in (1, 2):
             for sym in (False, True):
-                tag = "freq-SYM (barrier)" if sym else "full incidence  "
+                tag = "freq-SYM(barrier)" if sym else "full-incidence  "
                 m = Model(n, level, freq_sym=sym)
-                lb = certified_lb(m)
-                print(f"  d={level} [{tag}]  #classes={len(m.classes):4d}  "
-                      f"certified abundance lb ~ {lb:.3f}")
+                res = probe_t(m, tvals)
+                cells = "  ".join(f"t={t}:{res[t]:+.2e}" for t in tvals)
+                print(f"  d={level} [{tag}] cls={len(m.classes):4d}  {cells}", flush=True)
+
+
+def main_fast():
+    """Lighter: only n=2 both levels + n=3 level1, which converge cleanly."""
+    pass
 
 
 if __name__ == "__main__":
