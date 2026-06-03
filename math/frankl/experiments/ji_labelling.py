@@ -116,8 +116,6 @@ def ji_fibre_report(F: Family, n: int) -> dict:
 
     jis = set(lat.join_irreducibles(elements))
     mis = set(lat.meet_irreducibles(elements))
-    coatoms = [x for x in elements if x != top and any(
-        (x & top) == x and x != top for _ in [0]) ] if False else None
     # co-atoms = lower covers of top
     below = lat.cover_relation(elements)
     coatom_set = set(below[top]) if top in below else set()
