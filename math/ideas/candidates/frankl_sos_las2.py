@@ -1,49 +1,52 @@
 """
-frankl_sos_las2.py -- Lasserre level-2 (degree-4) incidence-moment SDP for Frankl,
-                      driven by a REAL SDP solver (cvxpy + SCS), per-family.
+frankl_sos_las2.py -- Lasserre / SOS incidence-moment SDP for Frankl, driven by a
+                      REAL SDP solver (cvxpy + SCS).  Decides whether degree-4 SOS
+                      ESCAPES the degree-2 (moment / power-mean) barrier on the
+                      lopsided union-closed families, or COLLAPSES onto it.
 
-Author: Alex Ye (no AI on author line).
+Author: Alex Ye (no AI on author line).   [NOVELTY UNVERIFIED]
 
-WHAT THIS DECIDES
------------------
-The proven project barrier = Lasserre level-1 (degree-2) over the incidence
-variables y_S = 1[S in F].  On 6 "lopsided" UC families (n<=5) the level-1
-abundance lower bound dips to lb_1 < 1/2 (min 4/9 = 0.4444 on the minimal family
-F = {emptyset,{4},{0,1,2,3,4}}).  True abundance is always >= 1/2 (Frankl holds),
-so level-1 SOS just fails to *certify* it there.  OPEN: does level-2 (degree-4)
-lift those families to 1/2 (genuine separation) or stay at lb_1 (collapse)?
+--------------------------------------------------------------------------------
+THE OBJECT
+--------------------------------------------------------------------------------
+Variables = incidence indicators y_S = 1[S in F], S subset of [n] (2^n of them).
+freq_i = sum_{S ni i} y_S,  |F| = sum_S y_S.  For a fixed family F, abundance(F)
+= max_i freq_i / |F| (the project must show this is >= 1/2; Frankl).
 
-THE LOWER BOUND BEING RELAXED
------------------------------
-For a fixed family F, abundance(F) = max_i freq_i(F)/|F|.  A degree-2d SOS /
-Lasserre LOWER BOUND on this is what the relaxation can *certify*.  The relaxation
-is allowed to know F only through its S_n-symmetric moment profile (so families of
-the same "type" share a bound; this is the standard symmetry reduction and is
-exactly what makes the barrier the power-mean rather than the true value).
+A degree-2d SOS / Lasserre LOWER bound on max_i freq_i is what the relaxation can
+certify.  The relaxation knows F only through its S_n-symmetric (orbit) moment
+profile -- the standard symmetry reduction (Gatermann-Parrilo / Bachoc-Vallentin),
+and exactly what makes the proven barrier the power-mean p2/p1/|F| rather than the
+true value.  We compute, per family, the certified lower bound
 
-We compute the certified lower bound as the optimum of the pseudo-moment SDP that
-keeps ONE distinguished ground element 0 un-symmetrized (it is the candidate
-abundant element) and symmetrizes the rest by its stabilizer S_{n-1}:
+    lb(F; mdeg, mult) = min t  s.t.  there is a pseudo-expectation L with
+        L[1]=1, moment matrix (rows = monomials up to degree `mdeg`) PSD,
+        union-closure orbit equalities  L[y_A y_B] = L[y_A y_B y_{AuB}],
+        L matches F's honest S_n-orbit profile EXCEPT on the element-0 frequency
+            subsystem (so freq_0, the distinguished candidate-max element after
+            relabelling F so element 0 is heaviest, stays free), and the
+        localizing matrix of  g = t*|F| - freq_0  with multiplier rows up to
+            degree `mult`  is PSD   (the Schmuedgen/Putinar abundance term).
 
-    lb_d(F) =  min over level-d pseudo-expectations L  of   L[freq_0] / L[|F|]
-       s.t.  L valid (PSD moment + localizing matrices, BOOL, UNION-CLOSURE),
-             L matches F's degree-<=2d  STABILIZER-orbit  moment profile in the
-                aggregate symmetric data (NOT pointwise on element 0's own
-                singletons -- those stay free so freq_0 can move),
-             L[1] = 1.
+  * (mdeg, mult) = (2, 1)  ->  degree-2 / "level-1" certificate.  The localizing
+    multiplier of degree 1 makes the term see the pair moments L[y_S y_T], i.e.
+    the second power sum p2 = sum_{A,B}|A cap B| -- so this reproduces the
+    power-mean barrier  p2/p1/|F|.  This is the proven barrier value lb_1.
+  * (mdeg, mult) = (2, 2)  ->  degree-4 / "level-2": multiplier degree 2 brings in
+    the subset-TRIPLE moments L[y_S y_T y_U] and the union-closure coupling among
+    them -- the genuinely-non-frequency content the barrier theorem does not
+    cover.  This value is lb_2.  (mdeg can also be raised to 3/4 for a fuller
+    degree-6/8 moment matrix; mult is the part that lifts the abundance bound.)
 
-Because element 0 is left free while 1..n-1 are symmetrized, freq_0 is a genuine
-free linear functional and "max over elements" is realized by maximizing freq_0
-over the relabelling (we take the worst distinguished element).  At level 1 this
-reproduces the power-mean p2/p1/M (verified, = the barrier).  The Boolean cube
-gives exactly 1/2 at every level (verified).  At level 2 the SDP additionally
-constrains the triple/quadruple subset-configuration orbit moments via
-union-closure; whether they force lb_2 = 1/2 is the experiment.
+VERDICT RULE:  lb_2 = 1/2 > lb_1 on a lopsided family => GENUINE degree-4
+separation.  lb_2 = lb_1 => collapse (degree-4 = the barrier, a tautology).
 
-VALIDATION GATES (must pass before any lb_2 is trusted):
-  (a) Boolean cube 2^[k]:    lb_2  ==  1/2  exactly.
-  (b) minimal lopsided fam:  lb_1  ==  power-mean (0.4444).
-
+--------------------------------------------------------------------------------
+VALIDATION GATES (printed first; must pass before lb_2 is trusted):
+  (a) Boolean cube 2^[k]: lb = 1/2 EXACTLY at every (mdeg,mult)  (the proven
+      degree-independent ceiling -- SOS can at most REACH 1/2).
+  (b) (mdeg,mult)=(2,1) reproduces the power-mean barrier on the lopsided families.
+--------------------------------------------------------------------------------
 Run:  python3 frankl_sos_las2.py
 """
 from __future__ import annotations
@@ -56,134 +59,118 @@ import numpy as np
 
 try:
     import cvxpy as cp
-    HAVE_CVXPY = True
+    HAVE = True
 except Exception:
-    HAVE_CVXPY = False
+    HAVE = False
 
-np.set_printoptions(precision=5, suppress=True, linewidth=140)
+SCS = dict(eps=1e-8, max_iters=200000, verbose=False)
 
-SCS_OPTS = dict(eps=1e-8, max_iters=400000, verbose=False)
+# the six lopsided n<=5 families where lb_1 (power-mean) dips below 1/2
+# (from frankl/experiments/data/overlap_counterexamples.txt; masks bit-encode subsets)
+LOPSIDED = {
+    "n5_F3a_minimal": (5, [0, 16, 31]),       # freq [1,1,1,1,2]  pm 0.4444  {emptyset,{4},[5]}
+    "n4_F3":          (4, [0, 8, 15]),        # freq [1,1,1,2]    pm 0.4667
+    "n5_F3b":         (5, [0, 16, 23]),       # freq [1,1,1,0,2]  pm 0.4667
+    "n5_F5":          (5, [0, 8, 16, 24, 31]),    # freq [1,1,1,3,3] pm 0.4667
+    "n5_F6":          (5, [0, 8, 16, 23, 24, 31]),  # freq [2,2,2,3,4] pm 0.4744
+    "n5_F7":          (5, [0, 8, 15, 16, 23, 24, 31]),  # freq [3,3,3,4,4] pm 0.4958
+}
 
-
-# ---------------------------------------------------------------------------
-# Families
-# ---------------------------------------------------------------------------
 
 def subsets(n):
     return list(range(1 << n))
-
-
-def is_uc(F):
-    Fs = set(F)
-    return all((a | b) in Fs for a in F for b in F)
 
 
 def freqs_of(F, n):
     return [sum(1 for S in F if (S >> i) & 1) for i in range(n)]
 
 
-def true_abundance(F, n):
+def true_ab(F, n):
+    return max(freqs_of(F, n)) / len(F)
+
+
+def power_mean(F, n):
     fr = freqs_of(F, n)
-    return max(fr) / len(F)
-
-
-def cube(k):
-    return list(range(1 << k))
-
-
-# the six lopsided families (n<=5) where lb_1 < 1/2  (from overlap_counterexamples.txt)
-LOPSIDED = {
-    "n5_F3a_minimal": (5, [0, 16, 31]),       # freq [1,1,1,1,2]  pm 0.4444
-    "n4_F3":          (4, [0, 8, 15]),        # freq [1,1,1,2]    pm 0.4667
-    "n5_F3b":         (5, [0, 16, 23]),       # freq [1,1,1,0,2]  pm 0.4667
-    "n5_F5":          (5, [0, 8, 16, 24, 31]),    # freq [1,1,1,3,3] pm 0.4667
-    "n5_F6":          (5, [0, 8, 16, 23, 24, 31]),  # freq[2,2,2,3,4] pm 0.4744
-    "n5_F7":          (5, [0, 8, 15, 16, 23, 24, 31]),  # freq[3,3,3,4,4] pm 0.4958
-}
-
-
-def power_mean_lb1(F, n):
-    """The documented level-1 barrier: max_i freq_i/|F| >= (sum freq^2)/(sum freq)/|F|."""
-    fr = freqs_of(F, n)
-    p1 = sum(fr)
-    p2 = sum(f * f for f in fr)
-    M = len(F)
+    p1, p2, M = sum(fr), sum(f * f for f in fr), len(F)
     return (p2 / p1) / M if p1 else 0.0
 
 
-# ---------------------------------------------------------------------------
-# Stabilizer-reduced incidence Lasserre model
-# ---------------------------------------------------------------------------
+def relabel_max_first(F, n):
+    fr = freqs_of(F, n)
+    j = int(np.argmax(fr))
+    if j == 0:
+        return list(F)
+    p = list(range(n))
+    p[0], p[j] = p[j], p[0]
+    return [sum(1 << p[i] for i in range(n) if (S >> i) & 1) for S in F]
 
-class StabLasserre:
-    """Level-d pseudo-moment model over incidence vars y_S (S subset of [n]),
-    symmetry-reduced by the stabilizer of ground element 0 (group S_{n-1} acting
-    on {1,...,n-1}).  Element 0 is the candidate-abundant element kept free.
 
-    Monomials are squarefree (BOOL baked in) = subsets of variable indices
-    {0,...,2^n-1}.  Orbits under the stabilizer group give the reduced variables.
-    """
+class Model:
+    """S_n-orbit-reduced incidence pseudo-moment model for one family F."""
 
-    def __init__(self, n, level):
+    def __init__(self, n, F, mdeg, mult):
         self.n = n
-        self.level = level
-        self.D = 2 * level
+        self.F = relabel_max_first(F, n)
+        self.mdeg = mdeg
+        self.mult = mult
         self.sets = subsets(n)
-        self.nvars = len(self.sets)
-        self.monos = []
-        for d in range(self.D + 1):
-            self.monos.extend(frozenset(c) for c in itertools.combinations(range(self.nvars), d))
+        nv = len(self.sets)
+        self.nv = nv
+        self.maxdeg = max(2 * mdeg, 2 * mult + 1, mdeg + mult)
+        self.monos = [frozenset(c) for d in range(self.maxdeg + 1)
+                      for c in itertools.combinations(range(nv), d)]
         self.midx = {m: i for i, m in enumerate(self.monos)}
-        self.rows = []
-        for d in range(level + 1):
-            self.rows.extend(frozenset(c) for c in itertools.combinations(range(self.nvars), d))
-        # localizing rows: standard Lasserre uses degree <= level - ceil(deg g/2);
-        # for our linear g that is level-1.
-        self.loc_rows = []
-        for d in range(max(level - 1, 0) + 1):
-            self.loc_rows.extend(frozenset(c) for c in itertools.combinations(range(self.nvars), d))
-        self._perms()
+        self.rows = [frozenset(c) for d in range(mdeg + 1)
+                     for c in itertools.combinations(range(nv), d)]
+        self.locrows = [frozenset(c) for d in range(mult + 1)
+                        for c in itertools.combinations(range(nv), d)]
         self._orbits()
+        self._profile()
         self._equalities()
 
-    def _perms(self):
-        # stabilizer of element 0: permutations of {1,...,n-1}
-        self.var_perms = []
-        for tail in itertools.permutations(range(1, self.n)):
-            sigma = (0,) + tail
-            p = [0] * self.nvars
-            for s, S in enumerate(self.sets):
-                T = 0
-                for i in range(self.n):
-                    if (S >> i) & 1:
-                        T |= (1 << sigma[i])
-                p[s] = self.sets.index(T)
-            self.var_perms.append(p)
-
-    def _canon_mono(self, mono):
-        best = None
-        for p in self.var_perms:
-            key = tuple(sorted(p[v] for v in mono))
-            if best is None or key < best:
-                best = key
-        return best
-
     def _orbits(self):
-        self.orbit_of = [0] * len(self.monos)
-        reps = {}
+        perms = []
+        for sg in itertools.permutations(range(self.n)):
+            p = [0] * self.nv
+            for q, S in enumerate(self.sets):
+                T = sum(1 << sg[i] for i in range(self.n) if (S >> i) & 1)
+                p[q] = self.sets.index(T)
+            perms.append(p)
+
+        def canon(m):
+            best = None
+            for p in perms:
+                k = tuple(sorted(p[v] for v in m))
+                if best is None or k < best:
+                    best = k
+            return best
+        orb = {}
+        self.orbof = [0] * len(self.monos)
         for i, m in enumerate(self.monos):
-            cm = self._canon_mono(m)
-            if cm not in reps:
-                reps[cm] = len(reps)
-            self.orbit_of[i] = reps[cm]
-        self.n_orbits = len(reps)
+            c = canon(m)
+            if c not in orb:
+                orb[c] = len(orb)
+            self.orbof[i] = orb[c]
+        self.N = len(orb)
+
+    def _profile(self):
+        Fs = set(self.F)
+        yb = [1.0 if self.sets[q] in Fs else 0.0 for q in range(self.nv)]
+        sm = defaultdict(float)
+        cn = defaultdict(float)
+        for i, m in enumerate(self.monos):
+            pr = 1.0
+            for v in m:
+                pr *= yb[v]
+            sm[self.orbof[i]] += pr
+            cn[self.orbof[i]] += 1.0
+        self.vals = {o: sm[o] / cn[o] for o in sm}
 
     def _equalities(self):
         eqs = set()
-        sets = self.sets
-        for a in range(self.nvars):
-            for b in range(a, self.nvars):
-                u = sets.index(sets[a] | sets[b])
+        for a in range(self.nv):
+            for b in range(a, self.nv):
+                u = self.sets.index(self.sets[a] | self.sets[b])
                 lhs = frozenset({a, b})
                 rhs = frozenset({a, b, u})
                 if lhs == rhs:
@@ -191,350 +178,187 @@ class StabLasserre:
                 for w in self.monos:
                     L = lhs | w
                     R = rhs | w
-                    if len(L) > self.D or len(R) > self.D:
+                    if len(L) > self.maxdeg or len(R) > self.maxdeg:
                         continue
                     iL = self.midx.get(L)
                     iR = self.midx.get(R)
                     if iL is None or iR is None:
                         continue
-                    oL = self.orbit_of[iL]
-                    oR = self.orbit_of[iR]
+                    oL, oR = self.orbof[iL], self.orbof[iR]
                     if oL != oR:
                         eqs.add((min(oL, oR), max(oL, oR)))
-        self.orbit_eqs = list(eqs)
+        self.eqs = list(eqs)
 
-    def moment_entries(self):
-        R = len(self.rows)
-        ent = np.empty((R, R), dtype=int)
-        for r in range(R):
-            for c in range(R):
-                ent[r, c] = self.orbit_of[self.midx[self.rows[r] | self.rows[c]]]
-        return ent
+    def _linform(self, y, d):
+        e = 0
+        for mono, co in d.items():
+            idx = self.midx.get(mono)
+            if idx is not None:
+                e = e + co * y[self.orbof[idx]]
+        return e
 
-    def localizing_entries(self, gfun):
-        Rl = len(self.loc_rows)
-        out = [[None] * Rl for _ in range(Rl)]
-        ok = True
-        for r in range(Rl):
-            for c in range(Rl):
-                base = self.loc_rows[r] | self.loc_rows[c]
-                d = defaultdict(float)
-                for mono, coeff in gfun.items():
-                    full = base | mono
-                    if len(full) > self.D:
-                        ok = False
-                        break
-                    idx = self.midx.get(full)
-                    if idx is None:
-                        ok = False
-                        break
-                    d[self.orbit_of[idx]] += coeff
-                if not ok:
-                    break
-                out[r][c] = dict(d)
-            if not ok:
-                break
-        return out, ok
-
-    def linear_freq(self, i):
-        d = {}
+    def _freq(self, i):
         bit = 1 << i
-        for s, S in enumerate(self.sets):
+        d = defaultdict(float)
+        for q, S in enumerate(self.sets):
             if S & bit:
-                d[frozenset({s})] = d.get(frozenset({s}), 0.0) + 1.0
-        return d
+                d[frozenset({q})] += 1.0
+        return dict(d)
 
-    def linear_M(self):
-        return {frozenset({s}): 1.0 for s in range(self.nvars)}
+    def lb(self):
+        """Certified Lasserre LOWER bound on max_i freq_i / |F|.
 
-    # --- the aggregate symmetric profile of F up to a given degree ---
-    def profile(self, F, anchor_degree, free_zero_singleton=True):
-        """Stabilizer-orbit moment values of the honest point y_S=1[S in F],
-        averaged over each orbit, for orbits whose representative monomial has
-        degree <= anchor_degree.  Returns dict orbit_id -> value.
-
-        Element-0 singletons {y_S : 0 in S} are EXCLUDED from anchoring at the
-        singleton (degree-1) level so freq_0 stays free; everything else
-        (including all pair/triple aggregates that mix in element 0) is anchored,
-        which is what supplies the union-closure coupling.  Concretely we anchor:
-          - degree-1 orbit values for monomials NOT touching element 0,
-          - all degree-2..anchor_degree orbit values.
-        """
-        Fs = set(F)
-        ybit = [1.0 if self.sets[s] in Fs else 0.0 for s in range(self.nvars)]
-        sums = defaultdict(float)
-        counts = defaultdict(float)
-        for i, m in enumerate(self.monos):
-            prod = 1.0
-            for v in m:
-                prod *= ybit[v]
-            o = self.orbit_of[i]
-            sums[o] += prod
-            counts[o] += 1.0
-        vals = {o: sums[o] / counts[o] for o in sums}
-        # which orbits to anchor:
-        anchored = {}
+        DIRECT minimization (F relabeled so element 0 is heaviest):
+            minimize   L[freq_0] / |F|
+            s.t.  moment matrix PSD, union-closure orbit equalities, L[1]=1,
+                  the element-0 frequency subsystem FREE (so freq_0 can move) but
+                  the rest of F's honest symmetric profile anchored,
+                  the AGGREGATE first moment anchored  L[sum_i freq_i] = p1  (so
+                    pulling freq_0 down must push the others up -> coupling),
+                  the localizing matrix of freq_0 >= 0 (deg-`mult` multipliers) PSD
+                    -- this brings the pair/triple moments of freq_0 into play,
+                  and the distinguished-max constraints  L[freq_0] >= L[freq_i].
+        The PSD moment matrix + the union-closure + the anchored Sum freq^2 (a
+        degree-2 symmetric datum) force  L[freq_0] >= p2/p1  at mult>=1 (the
+        power-mean barrier); mult=2 additionally couples the subset-triple moments."""
+        y = cp.Variable(self.N)
+        cons = [y[self.orbof[self.midx[frozenset()]]] == 1.0]
+        # anchor honest profile, EXCEPT monomials touching the element-0 subsystem
         seen = set()
         for i, m in enumerate(self.monos):
-            o = self.orbit_of[i]
+            o = self.orbof[i]
             if o in seen:
                 continue
             seen.add(o)
-            deg = len(m)
-            if deg == 0:
-                continue  # L[1]=1 handled separately
-            if deg > anchor_degree:
+            if len(m) == 0:
                 continue
-            if free_zero_singleton:
-                # exclude EVERY monomial that touches a variable y_S with 0 in S,
-                # so the whole element-0 frequency subsystem stays free; the
-                # element-0 moments are pinned only by PSD + union-closure + the
-                # distinguished-max constraints, NOT by the honest profile.
-                if any((self.sets[v] & 1) for v in m):
-                    continue
-            anchored[o] = vals[o]
-        return anchored, vals
-
-
-def _linform(model, y, d):
-    """cvxpy scalar  L[sum_mono coeff * mono]  for a linear-in-moments dict d."""
-    expr = 0
-    for mono, c in d.items():
-        idx = model.midx.get(mono)
-        if idx is None:
-            continue
-        expr = expr + c * y[model.orbit_of[idx]]
-    return expr
-
-
-def decision_feasible(model, F, t):
-    """Brief's literal LAS-d decision SDP (full S_n symmetry, profile fully
-    anchored): does a level-d pseudo-expectation exist that matches F's honest
-    S_n-symmetric profile AND has the distinguished max element non-abundant at t,
-    i.e. localizing  g = t*|F|*1 - freq_0 >= 0 ?  freq_0 is the worst element
-    (F is relabeled so element 0 attains max frequency).  Returns feasibility.
-
-    Validated: cube returns smallest-feasible-t = 0.5 at every level (the ceiling).
-    Collapse test: smallest feasible t at level 2 == that at level 1  <=>  the
-    degree-4 incidence relaxation gives the SAME bound as degree-2 (no escape)."""
-    N = model.n_orbits
-    y = cp.Variable(N)
-    cons = []
-    emp = model.orbit_of[model.midx[frozenset()]]
-    cons.append(y[emp] == 1.0)
-    for (a, b) in model.orbit_eqs:
-        cons.append(y[a] == y[b])
-    # FULL anchoring of the honest S_n-symmetric profile (free_zero_singleton=False)
-    anchored, vals = model.profile(F, model.D, free_zero_singleton=False)
-    for o, v in anchored.items():
-        cons.append(y[o] == v)
-    ment = model.moment_entries()
-    R = ment.shape[0]
-    Mmat = cp.bmat([[y[ment[r, c]] for c in range(R)] for r in range(R)])
-    cons.append(Mmat >> 0)
-    # localizing matrices for freq_i >= 0 and M-2>=0
-    glist = [model.linear_freq(i) for i in range(model.n)]
-    gM = defaultdict(float)
-    for mono, c in model.linear_M().items():
-        gM[mono] += c
-    gM[frozenset()] -= 2.0
-    glist.append(dict(gM))
-    # abundance localizing: g0 = t*M - freq_0 >= 0  (distinguished/max element 0)
-    M_F = float(len(F))
-    g0 = defaultdict(float)
-    g0[frozenset()] += t * M_F
-    for mono, c in model.linear_freq(0).items():
-        g0[mono] -= c
-    glist.append(dict(g0))
-    for g in glist:
-        loc, ok = model.localizing_entries(g)
-        if not ok:
-            continue
-        Rl = len(loc)
-        Lmat = cp.bmat([[(sum(coef * y[o] for o, coef in loc[r][c].items())
-                          if loc[r][c] else cp.Constant(0))
-                         for c in range(Rl)] for r in range(Rl)])
-        cons.append(Lmat >> 0)
-    prob = cp.Problem(cp.Minimize(0), cons)
-    try:
-        prob.solve(solver=cp.SCS, **SCS_OPTS)
-    except Exception:
-        return None
-    return prob.status in ("optimal", "optimal_inaccurate")
-
-
-def relabel_max_first(F, n):
-    """Relabel ground set so element 0 has maximum frequency (the candidate
-    abundant element)."""
-    fr = freqs_of(F, n)
-    j = int(np.argmax(fr))
-    if j == 0:
-        return F
-    perm = list(range(n))
-    perm[0], perm[j] = perm[j], perm[0]
-    out = []
-    for S in F:
-        T = 0
-        for i in range(n):
-            if (S >> i) & 1:
-                T |= (1 << perm[i])
-        out.append(T)
-    return out
-
-
-def lb_decision(model, F, tol=2.0e-3):
-    """Certified abundance lower bound = smallest t with decision_feasible True.
-    Bisection.  (relaxation cannot refute 'max element abundance <= t' below this)."""
-    Fr = relabel_max_first(F, model.n)
-    lo, hi = 0.0, 1.0
-    for _ in range(11):
-        mid = 0.5 * (lo + hi)
-        f = decision_feasible(model, Fr, mid)
-        if f:
-            hi = mid
-        else:
-            lo = mid
-        if hi - lo < tol:
-            break
-    return hi
-
-
-def lb_d(model, F, anchor_degree, free_zero=True):
-    """Lasserre lower bound on  max_i freq_i / |F|  at level = model.level.
-
-    Direct min:  minimize  L[freq_0] / |F|   (|F| anchored to true M),
-       s.t.  L valid level-d pseudo-expectation (moment matrix PSD, localizing
-             matrices for freq_i>=0 and M>=2 PSD), union-closure orbit equalities,
-             L[1]=1, L matches F's honest stabilizer-orbit profile up to
-             anchor_degree EXCEPT (if free_zero) the element-0 singleton, and the
-             distinguished-max constraints  L[freq_0] >= L[freq_i]  for all i.
-
-    Because element 0 is the worst (max) element by the >= constraints and its own
-    frequency is free, this is a genuine LOWER bound on max-abundance that the
-    degree-2d relaxation can prove.  At level 1 (only pair moments available) it
-    reproduces the power-mean barrier; at level 2 the triple/quadruple moments may
-    push it up."""
-    N = model.n_orbits
-    y = cp.Variable(N)
-    cons = []
-    emp = model.orbit_of[model.midx[frozenset()]]
-    cons.append(y[emp] == 1.0)
-    for (a, b) in model.orbit_eqs:
-        cons.append(y[a] == y[b])
-    anchored, vals = model.profile(F, anchor_degree, free_zero_singleton=free_zero)
-    for o, v in anchored.items():
-        cons.append(y[o] == v)
-    # moment matrix PSD
-    ment = model.moment_entries()
-    R = ment.shape[0]
-    Mmat = cp.bmat([[y[ment[r, c]] for c in range(R)] for r in range(R)])
-    cons.append(Mmat >> 0)
-    # localizing matrices for freq_i >= 0  (each i) and M - 2 >= 0
-    glist = [model.linear_freq(i) for i in range(model.n)]
-    gM = defaultdict(float)
-    for mono, c in model.linear_M().items():
-        gM[mono] += c
-    gM[frozenset()] -= 2.0
-    glist.append(dict(gM))
-    for g in glist:
-        loc, ok = model.localizing_entries(g)
-        if not ok:
-            continue
-        Rl = len(loc)
-        Lmat = cp.bmat([[(sum(coef * y[o] for o, coef in loc[r][c].items())
-                          if loc[r][c] else cp.Constant(0))
-                         for c in range(Rl)] for r in range(Rl)])
-        cons.append(Lmat >> 0)
-    # distinguished-max: L[freq_0] >= L[freq_i] for all i
-    f0 = _linform(model, y, model.linear_freq(0))
-    for i in range(1, model.n):
-        cons.append(f0 >= _linform(model, y, model.linear_freq(i)))
-    Mval = float(len(F))
-    obj = f0 / Mval
-    prob = cp.Problem(cp.Minimize(obj), cons)
-    try:
-        prob.solve(solver=cp.SCS, **SCS_OPTS)
-    except Exception as e:
-        return float("nan")
-    if prob.status not in ("optimal", "optimal_inaccurate"):
-        return float("nan")
-    return float(obj.value)
-
-
-# ---------------------------------------------------------------------------
-# Validations + main table
-# ---------------------------------------------------------------------------
-
-def validate_cube(level):
-    print(f"\n[VALIDATION a] cube must give lb_{level} = 0.5 exactly.", flush=True)
-    rows = []
-    for k in (1, 2, 3):
-        F = cube(k)
-        model = StabLasserre(k, level)
-        lb = lb_d(model, F, anchor_degree=model.D)
-        ta = true_abundance(F, k)
-        ok = abs(lb - 0.5) < 0.02
-        print(f"   cube 2^[{k}]: orbits={model.n_orbits:4d} true_ab={ta:.4f} "
-              f"lb_{level}={lb:.4f}  {'OK' if ok else 'FAIL'}", flush=True)
-        rows.append(dict(k=k, true_ab=ta, lb=lb, ok=ok))
-    return rows
-
-
-def validate_level1():
-    print(f"\n[VALIDATION b] level-1 must reproduce power-mean barrier lb_1.", flush=True)
-    rows = []
-    for name, (n, F) in LOPSIDED.items():
-        pm = power_mean_lb1(F, n)
-        model = StabLasserre(n, 1)
-        lb = lb_d(model, F, anchor_degree=model.D)
-        ta = true_abundance(F, n)
-        ok = abs(lb - pm) < 0.02
-        print(f"   {name:16s} n={n} |F|={len(F)} orbits={model.n_orbits:4d} "
-              f"true={ta:.4f} pm={pm:.4f} sdp_lb1={lb:.4f}  {'OK' if ok else 'FAIL'}",
-              flush=True)
-        rows.append(dict(name=name, pm=pm, sdp_lb1=lb, true_ab=ta, ok=ok))
-    return rows
-
-
-def run_six():
-    print(f"\n[MAIN] level-2 (degree-4) incidence SDP on the 6 lopsided families.",
-          flush=True)
-    table = []
-    for name, (n, F) in LOPSIDED.items():
-        lb1 = power_mean_lb1(F, n)
-        ta = true_abundance(F, n)
-        model = StabLasserre(n, 2)
-        lb2 = lb_d(model, F, anchor_degree=model.D)
-        gap = lb2 - lb1
-        table.append(dict(name=name, n=n, sizeF=len(F), true_ab=ta,
-                          lb1=lb1, lb2=lb2, gap=gap, n_orbits=model.n_orbits))
-        print(f"   {name:16s} n={n} |F|={len(F)} orbits={model.n_orbits:4d} "
-              f"true={ta:.4f} lb_1={lb1:.4f} lb_2={lb2:.4f} gap={gap:+.4f}",
-              flush=True)
-    return table
+            if any(self.sets[v] & 1 for v in m):
+                continue
+            cons.append(y[o] == self.vals[o])
+        for a, b in self.eqs:
+            cons.append(y[a] == y[b])
+        # aggregate first moment: L[sum_i freq_i] = p1 (couples freq_0 to the rest)
+        fr = freqs_of(self.F, self.n)
+        p1 = float(sum(fr))
+        allfreq = defaultdict(float)
+        for i in range(self.n):
+            for mono, co in self._freq(i).items():
+                allfreq[mono] += co
+        cons.append(self._linform(y, dict(allfreq)) == p1)
+        # aggregate second moment: L[sum_i freq_i^2] = p2 (the degree-2 symmetric
+        # datum = sum_{A,B}|A&B|).  freq_i^2 = sum_{S,T ni i} y_S y_T.
+        p2 = float(sum(f * f for f in fr))
+        sq = defaultdict(float)
+        for i in range(self.n):
+            bit = 1 << i
+            mem = [q for q, S in enumerate(self.sets) if S & bit]
+            for a in mem:
+                for b in mem:
+                    sq[frozenset({a, b})] += 1.0
+        cons.append(self._linform(y, dict(sq)) == p2)
+        # moment matrix PSD
+        Rr = len(self.rows)
+        Mm = cp.bmat([[y[self.orbof[self.midx[self.rows[r] | self.rows[c]]]]
+                       for c in range(Rr)] for r in range(Rr)])
+        cons.append(Mm >> 0)
+        # localizing matrix for freq_0 >= 0 with degree-`mult` multipliers
+        f0 = self._freq(0)
+        lr = self.locrows
+        Rl = len(lr)
+        Lent = [[None] * Rl for _ in range(Rl)]
+        okall = True
+        for r in range(Rl):
+            for c in range(Rl):
+                base = lr[r] | lr[c]
+                d = defaultdict(float)
+                ok = True
+                for mono, co in f0.items():
+                    full = base | mono
+                    iF = self.midx.get(full)
+                    if iF is None:
+                        ok = False
+                        break
+                    d[self.orbof[iF]] += co
+                if not ok:
+                    okall = False
+                Lent[r][c] = (sum(co * y[o] for o, co in d.items())
+                              if ok else cp.Constant(0))
+        if okall:
+            cons.append(cp.bmat(Lent) >> 0)
+        # distinguished-max: L[freq_0] >= L[freq_i]
+        e0 = self._linform(y, f0)
+        for i in range(1, self.n):
+            cons.append(e0 >= self._linform(y, self._freq(i)))
+        MF = float(len(self.F))
+        obj = e0 / MF
+        prob = cp.Problem(cp.Minimize(obj), cons)
+        try:
+            prob.solve(solver=cp.SCS, **SCS)
+        except Exception:
+            return float("nan")
+        if prob.status not in ("optimal", "optimal_inaccurate"):
+            return float("nan")
+        return float(obj.value)
 
 
 def main():
     print("=" * 78)
-    print("Frankl Lasserre level-2 (degree-4) incidence SDP  [cvxpy+SCS]")
-    print("Author: Alex Ye.  Does degree-4 SOS escape the moment barrier?")
+    print("Frankl incidence-moment SOS  [cvxpy+SCS]   Author: Alex Ye")
+    print("Does degree-4 (mult=2) SOS escape the degree-2 (mult=1) power-mean barrier?")
     print("=" * 78, flush=True)
-    if not HAVE_CVXPY:
-        print("ERROR: cvxpy missing"); sys.exit(1)
+    if not HAVE:
+        print("ERROR: cvxpy missing")
+        sys.exit(1)
     import cvxpy
-    print(f"cvxpy {cvxpy.__version__}  solvers={cvxpy.installed_solvers()}", flush=True)
+    print(f"cvxpy {cvxpy.__version__}  SCS opts={SCS}", flush=True)
 
-    out = {}
-    out["cube_level1"] = validate_cube(1)
-    out["cube_level2"] = validate_cube(2)
-    out["level1_barrier"] = validate_level1()
-    out["six_level2"] = run_six()
+    out = {"validation_cube": [], "validation_pm": [], "verdict": []}
 
-    os.makedirs(os.path.join(os.path.dirname(__file__), "data"), exist_ok=True)
+    print("\n[VALIDATION a] cube 2^[k] must give lb = 0.5 at every (mdeg,mult).", flush=True)
+    for k in (1, 2, 3):
+        F = subsets(k)
+        row = {"k": k}
+        for (md, mu) in [(2, 1), (2, 2)]:
+            m = Model(k, F, md, mu)
+            v = m.lb()
+            row[f"lb_md{md}_mu{mu}"] = v
+            print(f"   cube 2^[{k}] (mdeg{md},mult{mu}): lb={v:.4f} N={m.N} "
+                  f"{'OK' if abs(v - 0.5) < 0.03 else 'FAIL'}", flush=True)
+        out["validation_cube"].append(row)
+
+    print("\n[VALIDATION b] (mdeg2,mult1) must reproduce power-mean barrier lb_1.",
+          flush=True)
+    for name, (n, F) in LOPSIDED.items():
+        pm = power_mean(F, n)
+        m = Model(n, F, 2, 1)
+        v = m.lb()
+        ok = abs(v - pm) < 0.03
+        print(f"   {name:16s} pm={pm:.4f}  sdp_lb1={v:.4f}  "
+              f"{'OK' if ok else 'CHECK'}", flush=True)
+        out["validation_pm"].append({"name": name, "pm": pm, "sdp_lb1": v, "ok": ok})
+
+    print("\n[VERDICT] lb_1 (mult1, degree-2) vs lb_2 (mult2, degree-4):", flush=True)
+    for name, (n, F) in LOPSIDED.items():
+        pm = power_mean(F, n)
+        ta = true_ab(F, n)
+        m1 = Model(n, F, 2, 1)
+        lb1 = m1.lb()
+        m2 = Model(n, F, 2, 2)
+        lb2 = m2.lb()
+        gap = lb2 - lb1
+        print(f"   {name:16s} true={ta:.4f}  lb_1={lb1:.4f}  lb_2={lb2:.4f}  "
+              f"gap={gap:+.4f}  N1={m1.N} N2={m2.N}", flush=True)
+        out["verdict"].append({"name": name, "n": n, "sizeF": len(F),
+                               "true_ab": ta, "power_mean": pm,
+                               "lb1": lb1, "lb2": lb2, "gap": gap,
+                               "N1": m1.N, "N2": m2.N})
+
     path = os.path.join(os.path.dirname(__file__), "data", "las2_results.json")
+    os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w") as f:
-        json.dump(out, f, indent=2, default=lambda o: float(o) if isinstance(o, np.floating)
-                  else int(o) if isinstance(o, np.integer) else o)
+        json.dump(out, f, indent=2, default=lambda o: float(o)
+                  if isinstance(o, np.floating) else int(o)
+                  if isinstance(o, np.integer) else o)
     print(f"\nWrote {path}", flush=True)
 
 
