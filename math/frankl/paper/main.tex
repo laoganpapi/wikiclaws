@@ -325,8 +325,8 @@ the value $0.8090170$ is exact arithmetic, not a literature citation.)
 \section{History and the entropy-method line}
 \label{sec:history}
 
-We sketch the landscape; the surveys of Bruhn--Schaudt and Cambie are the
-standard entry points. \emph{All numerical constants and attributions in this
+We sketch the landscape; the surveys of Bruhn--Schaudt~\cite{bruhnschaudt2015survey}
+and Cambie~\cite{cambie2023} are the standard entry points. \emph{All numerical constants and attributions in this
 section are currently snippet-sourced and await a primary-source pass} (see
 Remark~\ref{rmk:verif}).
 
@@ -350,8 +350,8 @@ Balla--Bollob\'as--Eccles~\cite{bbe2013} for large families
 % [CONSTANT UNVERIFIED vs primary source]
 Karpas~\cite{karpas2017} for families of density near $\tfrac12$ (the first use
 of Boolean Fourier analysis here), and computer searches verifying small ground
-sets. None of these yields an unconditional positive constant for all
-union-closed families.
+sets (Bo\v snjak--Markovi\'c~\cite{bosnjakmarkovic2008} for $n\le 11$). None of
+these yields an unconditional positive constant for all union-closed families.
 
 \subsection{Gilmer's breakthrough and the rush to $\golden$}
 Gilmer~\cite{gilmer2022} proved the first unconditional, dimension-free, constant
@@ -1125,7 +1125,8 @@ Tao~\cite{tao2016sliceblog}). The union-relation tensor
 $T_\UC(A,B,C)=\mathbf 1[A\cup B=C]$ has $\operatorname{slice-rank}(T_\UC)=|\UC|$
 \emph{exactly}, over every field, because $A\cup B$ is a determinative,
 high-per-coordinate-degree function of $(A,B)$. The bound depends only on $|\UC|$,
-not on abundance, so it is vacuous (no cap-set-style power saving exists).
+not on abundance, so it is vacuous (no cap-set-style power saving exists; the
+partition-rank refinement of Naslund~\cite{naslund2020} does not change this).
 % [NOVELTY UNVERIFIED -- check vs Naslund and CLP successor literature]
 \item \textbf{Boolean--Fourier} (quadratic spectral statistics;
 cf.\ Karpas~\cite{karpas2017}). The cube $\cube k$ saturates Frankl at abundance
@@ -1412,6 +1413,19 @@ Maxwell--Boltzmann direction), which no single result has yet combined with the
 structural constraints.
 \item \textbf{Finite cases.} Verify Frankl's conjecture for ground sets of size
 $13$, and for families of size up to $100$, extending the computational frontier.
+\item \textbf{The JI-filter overlap inequality, made non-symmetric.} Is there a
+union-closure lower bound on $\OVL(\Lat)=\sum_{j,k}|\filt j\cap\filt k|$ that
+beats Cauchy--Schwarz \emph{and} is sensitive to the labelling
+of~\eqref{eq:R}---hence escapes the barrier of Theorem~\ref{thm:barrier}? This is
+the single inequality whose proof would prove Frankl
+(Section~\ref{ssec:closing}), tight on the cube by Theorem~\ref{thm:cube-unique}.
+% [NOVELTY UNVERIFIED -- the non-symmetric overlap lever]
+\item \textbf{Cube-uniqueness beyond $n\le5$.} Prove that the Boolean cube is the
+unique lattice with $\minab(\Lat)=\tfrac12$ for all $n$, extending
+Theorem~\ref{thm:cube-unique} past the $\le 5$-element census. A proof would
+upgrade the reformulation from verified-finite to unconditional and pin down the
+exact role of the cube as the global extremizer.
+% [NOVELTY UNVERIFIED -- cube-uniqueness asymptotic]
 \end{enumerate}
 
 %======================================================================
