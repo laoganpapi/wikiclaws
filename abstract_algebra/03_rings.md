@@ -49,7 +49,7 @@ Throughout, $R$ denotes a ring. Notation: $a + b$ and $ab$ (we write multiplicat
 - $\mathbb{Z}_n = \{0, 1, \dots, n-1\}$: integers mod $n$, with addition and multiplication done modulo $n$. Commutative. Notation: $\overline{a}$ or just $a$ means the class of $a$.
 - $\mathbb{Q}, \mathbb{R}, \mathbb{C}$: rationals, reals, complex numbers. All commutative; in fact **fields** (defined below).
 - $R[x]$: **polynomials** in one variable $x$ with coefficients in a ring $R$, e.g. $\mathbb{R}[x]$, $\mathbb{Z}[x]$, $\mathbb{Z}_2[x]$. Add and multiply polynomials as usual. Commutative when $R$ is. The identity is the constant polynomial $1$.
-- $M_2(R)$: the **matrix ring** of $2 \times 2$ matrices over $R$, with matrix addition and multiplication. The identity is $\begin{psmallmatrix}1 & 0\\ 0 & 1\end{psmallmatrix}$. **Noncommutative** (for $|R|>1$): for instance
+- $M_2(R)$: the **matrix ring** of $2 \times 2$ matrices over $R$, with matrix addition and multiplication. The identity is $\begin{bmatrix}1 & 0\\ 0 & 1\end{bmatrix}$. **Noncommutative** (for $|R|>1$): for instance
 $$\begin{pmatrix}0&1\\0&0\end{pmatrix}\begin{pmatrix}0&0\\1&0\end{pmatrix}=\begin{pmatrix}1&0\\0&0\end{pmatrix},\qquad \begin{pmatrix}0&0\\1&0\end{pmatrix}\begin{pmatrix}0&1\\0&0\end{pmatrix}=\begin{pmatrix}0&0\\0&1\end{pmatrix}.$$
 - $\mathbb{Z}[i] = \{a + bi : a, b \in \mathbb{Z}\}$: the **Gaussian integers**, a subring of $\mathbb{C}$ (here $i^2 = -1$). Commutative.
 

@@ -161,10 +161,10 @@ This is a famous fact: $D_4$ modulo its center is the Klein four-group, *not* cy
 **1.** $H=\{0,4,8\}$. Cosets: $0+H=\{0,4,8\}$, $1+H=\{1,5,9\}$, $2+H=\{2,6,10\}$, $3+H=\{3,7,11\}$. These four sets of size 3 cover all 12 elements, so $[\mathbb{Z}_{12}:H]=4$ (consistent with $12 = 3\cdot 4$).
 
 **2.** Left cosets of $H=\{e,(12)\}$:
-$eH=\{e,(12)\}$, $(13)H=\{(13),(13)(12)\}=\{(13),(132)\}$, $(23)H=\{(23),(23)(12)\}=\{(23),(123)\}$.
+$eH=\{e,(12)\}$, $(13)H=\{(13),(13)(12)\}=\{(13),(123)\}$, $(23)H=\{(23),(23)(12)\}=\{(23),(132)\}$.
 Right cosets:
-$He=\{e,(12)\}$, $H(13)=\{(13),(12)(13)\}=\{(13),(123)\}$, $H(23)=\{(23),(12)(23)\}=\{(23),(132)\}$.
-Compare: $(13)H=\{(13),(132)\}$ but $H(13)=\{(13),(123)\}$. They differ, so $H$ is **not normal** in $S_3$.
+$He=\{e,(12)\}$, $H(13)=\{(13),(12)(13)\}=\{(13),(132)\}$, $H(23)=\{(23),(12)(23)\}=\{(23),(123)\}$.
+Compare: $(13)H=\{(13),(123)\}$ but $H(13)=\{(13),(132)\}$. They differ, so $H$ is **not normal** in $S_3$.
 
 **3.** $f(m+n)=2(m+n)=2m+2n=f(m)+f(n)$, so $f$ is a homomorphism. Injective: $2m=2n\Rightarrow m=n$, yes. Surjective: no, odd numbers are not hit. $\ker f = \{n : 2n=0\} = \{0\}$. $\operatorname{im} f = 2\mathbb{Z}$ (the even integers).
 
