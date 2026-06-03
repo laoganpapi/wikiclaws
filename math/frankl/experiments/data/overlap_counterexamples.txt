@@ -1,0 +1,39 @@
+# Counterexamples to the TARGET overlap inequality (the lever does NOT close Frankl)
+#
+# TARGET-F:  2*OVL >= |F| * Sum_{A in F}|A|     [sufficient for abundance >= 1/2]
+#   where OVL = Sum_{(A,B) in FxF} |A cap B| = Sum_x |Fib(x)|^2  (the fibre 2nd moment).
+# This is FALSE.  All 6 failures (n<=5) listed; every one has TRUE abundance > 1/2.
+#
+# masks are bit-encoded subsets of [n]; element i <=> bit i.
+#
+# --- the minimal / sharpest counterexample (defeats the whole lever) ---
+# F = {emptyset, {4}, {0,1,2,3,4}}   masks [0,16,31]   n=5
+#   |F|=3, freq vector = [1,1,1,1,2]  (element 4 heavy, 0..3 parasitic)
+#   P1 = Sum|A| = 6,  P2 = OVL = 8,  power-mean = P2/P1 = 8/6 = 4/3
+#   pm density = (P2/P1)/|F| = (4/3)/3 = 4/9 = 0.4444 < 1/2   <-- lever undershoots
+#   TRUE abundance = max freq /|F| = 2/3 = 0.6667 > 1/2       <-- Frankl HOLDS, but not via this
+#   This is the SAME lopsided family that defeated the LP averaging (lp_duality.md §5)
+#   and raw second moment (second_moment.md §3): near-universal heavy element + parasites.
+#
+# --- all 6 TARGET-F failures (worst slack 2*OVL-|F|*P1 first) ---
+#   n=5 |F|=6 |L|=6  abund_F=0.6667  pmF=0.4744  slackF=-4  F=[0,8,16,23,24,31]
+#   n=5 |F|=5 |L|=5  abund_F=0.6000  pmF=0.4667  slackF=-3  F=[0,8,16,24,31]
+#   n=5 |F|=3 |L|=3  abund_F=0.6667  pmF=0.4444  slackF=-2  F=[0,16,31]      <-- minimal
+#   n=4 |F|=3 |L|=3  abund_F=0.6667  pmF=0.4667  slackF=-1  F=[0,8,15]
+#   n=5 |F|=7 |L|=7  abund_F=0.5714  pmF=0.4958  slackF=-1  F=[0,8,15,16,23,24,31]
+#   n=5 |F|=3 |L|=3  abund_F=0.6667  pmF=0.4667  slackF=-1  F=[0,16,23]
+#
+# DECOUPLING: min true abundance over ALL failures = 0.5714 > 1/2.
+#   => the inequality fails ONLY strictly above the Frankl threshold (harmless),
+#      but is genuinely FALSE so cannot serve as a certificate (useless).
+#
+# CUBE TIGHTNESS (must hold with equality; it does):
+#   2^[k] for k=1..5: slack = 2*OVL - |F|*P1 = 0 EXACTLY (and = 0 for |L| too).
+#   So the cube saturates the target -- consistent with cube-uniqueness (H5).
+#
+# STRUCTURED-BOUND COLLAPSE (the brief's lever has zero slack):
+#   up(j) cap up(k) = up(j v k)  EXACTLY in any lattice (tautology, not >=):
+#   a<=x and b<=x  <=>  a v b <= x.  Verified 0 violations / 25668 pairs n<=5.
+#   So JIOVL = Sum_{j,k}|up(j)cap up(k)| = Sum_{j,k}|up(j v k)| = JIOVL_lb on ALL
+#   29723 families (ratio == 1.0000).  The join-structured overlap supplies NO
+#   slack beyond the exact value -- the route degenerates to the raw 2nd moment.
