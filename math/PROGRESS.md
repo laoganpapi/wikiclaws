@@ -146,8 +146,18 @@ User chose to **widen network policy**, but arXiv still returns 403 this session
 |-------|--------|-------|
 | Frankl polynomial method | ✅ done | Clean STRUCTURAL OBSTRUCTION (proved + verified): slice-rank(T_F) = \|F\|, vacuous against abundance. Diagnoses why cap-set machinery doesn't apply. |
 | Collatz digit-sum + 𝔽_p[T] | ⏳ running | Hamming-weight Lyapunov candidates + function-field analog cross-check (not 2-adic). |
-| Frankl Boolean Fourier | ⏳ running | Walsh–Hadamard spectrum of 1_F vs abundance; influences, noise stability (Phase 5b). |
+| Frankl Boolean Fourier | ✅ done | Third proved obstruction: rotation+sign-invariant quadratic spectral stats CANNOT determine min abundance (Boolean cube saturates Frankl AND has trivial spectrum). Karpas 2017 acknowledged as prior. |
 | Collatz transfer operator | ⏳ running | Spectral analysis of Frobenius–Perron operator on (ℤ/3^n ℤ)*; mod-3 obstruction in eigen-language (Phase 5b). |
+
+### Emerging theme: FOUR PROVED OBSTRUCTIONS on Frankl (the methodological-survey contribution)
+| # | Method | Obstruction theorem (informal) |
+|---|--------|--------------------------------|
+| 1 | i.i.d. entropy (Gilmer–Sawin–AHS line) | Caps at ψ=(3−√5)/2; Δ₂≡0 at the product extremizer; richer couplings move the wrong way; Δ₂-recapture backfires. |
+| 2 | Polynomial method (Croot–Lev–Pach / slice rank) | slice-rank(T_F) = \|F\| exactly; CLP bound vacuous; A∪B=C is fully determinative + degree Ω(n) per coordinate. |
+| 3 | Lattice invariants | Abundance is NOT a lattice invariant (cone construction: lattice-isomorphic, ab 0.5 vs 0.875). |
+| 4 | Boolean Fourier (quadratic statistics) | Rotation+sign-invariant W^k / influences / noise-stability cannot determine min abundance (Boolean cube extremizer has trivial spectrum). |
+
+Each is a *distinct structural reason* the method fails. Even if individual obstructions are known, the synthesis as a "what works, what doesn't, and why" survey is publishable expository content for the Frankl paper's negative-results section. All marked [NOVELTY UNVERIFIED]; honest prior-art expected for #1 (Sawin) and partially #4 (Karpas).
 
 ### Frankl polynomial method (polynomial_method.md) — proved obstruction
 - **Theorem 2.1:** slice-rank(T_F) = |F| (lower bound via identity submatrix on {(C,C):C∈F}; upper = standard CLP). Verified exactly: 1664/1664 at n≤4, 8561/8561 at n=5, zero deviations across fields 𝔽_{2,3,5,7}. The CLP-style slice-rank bound carries NO abundance information.
