@@ -233,6 +233,7 @@ def main(nmax):
                 "max_freq": max(freqs),
                 "n_common_div": len(cdvars),
                 "freqs": sorted(freqs, reverse=True),
+                "freq_vec": list(freqs),   # aligned with S, per-element
             })
     return rows
 
@@ -298,3 +299,42 @@ if __name__ == "__main__":
         worst = min(viol, key=lambda r: r["freq_best_xS"] / r["sizeF"])
         print(f"  worst: freq/|F|={worst['freq_best_xS']/worst['sizeF']:.4f} "
               f"abund={worst['abund']} freqs={worst['freqs']} S={worst['S']}")
+
+    # ---- TEST 4 (INVERTED): is the abundant element the homology-LIGHTEST /
+    #      most cone-apex-like one?  (S(x) small <=> x trivializes homology) ----
+    def lightest_clears(r):
+        S = r["S"]; fv = r["freq_vec"]; nn = r["n"]
+        mn = min(S)
+        cands = [x for x in range(nn) if S[x] == mn]
+        # pick the most frequent among homology-lightest (break ties toward heavy)
+        x = max(cands, key=lambda i: fv[i])
+        return fv[x] / r["sizeF"]
+    inv_viol = [r for r in rows if lightest_clears(r) < 0.5]
+    print(f"\n[TEST4 INVERTED] 'homology-LIGHTEST element clears 1/2 freq': "
+          f"fails {len(inv_viol)} / {N}")
+    if inv_viol:
+        w = min(inv_viol, key=lambda r: lightest_clears(r))
+        print(f"  worst: freq/|F|={lightest_clears(w):.4f} abund={w['abund']} "
+              f"freqs={w['freqs']} S={w['S']} freq_vec={w['freq_vec']}")
+
+    # ---- TEST 5: correlation sign of (freq, S) within each family ----
+    import statistics
+    neg = pos = zero = 0
+    for r in rows:
+        S = r["S"]; fv = r["freq_vec"]; nn = r["n"]
+        if nn < 2 or len(set(S)) == 1 or len(set(fv)) == 1:
+            zero += 1
+            continue
+        # sign of Pearson-ish: compare ranking
+        mf = statistics.mean(fv); ms = statistics.mean(S)
+        cov = sum((fv[i] - mf) * (S[i] - ms) for i in range(nn))
+        if cov > 1e-9:
+            pos += 1
+        elif cov < -1e-9:
+            neg += 1
+        else:
+            zero += 1
+    print(f"\n[TEST5] within-family cov(freq, S): "
+          f"positive {pos}, NEGATIVE {neg}, flat/zero {zero}  "
+          f"(negative => abundant element is homology-light, an APEX, "
+          f"as the parasite mechanism predicts)")
