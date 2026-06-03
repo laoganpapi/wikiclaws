@@ -379,3 +379,53 @@ across formulations and is, *qua* spectral block, the rank-1 matrix
 $\binom{1/3\ 2/3}{1/3\ 2/3}$. Future agents: don't expect the operator
 view to bypass the obstruction; it makes the obstruction explicit, but
 also makes its rigidity obvious.
+
+---
+
+## 2026-06-03 — [collatz] — "Binary-digit statistics (Hamming weight / runs / carries) as a Lyapunov function, pure or hybridized with $\log_2 n$"
+
+**Agent / author:** Alex Ye (AI-assisted).
+**Time invested:** ~1 hour (re-validation + writeup of an orphaned prior run).
+**Attack vector:** Hope that a binary-digit observable $X(n)\in\{s(n)=\text{Hamming
+weight},\,r(n)=\text{run-count},\,c(n)=\text{carry-count}\}$ is pointwise
+anti-correlated with the magnitude jump of the $3n+1$ step, so that some hybrid
+$L_{\alpha,\beta}(n)=\alpha X(n)+\beta\log_2 n$ is a *strict pointwise* Lyapunov
+function (which would prove the conjecture). Systematic $(\alpha,\beta)$ drift sweep
+over all trajectories from $n\in[2,10^5)$ ($\approx7.2\times10^6$ steps).
+
+**Why it failed — two independent obstructions:**
+1. **Magnitude-blindness** of pure statistics ($\beta=0$): $s(2^k)=r(2^k)=1$,
+   $c(2^k)=0$ for all $k$, so they have no finite level sets and cannot bound the
+   trajectory regardless of drift.
+2. **Average-only descent** of the hybrids: across $\approx7.2\times10^6$ steps,
+   **zero** of the $\approx90$ nontrivial $(X,\alpha,\beta)$ candidates has
+   $\max_{\text{steps}}\Delta L\le0$ — every one strictly increases somewhere.
+   The digit term cancels the odd-step magnitude jump $\beta(\log_2 3-1)\approx
+   0.585\beta$ only in the *mean*, exactly reproducing the Tao/Lagarias–Weiss
+   $\tfrac12(\log_2 3-2)\approx-0.208$ heuristic descent and adding no rigour.
+   Raising $\beta$ lowers the mean but raises $\max\Delta L$.
+
+**Counter-example (if any):** Pointwise increase witnessed for every candidate;
+e.g. pure Hamming $\max\Delta s=+8$, and best-mean hybrid (runs, $\alpha=5,\beta=2$,
+mean $-0.94$) still has $\max\Delta L=+61.2$. The odd-step $\log_2$ drift is
+$+0.591$ (vs. closed form $\log_2 3-1=0.585$): magnitude genuinely grows every odd step.
+
+**Pointer to artifacts:**
+- `theory/digit_lyapunov.md` (full writeup, drift tables, §7 verdict)
+- `experiments/lyapunov_search.py` and `experiments/data/lyapunov_sweep.json`
+  (re-run 2026-06-03: reproduces committed data bit-for-bit incl. seeded
+  random-parity and uniform-bit blocks).
+
+**Verdict:** abandoned as a Lyapunov route. Kept expositionally: it pins down what a
+working Lyapunov function must do that these cannot — be simultaneously
+magnitude-aware (finite level sets) *and* pointwise (not merely average) decreasing
+across the $3n+1$ jump. The $\mathbb{F}_2[T]$ analog (`theory/function_field.md`)
+exhibits both via the degree valuation, isolating the archimedean/$2$-adic decoupling
+in $\mathbb{Z}$ as the obstruction.
+
+**Lesson:** "Drifts down on average" $\ne$ "is a Lyapunov function." Any digit
+statistic that is bounded on the powers of two is automatically disqualified
+(magnitude-blind), and hybridizing with $\log_2 n$ only re-imports the known average
+descent — never the pointwise strictness a proof needs. `[NOVELTY UNVERIFIED]`:
+$s(n)$ not decreasing is noted in Lagarias's survey; the systematic sweep + the
+pointwise-supermartingale audit appear new but were not exhaustively checked.
