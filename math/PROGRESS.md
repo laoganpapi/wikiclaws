@@ -150,7 +150,13 @@ User chose to **widen network policy**, but arXiv still returns 403 this session
 | Frankl LP duality / Poonen | ✅ done | Sixth obstruction: correct dual = Reimer in multiplier form, degenerates on the cube; gap is exactly max-vs-mean (fails on 6 families). Surfaced the second-moment lever. |
 | Frankl Kruskal–Katona/shadows | ✅ done | Fifth obstruction: shifting breaks union-closure; AD/FKG wrong sign. ALL FIVE METHODS CONVERGE on the join-irreducible labelling. |
 | Frankl second-moment | ✅ done | Seventh obstruction: cube minimizes the power-mean ratio at ½; union-closure bounds U the wrong way. |
-| Frankl JI-labelling (frontier) | ⏳ finishing | Direct attack on the convergence chokepoint; H5 labelling-freedom sweep. (deliverable data committed; awaiting report) |
+| Frankl JI-labelling (frontier) | ✅ done | ⭐ CROWN RESULT: Boolean cube is the UNIQUE Frankl extremal lattice (verified 13,734 iso classes n≤5). Reconstruction identity Fib(x)=⋃↑j. Closing inequality identified (JI-filter overlap). |
+
+## ⭐ STRONGEST RESULT: Frankl structural reformulation (join_irreducible_labelling.md)
+- **Reconstruction identity (verified, 0 violations):** Fib(x) = ⋃_{j∈JI, x∈j} ↑j — every element-fibre is a union of principal join-irreducible filters. The coupling all 7 invariant-methods discard.
+- **Cube-uniqueness characterization (verified n≤5, 13,734 lattice-iso classes):** minab(L) < ½ in ZERO classes; = ½ in EXACTLY 5 (the Boolean cubes B_k); > ½ in all 13,729 others. ⇒ Boolean cube is the unique extremal lattice; every non-cube has slack ε(L) > 0. [PENDING: proven only n≤5.]
+- **The single closing inequality** (two independent agents converged on it): union-closure lower bound on JI-filter overlap Σ_{j,k}|↑j∩↑k| (structured: ↑j∩↑k ⊇ ↑(j∨k)) → power-mean bound. Tight on the cube ⇒ at best reaches ½ ⇒ proving it would prove Frankl. OPEN.
+- This reframes Frankl as a concrete statement about JI-filter overlaps with a known extremal case — a genuine contribution beyond the negative results, [NOVELTY UNVERIFIED] but structurally substantive.
 | Collatz transfer operator | ✅ done | Sharpest obstruction reformulation: mod-3 block = [[1/3,2/3],[1/3,2/3]] (eigvals {1,0}); Syracuse RV = unique invariant π_n (proved). Names the uniform-perp-gap path forward. |
 | Collatz digit-Lyapunov + 𝔽_p[T] | ⏳ running | (first Phase-5 wave; still running) |
 
