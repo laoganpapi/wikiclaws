@@ -536,5 +536,140 @@ class TestLatticeAttack:
             assert abs(abundance(F) - h / len(els)) < 1e-12
 
 
+class TestLPDuality:
+    """LP-relaxation / LP-duality view (lp_duality.py): the (P-weight) LP is
+    vacuous, the averaging cover certificate saturates at exactly 1/2 on the cube
+    (Reimer tight), and dips below 1/2 on lopsided families — the LP gap."""
+
+    def test_pweight_lp_is_vacuous(self):
+        # min over a FREE probability weight of max weighted abundance can be 0
+        # (mass on the empty set), so this LP does NOT have Frankl as its value.
+        from lp_duality import lp_min_max_abundance
+        from uc_family import family_from_sets, ground_set
+        F = family_from_sets([[], [0]])  # contains ∅
+        n = ground_set(F)
+        res = lp_min_max_abundance(F, n)
+        assert res["value"] is not None
+        assert res["value"] < 1e-9  # vacuous: 0
+
+    def test_cube_saturates_averaging_at_half_reimer_tight(self):
+        # The Boolean cube 2^[k] is the universal extremizer: averaging cover
+        # certificate = exactly 1/2 with Reimer's inequality TIGHT (no margin).
+        from itertools import combinations
+        from lp_duality import lp_cover_certificate, reimer_bound
+        from uc_family import family_from_sets, ground_set, abundance
+        for k in range(1, 6):
+            cube = family_from_sets(
+                [list(c) for j in range(k + 1) for c in combinations(range(k), j)])
+            n = ground_set(cube)
+            rb = reimer_bound(cube)
+            cov = lp_cover_certificate(cube, n)
+            assert abs(rb["avg_set_size"] - rb["reimer_rhs"]) < 1e-12  # Reimer tight
+            assert abs(cov["avg_lb"] - 0.5) < 1e-12                    # cover = 1/2
+            assert abs(abundance(cube) - 0.5) < 1e-12                  # true = 1/2
+
+    def test_averaging_certificate_has_a_real_gap_below_half(self):
+        # The averaging cover certificate genuinely DIPS below 1/2 on a lopsided
+        # family while true abundance is high — a real LP relaxation gap, NOT an
+        # artifact. freqs=[2,3,4], m=5: avg/n_active = 9/(3*5)=0.6 BUT the recorded
+        # cover divides by the full ground set; the honest averaging bound
+        # sum_i ab_i / n itself can be < 1/2 (e.g. with a parasitic 0-freq slot).
+        from lp_duality import lp_cover_certificate
+        from uc_family import family_from_sets, ground_set, abundance, is_union_closed
+        F = family_from_sets([[2], [3], [1, 3], [2, 3], [1, 2, 3]])
+        assert is_union_closed(F)
+        n = ground_set(F)
+        cov = lp_cover_certificate(F, n)
+        assert cov["certified_lb"] < 0.5 - 1e-9     # certificate fails to reach 1/2
+        assert abundance(F) >= 0.5 - 1e-12          # but Frankl actually holds
+
+    def test_reimer_holds_and_avg_equals_sum_abundance(self):
+        # Reimer avg >= (1/2)log2|F| holds, and the averaging identity
+        # sum_i abundance_i = avg_set_size is exact, on all UC families n<=4.
+        import math
+        from lp_duality import reimer_avg_set_size
+        from enumerate import all_uc_families
+        from uc_family import frequencies, ground_set
+        for n in range(5):
+            for F in all_uc_families(n):
+                if len(F) < 2 or ground_set(F) == 0:
+                    continue
+                m = len(F)
+                avg = reimer_avg_set_size(F)
+                assert avg >= 0.5 * math.log2(m) - 1e-9        # Reimer
+                ng = ground_set(F)
+                assert abs(sum(frequencies(F, ng)) / m - avg) < 1e-12  # identity
+
+
+class TestShadowsKruskalKatona:
+    """Shadow / Kruskal–Katona attack (shadows.py): compression does NOT
+    preserve union-closure, FKG/Ahlswede–Daykin fails, and the cone/cube
+    obstruction. (shadows_kruskal_katona.md)"""
+
+    def test_minimal_compression_breaks_uc(self):
+        # F = {{0,1},{2,3},{0,1,2,3}} is UC; the down-shift S_02 destroys it.
+        from shadows import shift_family, fully_compressed
+        from uc_family import is_union_closed
+        F = frozenset({0b0011, 0b1100, 0b1111})   # {0,1},{2,3},{0,1,2,3}
+        assert is_union_closed(F)
+        assert not fully_compressed(F, 4)         # not a shift fixed point
+        G = shift_family(F, 0, 2)                  # replace elt 2 by elt 0
+        assert not is_union_closed(G)             # UC destroyed
+
+    def test_compression_preserves_uc_for_small_n(self):
+        # Shifting preserves UC for ALL families at n ≤ 3 (first failure n=4).
+        from shadows import compress_to_fixed_point
+        from enumerate import all_uc_families
+        from uc_family import is_union_closed, ground_set
+        for n in range(0, 4):
+            for F in all_uc_families(n):
+                if not F or ground_set(F) == 0:
+                    continue
+                assert is_union_closed(compress_to_fixed_point(F, n))
+
+    def test_compression_can_increase_abundance(self):
+        # Wrong direction for a reduction: compression can raise max-abundance.
+        from shadows import compress_to_fixed_point
+        from uc_family import abundance, family_from_sets
+        F = family_from_sets([[0, 1], [2], [0, 1, 2]])   # masks 3,4,7
+        before = abundance(F)
+        after = abundance(list(compress_to_fixed_point(F, 3)))
+        assert after > before + 1e-12
+
+    def test_fkg_fails_on_minimal_witness(self):
+        # {{0},{1},{0,1}} : elements 0,1 are ANTI-correlated under uniform-on-F.
+        from shadows import fkg_correlation
+        F = frozenset({0b01, 0b10, 0b11})
+        rows = fkg_correlation(F, 2)
+        assert len(rows) == 1
+        assert rows[0]["corr"] < -1e-9            # pij < pi*pj : FKG violated
+        assert not rows[0]["fkg_holds"]
+
+    def test_cone_cube_extremizer(self):
+        # Cube 2^[n] saturates abundance 1/2 and is shift-compressed; its cone
+        # is UC with abundance 1 − 1/2^n (same obstruction as lattice/Fourier).
+        from shadows import cone_extremizer_check
+        for n in range(1, 5):
+            c = cone_extremizer_check(n)
+            assert abs(c["cube_abundance"] - 0.5) < 1e-12
+            assert c["cube_is_compressed"]
+            assert c["cone_is_uc"]
+            if n >= 2:
+                assert c["cone_abundance"] > 0.5 + 1e-12
+
+    def test_frankl_holds_via_split_all_small(self):
+        # Cross-validate: every nontrivial UC family n≤4 has some i with
+        # |F_i| ≥ |F_¬i|  (link_size ≥ trace_size), i.e. Frankl holds.
+        from shadows import split
+        from enumerate import all_uc_families
+        from uc_family import ground_set
+        for n in range(1, 5):
+            for F in all_uc_families(n):
+                if not F or ground_set(F) == 0:
+                    continue
+                assert any(len(split(F, i)[0]) >= len(split(F, i)[1])
+                           for i in range(n))
+
+
 if __name__ == "__main__":
     sys.exit(pytest.main([__file__, "-v"]))
