@@ -184,7 +184,9 @@ inaccessible) and flagged in the source. See the title footnote.
 Section~\ref{sec:notation} fixes notation. Section~\ref{sec:history} surveys the density results.
 Section~\ref{sec:tao} reproduces Tao's framework and localizes where logarithmic density is forced.
 Section~\ref{sec:obstruction} states and proves the obstruction; Section~\ref{sec:numerics} gives the
-numerical corroboration; Section~\ref{sec:scope} delimits scope. Section~\ref{sec:cycles}
+numerical corroboration; Section~\ref{sec:scope} delimits scope.
+Section~\ref{sec:transfer} gives the transfer-operator reformulation; Section~\ref{sec:why-hard}
+gives the function-field diagnostic and the digit-Lyapunov negative result. Section~\ref{sec:cycles}
 reconstructs cycle exclusion. Section~\ref{sec:computational} notes the computational frontier.
 Section~\ref{sec:open} lists open questions.
 
@@ -593,6 +595,231 @@ believe are not previously recorded \emph{in this packaging} --- also
 % [PRIOR-ART CHECK PENDING]
 pending a prior-art check). We do not claim to have discovered the mod-$3$ imbalance. Settling priority
 requires the primary sources~\citep{tao2022,tao2020blog}, which were inaccessible during preparation.
+
+%======================================================================
+\section{A transfer-operator view of the obstruction}
+\label{sec:transfer}
+
+The obstruction of Section~\ref{sec:obstruction} admits a clean spectral reformulation. The
+one-step Syracuse map on residues, under Tao's i.i.d.\ valuation model, is a finite Markov chain;
+its Frobenius--Perron (transfer) operator makes the mod-$3$ imbalance a single explicit
+linear-algebra fact, identifies the ``right'' reference measure as the Syracuse law itself, and ---
+via an \emph{exact} characteristic-polynomial computation --- locates the obstruction precisely in
+the stationary distribution rather than in any mixing rate.
+
+\begin{remark}[prior art]\label{rem:transfer-priorart}
+% [PRIOR-ART CHECK PENDING]
+Transfer / Frobenius--Perron operators are standard in dynamics, and Markov-chain models of the
+$3n+1$ map go back to Lagarias--Weiss~\citep{lagariasweiss1992} and the Sinai/Bernstein--Lagarias
+circle~\citep{sinai2003,bernsteinlagarias1996}. The specific identification ``Syracuse law
+$=$ stationary distribution of the one-step chain on $\Zthreex{n}$,'' the explicit $2\times2$
+mod-$3$ block, and the nilpotency statement below are elementary once stated and are plausibly
+folklore; we make no priority claim and flag the framing as pending a prior-art pass.
+\end{remark}
+
+\subsection{The transfer operator}
+Let $U_n:=\Zthreex{n}$, $|U_n|=\tot(3^n)=2\cdot3^{n-1}$. A Syracuse step sends an odd residue $x$ to
+$2^{-k}(3x+1)$ where $k=\val(3x+1)$; in Tao's model $k\sim\Geom$. Since $3x+1\equiv1\pmod3$, the
+image is again a unit, so the step is a well-defined Markov chain on $U_n$ with row-stochastic
+kernel
+\begin{equation}
+   \Pop_n[x,y]\;=\;\sum_{k\ge1}2^{-k}\,\mathbf{1}\!\big[\,2^{-k}(3x+1)\equiv y \pmod{3^n}\,\big],
+   \qquad x,y\in U_n.
+   \label{eq:Pkernel}
+\end{equation}
+A \emph{stationary density} solves $\pi_n\Pop_n=\pi_n$. Because $2$ is a primitive root modulo
+$3^n$, $2^{-k}\bmod 3^n$ is periodic in $k$ with period $\tot(3^n)$, so~\eqref{eq:Pkernel} is a finite
+sum of geometric series and \emph{every entry of $\Pop_n$ is an exact rational}; this is what makes
+the spectral statements below rigorous rather than floating-point. The chain is \emph{not} doubly
+stochastic --- the column sums are not all $1$ --- so the uniform law on $U_n$ is \emph{not}
+stationary, the spectral counterpart of ``the Syracuse law is not uniform on units.''
+
+\subsection{The stationary law is the Syracuse law}
+\begin{proposition}[stationary $=$ Syracuse law]\label{prop:stationary}
+The law $\nu_n$ of the Syracuse random variable $X_n$ \eqref{eq:syrac} is stationary for $\Pop_n$:
+$\nu_n\Pop_n=\nu_n$. By uniqueness of the stationary distribution of an irreducible finite chain,
+$\pi_n=\nu_n$.
+\end{proposition}
+\begin{proof}
+We show $X_n\stackrel{d}{=}2^{-a}(3X_n+1)\pmod{3^n}$ with $a\sim\Geom$ independent of $X_n$, which is
+exactly the statement $\nu_n\Pop_n=\nu_n$. Applying one step to the defining sum~\eqref{eq:syrac},
+\[
+   2^{-a}(3X_n+1)\;=\;2^{-a}\!\Big(\sum_{j=1}^n 3^{\,n-j+1}2^{-(a_j+\cdots+a_n)}+1\Big)
+   \;=\;2^{-a}+\sum_{j=1}^n 3^{\,n-j+1}2^{-(a_j+\cdots+a_n+a)}\pmod{3^n}.
+\]
+Re-index $j'=j-1$ and set $a_{n+1}:=a$. The $j'=0$ term carries $3^n\equiv0$ and drops; the
+remaining terms together with the trailing $2^{-a_{n+1}}$ assemble exactly into
+$\sum_{j'=1}^n 3^{\,n-j'}2^{-(a_{j'+1}+\cdots+a_{n+1})}\pmod{3^n}$, which is $X_n$ written in the
+shifted sequence $(a_2,\dots,a_{n+1})$. As the $a_j$ are i.i.d., this has the same law as $X_n$.
+\end{proof}
+
+Thus the operator-stationary measure is the Syracuse law itself; the collision diagnostic
+$\Edist_n=\tot(3^n)\,\CP_n-1$ of Section~\ref{sec:numerics} is, equivalently, the squared $\ell^2$
+distance of $\pi_n$ to uniform-on-units, and uniform-on-units is simply \emph{not} the chain's
+stationary target.
+
+\subsection{The mod-3 obstruction is an explicit rank-one block}
+Let $\Vsub:=\mathrm{span}\{e_1,e_2\}\subset\R^{U_n}$, where $e_r[x]:=\mathbf{1}[x\equiv r\pmod3]$ for
+$r\in\{1,2\}$.
+
+\begin{proposition}[the mod-$3$ block]\label{prop:mod3block}
+For every $n\ge1$, $\Vsub$ is $\Pop_n$-invariant, and in the basis $(e_1,e_2)$ the action is
+\[
+   \Pop_n|_{\Vsub}\;=\;\begin{pmatrix} 1/3 & 2/3 \\ 1/3 & 2/3 \end{pmatrix},
+\]
+with eigenvalues $\{1,0\}$. The eigenvalue-$1$ left eigenvector is $(\tfrac13,\tfrac23)$, i.e.\ the
+stationary mod-$3$ marginal $(0,\tfrac13,\tfrac23)$ of Lemma~\ref{lem:mod3}.
+\end{proposition}
+\begin{proof}
+For $x\in U_n$, $3x+1\equiv1\pmod3$ regardless of $x\bmod3$, so the image residue mod $3$ is
+$2^{-k}\equiv(-1)^k\pmod3$, depending only on the parity of $k$. Under $k\sim\Geom$,
+$\PP(k\text{ even})=\tfrac{1/4}{1-1/4}=\tfrac13$ and $\PP(k\text{ odd})=\tfrac{1/2}{1-1/4}=\tfrac23$,
+independent of $x\bmod3$. Hence both rows of $\Pop_n|_{\Vsub}$ are $(\tfrac13,\tfrac23)$, giving the
+displayed matrix.
+\end{proof}
+
+This is the mod-$3$ imbalance of Lemma~\ref{lem:mod3} compressed to one rank-one $2\times2$ block:
+the obstruction is the eigenvalue-$1$ eigenvector inside $\Vsub$, \emph{entirely independent of $n$},
+and $\TV(\pi_n,U)\ge\tfrac16$ is the statement that this fixed marginal $(0,\tfrac13,\tfrac23)$ differs
+from $(0,\tfrac12,\tfrac12)$. A scalar tilt only deforms the block to $\big(\begin{smallmatrix}
+\alpha&1-\alpha\\\alpha&1-\alpha\end{smallmatrix}\big)$ with $\alpha=r/(1+r)$, still rank one, never
+equal to $1/2$ for admissible $r$ --- the spectral form of Theorem~\ref{thm:obstruction}.
+
+\subsection{The exact spectrum: nilpotent modulo the stationary projector}
+The mod-$3$ block is the bottom of a filtration: the indicators of residues mod $3^k$ ($k\le n$) span
+nested $\Pop_n$-invariant subspaces $\Vsub^{(1)}\subset\cdots\subset\Vsub^{(n)}=\R^{U_n}$ of
+dimensions $2,6,\dots,\tot(3^n)$, on which $\Pop_n$ acts as the level-$k$ operator. This forces a very
+rigid spectrum, which we record \emph{exactly}.
+
+\begin{proposition}[exact characteristic polynomial; nilpotency]\label{prop:nilpotent}
+Computed in exact rational arithmetic for $n=1,\dots,5$ (sizes $2,6,18,54,162$), the characteristic
+polynomial of $\Pop_n$ is
+\begin{equation}
+   \charpoly_{\Pop_n}(\lambda)\;=\;\lambda^{\,\tot(3^n)-1}\,(\lambda-1).
+   \label{eq:charpoly}
+\end{equation}
+Thus $\Pop_n$ has the single nonzero eigenvalue $\lambda=1$ (simple) and all $\tot(3^n)-1$ remaining
+eigenvalues are \emph{exactly} $0$. Equivalently, $\Pop_n-\statproj$ is nilpotent, where
+$\statproj=\mathbf{1}\otimes\pi_n$ is the rank-one stationary projector; the rank chain
+$\mathrm{rank}(\Pop_n^{\,k})=2\cdot3^{\,n-1-k}$ for $0\le k<n$ gives nilpotency index exactly $n$.
+\end{proposition}
+
+\begin{remark}[the spectral gap is not the obstruction]\label{rem:gap-useless}
+Proposition~\ref{prop:nilpotent} \emph{corrects} an earlier floating-point reading (recorded during
+this project) that the second eigenvalue $|\lambda_2(\Pop_n)|$ was of order $10^{-3}$ and possibly
+drifting toward $1$ with $n$: those magnitudes were numerical noise at the $10^{-3}$--$10^{-8}$ level;
+the exact value is $0$. The consequence is the opposite of a mixing-rate defect. The
+``perpendicular spectral gap'' is as large as possible ($\lambda_2=0$), uniformly in $n$ --- and yet
+this delivers \emph{no} equidistribution, for three independent reasons.
+\begin{enumerate}[label=(\roman*)]
+\item \emph{The obstruction is in the stationary vector, not off it.} The permanent marginal
+$(0,\tfrac13,\tfrac23)$ is the $\lambda=1$ eigenvector $\pi_n$ itself; killing the nilpotent part
+removes exactly the directions that already mix perfectly and retains the obstructed direction. Fast
+relaxation is relaxation to the wrong target. This is consistent with, and re-derives exactly, the
+divergence of $\Edist_n$ in Section~\ref{sec:numerics}: $\Edist_n$ is a property of $\pi_n$, not of
+the gap, and the exact stationary vector reproduces the $\Edist_n$ values
+($\tfrac19,\tfrac37,\dots$) of Table~\ref{tab:En} to all printed digits.
+\item \emph{Spectral radius $0$ is not norm contraction.} The nilpotent part has operator norm
+$\|\Pop_n-\statproj\|_2>1$ for $n\ge3$ (it increases with $n$), so there is no uniform per-step
+$\ell^2$ contraction; mixing finishes in $n$ steps (the nilpotency index $\to\infty$), not $O(1)$,
+and each step can expand.
+\item \emph{The standard orthogonal complement $\Vsub^\perp$ is not $\Pop_n$-invariant}, so a naive
+``restriction norm'' on $\Vsub^\perp$ is ill-posed; the correct object is the quotient
+$\R^{U_n}/\Vsub$, on which $\Pop_n$ is the nilpotent above.
+\end{enumerate}
+The honest one-line summary: the strongest conceivable spectral gap holds, and is inert. The Collatz
+natural-density obstruction does not live in a mixing rate; it lives in the (permanently non-uniform)
+stationary law $\pi_n=\nu_n$, exactly as in Section~\ref{sec:obstruction}.
+\end{remark}
+
+We emphasize that Proposition~\ref{prop:nilpotent} is a structural sharpening, not progress on
+Collatz: it makes the obstruction a one-line linear-algebra fact and certifies that the
+``uniform perpendicular spectral gap'' route is a dead end --- not because the gap is too small, but
+because it is maximal and located away from the obstruction.
+
+%======================================================================
+\section{Why the integer case resists: a function-field diagnostic}
+\label{sec:why-hard}
+
+This section records \emph{why} a direct descent proof resists, by contrasting the integers with a
+setting where the analogous problem is provably solvable. We stress at the outset: the results here
+are diagnostics of difficulty. They are \emph{not} evidence about whether integer Collatz is true,
+and nothing in this section is used elsewhere in the paper.
+
+\subsection{A provably convergent function-field analog}
+Replace the prime $2\in\Z$ by the irreducible $T\in\Ffield$. ``Even'' becomes $T\mid f$ and
+``halve'' becomes division by $T$; for the odd branch the clean analog of $3n+1$ is forced. Define
+\begin{equation}
+   \Phimap:\Ffield\to\Ffield,\qquad
+   \Phimap(f)=\begin{cases} f/T & T\mid f,\\[2pt] \big((T+1)f+1\big)/T & T\nmid f.\end{cases}
+   \label{eq:Phi}
+\end{equation}
+The multiplier $T+1$ and constant $1$ are forced by the requirement that $(T+1)f+1$ be divisible by
+$T$ for every $f$ with $f(0)\ne0$: reducing mod $T$ gives $f(0)+1$, which vanishes for \emph{all}
+admissible $f$ precisely because $\F_2$ has the single nonzero constant $1$ and $1+1=0$. Over $\F_p$
+with $p>2$ no fixed multiplier achieves this uniformly, which is why the clean analog lives over
+$\F_2$. % [PRIOR-ART CHECK PENDING]
+Function-field $3x+1$ analogs are studied by Hicks--Mullen--Yucas--Zavislak~\citep{hicksmullenyucas2008}
+(located at snippet level only); we make no originality claim for the map~\eqref{eq:Phi} or its
+convergence, only --- tentatively --- for the explicit archimedean/non-archimedean framing below.
+
+\begin{proposition}[degree is a Lyapunov function]\label{prop:degree}
+For all $f\ne0$, $\degmap\Phimap(f)\le\degmap f$: the degree strictly drops by $1$ on the
+$T\mid f$ branch and is unchanged on the $T\nmid f$ branch. Consequently every orbit of $\Phimap$
+reaches a fixed point, the fixed points are exactly $0$ and $1$, and $\Phimap$ has no nontrivial
+cycles --- $\Phimap$ is globally convergent.
+\end{proposition}
+\begin{proof}[Proof sketch]
+If $T\mid f$ then $\degmap(f/T)=\degmap f-1$. If $T\nmid f$ then $\degmap((T+1)f)=\degmap f+1$, adding
+the constant $1$ does not change the top degree, and dividing by $T$ subtracts $1$, giving
+$\degmap\Phimap(f)=\degmap f$. So $\degmap$ never increases. It strictly drops on every even step, and
+a direct computation shows at most $\degmap f$ consecutive odd steps can occur before an even step
+forces a drop (each consecutive odd step consumes one more low coefficient of $f$). Since $\degmap$ is
+a nonnegative integer with finite level sets ($\{\degmap\le d\}$ has $2^{d+1}$ elements), every orbit
+descends to $\degmap\le0$, i.e.\ into $\{0,1\}$, both fixed.
+\end{proof}
+
+\subsection{The structural disanalogy with $\Z$}
+The contrast with the integers is exact and is the diagnostic payload.
+\begin{itemize}
+\item Over $\Ffield$ the degree is the order at the single infinite (\emph{non-archimedean}) place;
+the odd-branch multiplier $T+1$ raises the degree by exactly $1$, and the forced division by $T$
+removes it. Growth and shrink act at the \emph{same} place and cancel by a clean valuation identity,
+so degree is a genuine Lyapunov function.
+\item Over $\Z$ there is one \emph{archimedean} absolute value (magnitude $\log_2 n$) and, separately,
+the $2$-adic valuation $\val=\nu_2$. The odd step $n\mapsto3n+1$ multiplies the archimedean size by
+$\approx3$ while the halving is governed by $\nu_2(3n+1)$ at a \emph{different} place, and the two are
+not tied by any identity: $\nu_2(3n+1)$ is heuristically geometric and independent of $\log n$, so the
+per-step magnitude growth $\log_2 3-1>0$ is cancelled only \emph{on average} (the Lagarias--Weiss
+heuristic). There is no pointwise cancellation, hence no magnitude Lyapunov function.
+\end{itemize}
+In one line: \emph{over $\Ffield$ the multiplier and divisor act at one non-archimedean place and
+cancel; over $\Z$, $3n+1$ couples archimedean magnitude to $2$-adic valuation, and these are
+decoupled, so only an average descent survives.} The function-field model is the controlled
+experiment in which this coupling is switched off and convergence becomes provable; it pinpoints the
+coupling as the source of difficulty, and says nothing about whether integer Collatz is true.
+
+\subsection{A matched negative result: digit statistics are not Lyapunov functions}
+The same difficulty is visible directly over $\Z$. Consider binary-digit statistics --- Hamming
+weight $s(n)$, run-count $r(n)$, carry-count $c(n)$ --- and hybrids $L_{\alpha,\beta}=\alpha X+\beta\log_2 n$.
+Two obstructions, both rigorous, rule out the family.
+\begin{enumerate}[label=(O\arabic*)]
+\item \emph{Magnitude-blindness.} Each pure statistic is bounded on the powers of two
+($s(2^k)=r(2^k)=1$, $c(2^k)=0$) while $2^k\to\infty$, so no pure digit statistic has finite level
+sets; the finiteness requirement fails outright ($\beta=0$ is dead).
+\item \emph{Average-only descent.} The size term $\log_2 n$ fixes finiteness but increases by
+$\log_2 3-1\approx0.585$ on every odd step, so it is at best an average supermartingale. In a sweep of
+all trajectories from $n\in[2,10^5)$ (about $7.2\times10^6$ steps), \emph{no} nontrivial hybrid
+$L_{\alpha,\beta}$ over a grid of $(\alpha,\beta)$ achieved $\max_{\text{steps}}\Delta L\le0$: a digit
+term anti-correlates with the magnitude jump only in the mean, never pointwise.
+\end{enumerate}
+% [PRIOR-ART CHECK PENDING]
+That digit statistics do not decrease under Collatz is noted in Lagarias's survey~\citep{lagarias1985};
+the systematic pointwise-supermartingale audit is, to our knowledge, not recorded, pending a prior-art
+pass. This dovetails with the function-field result: a successful Lyapunov function must be
+simultaneously magnitude-aware (finite level sets) \emph{and} pointwise (not merely average)
+decreasing across the $3n+1$ jump, and the degree valuation over $\Ffield$ is exactly such a
+function, isolating the archimedean feature of $\Z$ that defeats the digit program.
 
 %======================================================================
 \section{Cycle exclusion, and a correction to a folklore bottleneck}

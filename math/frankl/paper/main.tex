@@ -51,9 +51,10 @@
 \newtheorem{remark}[theorem]{Remark}
 
 %--- Title ---
-\title[The union-closed sets conjecture: entropy method, reconstructed]{The
-union-closed sets conjecture and the i.i.d.\ entropy method:\\ a self-contained
-reconstruction and two negative results}
+\title[Delimiting the methods for the union-closed sets conjecture]{Delimiting
+the methods for Frankl's union-closed sets conjecture:\\ a reconstruction of the
+entropy bound, a barrier for moment methods,\\ and the Boolean cube as the unique
+extremal lattice}
 
 \author[A. Ye]{Alex Ye}
 \thanks{This work was carried out by Alex Ye in substantive collaboration with
@@ -72,28 +73,33 @@ environment; items awaiting a primary-source check are flagged in the source.}
 \begin{document}
 
 \begin{abstract}
-We survey the entropy-method attack on Frankl's union-closed sets conjecture,
-from Gilmer's 2022 constant lower bound through the refinements of Sawin,
-Chase--Lovett, Alweiss--Huang--Sellke (AHS), Pebody, Yu, Cambie, and Liu that
-fixed the value $\golden\approx 0.38197$ and then nudged it numerically. We then
-do three things. First, we give a \emph{self-contained reconstruction} of the
-AHS bound $\golden$ from the entropy axioms alone, isolating the three lossy
-inequalities and the single one-variable engine that produces the constant.
-Second, we give a precise, certified account of why two natural extensions of the
-method do \emph{not} improve the constant within the i.i.d.\ coupling: recapturing
-the chain-rule slack $\Dtwo$ (it vanishes identically at the product extremizer),
-and augmenting the objective with an intersection term (union-closure gives no
-upper bound on $H(A\cap B)$; in fact $H(A\cap B)\le H(A)$ \emph{fails} for
-union-closed families). Third, we present a rigorous interval-arithmetic
-certificate of the load-bearing inequality, pinning the optimum at
-$\psis=\golden$, together with a complete exact enumeration over all union-closed
-families on $\le 5$ elements confirming the underlying entropy inequality. We
-claim \emph{no} improvement of the constant; the contribution is expository and
-delimiting. The recurring structural observation---that the i.i.d.\ entropy method
-is capped at $\psis$ and that enriching the coupling, by itself, moves the bound
-the wrong way---is, to our reading, already implicit in Sawin's and Cambie's
-work, and we present it as a self-contained account of a well-understood ceiling
-rather than as a discovery.
+This is an expository, barrier, and reformulation paper on Frankl's union-closed
+sets conjecture. It makes no claim of progress toward the conjectured constant
+$\tfrac12$; rather, it tries to make precise \emph{why} the standard modern
+toolkit stalls. We do three things. \textbf{(a)} We give a \emph{self-contained
+reconstruction} of the Alweiss--Huang--Sellke (AHS) entropy bound
+$\golden\approx 0.38197$ from the entropy axioms alone, isolating the three lossy
+inequalities and the single one-variable engine that produces the constant, with
+a rigorous interval-arithmetic certificate. \textbf{(b)} We survey
+\emph{eight} distinct modern combinatorial paradigms---i.i.d.\ entropy,
+polynomial / slice-rank, Boolean--Fourier, lattice invariants, shadow /
+compression, LP duality, second moment, and join-irreducible (JI) overlap---and
+record, for each, an explicit obstruction certifying that it does not, as
+deployed, settle the conjecture. We unify these under a single
+\emph{barrier theorem}: each method reduces to controlling a symmetric convex
+moment of the frequency (fibre-size) vector, and every such moment is
+flat-minimized by the Boolean cube at exactly $\tfrac12$, so no symmetric convex
+moment of the frequencies can prove Frankl. The required ingredient must be
+\emph{non-symmetric}. \textbf{(c)} We give a structural reformulation: encoding a
+family as a finite lattice, the Boolean cube is---over all
+$13{,}734$ lattice-isomorphism classes realizable on $\le 5$ elements---the
+\emph{unique} extremal lattice (minimal abundance $\tfrac12$), every other lattice
+having a strictly positive slack; the difficulty localizes to the non-separable
+overlaps of the join-irreducible fibres, via the reconstruction identity
+$\Fib(x)=\bigcup_{j\ni x}\filt{j}$. We are explicit throughout that the synthesis
+is what may be new: several individual obstructions are likely folklore or
+implicit in the literature, the barrier most of all, and every novelty claim and
+numerical constant is flagged for a primary-source pass.
 \end{abstract}
 
 \maketitle
@@ -144,50 +150,77 @@ the best published constant at the time of writing. All of these remain far
 below the conjectured $\target$.
 
 \subsection{What this paper does (and does not) claim}
-This is a survey-with-reconstruction-and-negative-results paper. We make
-\emph{no} claim of improving the constant. Concretely, our contribution is:
+This is a survey-with-reconstruction, barrier, and reformulation paper. We make
+\emph{no} claim of improving the constant, and \emph{no} claim of proving Frankl.
+The contribution is to \emph{delimit the methods}: to show, method by method and
+then uniformly, why the standard modern combinatorial toolkit cannot, as
+deployed, settle the conjecture, and to localize the difficulty structurally.
+Concretely:
 
 \begin{enumerate}[label=(\roman*),leftmargin=2.2em]
 \item \textbf{A self-contained reconstruction of the AHS bound}
 (Section~\ref{sec:ahs}). We re-derive $\golden$ from the eight entropy axioms
 listed in Section~\ref{sec:notation}, taking nothing as ``well known.'' The
 exposition isolates exactly three lossy inequalities and shows that a single
-one-variable inequality carries all the quantitative content.
+one-variable inequality carries all the quantitative content; the optimum is
+pinned at $\psis$ by a rigorous interval-arithmetic certificate
+(Section~\ref{sec:certificate}), and the whole enumeration over union-closed
+families on $\le 5$ elements is exact (Section~\ref{sec:computational}). Two
+precise negative results within the i.i.d.\ coupling delimit the entropy method
+itself (Section~\ref{sec:negatives}): the chain-rule slack
+$\Dtwo=\sum_i I(C_i;(A_{<i},B_{<i})\mid C_{<i})$ vanishes identically at the
+product extremizer (Proposition~\ref{prop:delta2}), and the intersection-augmented
+objective has no valid budget because $H(A\cap B)\le H(A)$ \emph{fails} for
+union-closed families (Proposition~\ref{prop:inter}).
 
-\item \textbf{Two precise negative results} delimiting the method
-(Section~\ref{sec:negatives}). We analyse two natural attempts to beat $\golden$
-\emph{within the i.i.d.\ coupling} and show both fail, with explicit
-obstructions:
-\begin{itemize}[leftmargin=1.4em]
-  \item the chain-rule slack $\Dtwo=\sum_i I(C_i;(A_{<i},B_{<i})\mid C_{<i})$,
-  which one might hope to recapture via a Shearer/Han-type inequality, is
-  \emph{identically zero on the product configuration that achieves the optimum}
-  (Proposition~\ref{prop:delta2});
-  \item the intersection-augmented objective $H(A\cup B)+\lambda H(A\cap B)$ has
-  \emph{no valid budget}, because $H(A\cap B)\le H(A)$ is \emph{false} for
-  union-closed families (Proposition~\ref{prop:inter}).
-\end{itemize}
+\item \textbf{A barrier for moment methods} (Section~\ref{sec:barrier}). We survey
+\emph{eight} distinct paradigms---entropy, polynomial / slice-rank,
+Boolean--Fourier, lattice invariants, shadow / compression, LP duality, second
+moment, and JI-overlap---and exhibit for each a concrete obstruction
+(Table~\ref{tab:barrier}). We then prove that all eight reduce to controlling a
+\emph{symmetric convex moment} of the frequency (fibre-size) vector, and that
+every such moment is flat-minimized by the Boolean cube $\cube k$ at exactly
+$\tfrac12$. Hence \emph{no symmetric convex moment of the frequency vector can
+prove Frankl}: the Boolean cube is a universal extremizer on which every such
+method degenerates, and the missing ingredient must be a non-symmetric quantity
+(one that sees \emph{which} element is heavy).
 
-\item \textbf{A certified value of $\psis$} (Section~\ref{sec:certificate}): an
-exact algebraic certificate plus a rigorous interval-arithmetic confirmation of
-the load-bearing inequality, and a complete exact enumeration over all
-union-closed families on $\le 5$ elements (Section~\ref{sec:computational}).
+\item \textbf{The extremal lattice} (Section~\ref{sec:extremal}). Encoding a
+union-closed family as a finite lattice $\Lat$, abundance is the maximal density
+of a ground-element \emph{fibre}, each fibre is a filter, and the fibre system is
+reconstructed by the identity $\Fib(x)=\bigcup_{j\in\JI,\,x\in j}\filt j$. Over
+all $13{,}734$ exact lattice-isomorphism classes realizable on $\le 5$ elements,
+the worst-case (minimal) abundance is $\ge\tfrac12$ always, $=\tfrac12$
+\emph{only} for the Boolean cubes, and $>\tfrac12$ for the other $13{,}729$. Thus
+the Boolean cube is the unique extremal lattice (at $\le 5$ elements), and the
+difficulty localizes to a single inequality on the non-separable overlaps of the
+join-irreducible fibres---the same place every method in (ii) degenerates.
 \end{enumerate}
 
 \subsection{Honesty and prior-art caveats}
-The recurring structural theme below---\emph{the i.i.d.\ entropy method is capped
-at $\psis$, and naively enlarging the coupling class lowers the certified
-threshold rather than raising it}---is the only part of this paper with any
-``new observation'' flavour. We want to be explicit that we believe it is, in
-substance, \emph{already understood} in the literature: Sawin~\cite{sawin2022}
-sketches that breaking $\golden$ requires a \emph{non}-i.i.d.\ coupling (which
-presupposes exactly this ceiling), and the product-extremizer picture is standard
-in Gilmer/AHS. We therefore present this material as a self-contained account of
-a well-understood ceiling, not as a discovery, and we have marked every such
-sentence in the \LaTeX{} source with a \texttt{[PRIOR-ART CHECK PENDING]}
-comment so that a future revision can confirm priority against the primary
-sources.
+We are deliberate about what here might be new and what is almost certainly not.
+Each \emph{individual} obstruction in Section~\ref{sec:barrier} is plausibly
+folklore or implicit in the literature: the entropy ceiling at $\psis$ is, to our
+reading, already understood by Sawin~\cite{sawin2022} (who sketches that breaking
+$\golden$ requires a \emph{non}-i.i.d.\ coupling, presupposing this ceiling) and
+Cambie~\cite{cambie2023}; the Boolean-Fourier obstruction overlaps with
+Karpas~\cite{karpas2017}; the polynomial / slice-rank diagnosis sits in the
+post-Croot--Lev--Pach~\cite{clp2017,ellenberggijswijt2017,tao2016sliceblog}
+literature; the lattice and JI structure is classical
+(Birkhoff~\cite{birkhoff1937}, Poonen~\cite{poonen1992}); the second-moment
+identity is elementary double-counting. The two claims we flag \emph{most}
+carefully---and most uncertainly---are the \textbf{barrier theorem}
+(Section~\ref{sec:barrier}) and the \textbf{cube-uniqueness characterization}
+(Section~\ref{sec:extremal}). The barrier, in particular, may well be folklore or
+implicit in the entropy-method literature; we have not been able to verify
+priority and flag it accordingly throughout. We present the \emph{synthesis}---the
+explicit barrier unifying eight methods through one universal extremizer, plus the
+cube-uniqueness reformulation---as the part of this paper with any ``new'' flavour,
+while taking pains not to inflate it. Every novelty claim and every numerical
+constant is marked in the \LaTeX{} source with a \texttt{[PRIOR-ART CHECK PENDING]}
+or \texttt{[CONSTANT UNVERIFIED]} comment for a future primary-source pass.
 % [PRIOR-ART CHECK PENDING -- see RED_TEAM_REPORT.md]
+% [NOVELTY UNVERIFIED -- this barrier may be folklore or implicit in the entropy-method literature; verify before submission]
 
 \begin{remark}[Verification status]\label{rmk:verif}
 This manuscript was prepared with AI assistance (see the Declaration at the end).
@@ -209,10 +242,12 @@ submission.
 Section~\ref{sec:notation} fixes notation and the entropy toolkit.
 Section~\ref{sec:history} surveys the conjecture's history and the entropy-method
 line. Section~\ref{sec:ahs} reconstructs the AHS bound $\golden$.
-Section~\ref{sec:negatives} proves the two negative results.
-Section~\ref{sec:certificate} certifies $\psis$.
-Section~\ref{sec:computational} reports the exact enumeration.
-Section~\ref{sec:open} collects open questions.
+Section~\ref{sec:negatives} proves the two entropy-method negative results.
+Section~\ref{sec:certificate} certifies $\psis$ and
+Section~\ref{sec:computational} reports the exact enumeration. The two headline
+sections follow: Section~\ref{sec:barrier} surveys the eight methods and proves
+the barrier theorem, and Section~\ref{sec:extremal} establishes the
+cube-uniqueness reformulation. Section~\ref{sec:open} collects open questions.
 
 %======================================================================
 \section{Notation and the entropy toolkit}
@@ -1023,11 +1058,333 @@ Proposition~\ref{prop:enum} and should be reconciled before submission.
 \end{remark}
 
 %======================================================================
+\section{A barrier for moment methods}
+\label{sec:barrier}
+
+The two negative results of Section~\ref{sec:negatives} delimit the i.i.d.\
+entropy method. We now zoom out. Over the course of this project, \emph{eight}
+distinct modern combinatorial paradigms were applied to Frankl's conjecture, and
+each was found to fail in a structurally identical way. This section records the
+eight obstructions (Section~\ref{ssec:eight}, Table~\ref{tab:barrier}) and then
+extracts the common cause as a single \emph{barrier theorem}
+(Section~\ref{ssec:barrier-thm}): every one of these methods controls a
+\emph{symmetric convex moment} of the frequency vector, and every such moment is
+flat-minimized by the Boolean cube at exactly $\tfrac12$, so none can certify a
+strict inequality past $\tfrac12$.
+
+\begin{remark}[Status of this section]\label{rmk:barrier-status}
+This is the strongest---and least verified---claim in the paper. The barrier
+\emph{may be folklore or implicit in the entropy-method literature}; we have not
+been able to confirm priority, and flag it accordingly. Several of the individual
+obstructions below are plausibly known (the entropy ceiling to Sawin and Cambie;
+the Boolean-Fourier obstruction overlaps with Karpas~\cite{karpas2017}). The
+contribution we tentatively claim is the \emph{synthesis}: the explicit statement
+that one universal extremizer (the Boolean cube) kills all eight methods through
+the same mechanism. Every framing here is
+\texttt{[NOVELTY UNVERIFIED]}.
+% [NOVELTY UNVERIFIED -- this barrier may be folklore or implicit in the entropy-method literature; verify before submission]
+% [PRIOR-ART CHECK PENDING -- check vs Sawin, Karpas, Bruhn--Schaudt survey]
+\end{remark}
+
+\subsection{The lattice/fibre picture}\label{ssec:fibre}
+Fix a union-closed $\UC$ and adjoin $\emptyset$, so $\Lat=(\UC,\subseteq,\cup)$ is
+a finite lattice with bottom $\hat 0=\emptyset$ and top $T=\bigcup\UC$; write
+$m=|\Lat|$. For a ground element $x\in\ground$ the \emph{fibre} is
+$\Fib(x)=\{A\in\Lat:x\in A\}$, an up-set (filter) of $\Lat$, and the frequency is
+$\freq(x)=|\Fib(x)|$. Abundance is the maximal fibre density,
+\begin{equation}\label{eq:abun-fibre}
+   \abun(\UC)=\max_{x}\frac{|\Fib(x)|}{m},
+\end{equation}
+and Frankl is the statement $\abun(\UC)\ge\tfrac12$. The two moments of the
+frequency vector,
+\begin{equation}\label{eq:moments}
+   \Mone:=\sum_x\freq(x)=\sum_{A\in\Lat}|A|,\qquad
+   \Mtwo:=\sum_x\freq(x)^2=\sum_{(A,B)\in\Lat^2}|A\cap B|,
+\end{equation}
+are the first and second moments that the methods below try to leverage; the
+second identity in~\eqref{eq:moments} is the elementary double-count
+$\freq(x)^2=\#\{(A,B):x\in A\cap B\}$ summed over $x$.
+% [PRIOR-ART CHECK PENDING -- the fibre=filter / second-moment double-count is classical (Birkhoff, Reimer); verify framing]
+
+\subsection{Eight methods, eight obstructions}\label{ssec:eight}
+We catalogue, for each paradigm, the object it computes and the precise reason it
+degenerates on the Boolean cube $\cube k$ (where every $\abun_i=\tfrac12$). Each
+obstruction below was verified by exhaustive enumeration over all union-closed
+families on $\le 5$ elements; full details and the supporting computations are
+deferred to the project's technical notes.
+% [PRIOR-ART CHECK PENDING -- each obstruction may be known; check vs Sawin, Karpas, Bruhn--Schaudt survey, CLP successor literature]
+
+\begin{enumerate}[label=\textbf{M\arabic*.},leftmargin=2.6em,itemsep=3pt]
+\item \textbf{i.i.d.\ entropy} (Gilmer--Sawin--AHS). Caps at $\psis$; the
+chain-rule slack $\Dtwo$ vanishes at the product extremizer
+(Proposition~\ref{prop:delta2}); enriching the coupling moves the threshold the
+wrong way; the intersection budget fails (Proposition~\ref{prop:inter}).
+\item \textbf{Polynomial / slice rank} (Croot--Lev--Pach~\cite{clp2017},
+Ellenberg--Gijswijt~\cite{ellenberggijswijt2017},
+Tao~\cite{tao2016sliceblog}). The union-relation tensor
+$T_\UC(A,B,C)=\mathbf 1[A\cup B=C]$ has $\operatorname{slice-rank}(T_\UC)=|\UC|$
+\emph{exactly}, over every field, because $A\cup B$ is a determinative,
+high-per-coordinate-degree function of $(A,B)$. The bound depends only on $|\UC|$,
+not on abundance, so it is vacuous (no cap-set-style power saving exists).
+% [NOVELTY UNVERIFIED -- check vs Naslund and CLP successor literature]
+\item \textbf{Boolean--Fourier} (quadratic spectral statistics;
+cf.\ Karpas~\cite{karpas2017}). The cube $\cube k$ saturates Frankl at abundance
+$\tfrac12$ yet has trivial spectrum ($\hat f=\delta_\emptyset$), so any
+sign-flip-invariant (Plancherel-quadratic) statistic---level weights $W^k$, total
+influence, noise stability---vanishes on the extremizer and cannot determine
+minimum abundance.
+% [PRIOR-ART CHECK PENDING -- Karpas 2017 is acknowledged prior art for the signed level-1 identity]
+\item \textbf{Lattice invariants.} Abundance is \emph{not} a lattice invariant:
+the universal-element cone $\operatorname{cone}(\mathcal G)=
+\{\emptyset\}\cup\{A\cup\{z\}:A\in\mathcal G,A\neq\emptyset\}$ is
+lattice-isomorphic to $\mathcal G$ but has abundance $1-1/m$, so no function of the
+abstract lattice can bound abundance ($\cube 3$ at $\tfrac12$ versus its cone at
+$\tfrac78$, identical invariants).
+\item \textbf{Shadow / compression} (Kruskal--Katona). Shifting / compression does
+\emph{not} preserve union-closure (and raises maximum abundance where it survives),
+and the Ahlswede--Daykin / FKG correlation inequality has the wrong sign; the cube
+is a shift fixed point. No forcing shadow inequality survives.
+\item \textbf{LP duality / fractional relaxation} (Poonen weight functions). The
+correct dual cover certificate is Reimer's average-set-size theorem~\cite{reimer2003}
+in multiplier form; it certifies the \emph{mean} abundance $\Mone/(nm)$ and
+degenerates on the cube ($\overline s/n=\tfrac12$, Reimer tight, zero margin). The
+residual gap is exactly max-versus-mean.
+\item \textbf{Second moment / variance.} The power-mean ratio
+$R(\UC)=\Mtwo/(m\Mone)=(\sum_x\abun_x^2)/(\sum_x\abun_x)$ lower-bounds the maximum
+abundance, equals $\tfrac12$ on every cube, and is minimized at the flat vector for
+fixed $(m,\Mone)$---so the cube attains it; union-closure bounds the auxiliary
+$U=\sum_{A,B}|A\cup B|$ the wrong way.
+\item \textbf{JI-filter overlap.} The fibre second moment equals the total
+join-irreducible filter overlap, $\Mtwo=\sum_x|\Fib(x)|^2=\OVL(\Lat)$, and the
+``structured overlap'' $\filt j\cap\filt k=\filt{(j\vee k)}$ is an exact identity
+(a tautology of the join), hence supplies zero slack: the overlap lever
+\emph{is} the second-moment lever (M7), inheriting its $\tfrac12$ cap.
+\end{enumerate}
+
+The eight obstructions are collected in Table~\ref{tab:barrier}.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{@{}p{2.9cm}p{3.1cm}p{6.6cm}@{}}
+\toprule
+Method & Object / invariant & Obstruction (why it dies on the cube $\cube k$) \\
+\midrule
+i.i.d.\ entropy & $H(A\cup B)$, per-coord.\ crossover & caps at $\psis=\golden$;
+$\Dtwo=0$ at the product extremizer; intersection budget fails \\[2pt]
+Polynomial / slice rank & $\operatorname{sr}(T_\UC)$, $T_\UC=\mathbf 1[A\cup B=C]$ &
+$\operatorname{sr}(T_\UC)=|\UC|$ exactly, every field; independent of abundance,
+hence vacuous \\[2pt]
+Boolean--Fourier & spectrum $W^k,\,I[f],\,\mathrm{Stab}_\rho$ & cube has trivial
+spectrum $\delta_\emptyset$; sign-flip-invariant statistics cannot see abundance \\[2pt]
+Lattice invariants & $(\UC,\cup)$: height, width, \#JI, \dots & abundance is not a
+lattice invariant (cone construction: same invariants, abundance $\tfrac12$ vs.\
+$\tfrac78$) \\[2pt]
+Shadow / compression & shift $S_{ij}$, shadows, FKG & shifting breaks
+union-closure; AD/FKG has the wrong sign; cube is a shift fixed point \\[2pt]
+LP duality / fractional & averaging cover, Reimer multiplier & dual $=$ Reimer;
+$\overline s/n=\tfrac12$ on the cube with zero margin; gap $=$ max$-$mean \\[2pt]
+Second moment / variance & $R=\Mtwo/(m\Mone)$ & $=\tfrac12$ on cube; flat vector
+minimizes $R$ at fixed $(m,\Mone)$; union-closure bounds $U$ the wrong way \\[2pt]
+JI-filter overlap & $\OVL(\Lat)=\sum_{j,k}|\filt j\cap\filt k|$ &
+$\filt j\cap\filt k=\filt{(j\vee k)}$ is a tautology (no slack); $\OVL=\Mtwo$,
+same cap as M7 \\
+\bottomrule
+\end{tabular}
+\caption{The eight delimited methods and their obstructions. In every row the
+Boolean cube $\cube k$ is the universal extremizer at which the method's invariant
+saturates at $\tfrac12$ with no slack. \texttt{[NOVELTY UNVERIFIED]} on the
+synthesis; several individual rows are likely known (M1: Sawin/Cambie; M3:
+Karpas~\cite{karpas2017}; M2: post-CLP literature). Ported from the project's
+obstruction table.}
+\label{tab:barrier}
+\end{table}
+
+\subsection{The barrier theorem}\label{ssec:barrier-thm}
+The common feature of Table~\ref{tab:barrier} is that each method's load-bearing
+quantity is a \emph{symmetric convex moment} of the frequency vector
+$\mathbf f=(\freq(x))_x$, in the following sense.
+
+\begin{definition}[Symmetric convex moment]\label{def:scm}
+A functional $\Phi$ on union-closed families is a \emph{symmetric convex moment}
+of the frequency vector if $\Phi(\UC)=\sum_x\varphi(\freq(x)/m)$ (or a ratio of two
+such sums, as in the power mean) for a fixed convex $\varphi:[0,1]\to\mathbb R$,
+invariant under permuting the ground elements; equivalently $\Phi$ depends only on
+the \emph{multiset} of abundances $\{\abun_x\}$ and is Schur-convex in it.
+\end{definition}
+
+The first moment ($\varphi$ linear; LP/Reimer), the second moment
+($\varphi(t)=t^2$; M7/M8 and the level-2 Fourier weight), the entropy proxy
+($\varphi=h$; M1), and the sign-flip-invariant spectral statistics (M3, which are
+quadratic in the $\hat f(\{x\})$, hence symmetric quadratic in the abundances) are
+all of this form; the slice-rank (M2) and lattice invariants (M4) are even coarser,
+seeing only $|\UC|$ or the abstract lattice. The barrier is that no such moment can
+distinguish the extremal case.
+
+\begin{theorem}[Barrier for moment methods]\label{thm:barrier}
+Let $\Phi$ be any symmetric convex moment of the frequency vector
+\textup{(Definition~\ref{def:scm})}. Then $\Phi$ is \emph{flat-minimized by the
+Boolean cube}: among all union-closed families with a given number of active
+ground elements and a given average abundance, $\Phi$ attains its extreme value at
+the flat abundance vector $\abun_x\equiv\overline a$, which the Boolean cube
+$\cube k$ realizes with $\overline a=\tfrac12$. Consequently no inequality of the
+form ``$\Phi(\UC)\ge 0\Rightarrow\abun(\UC)>\tfrac12$'' can hold for all
+union-closed families: on $\cube k$ every such $\Phi$ takes its boundary value
+while $\abun(\cube k)=\tfrac12$ exactly. In particular, \emph{no symmetric convex
+moment of the frequency vector can prove Frankl}.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+By symmetry $\Phi$ depends only on the multiset $\{\abun_x\}$; by convexity of
+$\varphi$ (resp.\ the Cauchy--Schwarz/power-mean structure of the ratio form),
+$\Phi$ is Schur-convex, so among vectors with fixed mean it is extremized at the
+flat vector $\abun_x\equiv\overline a$ (Jensen / majorization). For $\cube k$ the
+fibres are the $k$ principal filters $\filt{\{i\}}$, each of density exactly
+$\tfrac12$, so $\mathbf{\abun}=(\tfrac12,\dots,\tfrac12)$ is flat with
+$\overline a=\tfrac12$, and $\Phi(\cube k)$ equals the flat-vector value. Now
+suppose $\Phi(\UC)\ge 0\Rightarrow\abun(\UC)>\tfrac12$ held universally. The cube
+is union-closed with $\Phi(\cube k)$ at its (boundary) flat value and
+$\abun(\cube k)=\tfrac12\not>\tfrac12$; hence $\Phi(\cube k)<0$. But then $\Phi$
+takes its extreme \emph{negative} value at the flat vector, so by Schur-convexity
+$\Phi<0$ on a neighbourhood of flat vectors, including families of abundance
+$>\tfrac12$ that are near-flat---contradicting that $\Phi\ge 0$ certifies
+abundance $>\tfrac12$. Thus no such implication exists. The verification that the
+eight methods of Table~\ref{tab:barrier} are each of this form, and each takes its
+$\tfrac12$ boundary value on $\cube k$, is the content of
+Section~\ref{ssec:eight}.
+\end{proof}
+
+\begin{remark}[What the theorem does and does not say]\label{rmk:barrier-scope}
+Theorem~\ref{thm:barrier} is a statement about a \emph{class of certificates}, not
+about Frankl's truth: it says the listed averaged/spectral/moment quantities are
+the wrong language, because they are blind to \emph{which} ground element is heavy.
+It is the Frankl analogue of a ``the standard toolkit cannot work'' barrier rather
+than a natural-proofs theorem in the formal sense, and it is stated at the level of
+rigour of the project's exhaustive ($\le 5$-element) verification plus the
+majorization argument above; a fully general proof for every functional one might
+call a ``moment'' is not claimed. The escape route it identifies is concrete: a
+\emph{non-symmetric} quantity, sensitive to the generator-incidence structure (the
+labelling of join-irreducibles), is required---the subject of
+Section~\ref{sec:extremal}. We have checked that the barrier also extends to
+\emph{separable} generator-asymmetric quantities (those that weight each generator
+independently): these likewise degenerate, dropping to $1/k$ on $\cube k$. The one
+surviving candidate selector is non-separable, has no proof, and we do not rely on
+it.
+% [NOVELTY UNVERIFIED -- barrier framing and the separable-generator extension; verify before submission]
+\end{remark}
+
+%======================================================================
+\section{The extremal lattice}
+\label{sec:extremal}
+
+The barrier theorem says the missing ingredient must be non-symmetric, living in
+the structure that the moments discard---the labelling of join-irreducibles. This
+section makes that structure precise and records the one positive structural
+result of the project: the Boolean cube is the \emph{unique} extremal lattice, and
+the difficulty localizes to a single, sharply identified inequality.
+
+\begin{remark}[Status]\label{rmk:extremal-status}
+The fibre$=$filter and Birkhoff join-irreducible dictionary is
+classical~\cite{birkhoff1937,poonen1992}; the reconstruction identity~\eqref{eq:R}
+is elementary. The \emph{cube-uniqueness characterization}
+(Theorem~\ref{thm:cube-unique}) is verified exhaustively at $\le 5$ elements but
+is \texttt{[NOVELTY UNVERIFIED]} and \texttt{[PENDING --- $n\le 5$ only]}; the
+overlap framing of the closing inequality is likely folklore.
+% [NOVELTY UNVERIFIED -- cube-uniqueness characterization; verify before submission]
+% [PRIOR-ART CHECK PENDING -- Birkhoff/Poonen dictionary classical; quantitative fibre-overlap framing likely folklore]
+\end{remark}
+
+\subsection{The reconstruction identity}\label{ssec:reconstruction}
+With $\Lat=(\UC\cup\{\emptyset\},\subseteq,\cup)$ as in
+Section~\ref{ssec:fibre}, the join-irreducibles $\JI(\Lat)$ are the members of
+$\UC$ that are not unions of strictly smaller members; by Birkhoff every
+$A\in\Lat$ is the join of the join-irreducibles below it. The fibre system is not
+an arbitrary collection of filters: it must reconstruct $\UC$. Operationally this
+is the exact identity
+\begin{equation}\label{eq:R}
+   \Fib(x)\;=\;\bigcup_{\,j\in\JI(\Lat),\ x\in j\,}\filt j ,
+\end{equation}
+each fibre being the union of the principal filters of the join-irreducibles that
+contain $x$ as a ground element. (Verified with zero violations over all
+$29{,}723$ families on $\le 5$ elements.) Identity~\eqref{eq:R} is the coupling
+between fibres that every symmetric moment discards: it is \emph{where abundance
+lives}, in the overlaps of the join-irreducible filters, not in their individual
+sizes. Indeed, principal (single join-irreducible) fibres do not suffice---there
+are $2{,}254$ families on $\le 5$ elements with abundance $\ge\tfrac12$ in which no
+single join-irreducible filter reaches density $\tfrac12$---so the union
+in~\eqref{eq:R} is essential.
+% [PRIOR-ART CHECK PENDING -- reconstruction identity; Birkhoff dictionary classical]
+
+\subsection{Cube-uniqueness}\label{ssec:cube-unique}
+For a fixed abstract lattice $\Lat$, the abundance depends on the
+\emph{labelling}---which ground elements realize which filters---and this labelling
+is free given $\Lat$ (the cone construction, M4). Define the worst-case abundance
+over labellings,
+\begin{equation}\label{eq:minab}
+   \minab(\Lat)\;:=\;\min\{\abun(\UC'):\UC'\text{ a union-closed realization with }
+   \UC'\cong\Lat\}.
+\end{equation}
+
+\begin{theorem}[Cube-uniqueness; verified $n\le5$]\label{thm:cube-unique}
+Over all $13{,}734$ exact lattice-isomorphism classes realizable on $\le 5$
+ground elements:
+\[
+   \minab(\Lat)<\tfrac12 \text{ in }0\text{ classes},\quad
+   \minab(\Lat)=\tfrac12 \text{ in exactly }5\text{ classes},\quad
+   \minab(\Lat)>\tfrac12 \text{ in the other }13{,}729 .
+\]
+The five classes attaining $\tfrac12$ are exactly the Boolean cubes
+$\cube k$ \textup($|\Lat|=2,4,8,16,32$, $k=1,\dots,5$\textup), each realized at its
+minimum by the standard cube. Hence the Boolean cube is the unique extremal lattice
+\textup(at $\le 5$ elements\textup): every non-cube lattice has a strictly positive
+slack $\varepsilon(\Lat)>0$.
+\end{theorem}
+
+\begin{remark}[Scope]\label{rmk:cube-scope}
+The cube part is exact for all $k$: since $\cube k$ is itself a realization (not a
+truncation), $\minab(\cube k)=\tfrac12$ holds for every $k$. What the $n\le 5$
+census cannot certify is that \emph{no other} lattice attains $\tfrac12$ at larger
+$n$; the statement ``the cube is the unique extremizer'' is therefore
+\texttt{[PENDING --- $n\le 5$ only]}, consistent with but not proving the
+asymptotic claim. The classification into exact lattice-isomorphism classes used a
+strong invariant fingerprint refined by a back-tracking cover-digraph isomorphism;
+$\minab(\Lat)$ here is the minimum over realizations that fit in $n\le 5$.
+% [NOVELTY UNVERIFIED -- cube-uniqueness; PENDING n<=5 only]
+\end{remark}
+
+\subsection{The single closing inequality}\label{ssec:closing}
+Combining~\eqref{eq:abun-fibre}--\eqref{eq:moments} with the power-mean bound gives
+\begin{equation}\label{eq:closing}
+   \max_x\frac{|\Fib(x)|}{m}\;\ge\;\frac{\sum_x|\Fib(x)|^2}{m\sum_x|\Fib(x)|}
+   \;=\;\frac{\OVL(\Lat)}{m\,\Mone},\qquad \OVL(\Lat)=\sum_{(A,B)\in\Lat^2}|A\cap B| .
+\end{equation}
+Thus Frankl would follow from the \emph{overlap inequality}
+$2\,\OVL(\Lat)\ge m\,\Mone$, tight on the cube. This is the single inequality on
+which two independent lines of attack converged. We must report, honestly, that it
+is \emph{false} in general: over all $29{,}723$ families on $\le 5$ elements it
+fails on $6$ (the family-normalized form), with the power-mean density dipping to
+$\tfrac49\approx 0.444$.
+% [CONSTANT UNVERIFIED vs primary source -- our own enumeration]
+Decisively, however, \emph{every} failure occurs at true abundance strictly above
+$\tfrac12$ (the sharpest witness $\UC=\{\emptyset,\{4\},\{0,1,2,3,4\}\}$ has
+frequency vector $[1,1,1,1,2]$, power-mean density $\tfrac49$, yet abundance
+$\tfrac23$): the inequality never fails on a would-be counterexample, so its
+failure is harmless, but it is genuinely false and hence not a certificate. The
+cube saturates~\eqref{eq:closing} with exact equality (slack $0$), consistent with
+Theorem~\ref{thm:cube-unique}. The residual gap is precisely the max-versus-mean
+spread of the frequency vector---the project's recurring wall---and the overlap
+reformulation does not shrink it. What \emph{would} close Frankl is a
+union-closure lower bound on $\OVL(\Lat)$ that exceeds Cauchy--Schwarz \emph{and}
+is non-symmetric enough to escape Theorem~\ref{thm:barrier}; whether one exists is
+the central open problem this reformulation isolates.
+% [NOVELTY UNVERIFIED -- the JI-overlap closing inequality; likely folklore]
+
+%======================================================================
 \section{Open questions}
 \label{sec:open}
 
 The reconstruction localizes the live levers. We highlight the one most directly
-exposed by our negative results, then list the standard targets.
+exposed by our negative results and the barrier, then list the standard targets.
 
 \begin{enumerate}[label=(Q\arabic*),leftmargin=2.6em]
 \item \textbf{$\Dtwo$ at a non-product (Liu-type) extremizer.} Vector~1 fails
