@@ -1,0 +1,412 @@
+{"n": 1, "sizeF": 2, "abund": 0.5, "betti": [0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 1, "apex_abund": 0.5, "mobius_orderL": -1, "freqs": [1]}
+{"n": 1, "sizeF": 2, "abund": 0.5, "betti": [0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 1, "apex_abund": 0.5, "mobius_orderL": -1, "freqs": [1]}
+{"n": 2, "sizeF": 2, "abund": 0.5, "betti": [0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 1, "apex_abund": 0.5, "mobius_orderL": -1, "freqs": [1, 0]}
+{"n": 2, "sizeF": 2, "abund": 0.5, "betti": [0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 2, "apex_abund": 0.5, "mobius_orderL": -1, "freqs": [1, 1]}
+{"n": 2, "sizeF": 2, "abund": 0.5, "betti": [0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 2, "apex_abund": 0.5, "mobius_orderL": -1, "freqs": [1, 1]}
+{"n": 2, "sizeF": 3, "abund": 0.6666666666666666, "betti": [0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 2, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [2, 1]}
+{"n": 2, "sizeF": 3, "abund": 0.6666666666666666, "betti": [0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 2, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [2, 1]}
+{"n": 2, "sizeF": 4, "abund": 0.5, "betti": [0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 2, "apex_abund": 0.5, "mobius_orderL": 1, "freqs": [2, 2]}
+{"n": 2, "sizeF": 4, "abund": 0.5, "betti": [0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 2, "apex_abund": 0.5, "mobius_orderL": 1, "freqs": [2, 2]}
+{"n": 2, "sizeF": 2, "abund": 0.5, "betti": [0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 1, "apex_abund": 0.5, "mobius_orderL": -1, "freqs": [1, 0]}
+{"n": 3, "sizeF": 2, "abund": 0.5, "betti": [0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 1, "apex_abund": 0.5, "mobius_orderL": -1, "freqs": [1, 0, 0]}
+{"n": 2, "sizeF": 2, "abund": 0.5, "betti": [0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 2, "apex_abund": 0.5, "mobius_orderL": -1, "freqs": [1, 1]}
+{"n": 3, "sizeF": 2, "abund": 0.5, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.5, "mobius_orderL": -1, "freqs": [1, 1, 1]}
+{"n": 3, "sizeF": 2, "abund": 0.5, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.5, "mobius_orderL": -1, "freqs": [1, 1, 1]}
+{"n": 3, "sizeF": 3, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [2, 1, 1]}
+{"n": 3, "sizeF": 3, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [2, 2, 1]}
+{"n": 3, "sizeF": 3, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [2, 2, 1]}
+{"n": 3, "sizeF": 4, "abund": 0.75, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [3, 2, 1]}
+{"n": 3, "sizeF": 4, "abund": 0.5, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.5, "mobius_orderL": 1, "freqs": [2, 2, 2]}
+{"n": 3, "sizeF": 4, "abund": 0.75, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.75, "mobius_orderL": 1, "freqs": [3, 2, 2]}
+{"n": 3, "sizeF": 4, "abund": 0.75, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.75, "mobius_orderL": 1, "freqs": [3, 2, 2]}
+{"n": 3, "sizeF": 5, "abund": 0.6, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.6, "mobius_orderL": 1, "freqs": [3, 3, 2]}
+{"n": 3, "sizeF": 5, "abund": 0.6, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.6, "mobius_orderL": 2, "freqs": [3, 3, 3]}
+{"n": 3, "sizeF": 5, "abund": 0.8, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.8, "mobius_orderL": 0, "freqs": [4, 2, 2]}
+{"n": 3, "sizeF": 5, "abund": 0.8, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.8, "mobius_orderL": 0, "freqs": [4, 2, 2]}
+{"n": 3, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [4, 3, 2]}
+{"n": 3, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.6666666666666666, "mobius_orderL": 1, "freqs": [4, 3, 3]}
+{"n": 3, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.6666666666666666, "mobius_orderL": 1, "freqs": [4, 3, 3]}
+{"n": 3, "sizeF": 7, "abund": 0.5714285714285714, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.5714285714285714, "mobius_orderL": 0, "freqs": [4, 4, 3]}
+{"n": 3, "sizeF": 7, "abund": 0.5714285714285714, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.5714285714285714, "mobius_orderL": 0, "freqs": [4, 4, 3]}
+{"n": 3, "sizeF": 8, "abund": 0.5, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.5, "mobius_orderL": -1, "freqs": [4, 4, 4]}
+{"n": 3, "sizeF": 8, "abund": 0.5, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.5, "mobius_orderL": -1, "freqs": [4, 4, 4]}
+{"n": 3, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [4, 3, 2]}
+{"n": 3, "sizeF": 5, "abund": 0.6, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.6, "mobius_orderL": 2, "freqs": [3, 3, 3]}
+{"n": 3, "sizeF": 5, "abund": 0.6, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.6, "mobius_orderL": 1, "freqs": [3, 3, 2]}
+{"n": 3, "sizeF": 4, "abund": 0.5, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.5, "mobius_orderL": 1, "freqs": [2, 2, 2]}
+{"n": 3, "sizeF": 4, "abund": 0.75, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [3, 2, 1]}
+{"n": 3, "sizeF": 5, "abund": 0.6, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.6, "mobius_orderL": 0, "freqs": [3, 3, 1]}
+{"n": 3, "sizeF": 5, "abund": 0.6, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.6, "mobius_orderL": 0, "freqs": [3, 3, 1]}
+{"n": 3, "sizeF": 3, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [2, 1, 1]}
+{"n": 2, "sizeF": 2, "abund": 0.5, "betti": [0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 2, "apex_abund": 0.5, "mobius_orderL": -1, "freqs": [1, 1]}
+{"n": 3, "sizeF": 3, "abund": 0.6666666666666666, "betti": [0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 2, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [2, 1, 0]}
+{"n": 3, "sizeF": 3, "abund": 0.6666666666666666, "betti": [0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 2, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [2, 1, 0]}
+{"n": 2, "sizeF": 4, "abund": 0.5, "betti": [0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 2, "apex_abund": 0.5, "mobius_orderL": 1, "freqs": [2, 2]}
+{"n": 2, "sizeF": 4, "abund": 0.5, "betti": [0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 2, "apex_abund": 0.5, "mobius_orderL": 1, "freqs": [2, 2]}
+{"n": 3, "sizeF": 2, "abund": 0.5, "betti": [0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 1, "apex_abund": 0.5, "mobius_orderL": -1, "freqs": [1, 0, 0]}
+{"n": 4, "sizeF": 2, "abund": 0.5, "betti": [0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 1, "apex_abund": 0.5, "mobius_orderL": -1, "freqs": [1, 0, 0, 0]}
+{"n": 4, "sizeF": 2, "abund": 0.5, "betti": [0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 2, "apex_abund": 0.5, "mobius_orderL": -1, "freqs": [1, 1, 0, 0]}
+{"n": 3, "sizeF": 2, "abund": 0.5, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.5, "mobius_orderL": -1, "freqs": [1, 1, 1]}
+{"n": 4, "sizeF": 2, "abund": 0.5, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5, "mobius_orderL": -1, "freqs": [1, 1, 1, 1]}
+{"n": 4, "sizeF": 2, "abund": 0.5, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5, "mobius_orderL": -1, "freqs": [1, 1, 1, 1]}
+{"n": 4, "sizeF": 3, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [2, 1, 1, 1]}
+{"n": 4, "sizeF": 3, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [2, 2, 1, 1]}
+{"n": 4, "sizeF": 3, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [2, 2, 2, 1]}
+{"n": 4, "sizeF": 3, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [2, 2, 2, 1]}
+{"n": 4, "sizeF": 4, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [3, 2, 2, 1]}
+{"n": 4, "sizeF": 4, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [3, 3, 2, 1]}
+{"n": 4, "sizeF": 4, "abund": 0.5, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5, "mobius_orderL": 1, "freqs": [2, 2, 2, 2]}
+{"n": 4, "sizeF": 4, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 1, "freqs": [3, 2, 2, 2]}
+{"n": 4, "sizeF": 4, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 1, "freqs": [3, 3, 2, 2]}
+{"n": 4, "sizeF": 4, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 1, "freqs": [3, 3, 2, 2]}
+{"n": 4, "sizeF": 5, "abund": 0.6, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6, "mobius_orderL": 1, "freqs": [3, 3, 3, 2]}
+{"n": 4, "sizeF": 5, "abund": 0.6, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6, "mobius_orderL": 2, "freqs": [3, 3, 3, 3]}
+{"n": 4, "sizeF": 5, "abund": 0.8, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8, "mobius_orderL": 0, "freqs": [4, 3, 2, 2]}
+{"n": 4, "sizeF": 5, "abund": 0.8, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8, "mobius_orderL": 1, "freqs": [4, 3, 3, 2]}
+{"n": 4, "sizeF": 5, "abund": 0.8, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8, "mobius_orderL": 2, "freqs": [4, 3, 3, 3]}
+{"n": 4, "sizeF": 5, "abund": 0.8, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8, "mobius_orderL": 0, "freqs": [4, 4, 2, 2]}
+{"n": 4, "sizeF": 5, "abund": 0.8, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8, "mobius_orderL": 0, "freqs": [4, 4, 2, 2]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [4, 4, 3, 2]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 1, "freqs": [4, 4, 3, 3]}
+{"n": 4, "sizeF": 6, "abund": 0.8333333333333334, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8333333333333334, "mobius_orderL": 0, "freqs": [5, 4, 2, 2]}
+{"n": 4, "sizeF": 6, "abund": 0.8333333333333334, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8333333333333334, "mobius_orderL": 0, "freqs": [5, 4, 3, 2]}
+{"n": 4, "sizeF": 6, "abund": 0.8333333333333334, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8333333333333334, "mobius_orderL": 1, "freqs": [5, 4, 3, 3]}
+{"n": 4, "sizeF": 6, "abund": 0.8333333333333334, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8333333333333334, "mobius_orderL": 1, "freqs": [5, 4, 3, 3]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 0, "freqs": [5, 4, 4, 3]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 1, "freqs": [5, 4, 4, 4]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 1, "freqs": [5, 5, 3, 3]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 1, "freqs": [5, 5, 4, 3]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 2, "freqs": [5, 5, 4, 4]}
+{"n": 4, "sizeF": 7, "abund": 0.8571428571428571, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8571428571428571, "mobius_orderL": 0, "freqs": [6, 4, 3, 3]}
+{"n": 4, "sizeF": 7, "abund": 0.8571428571428571, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8571428571428571, "mobius_orderL": 0, "freqs": [6, 4, 4, 3]}
+{"n": 4, "sizeF": 7, "abund": 0.8571428571428571, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8571428571428571, "mobius_orderL": 0, "freqs": [6, 4, 4, 3]}
+{"n": 4, "sizeF": 8, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [6, 5, 4, 3]}
+{"n": 4, "sizeF": 8, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [6, 5, 5, 3]}
+{"n": 4, "sizeF": 8, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": -1, "freqs": [6, 4, 4, 4]}
+{"n": 4, "sizeF": 8, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [6, 5, 4, 4]}
+{"n": 4, "sizeF": 8, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 1, "freqs": [6, 5, 5, 4]}
+{"n": 4, "sizeF": 8, "abund": 0.875, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.875, "mobius_orderL": 0, "freqs": [7, 4, 4, 3]}
+{"n": 4, "sizeF": 8, "abund": 0.875, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.875, "mobius_orderL": -1, "freqs": [7, 4, 4, 4]}
+{"n": 4, "sizeF": 8, "abund": 0.875, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.875, "mobius_orderL": -1, "freqs": [7, 4, 4, 4]}
+{"n": 4, "sizeF": 9, "abund": 0.7777777777777778, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7777777777777778, "mobius_orderL": -1, "freqs": [7, 5, 4, 4]}
+{"n": 4, "sizeF": 9, "abund": 0.7777777777777778, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7777777777777778, "mobius_orderL": -1, "freqs": [7, 5, 5, 4]}
+{"n": 4, "sizeF": 9, "abund": 0.7777777777777778, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7777777777777778, "mobius_orderL": 0, "freqs": [7, 5, 5, 5]}
+{"n": 4, "sizeF": 9, "abund": 0.8888888888888888, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8888888888888888, "mobius_orderL": 0, "freqs": [8, 4, 4, 4]}
+{"n": 4, "sizeF": 9, "abund": 0.8888888888888888, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8888888888888888, "mobius_orderL": 0, "freqs": [8, 4, 4, 4]}
+{"n": 4, "sizeF": 10, "abund": 0.8, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8, "mobius_orderL": 0, "freqs": [8, 5, 4, 4]}
+{"n": 4, "sizeF": 10, "abund": 0.8, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8, "mobius_orderL": 0, "freqs": [8, 5, 5, 4]}
+{"n": 4, "sizeF": 10, "abund": 0.8, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8, "mobius_orderL": 1, "freqs": [8, 5, 5, 5]}
+{"n": 4, "sizeF": 10, "abund": 0.8, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8, "mobius_orderL": 1, "freqs": [8, 5, 5, 5]}
+{"n": 4, "sizeF": 11, "abund": 0.7272727272727273, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7272727272727273, "mobius_orderL": 0, "freqs": [8, 6, 5, 5]}
+{"n": 4, "sizeF": 11, "abund": 0.7272727272727273, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7272727272727273, "mobius_orderL": 0, "freqs": [8, 6, 6, 5]}
+{"n": 4, "sizeF": 11, "abund": 0.7272727272727273, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7272727272727273, "mobius_orderL": 0, "freqs": [8, 6, 6, 5]}
+{"n": 4, "sizeF": 12, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [8, 7, 6, 5]}
+{"n": 4, "sizeF": 12, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": -1, "freqs": [8, 6, 6, 6]}
+{"n": 4, "sizeF": 12, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": -1, "freqs": [8, 7, 6, 6]}
+{"n": 4, "sizeF": 12, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": -1, "freqs": [8, 7, 6, 6]}
+{"n": 4, "sizeF": 13, "abund": 0.6153846153846154, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6153846153846154, "mobius_orderL": -1, "freqs": [8, 7, 7, 6]}
+{"n": 4, "sizeF": 13, "abund": 0.6153846153846154, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6153846153846154, "mobius_orderL": -2, "freqs": [8, 7, 7, 7]}
+{"n": 4, "sizeF": 13, "abund": 0.6153846153846154, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6153846153846154, "mobius_orderL": 0, "freqs": [8, 8, 6, 6]}
+{"n": 4, "sizeF": 13, "abund": 0.6153846153846154, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6153846153846154, "mobius_orderL": 0, "freqs": [8, 8, 6, 6]}
+{"n": 4, "sizeF": 14, "abund": 0.5714285714285714, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5714285714285714, "mobius_orderL": 0, "freqs": [8, 8, 7, 6]}
+{"n": 4, "sizeF": 14, "abund": 0.5714285714285714, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5714285714285714, "mobius_orderL": -1, "freqs": [8, 8, 7, 7]}
+{"n": 4, "sizeF": 14, "abund": 0.5714285714285714, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5714285714285714, "mobius_orderL": -1, "freqs": [8, 8, 7, 7]}
+{"n": 4, "sizeF": 15, "abund": 0.5333333333333333, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5333333333333333, "mobius_orderL": 0, "freqs": [8, 8, 8, 7]}
+{"n": 4, "sizeF": 15, "abund": 0.5333333333333333, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5333333333333333, "mobius_orderL": 0, "freqs": [8, 8, 8, 7]}
+{"n": 4, "sizeF": 16, "abund": 0.5, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5, "mobius_orderL": 1, "freqs": [8, 8, 8, 8]}
+{"n": 4, "sizeF": 16, "abund": 0.5, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5, "mobius_orderL": 1, "freqs": [8, 8, 8, 8]}
+{"n": 4, "sizeF": 14, "abund": 0.5714285714285714, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5714285714285714, "mobius_orderL": 0, "freqs": [8, 8, 7, 6]}
+{"n": 4, "sizeF": 13, "abund": 0.6153846153846154, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6153846153846154, "mobius_orderL": -2, "freqs": [8, 7, 7, 7]}
+{"n": 4, "sizeF": 13, "abund": 0.6153846153846154, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6153846153846154, "mobius_orderL": -1, "freqs": [8, 7, 7, 6]}
+{"n": 4, "sizeF": 12, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": -1, "freqs": [8, 6, 6, 6]}
+{"n": 4, "sizeF": 12, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [8, 7, 6, 5]}
+{"n": 4, "sizeF": 13, "abund": 0.6153846153846154, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6153846153846154, "mobius_orderL": 0, "freqs": [8, 7, 7, 5]}
+{"n": 4, "sizeF": 13, "abund": 0.6153846153846154, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6153846153846154, "mobius_orderL": 0, "freqs": [8, 7, 7, 5]}
+{"n": 4, "sizeF": 11, "abund": 0.7272727272727273, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7272727272727273, "mobius_orderL": 0, "freqs": [8, 6, 5, 5]}
+{"n": 4, "sizeF": 10, "abund": 0.8, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8, "mobius_orderL": 0, "freqs": [8, 5, 5, 4]}
+{"n": 4, "sizeF": 11, "abund": 0.7272727272727273, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7272727272727273, "mobius_orderL": 0, "freqs": [8, 6, 5, 4]}
+{"n": 4, "sizeF": 11, "abund": 0.7272727272727273, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7272727272727273, "mobius_orderL": 0, "freqs": [8, 6, 5, 4]}
+{"n": 4, "sizeF": 12, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [8, 6, 6, 4]}
+{"n": 4, "sizeF": 12, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [8, 6, 6, 4]}
+{"n": 4, "sizeF": 10, "abund": 0.8, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8, "mobius_orderL": 0, "freqs": [8, 5, 4, 4]}
+{"n": 4, "sizeF": 9, "abund": 0.7777777777777778, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7777777777777778, "mobius_orderL": 0, "freqs": [7, 5, 5, 5]}
+{"n": 4, "sizeF": 10, "abund": 0.7, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7, "mobius_orderL": -1, "freqs": [7, 6, 5, 5]}
+{"n": 4, "sizeF": 10, "abund": 0.7, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7, "mobius_orderL": -1, "freqs": [7, 6, 6, 5]}
+{"n": 4, "sizeF": 10, "abund": 0.7, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7, "mobius_orderL": -1, "freqs": [7, 6, 6, 5]}
+{"n": 4, "sizeF": 11, "abund": 0.6363636363636364, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6363636363636364, "mobius_orderL": -1, "freqs": [7, 7, 6, 5]}
+{"n": 4, "sizeF": 11, "abund": 0.6363636363636364, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6363636363636364, "mobius_orderL": -2, "freqs": [7, 6, 6, 6]}
+{"n": 4, "sizeF": 11, "abund": 0.6363636363636364, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6363636363636364, "mobius_orderL": -2, "freqs": [7, 7, 6, 6]}
+{"n": 4, "sizeF": 11, "abund": 0.6363636363636364, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6363636363636364, "mobius_orderL": -2, "freqs": [7, 7, 6, 6]}
+{"n": 4, "sizeF": 12, "abund": 0.5833333333333334, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5833333333333334, "mobius_orderL": -2, "freqs": [7, 7, 7, 6]}
+{"n": 4, "sizeF": 12, "abund": 0.5833333333333334, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5833333333333334, "mobius_orderL": -3, "freqs": [7, 7, 7, 7]}
+{"n": 4, "sizeF": 12, "abund": 0.5833333333333334, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5833333333333334, "mobius_orderL": -3, "freqs": [7, 7, 7, 7]}
+{"n": 4, "sizeF": 12, "abund": 0.5833333333333334, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5833333333333334, "mobius_orderL": -2, "freqs": [7, 7, 7, 6]}
+{"n": 4, "sizeF": 11, "abund": 0.6363636363636364, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6363636363636364, "mobius_orderL": -2, "freqs": [7, 6, 6, 6]}
+{"n": 4, "sizeF": 11, "abund": 0.6363636363636364, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6363636363636364, "mobius_orderL": -1, "freqs": [7, 7, 6, 5]}
+{"n": 4, "sizeF": 12, "abund": 0.5833333333333334, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5833333333333334, "mobius_orderL": -1, "freqs": [7, 7, 7, 5]}
+{"n": 4, "sizeF": 12, "abund": 0.5833333333333334, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5833333333333334, "mobius_orderL": -1, "freqs": [7, 7, 7, 5]}
+{"n": 4, "sizeF": 10, "abund": 0.7, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7, "mobius_orderL": -1, "freqs": [7, 6, 5, 5]}
+{"n": 4, "sizeF": 9, "abund": 0.7777777777777778, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7777777777777778, "mobius_orderL": -1, "freqs": [7, 5, 5, 4]}
+{"n": 4, "sizeF": 10, "abund": 0.7, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7, "mobius_orderL": -1, "freqs": [7, 6, 5, 4]}
+{"n": 4, "sizeF": 10, "abund": 0.7, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7, "mobius_orderL": -1, "freqs": [7, 6, 5, 4]}
+{"n": 4, "sizeF": 11, "abund": 0.6363636363636364, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6363636363636364, "mobius_orderL": -1, "freqs": [7, 6, 6, 4]}
+{"n": 4, "sizeF": 11, "abund": 0.6363636363636364, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6363636363636364, "mobius_orderL": -1, "freqs": [7, 6, 6, 4]}
+{"n": 4, "sizeF": 9, "abund": 0.7777777777777778, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7777777777777778, "mobius_orderL": -1, "freqs": [7, 5, 4, 4]}
+{"n": 4, "sizeF": 8, "abund": 0.875, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.875, "mobius_orderL": 0, "freqs": [7, 4, 4, 3]}
+{"n": 4, "sizeF": 9, "abund": 0.7777777777777778, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7777777777777778, "mobius_orderL": 0, "freqs": [7, 5, 4, 3]}
+{"n": 4, "sizeF": 9, "abund": 0.7777777777777778, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7777777777777778, "mobius_orderL": 0, "freqs": [7, 5, 5, 3]}
+{"n": 4, "sizeF": 9, "abund": 0.7777777777777778, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7777777777777778, "mobius_orderL": 0, "freqs": [7, 5, 4, 4]}
+{"n": 4, "sizeF": 9, "abund": 0.7777777777777778, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7777777777777778, "mobius_orderL": 1, "freqs": [7, 5, 5, 4]}
+{"n": 4, "sizeF": 9, "abund": 0.7777777777777778, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7777777777777778, "mobius_orderL": 1, "freqs": [7, 5, 5, 4]}
+{"n": 4, "sizeF": 10, "abund": 0.7, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7, "mobius_orderL": 0, "freqs": [7, 6, 5, 4]}
+{"n": 4, "sizeF": 10, "abund": 0.7, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7, "mobius_orderL": 0, "freqs": [7, 6, 6, 4]}
+{"n": 4, "sizeF": 10, "abund": 0.7, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7, "mobius_orderL": 0, "freqs": [7, 6, 5, 5]}
+{"n": 4, "sizeF": 10, "abund": 0.7, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7, "mobius_orderL": 0, "freqs": [7, 6, 5, 5]}
+{"n": 4, "sizeF": 11, "abund": 0.6363636363636364, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6363636363636364, "mobius_orderL": -1, "freqs": [7, 6, 6, 5]}
+{"n": 4, "sizeF": 11, "abund": 0.6363636363636364, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6363636363636364, "mobius_orderL": -1, "freqs": [7, 6, 6, 6]}
+{"n": 4, "sizeF": 11, "abund": 0.6363636363636364, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6363636363636364, "mobius_orderL": 0, "freqs": [7, 7, 5, 5]}
+{"n": 4, "sizeF": 11, "abund": 0.6363636363636364, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6363636363636364, "mobius_orderL": 0, "freqs": [7, 7, 5, 5]}
+{"n": 4, "sizeF": 12, "abund": 0.5833333333333334, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5833333333333334, "mobius_orderL": -1, "freqs": [7, 7, 6, 6]}
+{"n": 4, "sizeF": 12, "abund": 0.5833333333333334, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5833333333333334, "mobius_orderL": -1, "freqs": [7, 7, 6, 6]}
+{"n": 4, "sizeF": 11, "abund": 0.6363636363636364, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6363636363636364, "mobius_orderL": -1, "freqs": [7, 6, 6, 6]}
+{"n": 4, "sizeF": 11, "abund": 0.6363636363636364, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6363636363636364, "mobius_orderL": -1, "freqs": [7, 6, 6, 5]}
+{"n": 4, "sizeF": 10, "abund": 0.7, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7, "mobius_orderL": 0, "freqs": [7, 6, 6, 4]}
+{"n": 4, "sizeF": 11, "abund": 0.6363636363636364, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6363636363636364, "mobius_orderL": 0, "freqs": [7, 7, 6, 4]}
+{"n": 4, "sizeF": 11, "abund": 0.6363636363636364, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6363636363636364, "mobius_orderL": 0, "freqs": [7, 7, 6, 4]}
+{"n": 4, "sizeF": 12, "abund": 0.5833333333333334, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5833333333333334, "mobius_orderL": 0, "freqs": [7, 7, 7, 4]}
+{"n": 4, "sizeF": 12, "abund": 0.5833333333333334, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5833333333333334, "mobius_orderL": 0, "freqs": [7, 7, 7, 4]}
+{"n": 4, "sizeF": 10, "abund": 0.7, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7, "mobius_orderL": 0, "freqs": [7, 6, 5, 4]}
+{"n": 4, "sizeF": 9, "abund": 0.7777777777777778, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7777777777777778, "mobius_orderL": 0, "freqs": [7, 5, 4, 4]}
+{"n": 4, "sizeF": 10, "abund": 0.7, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7, "mobius_orderL": 0, "freqs": [7, 6, 4, 4]}
+{"n": 4, "sizeF": 10, "abund": 0.7, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7, "mobius_orderL": 0, "freqs": [7, 6, 4, 4]}
+{"n": 4, "sizeF": 9, "abund": 0.7777777777777778, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7777777777777778, "mobius_orderL": 0, "freqs": [7, 5, 5, 3]}
+{"n": 4, "sizeF": 10, "abund": 0.7, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7, "mobius_orderL": 0, "freqs": [7, 6, 5, 3]}
+{"n": 4, "sizeF": 10, "abund": 0.7, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7, "mobius_orderL": 0, "freqs": [7, 6, 5, 3]}
+{"n": 4, "sizeF": 11, "abund": 0.6363636363636364, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6363636363636364, "mobius_orderL": 0, "freqs": [7, 6, 6, 3]}
+{"n": 4, "sizeF": 11, "abund": 0.6363636363636364, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6363636363636364, "mobius_orderL": 0, "freqs": [7, 6, 6, 3]}
+{"n": 4, "sizeF": 9, "abund": 0.7777777777777778, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7777777777777778, "mobius_orderL": 0, "freqs": [7, 5, 4, 3]}
+{"n": 4, "sizeF": 8, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 1, "freqs": [6, 5, 5, 4]}
+{"n": 4, "sizeF": 9, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [6, 6, 5, 4]}
+{"n": 4, "sizeF": 9, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [6, 6, 6, 4]}
+{"n": 4, "sizeF": 9, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": -1, "freqs": [6, 5, 5, 5]}
+{"n": 4, "sizeF": 9, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [6, 6, 5, 5]}
+{"n": 4, "sizeF": 9, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [6, 6, 5, 5]}
+{"n": 4, "sizeF": 10, "abund": 0.6, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6, "mobius_orderL": -1, "freqs": [6, 6, 6, 5]}
+{"n": 4, "sizeF": 10, "abund": 0.6, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6, "mobius_orderL": -1, "freqs": [6, 6, 6, 6]}
+{"n": 4, "sizeF": 10, "abund": 0.6, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6, "mobius_orderL": -1, "freqs": [6, 6, 6, 6]}
+{"n": 4, "sizeF": 10, "abund": 0.6, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6, "mobius_orderL": -1, "freqs": [6, 6, 6, 5]}
+{"n": 4, "sizeF": 9, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": -1, "freqs": [6, 5, 5, 5]}
+{"n": 4, "sizeF": 10, "abund": 0.6, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6, "mobius_orderL": -2, "freqs": [6, 6, 6, 5]}
+{"n": 4, "sizeF": 10, "abund": 0.6, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6, "mobius_orderL": -2, "freqs": [6, 6, 6, 5]}
+{"n": 4, "sizeF": 9, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [6, 6, 6, 4]}
+{"n": 4, "sizeF": 9, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [6, 6, 5, 4]}
+{"n": 4, "sizeF": 8, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [6, 5, 4, 4]}
+{"n": 4, "sizeF": 9, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": -1, "freqs": [6, 5, 5, 4]}
+{"n": 4, "sizeF": 9, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [6, 6, 4, 4]}
+{"n": 4, "sizeF": 9, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [6, 6, 4, 4]}
+{"n": 4, "sizeF": 10, "abund": 0.6, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6, "mobius_orderL": -1, "freqs": [6, 6, 5, 4]}
+{"n": 4, "sizeF": 10, "abund": 0.6, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6, "mobius_orderL": -1, "freqs": [6, 6, 5, 4]}
+{"n": 4, "sizeF": 9, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": -1, "freqs": [6, 5, 5, 4]}
+{"n": 4, "sizeF": 8, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": -1, "freqs": [6, 4, 4, 4]}
+{"n": 4, "sizeF": 8, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [6, 5, 5, 3]}
+{"n": 4, "sizeF": 9, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [6, 6, 5, 3]}
+{"n": 4, "sizeF": 9, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [6, 6, 5, 3]}
+{"n": 4, "sizeF": 10, "abund": 0.6, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6, "mobius_orderL": 0, "freqs": [6, 6, 6, 3]}
+{"n": 4, "sizeF": 10, "abund": 0.6, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6, "mobius_orderL": 0, "freqs": [6, 6, 6, 3]}
+{"n": 4, "sizeF": 8, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [6, 5, 4, 3]}
+{"n": 4, "sizeF": 7, "abund": 0.8571428571428571, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8571428571428571, "mobius_orderL": 0, "freqs": [6, 4, 3, 3]}
+{"n": 4, "sizeF": 8, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [6, 4, 4, 4]}
+{"n": 4, "sizeF": 8, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [6, 5, 3, 3]}
+{"n": 4, "sizeF": 8, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [6, 5, 4, 3]}
+{"n": 4, "sizeF": 8, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 1, "freqs": [6, 5, 4, 4]}
+{"n": 4, "sizeF": 8, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 1, "freqs": [6, 5, 4, 4]}
+{"n": 4, "sizeF": 9, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [6, 5, 5, 5]}
+{"n": 4, "sizeF": 9, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [6, 6, 4, 4]}
+{"n": 4, "sizeF": 9, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [6, 6, 4, 4]}
+{"n": 4, "sizeF": 10, "abund": 0.6, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6, "mobius_orderL": -1, "freqs": [6, 6, 5, 5]}
+{"n": 4, "sizeF": 10, "abund": 0.6, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6, "mobius_orderL": -1, "freqs": [6, 6, 5, 5]}
+{"n": 4, "sizeF": 9, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [6, 5, 5, 5]}
+{"n": 4, "sizeF": 8, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [6, 5, 4, 3]}
+{"n": 4, "sizeF": 9, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [6, 6, 4, 3]}
+{"n": 4, "sizeF": 9, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [6, 6, 4, 3]}
+{"n": 4, "sizeF": 8, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [6, 5, 3, 3]}
+{"n": 4, "sizeF": 8, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [6, 4, 4, 4]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 2, "freqs": [5, 5, 4, 4]}
+{"n": 4, "sizeF": 8, "abund": 0.625, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.625, "mobius_orderL": 0, "freqs": [5, 5, 5, 4]}
+{"n": 4, "sizeF": 8, "abund": 0.625, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.625, "mobius_orderL": 1, "freqs": [5, 5, 5, 5]}
+{"n": 4, "sizeF": 8, "abund": 0.625, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.625, "mobius_orderL": 1, "freqs": [5, 5, 5, 5]}
+{"n": 4, "sizeF": 8, "abund": 0.625, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.625, "mobius_orderL": 0, "freqs": [5, 5, 5, 4]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 1, "freqs": [5, 5, 4, 3]}
+{"n": 4, "sizeF": 8, "abund": 0.625, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.625, "mobius_orderL": 0, "freqs": [5, 5, 5, 3]}
+{"n": 4, "sizeF": 8, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 1, "freqs": [6, 5, 4, 3]}
+{"n": 4, "sizeF": 8, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 1, "freqs": [6, 5, 4, 3]}
+{"n": 4, "sizeF": 9, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [6, 5, 5, 3]}
+{"n": 4, "sizeF": 9, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [6, 5, 5, 3]}
+{"n": 4, "sizeF": 8, "abund": 0.625, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.625, "mobius_orderL": 0, "freqs": [5, 5, 5, 3]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 1, "freqs": [5, 5, 3, 3]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 1, "freqs": [5, 4, 4, 4]}
+{"n": 4, "sizeF": 8, "abund": 0.625, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.625, "mobius_orderL": 0, "freqs": [5, 5, 4, 4]}
+{"n": 4, "sizeF": 8, "abund": 0.625, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.625, "mobius_orderL": 0, "freqs": [5, 5, 4, 4]}
+{"n": 4, "sizeF": 9, "abund": 0.5555555555555556, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5555555555555556, "mobius_orderL": -1, "freqs": [5, 5, 5, 4]}
+{"n": 4, "sizeF": 9, "abund": 0.5555555555555556, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5555555555555556, "mobius_orderL": -1, "freqs": [5, 5, 5, 4]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 0, "freqs": [5, 4, 4, 3]}
+{"n": 4, "sizeF": 6, "abund": 0.8333333333333334, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8333333333333334, "mobius_orderL": 0, "freqs": [5, 4, 3, 2]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 0, "freqs": [5, 4, 4, 2]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 0, "freqs": [5, 5, 3, 2]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 0, "freqs": [5, 5, 3, 3]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 0, "freqs": [5, 5, 4, 2]}
+{"n": 4, "sizeF": 7, "abund": 0.8571428571428571, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8571428571428571, "mobius_orderL": 0, "freqs": [6, 4, 3, 2]}
+{"n": 4, "sizeF": 7, "abund": 0.8571428571428571, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8571428571428571, "mobius_orderL": 0, "freqs": [6, 4, 3, 2]}
+{"n": 4, "sizeF": 8, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [6, 4, 4, 2]}
+{"n": 4, "sizeF": 8, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [6, 5, 3, 2]}
+{"n": 4, "sizeF": 8, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [6, 5, 3, 3]}
+{"n": 4, "sizeF": 8, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [6, 5, 4, 2]}
+{"n": 4, "sizeF": 8, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [6, 5, 4, 2]}
+{"n": 4, "sizeF": 9, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [6, 5, 5, 2]}
+{"n": 4, "sizeF": 9, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [6, 6, 4, 2]}
+{"n": 4, "sizeF": 9, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [6, 6, 4, 2]}
+{"n": 4, "sizeF": 10, "abund": 0.6, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6, "mobius_orderL": 0, "freqs": [6, 6, 5, 2]}
+{"n": 4, "sizeF": 10, "abund": 0.6, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6, "mobius_orderL": 0, "freqs": [6, 6, 5, 2]}
+{"n": 4, "sizeF": 9, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [6, 5, 5, 2]}
+{"n": 4, "sizeF": 8, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [6, 5, 3, 3]}
+{"n": 4, "sizeF": 9, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [6, 6, 3, 3]}
+{"n": 4, "sizeF": 9, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [6, 6, 3, 3]}
+{"n": 4, "sizeF": 8, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [6, 5, 3, 2]}
+{"n": 4, "sizeF": 8, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [6, 4, 4, 2]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 0, "freqs": [5, 5, 4, 2]}
+{"n": 4, "sizeF": 8, "abund": 0.625, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.625, "mobius_orderL": 0, "freqs": [5, 5, 5, 2]}
+{"n": 4, "sizeF": 8, "abund": 0.625, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.625, "mobius_orderL": 0, "freqs": [5, 5, 5, 2]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 0, "freqs": [5, 5, 3, 3]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 0, "freqs": [5, 5, 3, 2]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 0, "freqs": [5, 4, 4, 2]}
+{"n": 4, "sizeF": 6, "abund": 0.8333333333333334, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8333333333333334, "mobius_orderL": 0, "freqs": [5, 4, 2, 2]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 0, "freqs": [5, 5, 2, 2]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 0, "freqs": [5, 5, 2, 2]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 1, "freqs": [4, 4, 3, 3]}
+{"n": 4, "sizeF": 7, "abund": 0.5714285714285714, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5714285714285714, "mobius_orderL": 0, "freqs": [4, 4, 4, 3]}
+{"n": 4, "sizeF": 7, "abund": 0.5714285714285714, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5714285714285714, "mobius_orderL": 0, "freqs": [4, 4, 4, 3]}
+{"n": 4, "sizeF": 8, "abund": 0.5, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5, "mobius_orderL": -1, "freqs": [4, 4, 4, 4]}
+{"n": 4, "sizeF": 8, "abund": 0.5, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5, "mobius_orderL": -1, "freqs": [4, 4, 4, 4]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [4, 4, 3, 2]}
+{"n": 4, "sizeF": 5, "abund": 0.8, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8, "mobius_orderL": 2, "freqs": [4, 3, 3, 3]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 1, "freqs": [4, 4, 3, 3]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 2, "freqs": [4, 4, 4, 3]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 3, "freqs": [4, 4, 4, 4]}
+{"n": 4, "sizeF": 6, "abund": 0.8333333333333334, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8333333333333334, "mobius_orderL": 0, "freqs": [5, 3, 3, 3]}
+{"n": 4, "sizeF": 6, "abund": 0.8333333333333334, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8333333333333334, "mobius_orderL": 0, "freqs": [5, 3, 3, 3]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 0, "freqs": [5, 4, 4, 3]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 1, "freqs": [5, 4, 4, 4]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 1, "freqs": [5, 4, 4, 4]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 0, "freqs": [5, 4, 4, 3]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 3, "freqs": [4, 4, 4, 4]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 2, "freqs": [4, 4, 4, 3]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 1, "freqs": [5, 4, 4, 3]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 1, "freqs": [5, 4, 4, 3]}
+{"n": 4, "sizeF": 8, "abund": 0.625, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.625, "mobius_orderL": 0, "freqs": [5, 5, 4, 3]}
+{"n": 4, "sizeF": 8, "abund": 0.625, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.625, "mobius_orderL": 0, "freqs": [5, 5, 4, 3]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 1, "freqs": [4, 4, 3, 3]}
+{"n": 4, "sizeF": 5, "abund": 0.8, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8, "mobius_orderL": 1, "freqs": [4, 3, 3, 2]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 1, "freqs": [4, 4, 3, 2]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [4, 4, 3, 2]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 1, "freqs": [4, 4, 3, 3]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 1, "freqs": [4, 4, 4, 2]}
+{"n": 4, "sizeF": 6, "abund": 0.8333333333333334, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8333333333333334, "mobius_orderL": 0, "freqs": [5, 3, 3, 2]}
+{"n": 4, "sizeF": 6, "abund": 0.8333333333333334, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8333333333333334, "mobius_orderL": 0, "freqs": [5, 3, 3, 2]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 0, "freqs": [5, 4, 3, 2]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 0, "freqs": [5, 4, 3, 3]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 0, "freqs": [5, 4, 4, 2]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 0, "freqs": [5, 4, 4, 2]}
+{"n": 4, "sizeF": 8, "abund": 0.625, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.625, "mobius_orderL": 0, "freqs": [5, 5, 4, 2]}
+{"n": 4, "sizeF": 8, "abund": 0.625, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.625, "mobius_orderL": 0, "freqs": [5, 5, 4, 2]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 0, "freqs": [5, 4, 3, 3]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 0, "freqs": [5, 4, 3, 2]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 1, "freqs": [4, 4, 4, 2]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 1, "freqs": [5, 4, 4, 2]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 1, "freqs": [5, 4, 4, 2]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 1, "freqs": [4, 4, 3, 3]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [4, 4, 3, 2]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 1, "freqs": [4, 4, 3, 2]}
+{"n": 4, "sizeF": 5, "abund": 0.8, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8, "mobius_orderL": 0, "freqs": [4, 3, 2, 2]}
+{"n": 4, "sizeF": 5, "abund": 0.6, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6, "mobius_orderL": 2, "freqs": [3, 3, 3, 3]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 1, "freqs": [4, 3, 3, 3]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 1, "freqs": [4, 3, 3, 3]}
+{"n": 4, "sizeF": 7, "abund": 0.5714285714285714, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5714285714285714, "mobius_orderL": 0, "freqs": [4, 4, 3, 3]}
+{"n": 4, "sizeF": 7, "abund": 0.5714285714285714, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5714285714285714, "mobius_orderL": 0, "freqs": [4, 4, 3, 3]}
+{"n": 4, "sizeF": 5, "abund": 0.6, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6, "mobius_orderL": 1, "freqs": [3, 3, 3, 2]}
+{"n": 4, "sizeF": 4, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 1, "freqs": [3, 2, 2, 2]}
+{"n": 4, "sizeF": 5, "abund": 0.6, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6, "mobius_orderL": 1, "freqs": [3, 3, 3, 2]}
+{"n": 4, "sizeF": 5, "abund": 0.6, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6, "mobius_orderL": 1, "freqs": [3, 3, 2, 2]}
+{"n": 4, "sizeF": 5, "abund": 0.8, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8, "mobius_orderL": 0, "freqs": [4, 2, 2, 2]}
+{"n": 4, "sizeF": 5, "abund": 0.8, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8, "mobius_orderL": 0, "freqs": [4, 2, 2, 2]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [4, 3, 3, 2]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [4, 3, 2, 2]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [4, 3, 2, 2]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [4, 3, 3, 2]}
+{"n": 4, "sizeF": 5, "abund": 0.6, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6, "mobius_orderL": 1, "freqs": [3, 3, 2, 2]}
+{"n": 4, "sizeF": 5, "abund": 0.6, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6, "mobius_orderL": 1, "freqs": [3, 3, 3, 2]}
+{"n": 4, "sizeF": 4, "abund": 0.5, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5, "mobius_orderL": 1, "freqs": [2, 2, 2, 2]}
+{"n": 4, "sizeF": 4, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [3, 3, 2, 1]}
+{"n": 4, "sizeF": 5, "abund": 0.8, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8, "mobius_orderL": 0, "freqs": [4, 3, 2, 1]}
+{"n": 4, "sizeF": 5, "abund": 0.6, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6, "mobius_orderL": 0, "freqs": [3, 3, 3, 1]}
+{"n": 4, "sizeF": 5, "abund": 0.8, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8, "mobius_orderL": 0, "freqs": [4, 3, 3, 1]}
+{"n": 4, "sizeF": 5, "abund": 0.8, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8, "mobius_orderL": 0, "freqs": [4, 3, 3, 1]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [4, 4, 3, 1]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [4, 4, 4, 1]}
+{"n": 4, "sizeF": 6, "abund": 0.8333333333333334, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8333333333333334, "mobius_orderL": 0, "freqs": [5, 3, 3, 1]}
+{"n": 4, "sizeF": 6, "abund": 0.8333333333333334, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8333333333333334, "mobius_orderL": 0, "freqs": [5, 3, 3, 1]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 0, "freqs": [5, 4, 3, 1]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 0, "freqs": [5, 4, 4, 1]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 0, "freqs": [5, 4, 4, 1]}
+{"n": 4, "sizeF": 8, "abund": 0.625, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.625, "mobius_orderL": 0, "freqs": [5, 5, 4, 1]}
+{"n": 4, "sizeF": 8, "abund": 0.625, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.625, "mobius_orderL": 0, "freqs": [5, 5, 4, 1]}
+{"n": 4, "sizeF": 9, "abund": 0.5555555555555556, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5555555555555556, "mobius_orderL": 0, "freqs": [5, 5, 5, 1]}
+{"n": 4, "sizeF": 9, "abund": 0.5555555555555556, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5555555555555556, "mobius_orderL": 0, "freqs": [5, 5, 5, 1]}
+{"n": 4, "sizeF": 7, "abund": 0.7142857142857143, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.7142857142857143, "mobius_orderL": 0, "freqs": [5, 4, 3, 1]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [4, 4, 4, 1]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [4, 4, 3, 1]}
+{"n": 4, "sizeF": 5, "abund": 0.6, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6, "mobius_orderL": 0, "freqs": [3, 3, 3, 1]}
+{"n": 4, "sizeF": 5, "abund": 0.8, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.8, "mobius_orderL": 0, "freqs": [4, 3, 2, 1]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [4, 4, 2, 1]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [4, 4, 2, 1]}
+{"n": 4, "sizeF": 4, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [3, 2, 2, 1]}
+{"n": 4, "sizeF": 3, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [2, 2, 1, 1]}
+{"n": 4, "sizeF": 4, "abund": 0.5, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5, "mobius_orderL": 1, "freqs": [2, 2, 2, 2]}
+{"n": 4, "sizeF": 4, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [3, 2, 1, 1]}
+{"n": 4, "sizeF": 4, "abund": 0.75, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [3, 2, 1, 1]}
+{"n": 4, "sizeF": 5, "abund": 0.6, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6, "mobius_orderL": 0, "freqs": [3, 3, 1, 1]}
+{"n": 4, "sizeF": 5, "abund": 0.6, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6, "mobius_orderL": 0, "freqs": [3, 3, 1, 1]}
+{"n": 4, "sizeF": 4, "abund": 0.5, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.5, "mobius_orderL": 1, "freqs": [2, 2, 2, 2]}
+{"n": 4, "sizeF": 3, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 4, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [2, 1, 1, 1]}
+{"n": 3, "sizeF": 2, "abund": 0.5, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.5, "mobius_orderL": -1, "freqs": [1, 1, 1]}
+{"n": 4, "sizeF": 3, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [2, 1, 1, 0]}
+{"n": 4, "sizeF": 3, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [2, 2, 1, 0]}
+{"n": 4, "sizeF": 3, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [2, 2, 1, 0]}
+{"n": 4, "sizeF": 4, "abund": 0.75, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [3, 2, 1, 0]}
+{"n": 4, "sizeF": 4, "abund": 0.5, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.5, "mobius_orderL": 1, "freqs": [2, 2, 2, 0]}
+{"n": 4, "sizeF": 4, "abund": 0.75, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.75, "mobius_orderL": 1, "freqs": [3, 2, 2, 0]}
+{"n": 4, "sizeF": 4, "abund": 0.75, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.75, "mobius_orderL": 1, "freqs": [3, 2, 2, 0]}
+{"n": 4, "sizeF": 5, "abund": 0.6, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.6, "mobius_orderL": 1, "freqs": [3, 3, 2, 0]}
+{"n": 3, "sizeF": 5, "abund": 0.6, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.6, "mobius_orderL": 2, "freqs": [3, 3, 3]}
+{"n": 4, "sizeF": 5, "abund": 0.8, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.8, "mobius_orderL": 0, "freqs": [4, 2, 2, 0]}
+{"n": 4, "sizeF": 5, "abund": 0.8, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.8, "mobius_orderL": 0, "freqs": [4, 2, 2, 0]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [4, 3, 2, 0]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.6666666666666666, "mobius_orderL": 1, "freqs": [4, 3, 3, 0]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.6666666666666666, "mobius_orderL": 1, "freqs": [4, 3, 3, 0]}
+{"n": 4, "sizeF": 7, "abund": 0.5714285714285714, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.5714285714285714, "mobius_orderL": 0, "freqs": [4, 4, 3, 0]}
+{"n": 4, "sizeF": 7, "abund": 0.5714285714285714, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.5714285714285714, "mobius_orderL": 0, "freqs": [4, 4, 3, 0]}
+{"n": 3, "sizeF": 8, "abund": 0.5, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.5, "mobius_orderL": -1, "freqs": [4, 4, 4]}
+{"n": 3, "sizeF": 8, "abund": 0.5, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.5, "mobius_orderL": -1, "freqs": [4, 4, 4]}
+{"n": 4, "sizeF": 6, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [4, 3, 2, 0]}
+{"n": 3, "sizeF": 5, "abund": 0.6, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.6, "mobius_orderL": 2, "freqs": [3, 3, 3]}
+{"n": 4, "sizeF": 5, "abund": 0.6, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.6, "mobius_orderL": 1, "freqs": [3, 3, 2, 0]}
+{"n": 4, "sizeF": 4, "abund": 0.5, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.5, "mobius_orderL": 1, "freqs": [2, 2, 2, 0]}
+{"n": 4, "sizeF": 4, "abund": 0.75, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.75, "mobius_orderL": 0, "freqs": [3, 2, 1, 0]}
+{"n": 4, "sizeF": 5, "abund": 0.6, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.6, "mobius_orderL": 0, "freqs": [3, 3, 1, 0]}
+{"n": 4, "sizeF": 5, "abund": 0.6, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.6, "mobius_orderL": 0, "freqs": [3, 3, 1, 0]}
+{"n": 4, "sizeF": 3, "abund": 0.6666666666666666, "betti": [0, 0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 3, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [2, 1, 1, 0]}
+{"n": 4, "sizeF": 2, "abund": 0.5, "betti": [0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 2, "apex_abund": 0.5, "mobius_orderL": -1, "freqs": [1, 1, 0, 0]}
+{"n": 4, "sizeF": 3, "abund": 0.6666666666666666, "betti": [0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 2, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [2, 1, 0, 0]}
+{"n": 4, "sizeF": 3, "abund": 0.6666666666666666, "betti": [0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 2, "apex_abund": 0.6666666666666666, "mobius_orderL": 0, "freqs": [2, 1, 0, 0]}
+{"n": 4, "sizeF": 4, "abund": 0.5, "betti": [0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 2, "apex_abund": 0.5, "mobius_orderL": 1, "freqs": [2, 2, 0, 0]}
+{"n": 4, "sizeF": 4, "abund": 0.5, "betti": [0, 0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 2, "apex_abund": 0.5, "mobius_orderL": 1, "freqs": [2, 2, 0, 0]}
+{"n": 4, "sizeF": 2, "abund": 0.5, "betti": [0, 0], "total_betti": 0, "reduced_euler": 0.0, "n_apex": 1, "apex_abund": 0.5, "mobius_orderL": -1, "freqs": [1, 0, 0, 0]}
