@@ -25,11 +25,9 @@ jobs:
   build-papers:
     name: Build LaTeX papers
     runs-on: ubuntu-latest
-    # Temporarily non-blocking again: papers are being heavily revised by
-    # consolidation agents (folding in the barrier theorem, cube-uniqueness,
-    # transfer-operator + function-field results). Flip back to blocking once
-    # both revised drafts are finalized and verified to compile.
-    continue-on-error: true
+    # Blocking: both upgraded drafts finalized and verified to compile
+    # (Frankl 19pp, Collatz 14pp; latexmk exit 0, 0 undefined). A red check
+    # here means a real regression.
     steps:
       - name: Checkout
         uses: actions/checkout@v4

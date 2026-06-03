@@ -158,8 +158,10 @@ User chose to **widen network policy**, but arXiv still returns 403 this session
 ## Phase 6 — Consolidation into papers
 | Agent | Status | Task |
 |-------|--------|------|
-| Frankl paper upgrade | ⏳ running | Fold in the BARRIER theorem + cube-uniqueness + 8-method "delimiting the methods" survey. |
-| Collatz paper upgrade | ⏳ running | Fold in the exact transfer-operator obstruction + function-field diagnostic + digit-Lyapunov negative. |
+| Frankl paper upgrade | ✅ done | 19pp, compiles. Restructured around the barrier theorem + cube-uniqueness + 8-method Table. |
+| Collatz paper upgrade | ✅ done | 14pp, compiles. Spectral obstruction (3 forms) + function-field diagnostic. |
+
+**Both papers upgraded with the strong results and verified to compile. CI re-blocked.** Remaining to publish: the primary-source/novelty verification pass (needs network) — see FINAL_STATUS.md.
 
 ### Both frontiers now rigorously characterized (no proof, no improved bound)
 - **Frankl:** BARRIER theorem (8 methods = symmetric convex moments, all flat-minimized by the cube at ½) + cube-uniqueness (verified n≤5) + the barrier extends to separable generator methods. Residual crux = non-separable JI-fibre overlaps. One presumed-flawed selector (0 ctrex/657K, false certificate).
