@@ -152,7 +152,7 @@ User chose to **widen network policy**, but arXiv still returns 403 this session
 | Frankl second-moment | ✅ done | Seventh obstruction: cube minimizes the power-mean ratio at ½; union-closure bounds U the wrong way. |
 | Frankl JI-overlap (culmination) | ✅ done | 8th obstruction = BARRIER: ↑a∩↑b=↑(a∨b) tautology; P₂=OVL=M₂; no symmetric convex moment can prove Frankl. |
 | Frankl generator-asymmetric | ✅ done | Barrier EXTENDS to separable generator methods; one presumed-flawed selector (0 ctrex in 657K, but false certificate). |
-| Collatz digit-Lyapunov+𝔽_p[T] | ⚠️ orphaned→salvaging | Container recycled mid-run; data survived. 𝔽₂[T]: degree IS a Lyapunov (analog provably converges). ℤ digit stats: negative. Salvage agent re-validating + writing up. |
+| Collatz digit-Lyapunov+𝔽_p[T] | ✅ salvaged | Re-validated bit-for-bit. ℤ digit stats: clean negative (magnitude-blind + average-only descent). 𝔽₂[T]: degree is a Lyapunov ⇒ analog provably converges; disanalogy = archimedean/2-adic decoupling. |
 | Collatz uniform perp-gap (frontier) | ⏳ running | Does ‖P_n\|_{V⊥}‖ ≤ ρ<1 uniformly? (Collatz analog of the JI-overlap crux; conditional natural-density if true). |
 | Frankl JI-labelling (frontier) | ✅ done | ⭐ CROWN RESULT: Boolean cube is the UNIQUE Frankl extremal lattice (verified 13,734 iso classes n≤5). Reconstruction identity Fib(x)=⋃↑j. Closing inequality identified (JI-filter overlap). |
 
