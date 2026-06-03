@@ -85,7 +85,16 @@ exponentially under the drift-balancing tilt) with no turnover out to $n=17$, an
 phase transition that strands the required tilt on the non-equidistributing side. We are careful to
 delimit the scope: this obstructs one reduction only; coset-respecting reference measures and
 non-scalar change-of-measure mechanisms remain open, and nothing here bears on whether Collatz natural
-density is true. We also reconstruct the Steiner--Simons--de Weger--Hercher cycle-exclusion argument,
+density is true. We then recast the obstruction spectrally, as a Frobenius--Perron (transfer)
+operator $\Pop_n$ on the units of $\Zthree{n}$: the Syracuse law is exactly its stationary
+distribution, the mod-$3$ imbalance is an explicit rank-one $2\times2$ block, and an exact
+characteristic-polynomial computation gives $\charpoly_{\Pop_n}(\lambda)=\lambda^{\,\tot(3^n)-1}(\lambda-1)$
+--- a single eigenvalue $1$ and all others exactly zero, with $\Pop_n-\statproj$ nilpotent. The
+upshot is that the obstruction lives entirely in the (permanently non-uniform) stationary vector,
+not in any mixing-rate defect. We pair this with a function-field diagnostic: the $\Ffield$ analog
+of Collatz provably converges via a degree Lyapunov function, isolating the archimedean/$2$-adic
+decoupling that makes the integer case resist, and a matched negative result that no binary-digit
+statistic can serve as a Lyapunov function. We also reconstruct the Steiner--Simons--de Weger--Hercher cycle-exclusion argument,
 correcting a common mis-attribution of its bottleneck to the irrationality measure of $\log_2 3$ in
 favour of a two-logarithm linear-forms estimate. We close with open questions.
 \end{abstract}
@@ -148,6 +157,18 @@ requires cannot hold. We corroborate this with an exact FFT computation of the c
 $\Edist_n=\tot(3^n)\CP_n-1$, which diverges with no turnover to $n=17$ and exhibits a phase
 transition in tilt space (Section~\ref{sec:numerics}). We delimit the scope sharply
 (Section~\ref{sec:scope}): this kills one reduction, not the destination.
+\item \textbf{A transfer-operator view} (Section~\ref{sec:transfer}). We recast the obstruction
+in clean spectral form. The Syracuse step on the units of $\Zthree{n}$ is a finite Markov chain
+with operator $\Pop_n$; the Syracuse law $\nu_n$ is \emph{exactly} its stationary distribution
+(Proposition~\ref{prop:stationary}); the mod-$3$ imbalance is an explicit rank-one $2\times2$ block
+(Proposition~\ref{prop:mod3block}); and an exact rational computation gives
+$\charpoly_{\Pop_n}(\lambda)=\lambda^{\,\tot(3^n)-1}(\lambda-1)$, so $\Pop_n$ has the single nonzero
+eigenvalue $1$ and is nilpotent modulo its stationary projector (Proposition~\ref{prop:nilpotent}).
+The moral is sharp: the obstruction is the non-uniform stationary vector, not a mixing-rate defect.
+\item \textbf{A function-field diagnostic} (Section~\ref{sec:why-hard}). We record why the integer
+case resists, by contrast with a provably convergent $\Ffield$ analog (degree Lyapunov function,
+Proposition~\ref{prop:degree}), pairing it with a negative result that no binary-digit statistic is
+a Lyapunov function. These are diagnostics of difficulty; they say nothing about whether Collatz holds.
 \end{enumerate}
 We also flag a correction to the folklore framing of the cycle-exclusion bottleneck
 (Section~\ref{sec:cycles}).
