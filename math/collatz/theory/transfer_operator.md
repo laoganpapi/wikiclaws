@@ -2,6 +2,8 @@
 
 > **Status:** `[unverified / NOVELTY UNVERIFIED]` — numerical findings + structural identifications proved, no analytic asymptotics proved.
 >
+> ⚠️ **CORRECTION (see `perp_gap.md`):** the float64 claim in this document that the second eigenvalue $|\lambda_2(n)|$ is $\sim 10^{-3}$ and *shrinking toward 1* is **WRONG — it was numerical noise.** Exact rational computation shows the characteristic polynomial of $P_n$ is exactly $\lambda^{\varphi(3^n)-1}(\lambda-1)$: a single eigenvalue $1$, all others **exactly $0$**, with $P_n-\Pi$ nilpotent of index $n$. The mod-3 obstruction (Prop 3.1) and $\pi_n$ = Syracuse RV (Prop 2.1) survive intact; only the second-eigenvalue magnitudes/asymptotics in §2–3 are retracted. The genuine obstruction is the non-uniform stationary vector $\pi_n$ (in $V$), not any perp eigenvalue.
+>
 > **Track:** Collatz, Vector A (alternative angle on the Tao-2022 log $\to$ natural-density gap).
 >
 > **Author:** Alex Ye (AI-assisted computation; AI not on author line per project rules).
