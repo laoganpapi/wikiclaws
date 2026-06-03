@@ -147,7 +147,7 @@ User chose to **widen network policy**, but arXiv still returns 403 this session
 | Frankl polynomial method | ✅ done | Clean STRUCTURAL OBSTRUCTION (proved + verified): slice-rank(T_F) = \|F\|, vacuous against abundance. Diagnoses why cap-set machinery doesn't apply. |
 | Collatz digit-sum + 𝔽_p[T] | ⏳ running | Hamming-weight Lyapunov candidates + function-field analog cross-check (not 2-adic). |
 | Frankl Boolean Fourier | ✅ done | Third proved obstruction: rotation+sign-invariant quadratic spectral stats CANNOT determine min abundance (Boolean cube saturates Frankl AND has trivial spectrum). Karpas 2017 acknowledged as prior. |
-| Frankl LP duality / Poonen | ⏳ finishing | (deliverable lp_duality.md committed; awaiting report) |
+| Frankl LP duality / Poonen | ✅ done | Sixth obstruction: correct dual = Reimer in multiplier form, degenerates on the cube; gap is exactly max-vs-mean (fails on 6 families). Surfaced the second-moment lever. |
 | Frankl Kruskal–Katona/shadows | ✅ done | Fifth obstruction: shifting breaks union-closure; AD/FKG wrong sign. ALL FIVE METHODS CONVERGE on the join-irreducible labelling. |
 | Collatz transfer operator | ✅ done | Sharpest obstruction reformulation: mod-3 block = [[1/3,2/3],[1/3,2/3]] (eigvals {1,0}); Syracuse RV = unique invariant π_n (proved). Names the uniform-perp-gap path forward. |
 | Collatz digit-Lyapunov + 𝔽_p[T] | ⏳ running | (first Phase-5 wave; still running) |
@@ -160,6 +160,7 @@ User chose to **widen network policy**, but arXiv still returns 403 this session
 | 3 | Lattice invariants | Abundance is NOT a lattice invariant (cone construction: lattice-isomorphic, ab 0.5 vs 0.875). |
 | 4 | Boolean Fourier (quadratic statistics) | Rotation+sign-invariant W^k / influences / noise-stability cannot determine min abundance (Boolean cube extremizer has trivial spectrum). |
 | 5 | Kruskal–Katona / shadows / compression | Shifting does NOT preserve union-closure (and raises max-abundance 77% when it survives); AD/FKG fails (40.5% anti-correlated pairs); no new forcing inequality. |
+| 6 | LP duality / fractional relaxation | Correct dual = Reimer in multiplier form; degenerates on the cube (zero margin); residual gap is exactly max-vs-mean (6 families). Free-measure LP is the budget-mismatch trap. |
 
 **⭐ THE CONVERGENCE (strongest emergent result):** all five orthogonal methods bottom out at the SAME structural obstacle — **the labelling of join-irreducibles** (open problem F.2) — and the SAME universal extremizer (the Boolean cube 2^[n], where abundance = ½ and every invariant/spectral/shadow feature degenerates). The lesson: no coordinatewise / order / spectral / shadow / polynomial *invariant* can control abundance; the crux is the JI-fibre labelling. This is a genuine, publishable "delimiting the methods" contribution that also tells future work exactly where to aim. All [NOVELTY UNVERIFIED]; honest prior-art expected for #1 (Sawin) and #4 (Karpas 2017).
 
