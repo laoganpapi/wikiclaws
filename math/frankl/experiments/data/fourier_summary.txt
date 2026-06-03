@@ -1,0 +1,12 @@
+Boolean-Fourier sweep over UC orbit representatives
+================================================================
+  n=0: 1 UC families, computed in 0.00s → data/fourier_n0.jsonl
+  n=1: 3 UC families, computed in 0.00s → data/fourier_n1.jsonl
+  n=2: 9 UC families, computed in 0.00s → data/fourier_n2.jsonl
+  n=3: 37 UC families, computed in 0.01s → data/fourier_n3.jsonl
+  n=4: 367 UC families, computed in 0.14s → data/fourier_n4.jsonl
+  n=5: 29327 UC families, computed in 33.16s → data/fourier_n5.jsonl
+  TOTAL across n≤5: 29744
+
+Sanity check  f̂({i}) = f̂(∅)·(1−2·abund_i):  PASS (0 failures)
+

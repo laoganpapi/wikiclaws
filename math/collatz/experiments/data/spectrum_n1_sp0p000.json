@@ -1,0 +1,53 @@
+{
+  "n": 1,
+  "s": 0.0,
+  "a_max": 120,
+  "phi3n": 2,
+  "doubly_stochastic": false,
+  "rowsum_err": 0.0,
+  "colsum_err": 0.33333333333333337,
+  "eigenvalues_real": [
+    1.0,
+    0.0
+  ],
+  "eigenvalues_imag": [
+    0.0,
+    0.0
+  ],
+  "moduli": [
+    1.0,
+    0.0
+  ],
+  "lambda1": [
+    1.0,
+    0.0
+  ],
+  "lambda2": [
+    0.0,
+    0.0
+  ],
+  "spectral_gap": 1.0,
+  "invariant_max": 0.6666666666666666,
+  "invariant_min": 0.3333333333333333,
+  "invariant_tv_to_uniform": 0.16666666666666666,
+  "P_on_V_coeffs": [
+    [
+      0.3333333333333333,
+      0.6666666666666666
+    ],
+    [
+      0.3333333333333333,
+      0.6666666666666666
+    ]
+  ],
+  "P_preserves_V_residual": 0.0,
+  "perp_largest_modulus": null,
+  "perp_gap": null,
+  "perp_spectrum_top10_moduli": [],
+  "cp_from_uniform_trajectory": [
+    0.5,
+    0.5555555555555555,
+    0.5555555555555555
+  ],
+  "1_over_phi3n": 0.5
+}
