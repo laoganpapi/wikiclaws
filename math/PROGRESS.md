@@ -147,7 +147,8 @@ User chose to **widen network policy**, but arXiv still returns 403 this session
 | Frankl polynomial method | ✅ done | Clean STRUCTURAL OBSTRUCTION (proved + verified): slice-rank(T_F) = \|F\|, vacuous against abundance. Diagnoses why cap-set machinery doesn't apply. |
 | Collatz digit-sum + 𝔽_p[T] | ⏳ running | Hamming-weight Lyapunov candidates + function-field analog cross-check (not 2-adic). |
 | Frankl Boolean Fourier | ✅ done | Third proved obstruction: rotation+sign-invariant quadratic spectral stats CANNOT determine min abundance (Boolean cube saturates Frankl AND has trivial spectrum). Karpas 2017 acknowledged as prior. |
-| Collatz transfer operator | ⏳ running | Spectral analysis of Frobenius–Perron operator on (ℤ/3^n ℤ)*; mod-3 obstruction in eigen-language (Phase 5b). |
+| Collatz transfer operator | ✅ done | Sharpest obstruction reformulation: mod-3 block = [[1/3,2/3],[1/3,2/3]] (eigvals {1,0}); Syracuse RV = unique invariant π_n (proved). Names the uniform-perp-gap path forward. |
+| Collatz digit-Lyapunov + 𝔽_p[T] | ⏳ running | (first Phase-5 wave; still running) |
 
 ### Emerging theme: FOUR PROVED OBSTRUCTIONS on Frankl (the methodological-survey contribution)
 | # | Method | Obstruction theorem (informal) |
