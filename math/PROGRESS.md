@@ -149,6 +149,8 @@ User chose to **widen network policy**, but arXiv still returns 403 this session
 | Frankl Boolean Fourier | ✅ done | Third proved obstruction: rotation+sign-invariant quadratic spectral stats CANNOT determine min abundance (Boolean cube saturates Frankl AND has trivial spectrum). Karpas 2017 acknowledged as prior. |
 | Frankl LP duality / Poonen | ✅ done | Sixth obstruction: correct dual = Reimer in multiplier form, degenerates on the cube; gap is exactly max-vs-mean (fails on 6 families). Surfaced the second-moment lever. |
 | Frankl Kruskal–Katona/shadows | ✅ done | Fifth obstruction: shifting breaks union-closure; AD/FKG wrong sign. ALL FIVE METHODS CONVERGE on the join-irreducible labelling. |
+| Frankl second-moment | ✅ done | Seventh obstruction: cube minimizes the power-mean ratio at ½; union-closure bounds U the wrong way. |
+| Frankl JI-labelling (frontier) | ⏳ finishing | Direct attack on the convergence chokepoint; H5 labelling-freedom sweep. (deliverable data committed; awaiting report) |
 | Collatz transfer operator | ✅ done | Sharpest obstruction reformulation: mod-3 block = [[1/3,2/3],[1/3,2/3]] (eigvals {1,0}); Syracuse RV = unique invariant π_n (proved). Names the uniform-perp-gap path forward. |
 | Collatz digit-Lyapunov + 𝔽_p[T] | ⏳ running | (first Phase-5 wave; still running) |
 
@@ -161,6 +163,7 @@ User chose to **widen network policy**, but arXiv still returns 403 this session
 | 4 | Boolean Fourier (quadratic statistics) | Rotation+sign-invariant W^k / influences / noise-stability cannot determine min abundance (Boolean cube extremizer has trivial spectrum). |
 | 5 | Kruskal–Katona / shadows / compression | Shifting does NOT preserve union-closure (and raises max-abundance 77% when it survives); AD/FKG fails (40.5% anti-correlated pairs); no new forcing inequality. |
 | 6 | LP duality / fractional relaxation | Correct dual = Reimer in multiplier form; degenerates on the cube (zero margin); residual gap is exactly max-vs-mean (6 families). Free-measure LP is the budget-mismatch trap. |
+| 7 | Second-moment / variance inequality | Σ freq² = Σ_{A,B}\|A∩B\| = 2mM₁−U; union-closure bounds U the wrong way. Cube minimizes the power-mean ratio at ½ (variance partner of Reimer). |
 
 **⭐ THE CONVERGENCE (strongest emergent result):** all five orthogonal methods bottom out at the SAME structural obstacle — **the labelling of join-irreducibles** (open problem F.2) — and the SAME universal extremizer (the Boolean cube 2^[n], where abundance = ½ and every invariant/spectral/shadow feature degenerates). The lesson: no coordinatewise / order / spectral / shadow / polynomial *invariant* can control abundance; the crux is the JI-fibre labelling. This is a genuine, publishable "delimiting the methods" contribution that also tells future work exactly where to aim. All [NOVELTY UNVERIFIED]; honest prior-art expected for #1 (Sawin) and #4 (Karpas 2017).
 
