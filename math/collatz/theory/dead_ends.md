@@ -309,3 +309,73 @@ $\le+1$, and reaching the next convergent plateau $q_{23}=1.375\times10^{11}$ ne
 **Lesson:** Never extrapolate an LMN-determined quantity by a 2-point power law across two decades of the
 variable; calibrate the *local* slope from the literature's own incremental data. The cheap $B$-lever is
 weaker than hoped because $2^{71}/(3\cdot2^{69})=2^{0.415}$ is far less than one doubling.
+
+---
+
+## 2026-06-03 — [collatz] — "Transfer-operator spectrum will give a new natural-density route"
+
+**Agent / author:** Alex Ye (AI-assisted).
+**Time invested:** ~3 hours of theory + computation.
+**Attack vector:** Set up the Frobenius--Perron operator $P_n$ for the
+Syracuse step on $(\mathbb{Z}/3^n\mathbb{Z})^\times$, compute its spectrum
+exactly for $n\le 8$, hope that (a) a uniform spectral gap or (b) a clean
+spectral identification of the mod-3 obstruction lets us bypass the
+Plancherel-style Lemma 6.2 errors and prove natural density.
+
+**Why it failed (as a route to a new bound, but the framing still helps):**
+- The spectral gap of $P_n$ is **large** ($1-|\lambda_2(8)|\approx 0.995$),
+  but **shrinking with $n$** ($|\lambda_2|$ grows from $0$ at $n=1$ to
+  $5\times 10^{-3}$ at $n=8$). Log-linear extrapolation suggests growth
+  $\sim 3^n$, which must turn over before $n=13$ (else $|\lambda_2|>1$).
+  **No analytic bound on the asymptotic gap is produced.**
+- The unique invariant distribution $\pi_n$ of $P_n$ is **exactly the
+  Syracuse RV** ($\nu_n^{\text{Syrac}}$); proved algebraically
+  (`theory/transfer_operator.md` §2.2) and verified to $10^{-16}$ for
+  $n\le 6$. So everything `syracuse_fft/results.md` says about $E_n$
+  diverging applies unchanged at the operator level. **The transfer-operator
+  view does NOT change the $E_n$ divergence finding.**
+- The mod-3 obstruction shows up as the explicit rank-1 2x2 block
+  $P_n|_V = \binom{1/3\ 2/3}{1/3\ 2/3}$ on the mod-3 indicator subspace,
+  with eigenvalue 1 and eigenvector $(1/3, 2/3)$. **This makes the
+  obstruction sharper** (one linear-algebra fact, no Plancherel needed)
+  but does NOT resolve it: the eigenvalue is permanently 1, by direct
+  computation. The descent-balance tilt $s^*$ and the equidistributing
+  tilt $s=-0.5$ both preserve the rank-1 structure with different fixed
+  marginals; no scalar tilt makes the marginal uniform.
+- Power iteration at $n=9$ converged to numerical zero ($\sim 10^{-16}$),
+  not the true $|\lambda_2|$ — deflation against the all-ones right
+  eigenvector was over-aggressive (the chain mixes very fast). ARPACK
+  gave $|\lambda_2(n=7)|\approx 8\times 10^{-3}$ vs. numpy's full eig
+  $\approx 3\times 10^{-3}$ — disagreement at the $\sim 30\%$ relative level
+  for eigenvalues this small. **Float64 is at the edge of reliability
+  here**; rigorous mpmath / interval arithmetic would be needed for
+  $n\ge 7$ headline numbers.
+
+**Counter-example (if any):** No counter-example; the framing is correct
+but produces *no new analytic bound*. It recasts the known obstruction in
+a cleaner form. The hope of a uniform $V^\perp$-gap as a route to
+"coset-respecting natural density" is consistent with the data but not
+proved; the data are also consistent with the perp-gap shrinking to 0.
+
+**Pointer to artifacts:**
+- `theory/transfer_operator.md` (full writeup, §10 honest bottom line)
+- `experiments/transfer_operator.py` (kernel + spectrum)
+- `experiments/transfer_operator_deep.py` (mod-3 / pi diagnostics)
+- `experiments/transfer_operator_validate.py` (pi_n = Syracuse RV proof)
+- `experiments/transfer_operator_final.py` (the data tables)
+- `experiments/data/spectrum_table_*.json` and `spectrum_summary.txt`
+
+**Verdict:** abandoned as a route to a *new* natural-density bound; kept
+as a cleaner *statement* of the existing obstruction. The mod-3 2x2 block
+(`theory/transfer_operator.md` Prop 3.1) and the invariant identification
+(Prop 2.1) survive and may be useful expositionally.
+
+**Lesson:** The "Markov chain / transfer-operator on $(\mathbb{Z}/3^n)^\times$"
+is the *forward* picture in operator-theoretic clothes — its stationary
+distribution IS Tao's Syracuse RV by an explicit shift-of-indices algebra
+(W-recursion = one Markov step at the boundary $m=n$, mod $3^n$). So no
+information is "added" by going adjoint. The mod-3 obstruction is robust
+across formulations and is, *qua* spectral block, the rank-1 matrix
+$\binom{1/3\ 2/3}{1/3\ 2/3}$. Future agents: don't expect the operator
+view to bypass the obstruction; it makes the obstruction explicit, but
+also makes its rigidity obvious.
