@@ -269,17 +269,84 @@ def branch_section(n):
 
 
 # --------------------------------------------------------------------------
+# (D) THE CORRECT non-abelian filtration: induced-from-trivial reps of U_n on the
+#     cosets U_n / U_n^{(k)} (U_n^{(k)} = ker(U_n -> (Z/3^k)^x)).  Concretely these
+#     are the coset-indicator subspaces V^(k) = span{ 1[x == r mod 3^k] }, which are
+#     EXACTLY P_n-invariant (transfer_operator.md sec3.1).  We confirm:
+#       - V^(k) invariant (leak ~ 0),
+#       - eigenvalue 1 sits in the BOTTOM block V^(1) (the mod-3 isotype),
+#       - every successive quotient V^(k)/V^(k-1) is NILPOTENT (spectral radius 0):
+#         i.e. the obstruction is confined to the trivial-on-quotient (mod-3) piece,
+#         and the entire complement of isotypes is nilpotent. This is the rigorous,
+#         group-theoretic localization of the obstruction the brief asked for.
+# --------------------------------------------------------------------------
+def induced_filtration(n):
+    Pf, U = kernel_float(n)
+    Ueye = np.eye(len(U))
+
+    def coset_basis(k):
+        m3 = 3 ** k
+        cols = {}
+        for i, u in enumerate(U):
+            cols.setdefault(u % m3, []).append(i)
+        B = np.zeros((len(U), len(cols)))
+        for j, (r, idxs) in enumerate(sorted(cols.items())):
+            for i in idxs:
+                B[i, j] = 1.0
+        Q, _ = np.linalg.qr(B)
+        return Q
+
+    rows = []
+    Qprev = None
+    for k in range(1, n + 1):
+        Q = coset_basis(k)
+        Pi = Q @ Q.T
+        leak = float(np.linalg.norm((Ueye - Pi) @ Pf @ Q))
+        blk = Q.T @ Pf @ Q
+        ev = np.abs(np.linalg.eigvals(blk))
+        sr = float(ev.max())
+        # successive-quotient action V^(k)/V^(k-1):  represent P|_{V^(k)} in a basis
+        # (basis of V^(k-1), then completion to V^(k)); the lower-right block is the
+        # quotient action (well-defined since V^(k-1) is invariant inside V^(k)).
+        if Qprev is not None:
+            d0 = Qprev.shape[1]
+            # extend Qprev to an orthonormal basis of V^(k) using cols of Q
+            Bcols = list(Qprev.T)
+            cur = Qprev.copy()
+            for col in Q.T:
+                cand = np.hstack([cur, col[:, None]])
+                if np.linalg.matrix_rank(cand, tol=1e-9) == cur.shape[1] + 1:
+                    cur = np.linalg.qr(cand)[0][:, :cur.shape[1] + 1]
+                    if cur.shape[1] == Q.shape[1]:
+                        break
+            Pblk = cur.T @ Pf @ cur          # P restricted to V^(k) in adapted basis
+            Quot = Pblk[d0:, d0:]            # lower-right = quotient action
+            qsr = float(np.abs(np.linalg.eigvals(Quot)).max()) if Quot.size else 0.0
+            qdim = int(Quot.shape[0])
+        else:
+            qsr, qdim = sr, int(Q.shape[1])
+        rows.append({"k": k, "dim_Vk": int(Q.shape[1]),
+                     "invariant_leak": leak, "block_spectral_radius": sr,
+                     "quotient_dim": qdim,
+                     "quotient_spectral_radius": qsr})
+        Qprev = Q
+    return {"n": n, "filtration": rows}
+
+
+# --------------------------------------------------------------------------
 def main():
     n_max = int(sys.argv[1]) if len(sys.argv) > 1 else 4
-    results = {"multiplicative": [], "affine": [], "branch": []}
+    results = {"multiplicative": [], "affine": [], "branch": [], "induced": []}
     for n in range(1, n_max + 1):
         print(f"=== n={n} ===", flush=True)
         A = multiplicative_decomposition(n)
         B = affine_orbit_decomposition(n)
         C = branch_section(n)
+        D = induced_filtration(n)
         results["multiplicative"].append(A)
         results["affine"].append(B)
         results["branch"].append(C)
+        results["induced"].append(D)
         print(f"  (A) mult-equivariance defect = {A['mult_equivariance_defect']:.4f}  "
               f"(>0 => abelian Fourier cannot diagonalize)")
         print(f"      mod3(sign)->trivial coupling = {A['mod3_to_trivial_coupling']:.4f}")
@@ -294,6 +361,13 @@ def main():
         print(f"  (C) section eigs = {C['section_eigs']}  "
               f"per-coset core radii = "
               f"{[round(C['per_coset_core'][r]['spectral_radius'],4) for r in (1,2)]}")
+        print(f"  (D) induced filtration V^(1)<...<V^(n) (CORRECT invariant blocks):")
+        for row in D["filtration"]:
+            print(f"      V^({row['k']}) dim={row['dim_Vk']:3d} "
+                  f"leak={row['invariant_leak']:.1e} "
+                  f"block_radius={row['block_spectral_radius']:.4f} | "
+                  f"quotient V^(k)/V^(k-1) dim={row['quotient_dim']:3d} "
+                  f"spec_radius={row['quotient_spectral_radius']:.4f}")
     with open(os.path.join(DATA, "collatz_isotypic.json"), "w") as f:
         json.dump(results, f, indent=2)
     print(f"\nWrote {os.path.join(DATA, 'collatz_isotypic.json')}")

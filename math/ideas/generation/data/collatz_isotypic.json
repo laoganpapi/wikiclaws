@@ -299,5 +299,107 @@
         }
       }
     }
+  ],
+  "induced": [
+    {
+      "n": 1,
+      "filtration": [
+        {
+          "k": 1,
+          "dim_Vk": 2,
+          "invariant_leak": 0.0,
+          "block_spectral_radius": 1.0,
+          "quotient_dim": 2,
+          "quotient_spectral_radius": 1.0
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "filtration": [
+        {
+          "k": 1,
+          "dim_Vk": 2,
+          "invariant_leak": 1.0029470241499347e-16,
+          "block_spectral_radius": 1.0,
+          "quotient_dim": 2,
+          "quotient_spectral_radius": 1.0
+        },
+        {
+          "k": 2,
+          "dim_Vk": 6,
+          "invariant_leak": 0.0,
+          "block_spectral_radius": 1.0,
+          "quotient_dim": 4,
+          "quotient_spectral_radius": 3.374904956305073e-17
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "filtration": [
+        {
+          "k": 1,
+          "dim_Vk": 2,
+          "invariant_leak": 1.7357639979993773e-16,
+          "block_spectral_radius": 0.9999999999999998,
+          "quotient_dim": 2,
+          "quotient_spectral_radius": 0.9999999999999998
+        },
+        {
+          "k": 2,
+          "dim_Vk": 6,
+          "invariant_leak": 1.409921113618468e-16,
+          "block_spectral_radius": 1.0,
+          "quotient_dim": 4,
+          "quotient_spectral_radius": 1.1487513583667928e-16
+        },
+        {
+          "k": 3,
+          "dim_Vk": 18,
+          "invariant_leak": 0.0,
+          "block_spectral_radius": 1.0,
+          "quotient_dim": 12,
+          "quotient_spectral_radius": 2.2236910659299266e-17
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "filtration": [
+        {
+          "k": 1,
+          "dim_Vk": 2,
+          "invariant_leak": 3.2088633332901653e-16,
+          "block_spectral_radius": 1.0,
+          "quotient_dim": 2,
+          "quotient_spectral_radius": 1.0
+        },
+        {
+          "k": 2,
+          "dim_Vk": 6,
+          "invariant_leak": 2.0845450202343216e-16,
+          "block_spectral_radius": 1.0,
+          "quotient_dim": 4,
+          "quotient_spectral_radius": 6.479993919140384e-17
+        },
+        {
+          "k": 3,
+          "dim_Vk": 18,
+          "invariant_leak": 2.7194902850334034e-16,
+          "block_spectral_radius": 0.9999999999999998,
+          "quotient_dim": 12,
+          "quotient_spectral_radius": 1.2619453304807544e-16
+        },
+        {
+          "k": 4,
+          "dim_Vk": 54,
+          "invariant_leak": 0.0,
+          "block_spectral_radius": 0.9999999999999994,
+          "quotient_dim": 36,
+          "quotient_spectral_radius": 4.4139495241784566e-17
+        }
+      ]
+    }
   ]
 }
