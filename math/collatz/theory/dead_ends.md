@@ -429,3 +429,67 @@ statistic that is bounded on the powers of two is automatically disqualified
 descent — never the pointwise strictness a proof needs. `[NOVELTY UNVERIFIED]`:
 $s(n)$ not decreasing is noted in Lagarias's survey; the systematic sweep + the
 pointwise-supermartingale audit appear new but were not exhaustively checked.
+
+---
+
+## 2026-06-03 — [collatz] — "Uniform perp-gap conjecture: a bounded $\|P_n|_{V^\perp}\|\le\rho<1$ gives coset-respecting natural density"
+
+**Agent / author:** Alex Ye (AI-assisted).
+**Time invested:** ~2 hours theory + exact-arithmetic computation.
+**Attack vector:** The `RED_TEAM_REPORT.md` §5c option (i) / `transfer_operator.md`
+§6 hope: prove a *uniform spectral gap* on $V^\perp$ (complement of the mod-3
+obstruction subspace $V=\mathrm{span}\{e_1,e_2\}$) — $\exists\,\rho<1$ with
+$\|P_n|_{V^\perp}\|\le\rho$ for all $n$ — to get exponential mixing on the
+non-obstructed part and hence "natural density up to the explicit mod-3 coset
+structure." Settle it RIGOROUSLY (exact rational arithmetic, exact charpoly over
+$\mathbb{Q}$), since the prior float64 spectrum was noise-limited at $|\lambda|\sim10^{-3}$.
+
+**Why it failed (the conjecture is TRUE in the strongest form and still useless):**
+- **Exact result:** $\chi_{P_n}(\lambda)=\lambda^{\varphi(3^n)-1}(\lambda-1)$,
+  verified exactly over $\mathbb{Q}$ for $n=1,\dots,5$. Every eigenvalue except the
+  single $\lambda=1$ is **exactly $0$**. So $\lambda_2^\perp(n)=0$ exactly:
+  $P_n-\Pi$ is **nilpotent**, index exactly $n$ (rank chain
+  $\mathrm{rank}(P_n^k)=2\cdot3^{n-1-k}$). The prior float64 $|\lambda_2|\sim
+  5\times10^{-3}$ and the "$3.0^n$/$3.7^n$ growth that must turn over" were
+  **pure numerical noise** — the true perp spectral radius is $0$, the strongest
+  possible uniform gap ($\rho=0$, gap $=1$).
+- **But it gives nothing.** The mod-3 obstruction does NOT live in $V^\perp$: it is
+  the $\lambda=1$ eigenvector $\pi_n|_V=(1/3,2/3)$, i.e. it lives in $V$. Killing
+  $V^\perp$ (or the whole nilpotent part) leaves $\mathrm{TV}(\pi_n,U)\ge1/6$ and
+  the diverging $E_n$ untouched. Exact rational $E_n$ ($1/9,3/7,150121/203889,\dots$)
+  match the FFT divergence to all printed digits — fast perp-mixing and $E_n\to\infty$
+  are consistent because they concern *different* pieces (rate vs. target).
+- **Two further traps.** (i) $V^\perp$ (standard inner product) is NOT $P_n$-invariant
+  ($P_n^\top V\not\subseteq V$, checked exactly), so $\|P_n|_{V^\perp}\|$ as a
+  restriction norm is ill-posed; the right object is the quotient $\mathbb{R}^{U_n}/V$,
+  on which $P_n$ is nilpotent. (ii) Spectral radius $0\ne$ norm contraction:
+  $\|P_n-\Pi\|_2$ exceeds $1$ for $n\ge3$ and GROWS ($0.89,1.21,1.33,1.45,1.55,1.64$),
+  with nilpotency index $=n\to\infty$. There is no $n$-uniform per-step
+  *operator-norm* contraction — mixing is finite-step but not $\rho$-contractive.
+
+**Counter-example (if any):** None; the conjecture is literally true ($\rho=0$). The
+failure is that its truth is inert — the obstruction is mislocated. Even the weaker
+"coset-respecting" target fails: $E_n\to\infty$ means $\pi_n$ is non-uniform *within*
+the unit coset, not only across mod-3 cosets.
+
+**Pointer to artifacts:**
+- `theory/perp_gap.md` (full writeup, §4 the decisive point, §5 break-attempt)
+- `experiments/perp_gap.py` (exact rational kernel + exact charpoly + quotient spectrum + nilpotent-norm transient)
+- `experiments/data/perpgap_exact.json`, `perpgap_norms.json`, `perpgap_summary.txt`
+
+**Verdict:** abandoned as a natural-density route. Resolves rigorously the open
+question left by the prior transfer-operator entry ("data consistent with perp-gap
+shrinking to 0"; "float64 at edge of reliability"): the exact answer is
+$\lambda_2^\perp\equiv0$, and this gives no bound. `RED_TEAM_REPORT.md` §5c option (i)
+is a dead end — not because the perp gap is too small but because it is maximal and in
+the wrong place.
+
+**Lesson:** A "uniform spectral gap on $V^\perp$" is the WRONG target. (1) The Collatz
+mod-3 obstruction is the $\lambda=1$ eigenvector (in $V$), so no perp gap can touch it.
+(2) Spectral radius $0$ (eigenvalues) $\ne$ operator-norm contraction (what a
+quantitative transport argument needs): a nilpotent chain mixes in finitely many steps
+yet can expand per step. (3) Always check the complement is actually invariant before
+"restricting"; here $V^\perp$ is not, and the well-posed object is the quotient.
+`[NOVELTY UNVERIFIED]`: nilpotency-mod-stationary of this projective-level chain is
+plausibly folklore (operator form of "the Syracuse law depends only on the last $n$
+valuations").

@@ -1,0 +1,50 @@
+perp_gap.py -- RIGOROUS verdict on the uniform perp-gap conjecture
+======================================================================
+VERDICT: lambda_2^perp(n) = 0 EXACTLY for all n tested (exact charpoly over Q).
+The conjectured uniform perp-gap holds in the STRONGEST form: rho = 0, gap = 1.
+P_n - Pi is NILPOTENT with index exactly n. Exact charpoly: lambda^(phi(3^n)-1)(lambda-1).
+The prior float64 |lambda_2| ~ 5e-3 ("shrinking, maybe ->1") was PURE NUMERICAL NOISE.
+
+BUT this does NOT yield natural density, for three rigorous reasons:
+ (1) The mod-3 obstruction lives in V (the lambda=1 eigenvector pi|_V=(1/3,2/3)),
+     NOT in V^perp. Killing V^perp leaves the obstruction untouched. E_n diverges.
+ (2) V^perp (standard inner product) is NOT P_n-invariant (P_n^T V not subset V),
+     so ||P_n|_Vperp|| as a restriction norm is ill-posed; the correct object is the
+     quotient R^{U_n}/V, on which P_n is nilpotent (spectral radius exactly 0).
+ (3) Spectral radius 0 is NOT operator-norm contraction: ||P_n - Pi||_2 > 1 for n>=3
+     and GROWS in n; nilpotency index = n grows. Mixing is finite-step, not rho-contractive.
+
+EXACT charpoly + E_n (exact rational, matches FFT results.md to all printed digits):
+  n | size | charpoly_full              | lambda2^perp | E_n
+  1 |    2 | lambda*(lambda-1)          | 0            | 0.111111  (= 1/9)
+  2 |    6 | lambda^5*(lambda-1)        | 0            | 0.428571  (= 3/7)
+  3 |   18 | lambda^17*(lambda-1)       | 0            | 0.736288  (= 150121/203889)
+  4 |   54 | lambda^53*(lambda-1)       | 0            | 1.045764
+  5 |  162 | lambda^161*(lambda-1)      | 0            | 1.356107
+  mod-3 marginal of pi_n = (1/3, 2/3) EXACTLY for every n.
+
+Rank chain (Jordan/nilpotency): rank(P_n^k) = 2*3^(n-1-k) for 0<=k<n, then 1.
+  n=4: 54 -> 18 -> 6 -> 2 -> 1     n=5: 162 -> 54 -> 18 -> 6 -> 2 -> 1
+
+Nilpotent-part transient operator norm (float64 from exact rationals, ||.||_2):
+  n   ||P-Pi||   sup_j||(P-Pi)^j||   nilp_index
+  1   0.00000    0.00000             1
+  2   0.89087    0.89087             2
+  3   1.20767    1.20767             3
+  4   1.33333    1.33333             4
+  5   1.44460    1.44460             5
+  6   1.54771    1.54771             6
+  7   1.64425    1.64425             7
+  -> no uniform rho<1 with ||P_n - Pi||_2 <= rho; single-step norm grows toward ~2.
+
+CONSISTENCY with FFT E_n: PASS (exact independent rational arithmetic reproduces
+0.111111, 0.428571, 0.736288, 1.045764, 1.356107). lambda2^perp=0 and E_n->inf are
+consistent: they describe orthogonal pieces (mixing rate vs. non-uniform target pi_n).
+
+BOTTOM LINE: the uniform perp-gap conjecture is TRUE (rho=0) and INERT. The Collatz
+natural-density obstruction is the lambda=1 eigenvector pi_n (in V) plus the absence of
+n-uniform norm contraction -- NOT any perp eigenvalue. RED_TEAM_REPORT.md sec 5c option
+(i) is a dead end. [NOVELTY UNVERIFIED] No proof of Collatz; structural result only.
+
+(Note: rerunning `python3 perp_gap.py N M` regenerates this file from exact_results 1..N;
+ this canonical version records the full n<=5 exact run.)

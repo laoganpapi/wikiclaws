@@ -1,0 +1,107 @@
+[
+  {
+    "n": 1,
+    "size": 2,
+    "charpoly_full": "lambda*(lambda - 1)",
+    "charpoly_quotient_on_RmodV": "1",
+    "quotient_nilpotent": true,
+    "lambda2_perp_exact": "0",
+    "Vperp_standard_is_P_invariant": true,
+    "E_n_exact": "1/9",
+    "E_n_float": 0.1111111111111111,
+    "mod3_marginal": [
+      "1/3",
+      "2/3"
+    ],
+    "rank_chain": [
+      1,
+      1
+    ]
+  },
+  {
+    "n": 2,
+    "size": 6,
+    "charpoly_full": "lambda**5*(lambda - 1)",
+    "charpoly_quotient_on_RmodV": "lambda**4",
+    "quotient_nilpotent": true,
+    "lambda2_perp_exact": "0",
+    "Vperp_standard_is_P_invariant": false,
+    "E_n_exact": "3/7",
+    "E_n_float": 0.42857142857142855,
+    "mod3_marginal": [
+      "1/3",
+      "2/3"
+    ],
+    "rank_chain": [
+      2,
+      1,
+      1
+    ]
+  },
+  {
+    "n": 3,
+    "size": 18,
+    "charpoly_full": "lambda**17*(lambda - 1)",
+    "charpoly_quotient_on_RmodV": "lambda**16",
+    "quotient_nilpotent": true,
+    "lambda2_perp_exact": "0",
+    "Vperp_standard_is_P_invariant": false,
+    "E_n_exact": "150121/203889",
+    "E_n_float": 0.7362878821319443,
+    "mod3_marginal": [
+      "1/3",
+      "2/3"
+    ],
+    "rank_chain": [
+      6,
+      2,
+      1,
+      1
+    ]
+  },
+  {
+    "n": 4,
+    "size": 54,
+    "charpoly_full": "lambda**53*(lambda - 1)",
+    "charpoly_quotient_on_RmodV": "lambda**52",
+    "quotient_nilpotent": true,
+    "lambda2_perp_exact": "0",
+    "Vperp_standard_is_P_invariant": false,
+    "E_n_exact": "6774297329168801389/6477844264020761961",
+    "E_n_float": 1.045764154410843,
+    "mod3_marginal": [
+      "1/3",
+      "2/3"
+    ],
+    "rank_chain": [
+      18,
+      6,
+      2,
+      1,
+      1
+    ]
+  },
+  {
+    "n": 5,
+    "size": 162,
+    "charpoly_full": "lambda**161*(lambda - 1)  [independently confirmed via direct charpoly]",
+    "charpoly_quotient_on_RmodV": "lambda**160  [= full minus V-block {1,0}]",
+    "quotient_nilpotent": true,
+    "lambda2_perp_exact": "0",
+    "Vperp_standard_is_P_invariant": false,
+    "E_n_exact": "21767227808128217933970165312039263021599093630947183403990681/16051256160426334530088626483776674211881689458222682248448609",
+    "E_n_float": 1.3561074342452,
+    "mod3_marginal": [
+      "1/3",
+      "2/3"
+    ],
+    "rank_chain": [
+      54,
+      18,
+      6,
+      2,
+      1,
+      1
+    ]
+  }
+]
