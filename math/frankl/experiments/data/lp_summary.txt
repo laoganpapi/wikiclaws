@@ -35,3 +35,11 @@ families where cover certificate FAILS (<1/2): 6
 min cover-certified abundance LB: 0.4
   attained by: [[3], [4], [2, 4], [3, 4], [2, 3, 4]]
   cover-fail examples (LP relaxation gap): [{"sets": [[2], [3], [1, 3], [2, 3], [1, 2, 3]], "cover_certified_lb": 0.45, "true_abundance": 0.8, "m": 5, "n_ground": 4}, {"sets": [[3], [4], [0, 4], [1, 4], [3, 4], [0, 1, 4], [0, 3, 4], [1, 3, 4], [0, 1, 3, 4]], "cover_certified_lb": 0.4666666666666667, "true_abundance": 0.8888888888888888, "m": 9, "n_ground": 5}, {"sets": [[3], [4], [1, 4], [2, 3], [2, 4], [3, 4], [1, 2, 4], [1, 3, 4], [2, 3, 4], [1, 2, 3, 4]], "cover_certified_lb": 0.46, "true_abundance": 0.8, "m": 10, "n_ground": 5}, {"sets": [[3], [4], [0, 3], [1, 4], [3, 4], [0, 1, 4], [0, 3, 4], [1, 3, 4], [0, 1, 3, 4]], "cover_certified_lb": 0.4666666666666667, "true_abundance": 0.7777777777777778, "m": 9, "n_ground": 5}, {"sets": [[4], [0, 1], [3, 4], [0, 1, 4], [0, 1, 3, 4]], "cover_certified_lb": 0.48, "true_abundance": 0.8, "m": 5, "n_ground": 5}, {"sets": [[3], [4], [2, 4], [3, 4], [2, 3, 4]], "cover_certified_lb": 0.4, "true_abundance": 0.8, "m": 5, "n_ground": 5}]
+
+--- (Sec.6) power-mean candidate  max>= (sum ab^2)/(sum ab) ---
+families where power-mean < 1/2 (candidate FAILS): 6
+min power-mean LB: 0.4444444444444444
+  attained by: [[], [4], [0, 1, 2, 3, 4]]
+  (cube stays at exactly 1/2, but the RAW power-mean still dips
+   below 1/2 -> NOT a sufficient certificate on its own; a genuine
+   union-closure lower bound on sum_i freq_i^2 would be needed.)

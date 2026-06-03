@@ -450,6 +450,21 @@
       4
     ]
   ],
+  "power_mean_below_half": 6,
+  "min_power_mean_lb": 0.4444444444444444,
+  "min_power_mean_family": [
+    [],
+    [
+      4
+    ],
+    [
+      0,
+      1,
+      2,
+      3,
+      4
+    ]
+  ],
   "max_gap_true_minus_minmax": 0.9411764705882353,
   "max_gap_family": {
     "sets": [
