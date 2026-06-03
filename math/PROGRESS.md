@@ -146,6 +146,8 @@ User chose to **widen network policy**, but arXiv still returns 403 this session
 |-------|--------|-------|
 | Frankl polynomial method | ✅ done | Clean STRUCTURAL OBSTRUCTION (proved + verified): slice-rank(T_F) = \|F\|, vacuous against abundance. Diagnoses why cap-set machinery doesn't apply. |
 | Collatz digit-sum + 𝔽_p[T] | ⏳ running | Hamming-weight Lyapunov candidates + function-field analog cross-check (not 2-adic). |
+| Frankl Boolean Fourier | ⏳ running | Walsh–Hadamard spectrum of 1_F vs abundance; influences, noise stability (Phase 5b). |
+| Collatz transfer operator | ⏳ running | Spectral analysis of Frobenius–Perron operator on (ℤ/3^n ℤ)*; mod-3 obstruction in eigen-language (Phase 5b). |
 
 ### Frankl polynomial method (polynomial_method.md) — proved obstruction
 - **Theorem 2.1:** slice-rank(T_F) = |F| (lower bound via identity submatrix on {(C,C):C∈F}; upper = standard CLP). Verified exactly: 1664/1664 at n≤4, 8561/8561 at n=5, zero deviations across fields 𝔽_{2,3,5,7}. The CLP-style slice-rank bound carries NO abundance information.
