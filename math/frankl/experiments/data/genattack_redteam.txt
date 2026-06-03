@@ -1,0 +1,44 @@
+GENERATOR-ASYMMETRIC ATTACK — RED-TEAM / BREAK-ATTEMPT LOG
+=========================================================
+Target under attack: the COMBINED non-symmetric pick rule
+  (i) if some generator is a singleton {x}: pick x   [PROVABLE, classical]
+  (ii) else: pick x = argmax_x invsize(x), invsize(x)=Σ_{g∋x} 1/|g|  [NO PROOF]
+On the n<=5 census (29,723 families): 0 failures, min pick-abundance exactly 0.5.
+This is FLAGGED [EXTRAORDINARY — PRESUMED FLAWED PENDING RED-TEAM].
+Frankl is OPEN; bounded-n success is NOT a proof. The invsize branch has no
+structural justification and is presumed to be a finite-n coincidence.
+
+BREAK ATTEMPTS (all on the invsize branch, i.e. no-singleton families):
+
+1. Exhaustive n<=5 (29,723 families): invsize branch 0 failures / 5,982
+   no-singleton families, min exactly 0.5.
+
+2. Random no-singleton families n=6,7,8 (generators of size 2..4):
+   400,000 families tested, 0 failures, worst >> 0.5 (generic families abundant).
+
+3. Targeted near-extremal no-singleton families (all 2-subsets of [t] = M_t
+   families, M3xM3 products, dense 2-generator graphs on [5..7]):
+   200,019 families tested, 0 failures, worst 0.5192.
+
+4. Exhaustive n=6, generators of size <=3, up to 4 generators (after closure):
+   57,560 DISTINCT no-singleton families, 0 failures, worst exactly 0.5.
+
+5. Hand-built adversarial families replicating the n=5 singleton-branch
+   failure structure (an element in many small generators that unions away its
+   advantage), but WITHOUT singletons: no counterexample found.
+
+WHY NO SIMPLE PROOF EXISTS (the structural obstruction):
+  - Candidate separable inequality  abundance(x) >= invsize(x)/|G|  is FALSE
+    (12 / 29,723 violations).  So the invsize pick does NOT certify via a
+    per-element separable bound.
+  - abundance(x) = |Fib(x)|/|L| and Fib(x) = ⋃_{g∋x} ↑g  (verified, 0/148,164
+    violations): abundance is a UNION (overlap) size, NOT a separable sum of
+    generator contributions.  The invsize score is a SEPARABLE proxy; it can
+    track the union argmax empirically but there is no reason the argmax of a
+    separable proxy equals the argmax of a non-separable union size.  This is
+    exactly the barrier's prediction: the true quantity is non-separable.
+
+VERDICT: invsize branch is an UNPROVEN heuristic that survives all n<=5 +
+~660,000 larger-n tests but has no proof and a clear reason (non-separability)
+to distrust.  NOT a proof of Frankl.  The singleton branch is the only
+provable part and it is the classical singleton case.

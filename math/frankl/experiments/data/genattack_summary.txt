@@ -1,0 +1,56 @@
+========================================================================
+GENERATOR-INCIDENCE (NON-SYMMETRIC) ATTACK — SUMMARY
+========================================================================
+Total UC families (|F|>=2, n<=5, orbit reps): 29723
+Reconstruction-from-generators violations: 0  (abundance via L = {{⋃S : S⊆G}} == direct)
+
+------------------------------------------------------------------------
+(b) HEURISTIC: 'most frequent GENERATOR element is >= 1/2-abundant in F'
+------------------------------------------------------------------------
+  families where it FAILS (true ab of that element < 1/2): 356
+  min true-abundance of the most-frequent-generator element: 0.333333
+  (the heuristic picks the genuinely most-abundant element in 20909/29723 families)
+  worst example: gens=['0b1', '0b10', '0b100', '0b1111', '0b10000', '0b11001', '0b11010', '0b11100'] freqs=[13, 13, 13, 8, 15] gx*=3 heur_ab=0.3333 true_ab=0.6250
+  first failures (<1/2):
+    n=4 gens=['0b1', '0b10', '0b100', '0b1001', '0b1010', '0b1100'] gfreq=[2, 2, 2, 3] gx*=3 heur_ab=0.4667 true_ab=0.5333 true_x=0
+    n=4 gens=['0b1', '0b10', '0b100', '0b1001', '0b1010', '0b1100'] gfreq=[2, 2, 2, 3] gx*=3 heur_ab=0.4667 true_ab=0.5333 true_x=0
+    n=4 gens=['0b100', '0b101', '0b111', '0b1000', '0b1010', '0b1011'] gfreq=[3, 3, 3, 3] gx*=0 heur_ab=0.4545 true_ab=0.6364 true_x=2
+    n=4 gens=['0b100', '0b101', '0b111', '0b1000', '0b1010', '0b1011'] gfreq=[3, 3, 3, 3] gx*=0 heur_ab=0.4545 true_ab=0.6364 true_x=2
+    n=4 gens=['0b100', '0b111', '0b1000', '0b1011'] gfreq=[2, 2, 2, 2] gx*=0 heur_ab=0.4286 true_ab=0.5714 true_x=2
+    n=4 gens=['0b100', '0b111', '0b1000', '0b1011'] gfreq=[2, 2, 2, 2] gx*=0 heur_ab=0.4286 true_ab=0.5714 true_x=2
+    n=5 gens=['0b100', '0b101', '0b110', '0b1000', '0b1001', '0b1010', '0b10000', '0b10011'] gfreq=[3, 3, 3, 3, 2] gx*=0 heur_ab=0.4815 true_ab=0.5926 true_x=2
+    n=5 gens=['0b1', '0b10', '0b100', '0b1001', '0b1010', '0b1100', '0b10000'] gfreq=[2, 2, 2, 3, 1] gx*=3 heur_ab=0.4667 true_ab=0.5333 true_x=0
+    n=5 gens=['0b1', '0b10', '0b100', '0b1000', '0b10001', '0b10010', '0b10100', '0b11000'] gfreq=[2, 2, 2, 2, 4] gx*=4 heur_ab=0.4839 true_ab=0.5161 true_x=0
+    n=5 gens=['0b1', '0b10', '0b100', '0b1000', '0b10001', '0b10010', '0b10100', '0b11000'] gfreq=[2, 2, 2, 2, 4] gx*=4 heur_ab=0.4839 true_ab=0.5161 true_x=0
+
+------------------------------------------------------------------------
+(b) ASYMMETRIC WEIGHTED 'abundance' statistics (generator-dependent w):
+------------------------------------------------------------------------
+  w(g)=|g|                 : min over families = 0.200000, #(<1/2) = 180
+        worst: gens=['0b1', '0b10', '0b100', '0b1000', '0b10000'] freqs=[16, 16, 16, 16, 16] val=0.2000 true_ab=0.5000
+  w(g)=1/|g|               : min over families = 0.200000, #(<1/2) = 3116
+        worst: gens=['0b1', '0b10', '0b100', '0b1000', '0b10000'] freqs=[16, 16, 16, 16, 16] val=0.2000 true_ab=0.5000
+  w(g)=|↑g| in L           : min over families = 0.200000, #(<1/2) = 2822
+        worst: gens=['0b1', '0b10', '0b100', '0b1000', '0b10000'] freqs=[16, 16, 16, 16, 16] val=0.2000 true_ab=0.5000
+  w(g)=1+#{gens ⊊ g}       : min over families = 0.200000, #(<1/2) = 192
+        worst: gens=['0b1', '0b10', '0b100', '0b1000', '0b10000'] freqs=[16, 16, 16, 16, 16] val=0.2000 true_ab=0.5000
+
+------------------------------------------------------------------------
+(b+c) COMBINED NON-SYMMETRIC PICK RULE  [EXTRAORDINARY — PRESUMED FLAWED]
+      singleton-generator branch (PROVABLE)  /  invsize-argmax branch (UNPROVEN)
+------------------------------------------------------------------------
+  combined rule over all 29723 families:
+    #fail(<1/2): 0    min pick-abundance: 0.500000    #equality(=1/2): 377
+    worst: gens=['0b1'] freqs=[1] pick=0 ab=0.5000
+  singleton branch: 23741 families, #fail=0, min=0.500000  (provable: {x}∈F ⇒ freq(x)≥|F|/2 via A↦A∪{x})
+  invsize branch (no-singleton): 5982 families, #fail=0, min=0.500000  (NO PROOF — heuristic)
+
+------------------------------------------------------------------------
+DISCIPLINE GATE — Boolean cubes 2^[k] (must be EXACTLY 1/2 if a proof):
+------------------------------------------------------------------------
+  k=1 m=2 ngens=1 true_ab=0.500000 comb_ab=0.500000 heur_ab=0.500000 w_size=1.000000 w_invsize=1.000000 w_filt=1.000000 w_lc=1.000000
+  k=2 m=4 ngens=2 true_ab=0.500000 comb_ab=0.500000 heur_ab=0.500000 w_size=0.500000 w_invsize=0.500000 w_filt=0.500000 w_lc=0.500000
+  k=3 m=8 ngens=3 true_ab=0.500000 comb_ab=0.500000 heur_ab=0.500000 w_size=0.333333 w_invsize=0.333333 w_filt=0.333333 w_lc=0.333333
+  k=4 m=16 ngens=4 true_ab=0.500000 comb_ab=0.500000 heur_ab=0.500000 w_size=0.250000 w_invsize=0.250000 w_filt=0.250000 w_lc=0.250000
+  k=5 m=32 ngens=5 true_ab=0.500000 comb_ab=0.500000 heur_ab=0.500000 w_size=0.200000 w_invsize=0.200000 w_filt=0.200000 w_lc=0.200000
+========================================================================

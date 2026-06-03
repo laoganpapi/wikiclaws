@@ -1,0 +1,1 @@
+{"n": 1, "m": 2, "ngens": 1, "gen_masks": [1], "freqs": [1], "gfreq": [1], "true_ab": 0.5, "true_x": 0, "recon_ok": true, "gx_star": 0, "heur_ab": 0.5, "heur_picks_true": true, "has_singleton": true, "comb_pick": 0, "comb_ab": 0.5, "iv_pick": 0, "iv_ab": 0.5, "w_size_v": 1.0, "w_invsize_v": 1.0, "w_filt_v": 1.0, "w_lc_v": 1.0}
