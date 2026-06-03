@@ -153,7 +153,18 @@ User chose to **widen network policy**, but arXiv still returns 403 this session
 | Frankl JI-overlap (culmination) | ✅ done | 8th obstruction = BARRIER: ↑a∩↑b=↑(a∨b) tautology; P₂=OVL=M₂; no symmetric convex moment can prove Frankl. |
 | Frankl generator-asymmetric | ✅ done | Barrier EXTENDS to separable generator methods; one presumed-flawed selector (0 ctrex in 657K, but false certificate). |
 | Collatz digit-Lyapunov+𝔽_p[T] | ✅ salvaged | Re-validated bit-for-bit. ℤ digit stats: clean negative (magnitude-blind + average-only descent). 𝔽₂[T]: degree is a Lyapunov ⇒ analog provably converges; disanalogy = archimedean/2-adic decoupling. |
-| Collatz uniform perp-gap (frontier) | ⏳ running | Does ‖P_n\|_{V⊥}‖ ≤ ρ<1 uniformly? (Collatz analog of the JI-overlap crux; conditional natural-density if true). |
+| Collatz uniform perp-gap (frontier) | ✅ done | Rigorous (exact rational): λ₂≡0, P_n−Π nilpotent. Perp-gap "true but useless"; obstruction is the non-uniform stationary π_n, not a perp eigenvalue. Corrected prior float64 artifact. |
+
+## Phase 6 — Consolidation into papers
+| Agent | Status | Task |
+|-------|--------|------|
+| Frankl paper upgrade | ⏳ running | Fold in the BARRIER theorem + cube-uniqueness + 8-method "delimiting the methods" survey. |
+| Collatz paper upgrade | ⏳ running | Fold in the exact transfer-operator obstruction + function-field diagnostic + digit-Lyapunov negative. |
+
+### Both frontiers now rigorously characterized (no proof, no improved bound)
+- **Frankl:** BARRIER theorem (8 methods = symmetric convex moments, all flat-minimized by the cube at ½) + cube-uniqueness (verified n≤5) + the barrier extends to separable generator methods. Residual crux = non-separable JI-fibre overlaps. One presumed-flawed selector (0 ctrex/657K, false certificate).
+- **Collatz:** mod-3 obstruction = exact 2×2 block; the obstruction is the non-uniform stationary π_n (Syracuse RV), TV≥1/6; perp-gap rigorously dead; function-field analog converges (degree Lyapunov) ⇒ the difficulty is archimedean/2-adic decoupling.
+- **Meta-lesson (honest):** ~30 agents across ~12 paradigms confirm both problems need a genuinely NEW idea (non-moment for Frankl; an argument exploiting the exact π_n structure for Collatz), not parallel search over known techniques.
 | Frankl JI-labelling (frontier) | ✅ done | ⭐ CROWN RESULT: Boolean cube is the UNIQUE Frankl extremal lattice (verified 13,734 iso classes n≤5). Reconstruction identity Fib(x)=⋃↑j. Closing inequality identified (JI-filter overlap). |
 
 ## ⭐ STRONGEST RESULT: Frankl structural reformulation (join_irreducible_labelling.md)
