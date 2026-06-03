@@ -1,0 +1,33 @@
+{"n": 3, "m": 2, "ab": 0.5, "maxji": 0.5, "maxco": 1.0, "max_mi": 0.0, "principal": {"0": true, "1": true, "2": true}, "freq_sorted": [1, 1, 1]}
+{"n": 3, "m": 3, "ab": 0.6666666666666666, "maxji": 0.6666666666666666, "maxco": 0.6666666666666666, "max_mi": 0.6666666666666666, "principal": {"0": true, "1": true, "2": true}, "freq_sorted": [2, 1, 1]}
+{"n": 3, "m": 3, "ab": 0.6666666666666666, "maxji": 0.6666666666666666, "maxco": 0.6666666666666666, "max_mi": 0.6666666666666666, "principal": {"0": true, "1": true, "2": true}, "freq_sorted": [2, 2, 1]}
+{"n": 3, "m": 3, "ab": 0.6666666666666666, "maxji": 0.6666666666666666, "maxco": 0.6666666666666666, "max_mi": 0.6666666666666666, "principal": {"0": true, "1": true, "2": true}, "freq_sorted": [2, 2, 1]}
+{"n": 3, "m": 4, "ab": 0.75, "maxji": 0.75, "maxco": 0.5, "max_mi": 0.75, "principal": {"0": true, "1": true, "2": true}, "freq_sorted": [3, 2, 1]}
+{"n": 3, "m": 4, "ab": 0.5, "maxji": 0.5, "maxco": 0.5, "max_mi": 0.5, "principal": {"0": true, "1": true, "2": true}, "freq_sorted": [2, 2, 2]}
+{"n": 3, "m": 4, "ab": 0.75, "maxji": 0.5, "maxco": 0.5, "max_mi": 0.5, "principal": {"0": true, "1": true, "2": false}, "freq_sorted": [3, 2, 2]}
+{"n": 3, "m": 4, "ab": 0.75, "maxji": 0.5, "maxco": 0.5, "max_mi": 0.5, "principal": {"0": true, "1": true, "2": false}, "freq_sorted": [3, 2, 2]}
+{"n": 3, "m": 5, "ab": 0.6, "maxji": 0.6, "maxco": 0.4, "max_mi": 0.6, "principal": {"0": true, "1": true, "2": false}, "freq_sorted": [3, 3, 2]}
+{"n": 3, "m": 5, "ab": 0.6, "maxji": 0.4, "maxco": 0.4, "max_mi": 0.4, "principal": {"0": false, "1": false, "2": false}, "freq_sorted": [3, 3, 3]}
+{"n": 3, "m": 5, "ab": 0.8, "maxji": 0.8, "maxco": 0.4, "max_mi": 0.4, "principal": {"0": true, "1": true, "2": true}, "freq_sorted": [4, 2, 2]}
+{"n": 3, "m": 5, "ab": 0.8, "maxji": 0.8, "maxco": 0.4, "max_mi": 0.4, "principal": {"0": true, "1": true, "2": true}, "freq_sorted": [4, 2, 2]}
+{"n": 3, "m": 6, "ab": 0.6666666666666666, "maxji": 0.6666666666666666, "maxco": 0.3333333333333333, "max_mi": 0.5, "principal": {"0": true, "1": true, "2": true}, "freq_sorted": [4, 3, 2]}
+{"n": 3, "m": 6, "ab": 0.6666666666666666, "maxji": 0.6666666666666666, "maxco": 0.3333333333333333, "max_mi": 0.3333333333333333, "principal": {"0": false, "1": false, "2": true}, "freq_sorted": [4, 3, 3]}
+{"n": 3, "m": 6, "ab": 0.6666666666666666, "maxji": 0.6666666666666666, "maxco": 0.3333333333333333, "max_mi": 0.3333333333333333, "principal": {"0": false, "1": false, "2": true}, "freq_sorted": [4, 3, 3]}
+{"n": 3, "m": 7, "ab": 0.5714285714285714, "maxji": 0.5714285714285714, "maxco": 0.2857142857142857, "max_mi": 0.2857142857142857, "principal": {"0": true, "1": true, "2": false}, "freq_sorted": [4, 4, 3]}
+{"n": 3, "m": 7, "ab": 0.5714285714285714, "maxji": 0.5714285714285714, "maxco": 0.2857142857142857, "max_mi": 0.2857142857142857, "principal": {"0": true, "1": true, "2": false}, "freq_sorted": [4, 4, 3]}
+{"n": 3, "m": 8, "ab": 0.5, "maxji": 0.5, "maxco": 0.25, "max_mi": 0.25, "principal": {"0": true, "1": true, "2": true}, "freq_sorted": [4, 4, 4]}
+{"n": 3, "m": 8, "ab": 0.5, "maxji": 0.5, "maxco": 0.25, "max_mi": 0.25, "principal": {"0": true, "1": true, "2": true}, "freq_sorted": [4, 4, 4]}
+{"n": 3, "m": 6, "ab": 0.6666666666666666, "maxji": 0.6666666666666666, "maxco": 0.3333333333333333, "max_mi": 0.5, "principal": {"0": true, "1": true, "2": true}, "freq_sorted": [4, 3, 2]}
+{"n": 3, "m": 5, "ab": 0.6, "maxji": 0.4, "maxco": 0.4, "max_mi": 0.4, "principal": {"0": false, "1": false, "2": false}, "freq_sorted": [3, 3, 3]}
+{"n": 3, "m": 5, "ab": 0.6, "maxji": 0.6, "maxco": 0.4, "max_mi": 0.6, "principal": {"0": true, "1": true, "2": false}, "freq_sorted": [3, 3, 2]}
+{"n": 3, "m": 4, "ab": 0.5, "maxji": 0.5, "maxco": 0.5, "max_mi": 0.5, "principal": {"0": true, "1": true, "2": true}, "freq_sorted": [2, 2, 2]}
+{"n": 3, "m": 4, "ab": 0.75, "maxji": 0.75, "maxco": 0.5, "max_mi": 0.75, "principal": {"0": true, "1": true, "2": true}, "freq_sorted": [3, 2, 1]}
+{"n": 3, "m": 5, "ab": 0.6, "maxji": 0.6, "maxco": 0.4, "max_mi": 0.6, "principal": {"0": true, "1": true, "2": true}, "freq_sorted": [3, 3, 1]}
+{"n": 3, "m": 5, "ab": 0.6, "maxji": 0.6, "maxco": 0.4, "max_mi": 0.6, "principal": {"0": true, "1": true, "2": true}, "freq_sorted": [3, 3, 1]}
+{"n": 3, "m": 3, "ab": 0.6666666666666666, "maxji": 0.6666666666666666, "maxco": 0.6666666666666666, "max_mi": 0.6666666666666666, "principal": {"0": true, "1": true, "2": true}, "freq_sorted": [2, 1, 1]}
+{"n": 3, "m": 2, "ab": 0.5, "maxji": 0.5, "maxco": 1.0, "max_mi": 0.0, "principal": {"0": true, "1": true}, "freq_sorted": [1, 1]}
+{"n": 3, "m": 3, "ab": 0.6666666666666666, "maxji": 0.6666666666666666, "maxco": 0.6666666666666666, "max_mi": 0.6666666666666666, "principal": {"0": null, "1": true, "2": true}, "freq_sorted": [2, 1, 0]}
+{"n": 3, "m": 3, "ab": 0.6666666666666666, "maxji": 0.6666666666666666, "maxco": 0.6666666666666666, "max_mi": 0.6666666666666666, "principal": {"0": null, "1": true, "2": true}, "freq_sorted": [2, 1, 0]}
+{"n": 3, "m": 4, "ab": 0.5, "maxji": 0.5, "maxco": 0.5, "max_mi": 0.5, "principal": {"0": true, "1": true}, "freq_sorted": [2, 2]}
+{"n": 3, "m": 4, "ab": 0.5, "maxji": 0.5, "maxco": 0.5, "max_mi": 0.5, "principal": {"0": true, "1": true}, "freq_sorted": [2, 2]}
+{"n": 3, "m": 2, "ab": 0.5, "maxji": 0.5, "maxco": 1.0, "max_mi": 0.0, "principal": {"0": null, "1": null, "2": true}, "freq_sorted": [1, 0, 0]}

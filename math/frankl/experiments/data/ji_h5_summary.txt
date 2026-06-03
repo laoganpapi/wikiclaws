@@ -1,0 +1,103 @@
+========================================================================
+H5: LABELLING FREEDOM on a FIXED abstract lattice (Alex Ye)
+[NOVELTY UNVERIFIED]  no proof claimed
+========================================================================
+exact lattice-iso classes (|L|, n<=5): 13734
+global min over classes of minab(L): 0.5000
+classes with minab(L) < 1/2 (would refute Frankl): 0
+classes with minab(L) == 1/2 EXACTLY (worst label is cube-like): 5
+classes with minab(L) > 1/2 (cone-forced / non-distributive heavy): 13729
+
+Distribution of worst-labelling abundance minab(L) (rounded):
+    minab=0.5000 : 5 classes
+    minab=0.5161 : 1 classes
+    minab=0.5294 : 2 classes
+    minab=0.5333 : 3 classes
+    minab=0.5517 : 4 classes
+    minab=0.5556 : 12 classes
+    minab=0.5600 : 5 classes
+    minab=0.5625 : 3 classes
+    minab=0.5652 : 4 classes
+    minab=0.5714 : 20 classes
+    minab=0.5769 : 18 classes
+    minab=0.5789 : 11 classes
+    minab=0.5833 : 36 classes
+    minab=0.5882 : 22 classes
+    minab=0.5909 : 34 classes
+    minab=0.5926 : 12 classes
+    minab=0.6000 : 141 classes
+    minab=0.6087 : 94 classes
+    minab=0.6111 : 82 classes
+    minab=0.6154 : 68 classes
+    minab=0.6190 : 157 classes
+    minab=0.6250 : 223 classes
+    minab=0.6316 : 267 classes
+    minab=0.6364 : 259 classes
+    minab=0.6400 : 24 classes
+    minab=0.6429 : 205 classes
+    minab=0.6471 : 381 classes
+    minab=0.6500 : 364 classes
+    minab=0.6522 : 84 classes
+    minab=0.6667 : 1646 classes
+    minab=0.6818 : 84 classes
+    minab=0.6842 : 459 classes
+    minab=0.6875 : 689 classes
+    minab=0.6923 : 493 classes
+    minab=0.6957 : 25 classes
+    minab=0.7000 : 437 classes
+    minab=0.7059 : 641 classes
+    minab=0.7143 : 789 classes
+    minab=0.7222 : 373 classes
+    minab=0.7273 : 425 classes
+    minab=0.7333 : 641 classes
+    minab=0.7368 : 169 classes
+    minab=0.7500 : 1150 classes
+    minab=0.7619 : 17 classes
+    minab=0.7647 : 232 classes
+    minab=0.7692 : 503 classes
+    minab=0.7778 : 313 classes
+    minab=0.7857 : 380 classes
+    minab=0.7895 : 34 classes
+    minab=0.8000 : 522 classes
+    minab=0.8125 : 118 classes
+    minab=0.8182 : 275 classes
+    minab=0.8235 : 52 classes
+    minab=0.8333 : 246 classes
+    minab=0.8421 : 6 classes
+    minab=0.8462 : 160 classes
+    minab=0.8571 : 114 classes
+    minab=0.8667 : 49 classes
+    minab=0.8750 : 43 classes
+    minab=0.8824 : 10 classes
+    minab=0.8889 : 27 classes
+    minab=0.9000 : 24 classes
+    minab=0.9091 : 18 classes
+    minab=0.9167 : 12 classes
+    minab=0.9231 : 9 classes
+    minab=0.9286 : 4 classes
+    minab=0.9333 : 2 classes
+    minab=0.9375 : 1 classes
+    minab=0.9412 : 1 classes
+
+--- H4: RIGID lattices (every L-element is a join-irreducible) ---
+  classes with all-elements-join-irreducible: 5
+  ...of those with minab < 1/2: 0
+  ...min minab among them: 0.5000
+  classes with |JI| == n at the representative: 772 (min minab 0.5000)
+
+--- Large-spread classes (labelling freedom maximally exploited) ---
+  m=4 minab=0.5 maxab=0.75 worst=[[0], [1], [0, 1]]
+  m=5 minab=0.6 maxab=0.8 worst=[[1], [0, 2], [1, 2], [0, 1, 2]]
+  m=5 minab=0.6 maxab=0.8 worst=[[0, 1], [0, 2], [1, 2], [0, 1, 2]]
+  m=7 minab=0.57143 maxab=0.85714 worst=[[0], [1], [0, 1], [0, 2], [1, 2], [0, 1, 2]]
+  m=8 minab=0.5 maxab=0.875 worst=[[0], [1], [0, 1], [2], [0, 2], [1, 2], [0, 1, 2]]
+  m=5 minab=0.6 maxab=0.8 worst=[[0], [1], [0, 1], [0, 1, 2]]
+  m=12 minab=0.66667 maxab=0.91667 worst=[[2], [1, 2], [0, 1, 2], [3], [0, 3], [1, 3], [0, 1, 3], [2, 3], [0, 2, 3], [1, 2, 3], [0, 1, 2, 3]]
+  m=12 minab=0.66667 maxab=0.91667 worst=[[0, 1], [2], [0, 1, 2], [3], [0, 3], [1, 3], [0, 1, 3], [2, 3], [0, 2, 3], [1, 2, 3], [0, 1, 2, 3]]
+  m=12 minab=0.66667 maxab=0.91667 worst=[[0, 2], [1, 2], [0, 1, 2], [3], [0, 3], [1, 3], [0, 1, 3], [2, 3], [0, 2, 3], [1, 2, 3], [0, 1, 2, 3]]
+  m=13 minab=0.61538 maxab=0.92308 worst=[[1], [0, 2], [1, 2], [0, 1, 2], [3], [0, 3], [1, 3], [0, 1, 3], [2, 3], [0, 2, 3], [1, 2, 3], [0, 1, 2, 3]]
+  m=13 minab=0.61538 maxab=0.92308 worst=[[0, 1], [0, 2], [1, 2], [0, 1, 2], [3], [0, 3], [1, 3], [0, 1, 3], [2, 3], [0, 2, 3], [1, 2, 3], [0, 1, 2, 3]]
+  m=13 minab=0.61538 maxab=0.92308 worst=[[2], [0, 2], [1, 2], [0, 1, 2], [3], [0, 3], [1, 3], [0, 1, 3], [2, 3], [0, 2, 3], [1, 2, 3], [0, 1, 2, 3]]
+  m=14 minab=0.57143 maxab=0.92857 worst=[[0], [1], [0, 1], [0, 2], [1, 2], [0, 1, 2], [3], [0, 3], [1, 3], [0, 1, 3], [0, 2, 3], [1, 2, 3], [0, 1, 2, 3]]
+  m=14 minab=0.57143 maxab=0.92857 worst=[[0, 1], [2], [0, 2], [1, 2], [0, 1, 2], [3], [0, 3], [1, 3], [0, 1, 3], [2, 3], [0, 2, 3], [1, 2, 3], [0, 1, 2, 3]]
+  m=15 minab=0.53333 maxab=0.93333 worst=[[0], [1], [0, 1], [2], [0, 2], [1, 2], [0, 1, 2], [0, 3], [1, 3], [0, 1, 3], [2, 3], [0, 2, 3], [1, 2, 3], [0, 1, 2, 3]]
