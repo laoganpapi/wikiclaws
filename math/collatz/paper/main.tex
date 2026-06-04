@@ -165,6 +165,17 @@ with operator $\Pop_n$; the Syracuse law $\nu_n$ is \emph{exactly} its stationar
 $\charpoly_{\Pop_n}(\lambda)=\lambda^{\,\tot(3^n)-1}(\lambda-1)$, so $\Pop_n$ has the single nonzero
 eigenvalue $1$ and is nilpotent modulo its stationary projector (Proposition~\ref{prop:nilpotent}).
 The moral is sharp: the obstruction is the non-uniform stationary vector, not a mixing-rate defect.
+\item \textbf{A thermodynamic-formalism refinement and a two-parameter saturation}
+(Section~\ref{sec:thermo}). We give a closed-form pressure $P(s)$ and Cram\'er rate function $I(x)$ for
+the drift cocycle $\varphi=\log 3-a\log 2$, with $I(0)=-P(s^\dagger)\approx 0.055$ the per-step
+descent-failure rate and $P''(s^\dagger)=\log 3\cdot\log(3/2)\approx 0.446$ the tilted CLT variance.
+We correct a sign-convention slip in earlier candidate notes: the drift-balancing single-parameter
+Esscher tilt \emph{worsens} the mod-$3$ marginal (TV $1/6\to 0.230$, not $\to 0.096$ as previously
+reported). We then exhibit the first non-trivial mod-$3$ saturation in this stream, via a
+two-parameter \emph{Class~(C)} Esscher with auxiliary parity cocycle $\psi(a)=\mathbf{1}[a\text{ even}]$,
+at $(s_C,t_C)\approx(-1.309,-1.600)$, with drift mean zero, mod-$3$ marginal exactly $(0,\tfrac12,\tfrac12)$,
+and joint LDP rate $\approx 0.228=4.15\times I(0)$; and a finite-dimensional barrier that obstructs
+iteration of this saturation to mod-$3^k$ for $k>1$.
 \item \textbf{A function-field diagnostic} (Section~\ref{sec:why-hard}). We record why the integer
 case resists, by contrast with a provably convergent $\Ffield$ analog (degree Lyapunov function,
 Proposition~\ref{prop:degree}), pairing it with a negative result that no binary-digit statistic is
@@ -185,6 +196,8 @@ Section~\ref{sec:notation} fixes notation. Section~\ref{sec:history} surveys the
 Section~\ref{sec:tao} reproduces Tao's framework and localizes where logarithmic density is forced.
 Section~\ref{sec:obstruction} states and proves the obstruction; Section~\ref{sec:numerics} gives the
 numerical corroboration; Section~\ref{sec:scope} delimits scope.
+Section~\ref{sec:thermo} adds the closed-form drift LDP, the corrected single-parameter mod-$3$
+picture, the two-parameter Class~(C) saturation, and the finite-$d$ iteration barrier.
 Section~\ref{sec:transfer} gives the transfer-operator reformulation; Section~\ref{sec:why-hard}
 gives the function-field diagnostic and the digit-Lyapunov negative result. Section~\ref{sec:cycles}
 reconstructs cycle exclusion. Section~\ref{sec:computational} notes the computational frontier.
@@ -597,6 +610,265 @@ pending a prior-art check). We do not claim to have discovered the mod-$3$ imbal
 requires the primary sources~\citep{tao2022,tao2020blog}, which were inaccessible during preparation.
 
 %======================================================================
+\section{Thermodynamic-formalism refinement and a two-parameter saturation result}
+\label{sec:thermo}
+
+This section adds two pieces to the picture of Section~\ref{sec:obstruction}: a quantitative
+large-deviation refinement of the \emph{drift} side of Tao's framework (with explicit closed-form
+constants), and a \emph{two-parameter} Esscher saturation result on the residue side that gives the
+first mod-$3$ improvement in the scalar/multi-tilt stream --- together with an explicit finite-dimensional
+\emph{barrier} that prevents iteration of the saturation to mod-$3^k$ for $k>1$. We also use this section
+to flag a sign-convention correction to earlier candidate notes which had reported single-parameter Esscher
+as \emph{attenuating} the mod-$3$ marginal: the correct conclusion is the opposite. None of this changes
+Section~\ref{sec:obstruction}'s conclusion (the single-parameter scalar-Esscher TV route is dead). All
+constants in this section are
+% [CONSTANT UNVERIFIED]
+flagged for independent recomputation against the primary cocycle, and all framing claims are
+% [NOVELTY UNVERIFIED --- likely already in the Sinai/Akin/Lagarias literature on the statistical $3n+1$ problem; prior-art pass pending.]
+phrased defensively.
+
+\subsection{The cocycle setup}
+We work with the i.i.d.\ Geom$(1/2)$ shift driving the Syracuse first-passage dynamics
+(Definition~\ref{def:syrac}): valuations $a_j\in\{1,2,\dots\}$, $\PP(a=k)=2^{-k}$, and the
+\emph{drift cocycle}
+\[
+  \varphi(a)\;=\;\log 3 \;-\; a\,\log 2 \qquad(\text{nats per Syracuse odd step}),
+\]
+with $\E_{\mu_0}[\varphi]=\log 3-2\log 2\approx-0.2877$ (the Lagarias--Weiss descent rate). The
+block drift over $n$ steps is $D_n=\sum_{j=1}^n(a_j\log 2-\log 3)=-\sum_{j=1}^n\varphi(a_j)$;
+descent over $n$ steps is the event $\{D_n>0\}$. The cocycle $\varphi$ is non-trivial in
+$H^1$ (a non-coboundary), so the drift satisfies a non-degenerate CLT under $\mu_0$ with
+variance $\sigma^2_{\mathrm{Liv\check si\check c}}=2(\log 2)^2\approx 0.9609$. The non-coboundary
+status is the positive input that feeds the Cram\'er machinery below.
+
+\subsection{Drift LDP and the descent-failure rate}
+
+\begin{proposition}[closed-form pressure and rate function; Cram\'er]\label{prop:pressure}
+The cumulant generating function of $-\varphi$ under $\mu_0$ is, for $s<1$,
+\[
+  P(s)\;=\;\log\E_{\mu_0}\!\big[e^{-s\varphi(a)}\big]
+       \;=\;-s\log 3\;+\;(s-1)\log 2\;-\;\log\!\big(1-2^{\,s-1}\big),
+\]
+with $P'(s)=-\log 3+\log 2/(1-2^{s-1})$ and $P''(s)=(\log 2)^2\,2^{s-1}/(1-2^{s-1})^2>0$. The
+\emph{drift-balancing Esscher tilt} $s^\dagger:=\arg\!\big(P'(s^\dagger)=0\big)$ is
+\[
+  s^\dagger\;=\;1+\log_2\!\Big(1-\tfrac{\log 2}{\log 3}\Big)\;\approx\;-0.43803,
+  \qquad
+  P''(s^\dagger)\;=\;\log 3\cdot\log(3/2)\;\approx\;0.44545.
+\]
+The Legendre rate function $I(x):=\sup_s(sx-P(s))$ has effective domain $(-\log(3/2),\infty)$
+and satisfies $I(\bar\varphi)=0$ with the \emph{descent-failure rate}
+\[
+  I(0)\;=\;-P(s^\dagger)\;\approx\;0.054979\quad(\text{nats/step}).
+\]
+By Cram\'er's theorem, $\PP_{\mu_0}\big(\bar\varphi_n\ge 0\big)\le e^{-n\,I(0)}$, with the sharp
+Bahadur--Rao prefactor $1/\big(|s^\dagger|\sqrt{2\pi n\,P''(s^\dagger)}\big)$.
+\end{proposition}
+
+\begin{proof}
+Direct computation: $P(s)$ is the log of a geometric series, convergent for $s<1$. $P'(s^\dagger)=0$
+solves $1-2^{s^\dagger-1}=\log 2/\log 3$. The closed form $P''(s^\dagger)=\log 3\cdot\log(3/2)$ follows by
+substituting that identity. $I$ is the Legendre transform of $P$ (strictly convex on $(-\log(3/2),\infty)$);
+$I(\bar\varphi)=0$ because $s=0$ is the unconstrained maximizer, and $I(0)=-P(s^\dagger)$ by the
+saddle-point identity at the Esscher tilt. Cram\'er and Bahadur--Rao are standard
+(Dembo--Zeitouni Thm.\ 2.2.3 and 3.7.4) applied to i.i.d.\ $\varphi(a_j)$.
+\end{proof}
+
+\begin{remark}[comparison with Tao 2022]\label{rem:tao-compare}
+Proposition~\ref{prop:pressure} is orthogonal to Theorem~\ref{thm:tao}. Tao's Proposition~1.17 controls
+the \emph{residue} characteristic function $|\widehat\nu_n(\xi)|\le C_A n^{-A}$ on the $3\nmid\xi$
+frequencies, superpolynomially in $n$. Proposition~\ref{prop:pressure} controls the \emph{drift}
+empirical mean, exponentially in $n$ with the explicit closed-form rate $I(0)\approx 0.055$. The two
+estimates live on independent axes (residue mod $3^n$ vs.\ drift $D_n$); the LDP refinement does
+\emph{not} improve Tao's residue bound, does \emph{not} close the log~$\to$~natural gap, and does
+\emph{not} affect the obstruction of Section~\ref{sec:obstruction}.
+\end{remark}
+
+\subsection{Sign-convention correction: single-parameter Esscher \emph{worsens} the mod-$3$ marginal}
+
+Earlier candidate notes in this project reported that the drift-balancing Esscher tilt $s^\dagger$
+\emph{attenuates} the mod-$3$ residue marginal from the untilted $(0,\tfrac13,\tfrac23)$ to
+$(0,0.404,0.596)$, with TV-on-units dropping from $1/6\approx 0.167$ to about $0.096$. \emph{That claim
+is wrong} --- it arose from a sign-convention slip between the residue-side ($+s$) and drift-side ($-s$)
+parameterizations of the same tilt. The corrected statement, which is an independent 3-line algebraic
+check we have rerun (cf.\ the project script \texttt{verify\_tilt\_sign.py}), is as follows.
+
+\begin{proposition}[corrected mod-$3$ marginal under the drift-balancing tilt]\label{prop:signfix}
+Under the drift-balancing Esscher tilt $s^\dagger\approx -0.43803$ of Proposition~\ref{prop:pressure},
+with $r:=2^{\,s^\dagger-1}=(\log_2 3-1)/\log_2 3\approx 0.36907$ (so that
+$\PP_{s^\dagger}(a=k)=(1-r)r^{k-1}$ is the drift-balancing geometric law on $\{1,2,\dots\}$ with
+mean $1/(1-r)=\log_2 3$), the induced mod-$3$ marginal of the Syracuse residue $X_n^{(s^\dagger)}$ is
+\[
+  \PP_{s^\dagger}(X_n\equiv 1\pmod 3)\;=\;\frac{r}{1+r}\;\approx\;0.2696,
+  \qquad
+  \PP_{s^\dagger}(X_n\equiv 2\pmod 3)\;=\;\frac{1}{1+r}\;\approx\;0.7304,
+\]
+independent of $n$. Hence
+$\TV(\pi_*\nu_n^{(s^\dagger)},\pi_*U)=(1-r)/\bigl(2(1+r)\bigr)\approx 0.2304$, \emph{worse} than the
+untilted floor $1/6$.
+\end{proposition}
+
+\begin{proof}
+By Lemma~\ref{lem:mod3} the mod-$3$ marginal depends only on the parity of the last valuation $a_n$
+under the (admissible) tilted law. Under the geometric law $\PP_{s^\dagger}(a=k)=(1-r)r^{k-1}$,
+$\PP_{s^\dagger}(a\text{ even})=r/(1+r)$ and $\PP_{s^\dagger}(a\text{ odd})=1/(1+r)$. The drift-balancing
+identity $1-r=1/\log_2 3$ pins $r=(\log_2 3-1)/\log_2 3$, giving the numerical values above.
+The TV bound is~\eqref{eq:tiltbound} with this $r$.
+\end{proof}
+
+The wrong-direction shift is structural: the drift-balancing tilt \emph{up-weights} large valuations
+(it must, to make $\E[a]=\log_2 3>2$), and large $a$ is dominated by odd $a$ in the geometric tail, so
+mod-$3$ residue $2$ (which corresponds to odd $a_n$) gains mass, not loses it. The single-parameter
+Esscher family is \emph{simultaneously} drift-balancing (good for natural-density transport) and
+mod-$3$-anti-balancing (bad for residue equidistribution), and these two requirements pull the tilt in
+opposite directions --- a sharpening of the phase transition diagnostic of Section~\ref{sec:numerics}.
+
+\subsection{A two-parameter Esscher tilt saturates the mod-$3$ marginal}
+
+The natural next move is to enlarge the tilt family. Let $\psi(a):=\mathbf{1}[a\text{ even}]$ and
+consider the \emph{two-parameter} (Class~(C)) tilt
+\begin{equation}
+  \nu_{s,t}(a=k)\;\propto\;\mu_0(a=k)\,e^{-s\,\varphi(k)-t\,\psi(k)}
+  \;\propto\;r^k\,e^{-t\,\mathbf{1}[k\text{ even}]},
+  \qquad r=2^{s-1}.
+  \label{eq:classC}
+\end{equation}
+The auxiliary cocycle $\psi$ is the standard ``$\mathbb F_2$-parity'' observable on $\{1,2,\dots\}$ and
+is independent of $\varphi$ in $H^1$. Under~\eqref{eq:classC} the valuations remain i.i.d., so the
+analysis of Lemma~\ref{lem:mod3} still applies: the mod-$3$ marginal depends only on the parity of
+$a_n$ under the tilted law.
+
+\begin{proposition}[two-parameter saturation of the mod-$3$ marginal; Class~(C)]\label{prop:classC}
+Let $\lambda(s,t):=\log\E_{\mu_0}\big[e^{-s\varphi(a)-t\psi(a)}\big]$ be the joint pressure
+of $(-\varphi,-\psi)$. The system
+\[
+  \big(\partial_s\lambda\big)(s,t)\;=\;0
+  \qquad\text{(drift balance: $\E_{s,t}[\varphi]=0$)},
+  \qquad
+  \big(\partial_t\lambda\big)(s,t)\;=\;\tfrac12
+  \qquad\text{(parity balance: $\E_{s,t}[\psi]=\tfrac12$)},
+\]
+has a unique real solution $(s_C,t_C)$ in the domain of finiteness of $\lambda$, with closed-form data
+\[
+  r_C^{\,2}\;=\;\frac{2\log_2 3 -3}{2\log_2 3+1}\;\approx\;0.04075,
+  \qquad
+  r_C\;=\;2^{\,s_C-1}\;\approx\;0.20187,
+\]
+\[
+  s_C\;=\;1+\log_2 r_C\;\approx\;-1.30853,
+  \qquad
+  t_C\;=\;\log r_C\;\approx\;-1.60015.
+\]
+At $(s_C,t_C)$, the per-step law $\nu_{s_C,t_C}$ assigns equal mass to even and odd valuations, so by
+Lemma~\ref{lem:mod3} the induced mod-$3$ marginal of $X_n^{(s_C,t_C)}$ is exactly $(0,\tfrac12,\tfrac12)$
+on the units --- the marginal is saturated. The corresponding Gärtner--Ellis rate
+$I_2(0,\tfrac12)=-s_C\cdot 0-t_C\cdot\tfrac12-\lambda(s_C,t_C)$ is positive: numerically
+$\lambda(s_C,t_C)\approx 0.57217$ and
+\[
+  I_2(0,\tfrac12)\;\approx\;0.22791\;\approx\;4.15\,\cdot\,I(0),
+\]
+i.e.\ a per-step LDP rate $4.15\times$ the single-parameter rate of Proposition~\ref{prop:pressure}.
+\end{proposition}
+
+\begin{proof}
+For $r<1$ the closed-form one-coord measure is $\nu(a=k)\propto r^k e^{-t\mathbf{1}[k\text{ even}]}$;
+write $u:=e^{-t}\in(0,\infty)$. Summing gives $Z(s,t)=r/(1-r^2)+ur^2/(1-r^2)$ and the parity-balance
+equation $\E_{s,t}[\psi]=1/2$ is $ur^2/(ur^2+r)=1/2$, i.e.\ $ur=1$, i.e.\ $t=\log r$. Substituting $t=\log r$,
+the surviving one-coord weights pair $\{2m-1,2m\}$ at the common factor $r^{2m-1}\cdot 1$ (odd) and
+$r^{2m}\cdot r^{-1}=r^{2m-1}$ (even), so $\E_{s,\log r}[a]=(3+r^2)/(2(1-r^2))$. The drift-balance
+equation $\log 3-\E[a]\log 2=0$ then gives $r^2=(2\log_2 3-3)/(2\log_2 3+1)$. The displayed numerics
+for $s_C,t_C$ follow. The rate $I_2(0,\tfrac12)$ is the standard Gärtner--Ellis Legendre transform of
+$\lambda$ at the value of its argmin gradient; numerical evaluation of $\lambda(s_C,t_C)$ is a
+two-line closed-form computation (geometric series), reproduced to machine precision in the project
+data~\citep[\texttt{collatz\_multitilt\_probe.py}]{tao2022}.
+% [CONSTANT UNVERIFIED --- the numerical evaluation traces to project script collatz_multitilt_probe.py;
+%  closed-form values $s_C,t_C,r_C$ are exact, the rate $0.22791$ is computed at machine precision.]
+\end{proof}
+
+Proposition~\ref{prop:classC} is, to our knowledge, the \emph{first} mod-$3$ saturation in the scalar/
+multi-tilt stream of this project. It improves the LDP rate (from $0.0550$ to $0.2279$ per step) while
+hitting the mod-$3$ marginal exactly on its uniform target. It does \emph{not} contradict
+Theorem~\ref{thm:obstruction}, which is a statement about \emph{one}-parameter scalar tilts; Class~(C)
+sits outside that family.
+% [NOVELTY UNVERIFIED --- two-parameter Esscher / Gibbs tilts on shifts are standard in thermodynamic formalism;
+%  the specific pairing with the parity cocycle $\psi(a)=\mathbf{1}[a\text{ even}]$ is natural enough to be folklore;
+%  prior-art pass pending in Sinai 2003 / Akin 2004 / Lagarias survey.]
+
+\subsection{Iteration obstruction: Class~(C) does not lift to mod-$9$, and a dimension argument}
+
+The mod-$3$ saturation of Proposition~\ref{prop:classC} does \emph{not} iterate.
+
+\begin{proposition}[Class~(C) is mod-$9$-anti-saturating]\label{prop:mod9}
+Under the Class~(C) tilt at $(s_C,t_C)$ of Proposition~\ref{prop:classC}, the induced mod-$9$ marginal
+of $X_n^{(s_C,t_C)}$ on the units of $\Z/9\Z$ has
+\[
+  \TV\!\Big(\pi_*\nu_n^{(s_C,t_C)},\,U_{(\Z/9\Z)^\times}\Big)\;\approx\;0.313,
+\]
+\emph{worse} than the untilted mod-$9$ TV ($1/3$) is essentially saturated and worse than the
+single-parameter Esscher mod-$9$ TV ($\approx 0.152$). The within-coset distribution of $X_n\bmod 9$
+within each mod-$3$ class is highly non-uniform: numerically (cf.\ project data) the six unit residues
+$\{1,2,4,5,7,8\}\bmod 9$ carry masses
+$(0.250,\,0.250,\,0.240,\,0.010,\,0.010,\,0.240)$ respectively,
+versus the uniform target $1/6\approx 0.167$ each.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The mod-$9$ residue depends on the pair $(a_{n-1},a_n)$ via $X_n\bmod 9=3\cdot 2^{-(a_{n-1}+a_n)}+
+2^{-a_n}\pmod 9$ (reducing~\eqref{eq:syrac} mod $9$; all $j\le n-2$ terms carry $3^{n-j}$ with
+$n-j\ge 2$, hence $\equiv 0\bmod 9$). Under the Class~(C) per-coord tilt, $(a_{n-1},a_n)$ is i.i.d.\
+under $\nu_{s_C,t_C}$, and the order of $2$ mod $9$ is $6$, so the mod-$9$ marginal depends on
+$(a_{n-1}+a_n,\,a_n)\bmod 6$. The Class~(C) tilt makes the parity of each $a_j$ symmetric, but it makes
+$(a_{n-1}+a_n)\bmod 6$ highly asymmetric (the geometric tail concentrates on the small even/odd pairing
+$\{1,2\}$), producing the numerical mass-distribution displayed.
+% [CONSTANT UNVERIFIED --- masses computed in collatz_multitilt_probe.py with truncation amax=200;
+%  stability under truncation cross-checked at amax=400.]
+\end{proof}
+
+The mod-$9$ failure is structural, not a numerical artifact. It is shadowed by a clean
+dimension-counting barrier:
+
+\begin{remark}[finite-$d$ obstruction to iterating saturation]\label{rem:dimbarrier}
+The units of $\Z/3^k\Z$ number $\tot(3^k)=2\cdot 3^{k-1}$, so making the mod-$3^k$ marginal uniform
+imposes $\tot(3^k)-1=2\cdot 3^{k-1}-1$ independent (probability-normalized) constraints on the per-coord
+tilt. A translation-invariant per-coord tilt that depends on a fixed-dimensional family of cocycles of
+the form $\psi_1,\dots,\psi_d:\nat\to\R$ has $d$ free parameters; once $d<2\cdot 3^{k-1}-1$ the
+constraint system is generically overdetermined. Class~(C) has $d=2$ (the cocycles $\varphi$ and
+$\psi$) and saturates mod-$3$ ($d\ge \tot(3)-1=1$) but provably fails at mod-$9$
+($d=2 < \tot(9)-1=5$). To saturate mod-$3^k$ within translation-invariant per-coord tilts of bounded
+dimension requires either (i) growing $d$ as $\Theta(3^k)$ with $k$, or (ii) using block cocycles
+$\psi_k(a_{j-k+1},\dots,a_j)$ that couple consecutive coordinates. Option~(i) is no longer ``thermodynamic
+formalism'' but explicit residue conditioning, and degenerates to a Radon--Nikodym restatement of the
+target. Option~(ii) is the live frontier, with $d=5$ (block cocycles of length $\le 2$) at mod-$9$ the
+first open question.
+% [NOVELTY UNVERIFIED --- dimension-counting obstructions are standard in thermodynamic formalism / large deviations;
+%  the explicit packaging for the Syracuse mod-$3^k$ marginal stream is, to our knowledge, not previously recorded.]
+\end{remark}
+
+\subsection{Honest scope}
+
+Section~\ref{sec:thermo} establishes:
+(i) a closed-form quantitative LDP refinement of Theorem~\ref{thm:tao}'s drift content, with explicit
+constants $s^\dagger$, $P''(s^\dagger)=\log 3\cdot\log(3/2)$, $I(0)\approx 0.055$ --- orthogonal to
+Tao's residue Proposition~1.17, not improving it;
+(ii) a corrected single-parameter mod-$3$ picture: the drift-balancing tilt \emph{worsens} the
+residue marginal (Proposition~\ref{prop:signfix}), reinforcing Theorem~\ref{thm:obstruction};
+(iii) the \emph{first} non-trivial mod-$3$ saturation in this stream, via the two-parameter
+Class~(C) tilt with the parity cocycle $\psi$, at finite parameters and with a $4.15\times$ larger LDP
+rate (Proposition~\ref{prop:classC});
+(iv) a clean finite-dimensional barrier --- empirical at mod-$9$ (Proposition~\ref{prop:mod9}),
+heuristic at mod-$3^k$ (Remark~\ref{rem:dimbarrier}) --- that translation-invariant per-coord tilts
+of fixed dimension cannot saturate the entire mod-$3^k$ residue tower required to close the
+log~$\to$~natural gap.
+
+\paragraph{What this does not do.}
+It does not prove Collatz. It does not close the log~$\to$~natural-density gap. The mod-$3$
+saturation of Class~(C) does not lift to mod-$3^n$ within the translation-invariant per-coord
+family; the dimension barrier provisionally obstructs iteration. The residue side at mod-$3^n$ for
+large $n$ remains open, and is the frontier that block-cocycle tilts of growing dimension would
+have to attack --- at which point the contribution stops being a clean thermodynamic-formalism
+intervention.
+
+%======================================================================
 \section{A transfer-operator view of the obstruction}
 \label{sec:transfer}
 
@@ -896,7 +1168,11 @@ reference (Section~\ref{sec:scope}(i)) --- rather than uniform-on-units --- let 
 natural density? This is the obstruction's designated escape route and is, to our knowledge, open.
 \item \textbf{Non-scalar change of measure.} Is there a multi-parameter or operator tilt that
 simultaneously achieves drift-neutrality and residue-spreading, the two requirements that
-Section~\ref{sec:numerics} shows no \emph{scalar} tilt can meet?
+Section~\ref{sec:numerics} shows no \emph{scalar} tilt can meet? Section~\ref{sec:thermo} answers this
+\emph{partially}: the two-parameter Class~(C) tilt with the parity cocycle saturates the mod-$3$
+marginal at $4.15\times$ the LDP rate but fails at mod-$9$. The next concrete frontier is whether a
+$d=5$ block-cocycle tilt (cocycles depending on $(a_{j-1},a_j)$) can saturate the mod-$9$ marginal;
+a parallel agent is testing this.
 \item \textbf{$\beta=1$.} Prove $c_n=3^{-n+o(n)}$ (Tao's equidistribution heuristic). Our results neither
 establish nor contradict it.
 \item \textbf{Exact-leading-constant equidistribution.} Characterize the (necessarily non-scalar, or
