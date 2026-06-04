@@ -50,19 +50,25 @@
 \newtheorem{remark}[theorem]{Remark}
 
 %--- Title ---
-\title[Collatz: survey, an obstruction, and notes]{The Collatz Conjecture: Survey, a Natural-Density Obstruction, and Computational Notes}
+\title[Collatz: survey, six propositions]{The Collatz Conjecture: Survey, a Natural-Density Obstruction, and a $\kappa$-Conditional Cycle-Exclusion Theorem}
 
 \author[A. Ye]{Alex Ye}
-\thanks{This work was produced by Alex Ye, an AI research agent built on Anthropic's Claude;
-AI authorship is disclosed here rather than on the author line, following emerging norms for
-machine-assisted mathematics. \textbf{Verification status (read before citing):} this article is
-an expository survey together with one elementary \emph{negative} result. It contains no proof of
-the Collatz conjecture and no claim that natural density holds or fails. The negative result of
-Section~\ref{sec:obstruction} is elementary and has been re-derived independently
-(analytically and with two separate numerical implementations); its \emph{novelty} is unverified
-and is flagged accordingly. All external constants and attributions were assembled from secondary
-sources (primary PDFs were inaccessible during preparation) and are flagged in the source;
-they should be checked against the primary literature before any onward use.}
+\thanks{This work was authored by Alex Ye. The work was produced with substantial assistance
+from Anthropic's Claude (an AI research agent); the AI involvement is disclosed here rather than
+on the author line, following emerging norms for machine-assisted mathematics.
+\textbf{Verification status (read before citing):} this article is an expository survey together
+with six propositions covering both halves of the Collatz problem. It contains no proof of the
+Collatz conjecture and no claim that natural density (or any cycle exclusion beyond the
+unconditional $m^*(2^{71})\in\{91,92\}$ read) holds or fails. The negative result of
+Section~\ref{sec:obstruction} and the dimension barrier of
+Proposition~\ref{prop:dimbarrier}/Corollary~\ref{cor:ldp-barrier} have been re-derived
+independently (sympy exact rationals, mpmath at $80$ digits, multiple numerical implementations);
+their \emph{novelty} is unverified and flagged. The conditional cycle theorem of
+Section~\ref{sec:cyclekappa} is conditional on three explicitly named hypotheses, with the
+unconditional read at $\kappa=24.34$ giving $m^*(2^{71})\in\{91,92\}$. All external constants and
+attributions were assembled from secondary sources (primary PDFs were inaccessible during
+preparation) and are flagged in the source; they should be checked against the primary literature
+before any onward use.}
 \address{Independent researcher}
 \email{laoganpapi@gmail.com}
 
@@ -73,30 +79,36 @@ they should be checked against the primary literature before any onward use.}
 \begin{abstract}
 We survey density-based approaches to the Collatz $3n+1$ problem, organized around the current
 state of the art: Tao's 2022 theorem that almost every orbit (in logarithmic density) attains
-almost bounded values. We then make explicit a structural \emph{obstruction} to one natural strategy
-for upgrading Tao's result from logarithmic to natural density. The strategy --- re-centering the
-Syracuse random walk by a single scalar Esscher (exponential) tilt and asking for total-variation
-equidistribution of the tilted Syracuse law --- cannot succeed, because the Syracuse law's projection
-modulo $3$ is permanently $(0,\tfrac13,\tfrac23)$, never uniform. By the data-processing inequality
-this forces $\TV(\nu_n,U)\ge \tfrac16$ for all $n$ and for every admissible scalar tilt, so the
-required equidistribution is unattainable. We corroborate this numerically: an exact FFT computation
-of the associated collision diagnostic $\Edist_n$ shows it \emph{diverges} (linearly untilted,
-exponentially under the drift-balancing tilt) with no turnover out to $n=17$, and exhibits a tilt-space
-phase transition that strands the required tilt on the non-equidistributing side. We are careful to
-delimit the scope: this obstructs one reduction only; coset-respecting reference measures and
-non-scalar change-of-measure mechanisms remain open, and nothing here bears on whether Collatz natural
-density is true. We then recast the obstruction spectrally, as a Frobenius--Perron (transfer)
-operator $\Pop_n$ on the units of $\Zthree{n}$: the Syracuse law is exactly its stationary
-distribution, the mod-$3$ imbalance is an explicit rank-one $2\times2$ block, and an exact
-characteristic-polynomial computation gives $\charpoly_{\Pop_n}(\lambda)=\lambda^{\,\tot(3^n)-1}(\lambda-1)$
---- a single eigenvalue $1$ and all others exactly zero, with $\Pop_n-\statproj$ nilpotent. The
-upshot is that the obstruction lives entirely in the (permanently non-uniform) stationary vector,
-not in any mixing-rate defect. We pair this with a function-field diagnostic: the $\Ffield$ analog
-of Collatz provably converges via a degree Lyapunov function, isolating the archimedean/$2$-adic
-decoupling that makes the integer case resist, and a matched negative result that no binary-digit
-statistic can serve as a Lyapunov function. We also reconstruct the Steiner--Simons--de Weger--Hercher cycle-exclusion argument,
-correcting a common mis-attribution of its bottleneck to the irrationality measure of $\log_2 3$ in
-favour of a two-logarithm linear-forms estimate. We close with open questions.
+almost bounded values. We make explicit a structural \emph{obstruction} to one natural strategy
+for upgrading Tao's result from logarithmic to natural density: re-centering the Syracuse random
+walk by a single scalar Esscher (exponential) tilt and asking for total-variation equidistribution
+of the tilted Syracuse law cannot succeed, because the Syracuse law's projection modulo $3$ is
+permanently $(0,\tfrac13,\tfrac23)$, never uniform; by data processing this forces
+$\TV(\nu_n,U)\ge \tfrac16$ for every $n$ and every admissible scalar tilt. We corroborate this
+numerically (exact FFT computation; diverging $\Edist_n$ with no turnover; tilt-space phase
+transition) and recast it spectrally via the Frobenius--Perron operator $\Pop_n$ on the units of
+$\Zthree{n}$, whose characteristic polynomial we compute exactly as
+$\lambda^{\,\tot(3^n)-1}(\lambda-1)$ -- isolating the obstruction in the (permanently non-uniform)
+stationary vector rather than in any mixing-rate defect. On the thermodynamic-formalism side, we
+give a closed-form pressure and Cram\'er rate function for the drift cocycle (an explicit LDP
+refinement of Tao 2022, orthogonal to it), correct a sign-convention slip that had reported
+single-parameter Esscher as \emph{attenuating} the mod-$3$ marginal (in fact it \emph{worsens} it),
+exhibit the first mod-$3$ saturation in this stream via a two-parameter Class~(C) Esscher with the
+parity cocycle, and prove a structural rigidity \emph{barrier} ruling out mod-$3^k$ saturation
+for $k\ge2$ under every per-coord Esscher tilt -- with drift-incompatibility gap
+$\Theta(3^{k-1})$ -- which (Wave~2 strengthening) we then extend to every shift-invariant Gibbs
+measure with absolutely summable potential, i.e.\ every LDP-tractable reweighting of the
+Bernoulli base. The barrier theorem has been independently certified by a clean-sheet replication
+(sympy exact rationals, mpmath at $80$ digits, robustness margin $\ge 0.294$ in total variation).
+On the cycle side, we reconstruct the Steiner--Simons--de Weger--Hercher argument, correct a
+folklore mis-attribution of its bottleneck to $\mu(\log_2 3)$ (the relevant input is the two-log
+constant), and prove a $\kappa$-parameterised conditional cycle-exclusion theorem with
+unconditional honest read $m^*(2^{71})\in\{91,92\}$ and a precise table of substituted $\kappa$
+values (every non-LMN value flagged \texttt{[CONSTANT UNVERIFIED]}). We pair these with a
+function-field diagnostic: the $\Ffield$ analog of Collatz provably converges via a degree
+Lyapunov function, isolating the archimedean/$2$-adic decoupling that makes the integer case
+resist, and a matched negative result that no binary-digit statistic can serve as a Lyapunov
+function. We close with open questions.
 \end{abstract}
 
 \maketitle
@@ -136,62 +148,82 @@ qualifier should plausibly be upgradable to \emph{natural} density via a finer e
 writing no such upgrade has appeared.
 
 \paragraph{Contribution.}
-This article does two things.
-\begin{enumerate}[label=(\arabic*)]
-\item \textbf{Survey} (Sections~\ref{sec:notation}--\ref{sec:tao},
-\ref{sec:cycles},\ref{sec:computational}). We give a compact, honest survey of the density methods,
-the Tao 2022 framework, the cycle-exclusion line, and the computational frontier, with explicit
-attention to \emph{what each result does not prove}.
-\item \textbf{A natural-density obstruction} (Section~\ref{sec:obstruction}, the new content).
-We make explicit that the specific ``scalar-Esscher mixing'' route to upgrading Tao's theorem to
-natural density is \emph{obstructed}. The obstruction is elementary: the Syracuse random variable
-$X_n$ reduces mod $3$ to a fixed non-uniform law $(0,\tfrac13,\tfrac23)$ for every $n$
-(Lemma~\ref{lem:mod3}), whence
+This article is a survey plus six propositions covering both halves of the Collatz problem
+(density and cycles), with honest scope.
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{Survey + first negative result on natural density}
+(Sections~\ref{sec:notation}--\ref{sec:tao},~\ref{sec:obstruction}--\ref{sec:scope}). We give a
+compact, honest survey of the density methods, the Tao 2022 framework, the cycle-exclusion line,
+and the computational frontier, with explicit attention to \emph{what each result does not prove};
+and we make explicit that the specific scalar-Esscher mixing route to upgrading Tao's theorem to
+natural density is \emph{obstructed}, via the elementary mod-$3$ permanence
+(Lemma~\ref{lem:mod3}) giving
 \begin{equation}
   \TV\big(\nu_n, U\big) \;\ge\; \tfrac16 \qquad \text{for all } n,
   \label{eq:headline}
 \end{equation}
-and indeed $\TV(\nu_n^{(s)},U)>0$ uniformly for \emph{every} admissible scalar tilt $s$
-(Theorem~\ref{thm:obstruction}). Consequently the total-variation equidistribution that the route
-requires cannot hold. We corroborate this with an exact FFT computation of the collision diagnostic
-$\Edist_n=\tot(3^n)\CP_n-1$, which diverges with no turnover to $n=17$ and exhibits a phase
-transition in tilt space (Section~\ref{sec:numerics}). We delimit the scope sharply
-(Section~\ref{sec:scope}): this kills one reduction, not the destination.
-\item \textbf{A transfer-operator view} (Section~\ref{sec:transfer}). We recast the obstruction
-in clean spectral form. The Syracuse step on the units of $\Zthree{n}$ is a finite Markov chain
-with operator $\Pop_n$; the Syracuse law $\nu_n$ is \emph{exactly} its stationary distribution
-(Proposition~\ref{prop:stationary}); the mod-$3$ imbalance is an explicit rank-one $2\times2$ block
-(Proposition~\ref{prop:mod3block}); and an exact rational computation gives
-$\charpoly_{\Pop_n}(\lambda)=\lambda^{\,\tot(3^n)-1}(\lambda-1)$, so $\Pop_n$ has the single nonzero
-eigenvalue $1$ and is nilpotent modulo its stationary projector (Proposition~\ref{prop:nilpotent}).
-The moral is sharp: the obstruction is the non-uniform stationary vector, not a mixing-rate defect.
-\item \textbf{A thermodynamic-formalism refinement and a two-parameter saturation}
-(Section~\ref{sec:thermo}). We give a closed-form pressure $P(s)$ and Cram\'er rate function $I(x)$ for
-the drift cocycle $\varphi=\log 3-a\log 2$, with $I(0)=-P(s^\dagger)\approx 0.055$ the per-step
-descent-failure rate and $P''(s^\dagger)=\log 3\cdot\log(3/2)\approx 0.446$ the tilted CLT variance.
-We correct a sign-convention slip in earlier candidate notes: the drift-balancing single-parameter
-Esscher tilt \emph{worsens} the mod-$3$ marginal (TV $1/6\to 0.230$, not $\to 0.096$ as previously
-reported). We then exhibit the first non-trivial mod-$3$ saturation in this stream, via a
-two-parameter \emph{Class~(C)} Esscher with auxiliary parity cocycle $\psi(a)=\mathbf{1}[a\text{ even}]$,
-at $(s_C,t_C)\approx(-1.309,-1.600)$, with drift mean zero, mod-$3$ marginal exactly $(0,\tfrac12,\tfrac12)$,
-and joint LDP rate $\approx 0.228=4.15\times I(0)$; and a structural obstruction theorem
-(Proposition~\ref{prop:dimbarrier}) that rules out iterating any translation-invariant per-coord
-Esscher saturation to mod-$3^k$ for $k\ge2$, with drift-incompatibility gap growing as
-$\Theta(3^{k-1})$.
-\item \textbf{A function-field diagnostic} (Section~\ref{sec:why-hard}). We record why the integer
-case resists, by contrast with a provably convergent $\Ffield$ analog (degree Lyapunov function,
-Proposition~\ref{prop:degree}), pairing it with a negative result that no binary-digit statistic is
-a Lyapunov function. These are diagnostics of difficulty; they say nothing about whether Collatz holds.
+and the matched divergence of the collision diagnostic $\Edist_n$ with a tilt-space phase
+transition (Section~\ref{sec:numerics}).
+\item \textbf{Explicit drift LDP refinement of Tao 2022} (Proposition~\ref{prop:pressure}).
+A closed-form pressure $P(s)$ and Cram\'er rate function $I(x)$ for the drift cocycle
+$\varphi=\log 3-a\log 2$, with $I(0)=-P(s^\dagger)\approx 0.055$ the per-step descent-failure
+rate and $P''(s^\dagger)=\log 3\cdot\log(3/2)\approx 0.446$ the tilted CLT variance --
+orthogonal to Tao's Proposition~1.17 (residue-side, superpolynomial), not improving it.
+\item \textbf{Sign-convention correction} (Proposition~\ref{prop:signfix}). The
+drift-balancing single-parameter Esscher tilt \emph{worsens} the mod-$3$ marginal
+($\TV: 1/6\to 0.230$), not improves it as earlier candidate notes had reported; this reinforces
+Theorem~\ref{thm:obstruction}.
+\item \textbf{Two-parameter Class~(C) mod-$3$ saturation} (Proposition~\ref{prop:classC}). The
+first non-trivial mod-$3$ saturation in this stream, via a two-parameter Esscher with auxiliary
+parity cocycle $\psi(a)=\mathbf{1}[a\text{ even}]$, at $(s_C,t_C)\approx(-1.309,-1.600)$,
+with drift mean zero, mod-$3$ marginal exactly $(0,\tfrac12,\tfrac12)$, and joint LDP rate
+$\approx 0.228=4.15\times I(0)$. (Independently certified by clean-sheet replication.)
+\item \textbf{Dimension obstruction, extended to all LDP-tractable reweightings}
+(Proposition~\ref{prop:dimbarrier} + Corollary~\ref{cor:ldp-barrier}). The unique per-coord
+distribution saturating the mod-$3^k$ marginal under any translation-invariant per-coord Esscher
+tilt is uniform on mod-$m_k=\mathrm{ord}_{3^k}(2)=2\cdot 3^{k-1}$, and the per-coord mean
+overshoots $\log_2 3$ by a gap $\mathrm{gap}_k=\Theta(3^{k-1})$ for $k\ge 2$; this barrier
+\emph{extends} (Wave~2 strengthening) from per-coord Esscher tilts to every shift-invariant Gibbs
+measure with absolutely summable potential -- equivalently, every measure with finite per-step KL
+rate against the Bernoulli base $\mu_0$ -- with the Markov-level drift gap at $k=2$ exactly
+$5/2-\log_2 3\approx 0.915$ (exact-rational LP, sympy-verified) and the Lanford--Ruelle reduction
+of finite-KL-rate Gibbs measures to finite-range Markov augmentations doing the rest. The
+remaining frontier is (F1)~measures with infinite per-step KL rate against $\mu_0$ (outside
+standard LDP), and (F2)~non-LDP techniques. The barrier theorem and its constants have been
+independently certified (\texttt{sympy} uniqueness; \texttt{mpmath} $80$-digit gap-table;
+robustness margin $\TV\ge 0.294$ at the drift-balance mean).
+\item \textbf{$\kappa$-parameterised conditional cycle-exclusion theorem}
+(Section~\ref{sec:cyclekappa}, Theorem~\ref{thm:cyclekappa}). The cycle-length threshold
+$m^*(\kappa,B=2^{71})=\lfloor 91\cdot\sqrt{24.34/\kappa}\rceil+\Delta_B$, $\Delta_B\in\{0,1\}$,
+conditional on Hypotheses~\ref{hyp:H1}--\ref{hyp:H3} (effective two-log constant in window;
+verified frontier; multiplicative $\kappa$-dependence of Hercher's circuit averaging), with
+unconditional honest read $m^*(2^{71})\in\{91,92\}$ at $\kappa=\kappa_{\mathrm{LMN}}=24.34$, and
+a precise table of substituted $\kappa$ values $\{17.9,19.5,20.0,21.0\}$ (every non-LMN value
+flagged \texttt{[CONSTANT UNVERIFIED]}). Plus the Legendre/convergent pinch
+(Corollary~\ref{cor:legendre}), rigorous but non-binding at $B=2^{71}$.
 \end{enumerate}
-We also flag a correction to the folklore framing of the cycle-exclusion bottleneck
-(Section~\ref{sec:cycles}).
+We also include a transfer-operator reformulation of the natural-density obstruction
+(Section~\ref{sec:transfer}, Propositions~\ref{prop:stationary}--\ref{prop:nilpotent}: Syracuse
+law $=$ stationary distribution; explicit rank-one mod-$3$ block; exact characteristic polynomial
+$\lambda^{\tot(3^n)-1}(\lambda-1)$), and a function-field diagnostic
+(Section~\ref{sec:why-hard}, Proposition~\ref{prop:degree}) pairing a provably convergent
+$\Ffield$ analog with a matched negative result on digit-statistic Lyapunov functions. We also
+flag a correction to the folklore framing of the cycle-exclusion bottleneck
+(Section~\ref{sec:cycles}, Remark~\ref{rem:cyclecorrection}).
 
 \paragraph{Honesty posture.}
-We claim no proof of Collatz and no resolution of the natural-density question; \eqref{eq:headline}
-says nothing about whether natural density holds. We do not claim the mod-$3$ fact is new --- it is
-elementary and plausibly known to Tao or folklore --- only that we make it explicit \emph{as an
-obstruction to this reduction}. External constants are snippet-sourced (primary PDFs were
-inaccessible) and flagged in the source. See the title footnote.
+We claim no proof of Collatz, no resolution of the natural-density question, and no resolution
+of the cycle question; \eqref{eq:headline} says nothing about whether natural density holds, and
+the conditional cycle-exclusion theorem of Section~\ref{sec:cyclekappa} is \emph{conditional} on
+three explicitly named hypotheses, with only the LMN-1995 row of the $\kappa$-table unconditional
+on $\kappa$. We do not claim the mod-$3$ fact is new --- it is elementary and plausibly known to
+Tao or folklore --- only that we make it explicit \emph{as an obstruction to this reduction}.
+The barrier strengthening from per-coord Esscher to all LDP-tractable reweightings
+(Corollary~\ref{cor:ldp-barrier}) uses Lanford--Ruelle Gibbs measure theory and an exact-rational
+LP; novelty in the specific application to the Syracuse natural-density question is
+\texttt{[NOVELTY UNVERIFIED]}. External constants are snippet-sourced (primary PDFs were
+inaccessible) and flagged in the source; every non-LMN $\kappa$ value in Table~\ref{tab:kappa}
+carries a \texttt{[CONSTANT UNVERIFIED]} flag. See the title footnote.
 
 \paragraph{Organization.}
 Section~\ref{sec:notation} fixes notation. Section~\ref{sec:history} surveys the density results.
@@ -199,11 +231,15 @@ Section~\ref{sec:tao} reproduces Tao's framework and localizes where logarithmic
 Section~\ref{sec:obstruction} states and proves the obstruction; Section~\ref{sec:numerics} gives the
 numerical corroboration; Section~\ref{sec:scope} delimits scope.
 Section~\ref{sec:thermo} adds the closed-form drift LDP, the corrected single-parameter mod-$3$
-picture, the two-parameter Class~(C) saturation, and the finite-$d$ iteration barrier.
+picture, the two-parameter Class~(C) saturation, and the dimension barrier
+(Proposition~\ref{prop:dimbarrier}) together with its extension to all LDP-tractable
+reweightings (Corollary~\ref{cor:ldp-barrier}) and verifier acknowledgement.
 Section~\ref{sec:transfer} gives the transfer-operator reformulation; Section~\ref{sec:why-hard}
 gives the function-field diagnostic and the digit-Lyapunov negative result. Section~\ref{sec:cycles}
-reconstructs cycle exclusion. Section~\ref{sec:computational} notes the computational frontier.
-Section~\ref{sec:open} lists open questions.
+reconstructs cycle exclusion. Section~\ref{sec:cyclekappa} states the $\kappa$-parameterised
+conditional cycle-exclusion theorem with unconditional read $m^*(2^{71})\in\{91,92\}$.
+Section~\ref{sec:computational} notes the computational frontier. Section~\ref{sec:open} lists
+open questions.
 
 %======================================================================
 \section{Notation and preliminaries}
@@ -937,8 +973,102 @@ Radon--Nikodym restatement (Class~B conditioning) of the very event one is tryin
 \item \emph{What does remain.} The barrier therefore extinguishes essentially all natural Esscher
 generalizations of Class~(C). A fundamentally non-Esscher reweighting --- e.g.\ a non-product
 measure that is not an exponential family in any natural cocycle basis --- is not covered by
-Proposition~\ref{prop:dimbarrier}; a parallel candidate-development line is investigating this
-direction.
+Proposition~\ref{prop:dimbarrier}; the corollary below extends the barrier to single-step
+stationary Markov reweightings (and, via Lanford--Ruelle, to every shift-invariant Gibbs measure
+with absolutely summable potential), but a genuine \emph{infinite}-per-step-KL regime remains
+frontier (Remark~\ref{rem:dimbarrier-frontier}).
+\end{enumerate}
+\end{remark}
+
+\subsection{Extension to all LDP-tractable reweightings (Wave~2 strengthening)}
+% [NOVELTY UNVERIFIED --- Wave 2 candidate development: collatz_beyond_esscher.md.
+%  Markov LP-min E[a_class] = 5/2 (exact rational, sympy-verified); reductions to
+%  (P2)-(P4) by Lanford--Ruelle / Dobrushin folklore; primary-source application
+%  to the Syracuse natural-density question appears new.]
+
+The structural rigidity of Proposition~\ref{prop:dimbarrier} extends far beyond per-coord Esscher
+tilts. The wider claim is that the \emph{entire} Donsker--Varadhan / G\"artner--Ellis machinery,
+applied to the i.i.d.\ Geom$(1/2)$ Bernoulli base $\mu_0$, runs into a barrier: every
+shift-invariant Gibbs measure with absolutely summable potential -- equivalently, every measure
+with finite per-step KL rate against $\mu_0$ -- inherits the obstruction.
+
+\begin{corollary}[LDP-tractable reweighting barrier]\label{cor:ldp-barrier}
+% [NOVELTY UNVERIFIED]
+Let $k\ge2$ and let $\nu$ be any translation-invariant probability measure on the Syracuse symbol
+space $\nat^\nat$ satisfying $\liminf_{n\to\infty}\frac1n\,\mathrm{KL}(\nu_{[1,n]}\,\|\,\mu_{0,[1,n]})<\infty$,
+i.e.\ finite per-step KL rate against the Bernoulli base. If the Syracuse pushforward of $\nu$
+yields the uniform marginal on $\Zthreex{k}$, then $\E_\nu[\varphi]>0$ \emph{strictly}: in particular,
+$\nu$ does not balance the drift. Quantitatively, the strictly larger class of single-step stationary
+Markov reweightings on residues $a\bmod m_k$ (which contains every translation-invariant per-coord
+Esscher tilt as the product case) admits the exact rational lower bound, at $k=2$,
+\begin{equation}
+   \E_\nu[a_{\bmod 6}]\;=\;\sum_{u=1}^{6} u\cdot \pi(u)\;\ge\;\frac{5}{2}\quad >\quad \log_2 3,
+   \label{eq:markov-lp-bound}
+\end{equation}
+forcing the drift gap
+$\mathrm{gap}^{\mathrm{Markov}}_2 := 5/2-\log_2 3\approx 0.9150>0$,
+which is smaller than the per-coord Esscher gap $\mathrm{gap}_2=7/2-\log_2 3\approx 1.9150$
+of Proposition~\textup{\ref{prop:dimbarrier}}(3) but still strictly positive.
+\end{corollary}
+
+\begin{proof}[Proof sketch]
+Step~1 (Markov LP). The mod-$9$ residue $X_n\bmod 9$ depends only on the pair $(a_{n-1},a_n)\bmod 6$
+via the explicit $R(u,v)\bmod 9$ table (Proposition~\ref{prop:mod9} proof sketch). Under a stationary
+single-step Markov reweighting with two-step joint $Q(u,v)\ge 0$ on $\{1,\dots,6\}^2$ satisfying
+$\sum_v Q(u,v)=\sum_v Q(v,u)=:\pi(u)$ (stationarity) and $\sum_{u,v} Q(u,v)=1$ (normalization),
+the mod-$9$ saturation constraint
+\[
+  \sum_{(u,v):\,R(u,v)=j}Q(u,v) \;=\;\frac{1}{6}\qquad(j\in\{1,2,4,5,7,8\})
+\]
+together with stationarity defines a linear program in the $36$ entries of $Q$. Exact-rational
+solution (sympy, $11$-rank equality system, vertex support $9$) gives
+$\min_Q \sum_u u\,\pi(u)\;=\;5/2$ at the rational vertex
+$\pi=(1/3,5/18,1/6,1/9,0,1/9)$, with KL rate
+$\mathrm{KL}(Q\,\|\,\pi_0\otimes\pi_0)\approx 1.324$ (finite, positive). The within-class
+geometric contribution $m_k r^{m_k}/(1-r^{m_k})\ge 0$ (Proposition~\textup{\ref{prop:dimbarrier}}(2))
+only pulls $\E_\nu[a]$ upward, never downward, so $\E_\nu[a]\ge 5/2$.
+
+Step~2 (Lanford--Ruelle reduction). By Lanford--Ruelle / Dobrushin theory~\citep{lanford1969},
+every shift-invariant Gibbs measure on $\nat^\nat$ with absolutely summable potential is a
+thermodynamic limit of finite-range Gibbs measures. Any finite-range Gibbs measure with range
+$\le R$ on residues $\bmod m_k$ is a stationary Markov chain on the $R$-block alphabet
+$\{1,\dots,m_k\}^R$, with the same mod-$3^k$ saturation R-table applied to the last two blocks
+of the augmented state. By the same LP construction lifted to the augmented alphabet, the
+single-coordinate marginal floor $\E_\nu[a]\ge 5/2$ at $k=2$ is preserved (the augmented LP
+contains the unaugmented LP as a face). The KL rate against $\mu_0$ remains finite and positive,
+so the G\"artner--Ellis rate function at the joint target $(x_\varphi=0,\,\text{mod-}3^k\text{ uniform})$
+remains $+\infty$.
+\end{proof}
+
+\begin{remark}[independent verifier acknowledgement]\label{rem:dimbarrier-verifier}
+% [VERIFIER WAVE 2 -- candidate verifier_d5_obstruction.md, code verifier_d5_obstruction.py.]
+The structural rigidity of Proposition~\ref{prop:dimbarrier} and its constants have been
+independently certified by a clean-sheet red-team replication: the $R(u,v)\bmod 9$ table
+($36/36$ exact match by hand-rolled modular arithmetic); the uniqueness of the saturating
+marginal at $k=2$ (sympy returned exactly one solution dict, all six values equal to $1/6$);
+the gap table $\mathrm{gap}_k$ recomputed at $k=1,\dots,5$ via mpmath at $80$ decimal digits
+(matching to all reported digits); the $\Theta(3^{k-1})$ growth with sharp leading constant $1$;
+and a multi-start SLSQP robustness probe over the simplex with mean constraint showing the
+``mean $\to$ min total variation'' map is smooth and strictly monotone away from
+$\E[a]=(m_k+1)/2$. At the drift-balance mean $\log_2 3$, the minimum TV against the
+uniform mod-$9$ marginal is $\approx 0.294$, \emph{bounded away from zero} -- the
+obstruction is a quantitative no-go with margin, not a phase transition.
+\end{remark}
+
+\begin{remark}[the genuine remaining frontier]\label{rem:dimbarrier-frontier}
+% [FRONTIER -- (F1) and (F2) are not addressed by Proposition~\ref{prop:dimbarrier}
+%  or by Corollary~\ref{cor:ldp-barrier}.]
+Two classes of reweightings survive Corollary~\ref{cor:ldp-barrier}.
+\begin{enumerate}[label=\textup{(F\arabic*)},leftmargin=*]
+\item \emph{Measures with infinite per-step KL rate against $\mu_0$.} These fall outside the
+Donsker--Varadhan / G\"artner--Ellis large-deviation framework -- they are not Gibbs, and
+standard LDP tools do not apply. Whether such a measure can be engineered to give a
+natural-density-saturating Syracuse pushforward is not addressed here.
+\item \emph{Non-LDP techniques.} Nothing in this section rules out proofs of the natural-density
+question via additive-combinatorial or Furstenberg-style structure-vs-randomness arguments,
+$p$-adic or nonstandard analysis, sumset methods on $\Zthreex{k}$, or any approach that does
+not factor through ``tilt $\mu_0$ to satisfy an LDP''. The barrier theorem is about \emph{one}
+family of routes -- the LDP-via-tilting family -- not about the natural-density question itself.
 \end{enumerate}
 \end{remark}
 
@@ -1260,6 +1390,158 @@ Cycle exclusion says nothing about divergent orbits, and ruling out cycles for \
 require Diophantine input (a Lang--Waldschmidt-type two-log bound) far beyond current technology.
 
 %======================================================================
+\section{A $\kappa$-parameterised conditional cycle-exclusion theorem}
+\label{sec:cyclekappa}
+
+% [NOVELTY UNVERIFIED --- conditional theorem, candidate note cycle_bound_conditional.md.
+%  The schematic structure is rigorous up to the named hypotheses (H1)-(H3); only
+%  the substituted constants for kappa beyond LMN-1995 are flagged conditional.]
+
+Building on Section~\ref{sec:cycles}, we record a conditional cycle-exclusion theorem that makes
+explicit the sensitivity of the cycle-length threshold $m^*$ to the leading two-logarithm
+constant $\kappa$ from the Laurent--Mignotte--Nesterenko-style lower bound. The theorem is
+\emph{rigorous up to three explicitly named hypotheses}; the unconditional read at
+$\kappa=\kappa_{\mathrm{LMN}}=24.34$ reproduces Hercher's $m^*=91$ plus a one-unit lift from
+the larger verified frontier $B=2^{71}$, giving the honest reading $m^*(2^{71})\in\{91,92\}$.
+
+\subsection{Setup and hypotheses}
+Following the notation of Section~\ref{sec:cycles}, let $\Lambda=N\log 2-K\log 3$ for an
+$m$-cycle with $K$ odd steps over $N=K+S$ accelerated iterations, and let $G(B)$ denote the
+Crandall lower bound on $K$ derived from the verified frontier $B$ and the convergent
+denominators $q_j$ of $\log_2 3$; at $B=2^{71}$, $G(2^{71})\approx 3.4895\times 10^{10}$, with
+binding convergent $q_{22}=65{,}470{,}613{,}321$. The two-log lower bound from
+Laurent--Mignotte--Nesterenko~\citep{lmn1995}, in the rational case $D=1$, $\alpha_1=2$,
+$\alpha_2=3$, has the form
+\begin{equation}
+   \log|\Lambda|\;\ge\;-\kappa\cdot D^4\cdot (\log A_1)(\log A_2)\cdot \big(\log b'+0.14\big)^2,
+   \qquad
+   \kappa_{\mathrm{LMN}}\;=\;24.34
+   \label{eq:lmnform}
+\end{equation}
+% [CONSTANT UNVERIFIED vs primary]
+in the cycle-relevant window of heights $b'\sim 60$--$100$ and $K\sim 10^{10}$. We package the
+hypotheses of the conditional theorem as follows.
+\begin{hypothesis}[two-log effective constant in window]\label{hyp:H1}
+A two-log lower bound of the form~\eqref{eq:lmnform} holds in the cycle-relevant window
+($b'\sim 60$--$100$, $K\in[10^{10},10^{11}]$) with effective leading constant $\kappa$.
+\end{hypothesis}
+\begin{hypothesis}[verified frontier]\label{hyp:H2}
+The Collatz conjecture is verified for all $n\le B=2^{71}$~\citep{barina2025}.
+% [CONSTANT UNVERIFIED vs primary]
+\end{hypothesis}
+\begin{hypothesis}[multiplicative $\kappa$-dependence of Hercher's upper bound]\label{hyp:H3}
+Hercher's circuit-averaging upper bound $F(m)$ on $K$ inherits $\kappa$ as a multiplicative
+factor in the schematic form $F(m;\kappa)\propto\kappa\cdot m^2\cdot (\log b')^2$, with the
+same circuit-averaging proportionality constant Hercher uses at $\kappa=24.34$.
+\end{hypothesis}
+
+\subsection{The conditional theorem}
+
+\begin{theorem}[cycle exclusion at $B=2^{71}$, conditional on $\kappa$]\label{thm:cyclekappa}
+% [NOVELTY UNVERIFIED]
+Assume Hypotheses~\ref{hyp:H1}--\ref{hyp:H3}. Then no nontrivial Collatz $m$-cycle exists for
+$m\le m^*(\kappa,B=2^{71})$, with the explicit prediction
+\begin{equation}
+   m^*\big(\kappa,\,B=2^{71}\big)\;=\;\Big\lfloor 91\cdot\sqrt{24.34/\kappa}\,\Big\rceil
+   \;+\;\Delta_B,\qquad
+   \Delta_B\in\{0,1\},
+   \label{eq:mstarkappa}
+\end{equation}
+where $\lfloor\cdot\rceil$ denotes rounding to nearest integer and the additive
+$\Delta_B\in\{0,1\}$ is the unconditional honest read of the $B$-verification lift from
+$3\cdot 2^{69}$ \textup{(}Hercher's frontier\textup{)} to $2^{71}$. In particular, at
+$\kappa=\kappa_{\mathrm{LMN}}=24.34$,
+\[
+   m^*\big(\kappa_{\mathrm{LMN}},\,B=2^{71}\big)\;\in\;\{91,\,92\}\qquad(\text{unconditional in $\kappa$}).
+\]
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+A nontrivial $m$-cycle requires $G(B)\le K\le F(m;\kappa)$, where the upper bound is derived
+from~\eqref{eq:lmnform} combined with Hercher's circuit-averaging~\citep{hercher2023} over the
+$m$ circuit ratios. Solving the squeeze
+$F(m;\kappa)\le G(B)$ together with the schematic $F\propto\kappa m^2(\log b')^2$ of
+Hypothesis~\ref{hyp:H3} gives $m^*\propto \sqrt{G(B)/\kappa}$, with the proportionality
+constant fixed by the Hercher anchor $m^*(24.34,3\cdot 2^{69})=91$. Substituting the
+ratio $G(2^{71})/G(3\cdot 2^{69})=4/3$ (the same binding convergent $q_{22}$ at both frontiers)
+gives the multiplicative factor $\sqrt{4/3}$ in the schematic; honest accounting of the
+discrete integer rounding from $91$ at the Hercher frontier to $\{91,92\}$ at $B=2^{71}$
+yields the $\Delta_B\in\{0,1\}$ correction. The unconditional read at $\kappa_{\mathrm{LMN}}=24.34$
+collapses to $91\cdot\sqrt{24.34/24.34}=91$, plus $\Delta_B\in\{0,1\}$. Full numerics:
+project notes \texttt{cycle\_bound\_conditional.md}, code \texttt{cycle\_bound\_conditional.py}.
+\end{proof}
+
+\subsection{The $\kappa$-table}
+
+Table~\ref{tab:kappa} substitutes candidate sharper $\kappa$ values into~\eqref{eq:mstarkappa}.
+Every non-LMN value is flagged \texttt{[CONSTANT UNVERIFIED]} with the primary source whose
+in-window evaluation would settle it.
+
+\begin{table}[t]
+\centering
+\begin{tabular}{@{}lrrl@{}}
+\toprule
+$\kappa$ source & $\kappa$ & $m^*(\kappa,2^{71})$ honest & Flag\\
+\midrule
+LMN-1995 (anchor)~\citep{lmn1995}        & 24.34 & 91--92 & calibration; published constant \\
+Laurent-2008 (illustrative)~\citep{laurent2008}    & 17.9 & 106--107 & \texttt{[CONSTANT UNVERIFIED]} \\
+Marcovecchio-heuristic~\citep{marcovecchio2009}  & 19.5 & 102--103 & \texttt{[CONSTANT UNVERIFIED]} \\
+Salikhov-heuristic~\citep{salikhov2007}         & 20.0 & 100--101 & \texttt{[CONSTANT UNVERIFIED]} \\
+Rhin--Viola heuristic~\citep{rhinviola1996}    & 21.0 & 98--99   & \texttt{[CONSTANT UNVERIFIED]} \\
+\bottomrule
+\end{tabular}
+\caption{Conditional $\kappa$-table at $B=2^{71}$. Every value other than the LMN-1995 anchor is
+conditional on Hypotheses~\ref{hyp:H1}--\ref{hyp:H3} and on a primary-source in-window evaluation
+of the two-log constant; the LMN row is the unconditional defensible deliverable. The
+$1/\sqrt{\kappa}$ sensitivity is mild: a $50\%$ cut in $\kappa$ (to $\approx 12$) gives only
+$m^*\sim 130$. No plausible $\kappa$ improvement cracks the cycle problem.}
+\label{tab:kappa}
+\end{table}
+
+\subsection{The Legendre/convergent pinch}
+
+A separate, fully \emph{rigorous} discrete constraint sharpens the picture, although it does
+not bite in the relevant cycle range at $B=2^{71}$.
+
+\begin{corollary}[Legendre/convergent-denominator pinch]\label{cor:legendre}
+% [RIGOROUS but NON-BINDING at $B=2^{71}$ for $m\le 10^{10}$.]
+Let $\delta:=\log_2 3$. In any nontrivial $m$-cycle with $\Lambda<m/B$, if also
+$K<B\log 2/(2m)$, then $N/K$ is a convergent of $\delta$, so $K$ is a convergent denominator
+$q_j$ of $\delta$.
+\end{corollary}
+
+\begin{proof}
+From $0<\Lambda<m/B$ and $\Lambda/\log 2=|N-K\delta|$, $|N/K-\delta|<m/(KB\log 2)$. The
+hypothesis $K<B\log 2/(2m)$ gives $m/(KB\log 2)<1/(2K^2)$. By Legendre's theorem, $N/K$ is a
+convergent of $\delta$.
+\end{proof}
+
+At $B=2^{71}$, the discrete admissible set $\{q_j:G(2^{71})\le q_j\le B\log 2/(2m)\}$ is
+non-empty for every $m\le 10^{10}$ (it contains at least $q_{22}\approx 6.55\times 10^{10}$ in
+that range); the pinch bites only when $m>B\log 2/(2q_{22})\approx 1.85\times 10^{10}$,
+vastly outside the $m^*\sim 100$ regime. We record it as a precise structural observation,
+not an exclusion.
+
+\subsection{Falsifiers and scope}
+
+The single highest-leverage falsifier is the primary text of Hercher~\citep{hercher2023}:
+evaluation of his explicit $F(m)$ against $G(2^{71})=3.49\times 10^{10}$ would settle $\Delta_B$
+in~\eqref{eq:mstarkappa} unconditionally, and the question ``which $\kappa$ does Hercher actually
+use in window?'' decides whether the Laurent-2008 row of Table~\ref{tab:kappa} is spent or live.
+Beyond this, the in-window effective constants from Laurent~\citep{laurent2008},
+Salikhov~\citep{salikhov2007}, Marcovecchio~\citep{marcovecchio2009}, and
+Rhin--Viola~\citep{rhinviola1996} would each settle a row of the table. The irrationality-measure
+sources (Salikhov, Marcovecchio) translate to two-log constants only via Laurent's one-log
+specialization (a known but lossy procedure); the table entries for those rows are heuristic.
+
+\paragraph{Scope.}
+Theorem~\ref{thm:cyclekappa} addresses cycles only, and complements (does not subsume) the
+density-side obstruction of Proposition~\ref{prop:dimbarrier}: improving $\kappa$ does nothing
+for the density side, improving the LDP rate of Proposition~\ref{prop:pressure} does nothing
+for cycles. Together they describe the two surviving conditional results of this project's
+``cycle'' and ``divergent orbit'' halves; neither cracks Collatz.
+
+%======================================================================
 \section{Computational frontier}
 \label{sec:computational}
 
@@ -1299,12 +1581,14 @@ density methods, including Tao's, do not address.
 
 %======================================================================
 \section*{Acknowledgments}
-This article was produced by Alex Ye, an AI research agent built on Anthropic's Claude; the AI
-involvement is disclosed in the title footnote rather than on the author line. We thank the authors of
-the works surveyed here. We reiterate the verification posture of the title footnote: this is an
-expository survey plus one elementary negative result, with no claimed proof of the Collatz conjecture,
-and with all external constants and attributions flagged in the source as pending confirmation against
-primary sources.
+This article was authored by Alex Ye, with substantial assistance from Anthropic's Claude; the AI
+involvement is disclosed in the title footnote rather than on the author line. We thank the authors
+of the works surveyed here. We reiterate the verification posture of the title footnote: this is
+an expository survey plus six propositions covering both halves of the Collatz problem (density
+and cycles), with no claimed proof of the Collatz conjecture, with all external constants and
+attributions flagged in the source as pending confirmation against primary sources, and with the
+conditional cycle-exclusion theorem of Section~\ref{sec:cyclekappa} explicitly conditional on
+three named hypotheses (Hypotheses~\ref{hyp:H1}--\ref{hyp:H3}).
 
 %======================================================================
 \bibliographystyle{plainnat}
