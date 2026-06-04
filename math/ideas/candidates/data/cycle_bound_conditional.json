@@ -1,0 +1,307 @@
+{
+  "B_H": 1.770887431076117e+21,
+  "B_B": 2.3611832414348226e+21,
+  "G_H": 26170923143.059185,
+  "G_B": 34894564190.74558,
+  "G_H_binding_qj": 65470613321,
+  "G_B_binding_qj": 65470613321,
+  "log2_ratio_GB_GH": 0.4150374992788438,
+  "calibration": {
+    "c1": 3013.2312660088432,
+    "c2": 2.0,
+    "target_m": 91,
+    "target_kappa": 24.34,
+    "target_B": "3*2^69"
+  },
+  "kappa_table": [
+    {
+      "tag": "LMN-1995",
+      "kappa": 24.34,
+      "source": "Laurent-Mignotte-Nesterenko, J. Number Theory 55 (1995), 285-321.",
+      "status": "calibration anchor; published rational-case D=1 leading constant",
+      "m_star_schematic_at_B_H": 91,
+      "m_star_schematic_at_B_B": 103,
+      "m_star_honest_at_B_B": 92,
+      "delta_vs_91": 1
+    },
+    {
+      "tag": "Laurent-2008 (illustrative)",
+      "kappa": 17.9,
+      "source": "Laurent, Acta Arith. 133.4 (2008), 325-348.",
+      "status": "[CONSTANT UNVERIFIED] representative in-window value; primary PDF not re-derived here. Bugeaud survey reports 17-21 range in tight parameter windows.",
+      "m_star_schematic_at_B_H": 104,
+      "m_star_schematic_at_B_B": 118,
+      "m_star_honest_at_B_B": 107,
+      "delta_vs_91": 16
+    },
+    {
+      "tag": "Pad\u00e9/Salikhov-(log 3) (heuristic)",
+      "kappa": 20.0,
+      "source": "Salikhov, J. Number Theory 127 (2007); \u03bc(log 3) \u2264 5.125.",
+      "status": "[CONSTANT UNVERIFIED] heuristic translation: \u03bc(log 3) bound NOT a two-log leading constant; substitution into LMN requires Laurent's one-log specialization (Bugeaud survey) which is not redone here.",
+      "m_star_schematic_at_B_H": 99,
+      "m_star_schematic_at_B_B": 112,
+      "m_star_honest_at_B_B": 101,
+      "delta_vs_91": 10
+    },
+    {
+      "tag": "Pad\u00e9/Marcovecchio-(log 3) (heuristic)",
+      "kappa": 19.5,
+      "source": "Marcovecchio-style bound \u03bc(log 3) \u2264 5.1163051 (snippet).",
+      "status": "[CONSTANT UNVERIFIED] same caveat as Salikhov entry.",
+      "m_star_schematic_at_B_H": 100,
+      "m_star_schematic_at_B_B": 113,
+      "m_star_honest_at_B_B": 103,
+      "delta_vs_91": 12
+    },
+    {
+      "tag": "Rhin-Viola-(log 2) (heuristic)",
+      "kappa": 21.0,
+      "source": "Rhin-Viola; Rukhadze \u03bc(log 2) \u2264 3.892.",
+      "status": "[CONSTANT UNVERIFIED] same caveat; (log 2) measure unlikely to bind in the cycle window since log_2 3 = log 3 / log 2 ratio matters.",
+      "m_star_schematic_at_B_H": 97,
+      "m_star_schematic_at_B_B": 110,
+      "m_star_honest_at_B_B": 99,
+      "delta_vs_91": 8
+    }
+  ],
+  "unconditional_honest_read": {
+    "m_star_at_B_B_with_LMN_1995": "{91, 92}",
+    "source": "Hercher-self-calibrated local-slope; cycle_bound_push.md \u00a73.4 / cycle_bound_attempt.md \u00a76",
+    "schematic_model_value": 103
+  },
+  "pinch": {
+    "rows": [
+      {
+        "m": 1,
+        "pinch_upper": 8.1832375329297e+20,
+        "n_admissible": 22,
+        "min_q": 65470613321
+      },
+      {
+        "m": 2,
+        "pinch_upper": 4.09161876646485e+20,
+        "n_admissible": 22,
+        "min_q": 65470613321
+      },
+      {
+        "m": 5,
+        "pinch_upper": 1.6366475065859398e+20,
+        "n_admissible": 21,
+        "min_q": 65470613321
+      },
+      {
+        "m": 10,
+        "pinch_upper": 8.183237532929699e+19,
+        "n_admissible": 20,
+        "min_q": 65470613321
+      },
+      {
+        "m": 50,
+        "pinch_upper": 1.63664750658594e+19,
+        "n_admissible": 16,
+        "min_q": 65470613321
+      },
+      {
+        "m": 91,
+        "pinch_upper": 8.992568717505164e+18,
+        "n_admissible": 16,
+        "min_q": 65470613321
+      },
+      {
+        "m": 92,
+        "pinch_upper": 8.894823405358369e+18,
+        "n_admissible": 16,
+        "min_q": 65470613321
+      },
+      {
+        "m": 100,
+        "pinch_upper": 8.1832375329297e+18,
+        "n_admissible": 16,
+        "min_q": 65470613321
+      },
+      {
+        "m": 110,
+        "pinch_upper": 7.439306848117908e+18,
+        "n_admissible": 16,
+        "min_q": 65470613321
+      },
+      {
+        "m": 200,
+        "pinch_upper": 4.09161876646485e+18,
+        "n_admissible": 14,
+        "min_q": 65470613321
+      },
+      {
+        "m": 1000,
+        "pinch_upper": 8.1832375329297e+17,
+        "n_admissible": 14,
+        "min_q": 65470613321
+      },
+      {
+        "m": 10000,
+        "pinch_upper": 8.1832375329297e+16,
+        "n_admissible": 11,
+        "min_q": 65470613321
+      },
+      {
+        "m": 100000,
+        "pinch_upper": 8183237532929700.0,
+        "n_admissible": 11,
+        "min_q": 65470613321
+      },
+      {
+        "m": 1000000,
+        "pinch_upper": 818323753292970.0,
+        "n_admissible": 9,
+        "min_q": 65470613321
+      },
+      {
+        "m": 100000000,
+        "pinch_upper": 8183237532929.699,
+        "n_admissible": 5,
+        "min_q": 65470613321
+      },
+      {
+        "m": 10000000000,
+        "pinch_upper": 81832375329.297,
+        "n_admissible": 1,
+        "min_q": 65470613321
+      }
+    ],
+    "smallest_m_pinch_empty": null,
+    "corollary": "In the range m \u2264 ~10^10 at B = 2^71, the Legendre convergent-denominator pinch is non-empty and adds nothing to the \u03ba-squeeze. The pinch is a rigorous additional constraint, not a tighter bound."
+  },
+  "validation": {
+    "ok": true,
+    "parity_nontrivial_count": 0,
+    "orbit_cycle_count": 0,
+    "consistency_identity_ok": 2,
+    "consistency_bound_ok": 2,
+    "consistency_n_fixed": 2,
+    "elapsed_parity_s": 0.18615313800000877,
+    "elapsed_orbit_s": 0.42314082000007147
+  },
+  "convergents_first_30": [
+    [
+      1,
+      1
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      3,
+      2
+    ],
+    [
+      8,
+      5
+    ],
+    [
+      19,
+      12
+    ],
+    [
+      65,
+      41
+    ],
+    [
+      84,
+      53
+    ],
+    [
+      485,
+      306
+    ],
+    [
+      1054,
+      665
+    ],
+    [
+      24727,
+      15601
+    ],
+    [
+      50508,
+      31867
+    ],
+    [
+      125743,
+      79335
+    ],
+    [
+      176251,
+      111202
+    ],
+    [
+      301994,
+      190537
+    ],
+    [
+      16785921,
+      10590737
+    ],
+    [
+      17087915,
+      10781274
+    ],
+    [
+      85137581,
+      53715833
+    ],
+    [
+      272500658,
+      171928773
+    ],
+    [
+      357638239,
+      225644606
+    ],
+    [
+      630138897,
+      397573379
+    ],
+    [
+      9809721694,
+      6189245291
+    ],
+    [
+      10439860591,
+      6586818670
+    ],
+    [
+      103768467013,
+      65470613321
+    ],
+    [
+      217976794617,
+      137528045312
+    ],
+    [
+      1193652440098,
+      753110839881
+    ],
+    [
+      8573543875303,
+      5409303924479
+    ],
+    [
+      9767196315401,
+      6162414764360
+    ],
+    [
+      18340740190704,
+      11571718688839
+    ],
+    [
+      83130157078217,
+      52449289519716
+    ],
+    [
+      683381996816440,
+      431166034846567
+    ]
+  ]
+}
