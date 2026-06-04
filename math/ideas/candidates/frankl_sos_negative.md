@@ -1,8 +1,13 @@
-# Frankl candidate — degree-4 (Lasserre level-2) SOS over incidence variables
+# Frankl candidate (KILLED SHORTCUT, ARCHIVED) — degree-4 (Lasserre level-2) SOS over incidence variables
+
+> This file preserves the previous candidate's content for record-keeping after
+> its deciding experiment came back NEGATIVE (level-4 SOS collapses to the
+> level-2 / power-mean barrier on the lopsided "parasite" families).  The live
+> (surviving) candidate is `frankl_candidate.md`.
 
 **Author:** Alex Ye (no AI on author line).
 **Date:** 2026-06-03.
-**Status:** DECIDED — see VERDICT. `[NOVELTY UNVERIFIED]` (Lasserre/SOS for
+**Status:** ARCHIVED — DECIDED NEGATIVE; see VERDICT below. `[NOVELTY UNVERIFIED]` (Lasserre/SOS for
 extremal set theory exists — Raymond–Saunderson–Singh–Thomas, Bachoc–Vallentin,
 Gribling–de Laat–Laurent; the Frankl-specific incidence formulation is flagged
 new but plausibly folklore).
