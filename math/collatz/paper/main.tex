@@ -750,7 +750,7 @@ of $(-\varphi,-\psi)$. The system
 \]
 has a unique real solution $(s_C,t_C)$ in the domain of finiteness of $\lambda$, with closed-form data
 \[
-  r_C^{\,2}\;=\;\frac{2\log_2 3 -3}{2\log_2 3+1}\;\approx\;0.04075,
+  r_C^{\,2}\;=\;\frac{2\log_2 3 -3}{2\log_2 3+1}\;=\;\frac{\log(9/8)}{\log 18}\;\approx\;0.04075,
   \qquad
   r_C\;=\;2^{\,s_C-1}\;\approx\;0.20187,
 \]
@@ -759,6 +759,7 @@ has a unique real solution $(s_C,t_C)$ in the domain of finiteness of $\lambda$,
   \qquad
   t_C\;=\;\log r_C\;\approx\;-1.60015.
 \]
+(The two forms for $r_C^{\,2}$ are algebraically equal, as $\log(9/8)/\log 18 = (2\log 3-3\log 2)/(\log 2+2\log 3)$ becomes $(2\log_2 3-3)/(2\log_2 3+1)$ on dividing numerator and denominator by $\log 2$.)
 At $(s_C,t_C)$, the per-step law $\nu_{s_C,t_C}$ assigns equal mass to even and odd valuations, so by
 Lemma~\ref{lem:mod3} the induced mod-$3$ marginal of $X_n^{(s_C,t_C)}$ is exactly $(0,\tfrac12,\tfrac12)$
 on the units --- the marginal is saturated. The corresponding Gärtner--Ellis rate
@@ -790,6 +791,24 @@ multi-tilt stream of this project. It improves the LDP rate (from $0.0550$ to $0
 hitting the mod-$3$ marginal exactly on its uniform target. It does \emph{not} contradict
 Theorem~\ref{thm:obstruction}, which is a statement about \emph{one}-parameter scalar tilts; Class~(C)
 sits outside that family.
+
+\begin{remark}[independent verification]\label{rem:verifier}
+The numerical and symbolic values in Proposition~\ref{prop:classC} have been independently replicated
+end-to-end via exact-rational and high-precision (\texttt{mpmath}, $60$ digits) arithmetic in a
+clean-sheet re-derivation that did not import any code or data from the multi-tilt run
+(\texttt{verifier\_classC.py}). The cleaner closed form $r_C^{\,2}=\log(9/8)/\log 18$ was obtained
+during that replication; saturation identities $\E_{s_C,t_C}[\varphi]=0$ and $\E_{s_C,t_C}[\psi]=\tfrac12$
+were verified symbolically; the rate $I_2(0,\tfrac12)=0.227908836543\ldots$ agrees to all reported
+digits. The replication also flagged that the Class~(C) Esscher parameters are determined only up to
+the sign convention of the pressure $\lambda(s,t)=\log\E_{\mu_0}[e^{\mp s\varphi\mp t\psi}]$: under
+$\lambda^-$ (the convention used here, with $-s\varphi-t\psi$ in the exponent) one obtains
+$(s_C,t_C)\approx(-1.30853,-1.60015)$; under $\lambda^+$ the same magnitudes appear with positive
+signs. The magnitudes, $r_C$, and all derived quantities ($\E[\varphi]$, $\E[\psi]$, $I_2$, the
+mod-$9$ marginal) are convention-independent. Independent verification also corrected the comparator
+mod-$9$ TV values reported in earlier candidate notes; the values in Proposition~\ref{prop:mod9} are
+computed under the standard convention $\TV=\tfrac12\sum|p_i-q_i|$ and double-checked in
+closed form.
+\end{remark}
 % [NOVELTY UNVERIFIED --- two-parameter Esscher / Gibbs tilts on shifts are standard in thermodynamic formalism;
 %  the specific pairing with the parity cocycle $\psi(a)=\mathbf{1}[a\text{ even}]$ is natural enough to be folklore;
 %  prior-art pass pending in Sinai 2003 / Akin 2004 / Lagarias survey.]
@@ -799,17 +818,18 @@ sits outside that family.
 The mod-$3$ saturation of Proposition~\ref{prop:classC} does \emph{not} iterate.
 
 \begin{proposition}[Class~(C) is mod-$9$-anti-saturating]\label{prop:mod9}
-Under the Class~(C) tilt at $(s_C,t_C)$ of Proposition~\ref{prop:classC}, the induced mod-$9$ marginal
-of $X_n^{(s_C,t_C)}$ on the units of $\Z/9\Z$ has
+Under the Class~(C) tilt at $(s_C,t_C)$ of Proposition~\ref{prop:classC}, for every $n\ge2$ the
+induced mod-$9$ marginal of $X_n^{(s_C,t_C)}$ on the units of $\Z/9\Z$ has, under the standard
+total-variation convention $\TV(p,q)=\tfrac12\sum|p_i-q_i|$,
 \[
-  \TV\!\Big(\pi_*\nu_n^{(s_C,t_C)},\,U_{(\Z/9\Z)^\times}\Big)\;\approx\;0.313,
+  \TV\!\Big(\pi_*\nu_n^{(s_C,t_C)},\,U_{(\Z/9\Z)^\times}\Big)\;\approx\;0.31299,
 \]
-\emph{worse} than the untilted mod-$9$ TV ($1/3$) is essentially saturated and worse than the
-single-parameter Esscher mod-$9$ TV ($\approx 0.152$). The within-coset distribution of $X_n\bmod 9$
-within each mod-$3$ class is highly non-uniform: numerically (cf.\ project data) the six unit residues
+\emph{worse} than the corresponding untilted mod-$9$ TV $\approx 0.27778$ (computed in closed form
+in the same convention from the Geom$(1/2)$ per-step law). The within-coset distribution of
+$X_n\bmod 9$ within each mod-$3$ class is highly non-uniform: numerically the six unit residues
 $\{1,2,4,5,7,8\}\bmod 9$ carry masses
-$(0.250,\,0.250,\,0.240,\,0.010,\,0.010,\,0.240)$ respectively,
-versus the uniform target $1/6\approx 0.167$ each.
+$(0.2496,\,0.2496,\,0.2402,\,0.0102,\,0.0102,\,0.2402)$ respectively,
+versus the uniform target $1/6\approx 0.1667$ each.
 \end{proposition}
 
 \begin{proof}[Proof sketch]
@@ -821,7 +841,9 @@ $(a_{n-1}+a_n,\,a_n)\bmod 6$. The Class~(C) tilt makes the parity of each $a_j$ 
 $(a_{n-1}+a_n)\bmod 6$ highly asymmetric (the geometric tail concentrates on the small even/odd pairing
 $\{1,2\}$), producing the numerical mass-distribution displayed.
 % [CONSTANT UNVERIFIED --- masses computed in collatz_multitilt_probe.py with truncation amax=200;
-%  stability under truncation cross-checked at amax=400.]
+%  stability under truncation cross-checked at amax=400; independently re-derived in closed form
+%  (Class~(C) per-step law $P(a\bmod 6=j)\in\{r^4,1,1,r^2,r^2,r^4\}/(2(1+r^2+r^4))$) via
+%  exact-rational arithmetic, see Remark~\ref{rem:verifier}.]
 \end{proof}
 
 The mod-$9$ failure is structural, not a numerical artifact. It is shadowed by a clean

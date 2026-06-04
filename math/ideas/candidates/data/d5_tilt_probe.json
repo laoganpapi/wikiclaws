@@ -394,5 +394,5 @@
     "mod3k_drift_gap_lower_bound_formula": "(3^{k-1} * 6 / 2) + 0.5 - log_2(3)",
     "verdict": "Drift obstruction grows with k: mod-3^k saturation requires per-coord uniform-on-mod-{2 * 3^{k-1}}, which has E[a] >= 3^{k-1} + 0.5. Drift gap from log_2(3) grows as Theta(3^{k-1}). STRICT NO-ITERATION."
   },
-  "runtime_sec": 0.8661289215087891
+  "runtime_sec": 0.9522225856781006
 }
