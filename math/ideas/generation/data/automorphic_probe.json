@@ -1,0 +1,104 @@
+{
+  "B": 1770887431076116955136,
+  "log_B": 48.925767747304334,
+  "calibration": {
+    "c1": 2422.5843380117776,
+    "c2": 2.0,
+    "target_m": 91,
+    "target_kappa": 24.34
+  },
+  "kappa_table": [
+    {
+      "tag": "LMN-1995",
+      "kappa": 24.34,
+      "m_star": 91,
+      "delta": 0
+    },
+    {
+      "tag": "Laurent-2008 pess",
+      "kappa": 21.5,
+      "m_star": 96,
+      "delta": 5
+    },
+    {
+      "tag": "Laurent-2008 opt",
+      "kappa": 17.9,
+      "m_star": 104,
+      "delta": 13
+    },
+    {
+      "tag": "Dream \u03ba=15",
+      "kappa": 15.0,
+      "m_star": 112,
+      "delta": 21
+    },
+    {
+      "tag": "Dream \u03ba=12",
+      "kappa": 12.0,
+      "m_star": 124,
+      "delta": 33
+    },
+    {
+      "tag": "Dream \u03ba=10",
+      "kappa": 10.0,
+      "m_star": 134,
+      "delta": 43
+    },
+    {
+      "tag": "Dream \u03ba=7",
+      "kappa": 7.0,
+      "m_star": 157,
+      "delta": 66
+    },
+    {
+      "tag": "Dream \u03ba=5",
+      "kappa": 5.0,
+      "m_star": 182,
+      "delta": 91
+    }
+  ],
+  "inverse_table": [
+    {
+      "target_m": 92,
+      "required_kappa": 23.738673744201655,
+      "fractional_improvement": 0.024705269342577885
+    },
+    {
+      "target_m": 100,
+      "required_kappa": 19.616632843017577,
+      "fractional_improvement": 0.19405781253009136
+    },
+    {
+      "target_m": 120,
+      "required_kappa": 12.935869369506836,
+      "fractional_improvement": 0.4685345369964323
+    },
+    {
+      "target_m": 150,
+      "required_kappa": 7.780928344726562,
+      "fractional_improvement": 0.6803234040786129
+    },
+    {
+      "target_m": 200,
+      "required_kappa": 4.048974533081054,
+      "fractional_improvement": 0.8336493618290446
+    },
+    {
+      "target_m": 300,
+      "required_kappa": 1.6190744400024413,
+      "fractional_improvement": 0.9334809186523236
+    },
+    {
+      "target_m": 500,
+      "required_kappa": 0.5135956573486329,
+      "fractional_improvement": 0.9788991102157505
+    },
+    {
+      "target_m": 1000,
+      "required_kappa": 0.10930839538574218,
+      "fractional_improvement": 0.9955091045445463
+    }
+  ],
+  "dm_dkappa_at_LMN": -0.0,
+  "note": "Sensitivity probe only. F(m;\u03ba) is a schematic c1\u00b7\u03ba\u00b7m^2\u00b7log^2 model calibrated to m^*(24.34)=91. Numbers are RELATIVE; absolute m^* deviations from real Hercher reflect model simplification, not constants in the literature."
+}
