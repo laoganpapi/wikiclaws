@@ -1,0 +1,385 @@
+{
+  "stage1_min_2a_mod_3n": [
+    {
+      "n": 2,
+      "mod_3n": 9,
+      "order": 6,
+      "min_2a_mod_3n": 1,
+      "arg_a": 3,
+      "log3_min": 0.0,
+      "log3_mod": 2,
+      "log3_gap": 2.0
+    },
+    {
+      "n": 3,
+      "mod_3n": 27,
+      "order": 18,
+      "min_2a_mod_3n": 1,
+      "arg_a": 9,
+      "log3_min": 0.0,
+      "log3_mod": 3,
+      "log3_gap": 3.0
+    },
+    {
+      "n": 4,
+      "mod_3n": 81,
+      "order": 54,
+      "min_2a_mod_3n": 1,
+      "arg_a": 27,
+      "log3_min": 0.0,
+      "log3_mod": 4,
+      "log3_gap": 4.0
+    },
+    {
+      "n": 5,
+      "mod_3n": 243,
+      "order": 162,
+      "min_2a_mod_3n": 1,
+      "arg_a": 81,
+      "log3_min": 0.0,
+      "log3_mod": 5,
+      "log3_gap": 5.0
+    },
+    {
+      "n": 6,
+      "mod_3n": 729,
+      "order": 486,
+      "min_2a_mod_3n": 1,
+      "arg_a": 243,
+      "log3_min": 0.0,
+      "log3_mod": 6,
+      "log3_gap": 6.0
+    },
+    {
+      "n": 7,
+      "mod_3n": 2187,
+      "order": 1458,
+      "min_2a_mod_3n": 1,
+      "arg_a": 729,
+      "log3_min": 0.0,
+      "log3_mod": 7,
+      "log3_gap": 7.0
+    },
+    {
+      "n": 8,
+      "mod_3n": 6561,
+      "order": 4374,
+      "min_2a_mod_3n": 1,
+      "arg_a": 2187,
+      "log3_min": 0.0,
+      "log3_mod": 8,
+      "log3_gap": 8.0
+    },
+    {
+      "n": 9,
+      "mod_3n": 19683,
+      "order": 13122,
+      "min_2a_mod_3n": 1,
+      "arg_a": 6561,
+      "log3_min": 0.0,
+      "log3_mod": 9,
+      "log3_gap": 9.0
+    },
+    {
+      "n": 10,
+      "mod_3n": 59049,
+      "order": 39366,
+      "min_2a_mod_3n": 1,
+      "arg_a": 19683,
+      "log3_min": 0.0,
+      "log3_mod": 10,
+      "log3_gap": 10.0
+    },
+    {
+      "n": 11,
+      "mod_3n": 177147,
+      "order": 118098,
+      "min_2a_mod_3n": 1,
+      "arg_a": 59049,
+      "log3_min": 0.0,
+      "log3_mod": 11,
+      "log3_gap": 11.0
+    },
+    {
+      "n": 12,
+      "mod_3n": 531441,
+      "order": 354294,
+      "min_2a_mod_3n": 1,
+      "arg_a": 177147,
+      "log3_min": 0.0,
+      "log3_mod": 12,
+      "log3_gap": 12.0
+    },
+    {
+      "n": 13,
+      "mod_3n": 1594323,
+      "order": 1062882,
+      "min_2a_mod_3n": 1,
+      "arg_a": 531441,
+      "log3_min": 0.0,
+      "log3_mod": 13,
+      "log3_gap": 13.0
+    },
+    {
+      "n": 14,
+      "mod_3n": 4782969,
+      "order": 3188646,
+      "min_2a_mod_3n": 1,
+      "arg_a": 1594323,
+      "log3_min": 0.0,
+      "log3_mod": 14,
+      "log3_gap": 14.0
+    }
+  ],
+  "stage2_additive_discrepancy": [
+    {
+      "n": 2,
+      "size_O": 6,
+      "mod_3n": 9,
+      "additive_discrepancy_D": 2.0,
+      "expected_r": 4.0,
+      "D_over_expected": 0.5,
+      "additive_energy": 162,
+      "expected_energy_M4_over_3n": 144.0,
+      "energy_ratio": 1.125
+    },
+    {
+      "n": 3,
+      "size_O": 18,
+      "mod_3n": 27,
+      "additive_discrepancy_D": 6.0,
+      "expected_r": 12.0,
+      "D_over_expected": 0.5,
+      "additive_energy": 4374,
+      "expected_energy_M4_over_3n": 3888.0,
+      "energy_ratio": 1.125
+    },
+    {
+      "n": 4,
+      "size_O": 54,
+      "mod_3n": 81,
+      "additive_discrepancy_D": 18.0,
+      "expected_r": 36.0,
+      "D_over_expected": 0.5,
+      "additive_energy": 118098,
+      "expected_energy_M4_over_3n": 104976.0,
+      "energy_ratio": 1.125
+    },
+    {
+      "n": 5,
+      "size_O": 162,
+      "mod_3n": 243,
+      "additive_discrepancy_D": 54.0,
+      "expected_r": 108.0,
+      "D_over_expected": 0.5,
+      "additive_energy": 3188646,
+      "expected_energy_M4_over_3n": 2834352.0,
+      "energy_ratio": 1.125
+    },
+    {
+      "n": 6,
+      "size_O": 486,
+      "mod_3n": 729,
+      "additive_discrepancy_D": 162.0,
+      "expected_r": 324.0,
+      "D_over_expected": 0.5,
+      "additive_energy": 86093442,
+      "expected_energy_M4_over_3n": 76527504.0,
+      "energy_ratio": 1.125
+    },
+    {
+      "n": 7,
+      "size_O": 1458,
+      "mod_3n": 2187,
+      "additive_discrepancy_D": 486.0,
+      "expected_r": 972.0,
+      "D_over_expected": 0.5,
+      "additive_energy": 2324522934,
+      "expected_energy_M4_over_3n": 2066242608.0,
+      "energy_ratio": 1.125
+    }
+  ],
+  "stage3_smallest_diffs_brute_force": [
+    {
+      "a": 1,
+      "b": 1,
+      "diff": 1,
+      "log_ratio": 0.0
+    },
+    {
+      "a": 2,
+      "b": 1,
+      "diff": 1,
+      "log_ratio": 0.0
+    },
+    {
+      "a": 3,
+      "b": 2,
+      "diff": 1,
+      "log_ratio": 0.0
+    },
+    {
+      "a": 2,
+      "b": 2,
+      "diff": 5,
+      "log_ratio": 0.7324867603589634
+    },
+    {
+      "a": 3,
+      "b": 1,
+      "diff": 5,
+      "log_ratio": 0.7739760316291208
+    },
+    {
+      "a": 5,
+      "b": 3,
+      "diff": 5,
+      "log_ratio": 0.46438561897747244
+    },
+    {
+      "a": 1,
+      "b": 2,
+      "diff": 7,
+      "log_ratio": 0.8856218745807111
+    },
+    {
+      "a": 4,
+      "b": 2,
+      "diff": 7,
+      "log_ratio": 0.701838730514401
+    },
+    {
+      "a": 4,
+      "b": 3,
+      "diff": 11,
+      "log_ratio": 0.7275527795480461
+    },
+    {
+      "a": 4,
+      "b": 1,
+      "diff": 13,
+      "log_ratio": 0.925109929535273
+    },
+    {
+      "a": 8,
+      "b": 5,
+      "diff": 13,
+      "log_ratio": 0.4625549647676365
+    },
+    {
+      "a": 6,
+      "b": 4,
+      "diff": 17,
+      "log_ratio": 0.6447254807906414
+    },
+    {
+      "a": 3,
+      "b": 3,
+      "diff": 19,
+      "log_ratio": 0.8933812864154583
+    },
+    {
+      "a": 2,
+      "b": 3,
+      "diff": 23,
+      "log_ratio": 0.9513499434000904
+    },
+    {
+      "a": 5,
+      "b": 2,
+      "diff": 23,
+      "log_ratio": 0.9047123912114026
+    },
+    {
+      "a": 1,
+      "b": 3,
+      "diff": 25,
+      "log_ratio": 0.9766490138119513
+    },
+    {
+      "a": 5,
+      "b": 1,
+      "diff": 29,
+      "log_ratio": 0.9715961990255144
+    },
+    {
+      "a": 6,
+      "b": 3,
+      "diff": 37,
+      "log_ratio": 0.8682422276048251
+    },
+    {
+      "a": 7,
+      "b": 4,
+      "diff": 47,
+      "log_ratio": 0.7935126930968054
+    },
+    {
+      "a": 5,
+      "b": 4,
+      "diff": 49,
+      "log_ratio": 0.8856218745807111
+    },
+    {
+      "a": 6,
+      "b": 2,
+      "diff": 55,
+      "log_ratio": 0.9635599522541101
+    },
+    {
+      "a": 6,
+      "b": 1,
+      "diff": 61,
+      "log_ratio": 0.9884562229271479
+    },
+    {
+      "a": 4,
+      "b": 4,
+      "diff": 65,
+      "log_ratio": 0.9499227600476798
+    },
+    {
+      "a": 3,
+      "b": 4,
+      "diff": 73,
+      "log_ratio": 0.976336120896181
+    },
+    {
+      "a": 2,
+      "b": 4,
+      "diff": 77,
+      "log_ratio": 0.9884755219513901
+    },
+    {
+      "a": 1,
+      "b": 4,
+      "diff": 79,
+      "log_ratio": 0.9943107085039692
+    },
+    {
+      "a": 7,
+      "b": 3,
+      "diff": 101,
+      "log_ratio": 0.9511730689645422
+    },
+    {
+      "a": 7,
+      "b": 5,
+      "diff": 115,
+      "log_ratio": 0.8638046701836397
+    },
+    {
+      "a": 7,
+      "b": 2,
+      "diff": 119,
+      "log_ratio": 0.9849739661868492
+    },
+    {
+      "a": 7,
+      "b": 1,
+      "diff": 125,
+      "log_ratio": 0.9951120406660126
+    }
+  ],
+  "notes": "min_2a_mod_3n is the closest approach to 0 of the orbit of 2 in Z/3^n, taking the signed-magnitude representative in [-3^n/2, 3^n/2]. A 'sum-product' / mixing assumption would predict this is comparable to the trivial pigeonhole bound 3^n / |O| = 3^n / (2*3^{n-1}) = 3/2; the data shows the orbit in fact achieves values within an order of magnitude of that, which is the OPPOSITE of what would help cycles (the orbit is TOO well-distributed). See sum_product_markoff.md for interpretation."
+}
