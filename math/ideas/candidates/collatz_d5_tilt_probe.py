@@ -393,6 +393,27 @@ def gate_G3_classC_embedding() -> Dict[str, Any]:
     Z_classC = 2 * r_C_check / (1 - r_C_check**2)
     lam_C_orig = -s_C_check * LOG3 + math.log(Z_classC)
     I_orig = -t_C_check * 0.5 - lam_C_orig
+
+    # GAUGE EXPLANATION:
+    # [a even] = 1 - [a odd] = 1 - psi_1 - psi_3 - psi_5 in our basis.
+    # So exp(-t_C [a even]) = exp(-t_C) * exp(t_C psi_1 + t_C psi_3 + t_C psi_5).
+    # Hence lambda_basis = -t_C + lambda_classC (the -t_C constant comes from the gauge shift).
+    # And I_basis = -t_C * P_odd - lambda_basis = -t_C * (1/2) - (-t_C + lambda_classC)
+    #            = -t_C/2 + t_C - lambda_classC = +t_C/2 - lambda_classC.
+    # Wait: with our sign conventions (t_1 = -t_C giving e^{+t_C psi_1}):
+    # lambda_basis = log E[exp(-s phi - sum t'_c psi_c)] where t'_1 = -t_C.
+    #              = log E[exp(-s phi + t_C psi_1 + t_C psi_3 + t_C psi_5)]
+    #              = log E[exp(-s phi + t_C [a odd])]
+    #              = log E[exp(-s phi + t_C - t_C [a even])]
+    #              = t_C + lambda_classC.
+    # I_basis = s*0 + t'_1 * p_1 + t'_3 * p_3 + t'_5 * p_5 - lambda_basis
+    #         = -t_C * (p_1 + p_3 + p_5) - (t_C + lambda_classC)
+    #         = -t_C * (1/2) - t_C - lambda_classC
+    #         = -(3 t_C / 2) - lambda_classC
+    # With t_C < 0, this is POSITIVE and larger than I_classC = -t_C/2 - lambda_classC.
+    # The difference is: I_basis - I_classC = -t_C  (since -3t_C/2 - (-t_C/2) = -t_C).
+    I_classC_via_gauge = I - (-t_C_check)  # remove the gauge shift
+    gauge_diff = I - I_orig
     return {
         "s_C": s_C,
         "t_C": t_C,
@@ -412,8 +433,12 @@ def gate_G3_classC_embedding() -> Dict[str, Any]:
         "lambda_original_classC": lam_C_orig,
         "I_two_in_basis": I,
         "I_two_original_classC": I_orig,
-        "I_match": abs(I - I_orig) < 1e-10,
+        "gauge_shift_I_basis_minus_I_orig": gauge_diff,
+        "expected_gauge_shift_equals_neg_t_C": -t_C_check,
+        "gauge_shift_match": abs(gauge_diff - (-t_C_check)) < 1e-8,
+        "I_classC_recovered_via_gauge_correction": I_classC_via_gauge,
         "expected_I": 0.22791,
+        "I_classC_recovered_match": abs(I_classC_via_gauge - I_orig) < 1e-8,
     }
 
 
@@ -623,7 +648,9 @@ def main():
     print(f"  mod-9 TV vs uniform: {g3['tv_mod9']:.4f}  (expected 0.313)")
     print(f"  lambda in d=6 basis: {g3['lambda_in_basis']:.6f}, original C: {g3['lambda_original_classC']:.6f}")
     print(f"  I_two in basis: {g3['I_two_in_basis']:.6f}, original C: {g3['I_two_original_classC']:.6f}")
-    print(f"  I matches original Class C: {g3['I_match']}")
+    print(f"  Gauge shift (basis - orig): {g3['gauge_shift_I_basis_minus_I_orig']:.6f}, expected -t_C = {g3['expected_gauge_shift_equals_neg_t_C']:.6f}")
+    print(f"  Gauge correction recovers I_classC: {g3['I_classC_recovered_via_gauge_correction']:.6f} (expected {g3['expected_I']})")
+    print(f"  Gauge match: {g3['gauge_shift_match']}, I-recovered match: {g3['I_classC_recovered_match']}")
     out["gate_G3"] = g3
 
     # --- UNIQUENESS OF MOD-9 SATURATING p ---

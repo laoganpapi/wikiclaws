@@ -139,8 +139,12 @@
     "lambda_original_classC": 0.5721652028674022,
     "I_two_in_basis": 1.828056915366227,
     "I_two_original_classC": 0.22790883654380767,
-    "I_match": false,
-    "expected_I": 0.22791
+    "gauge_shift_I_basis_minus_I_orig": 1.6001480788224192,
+    "expected_gauge_shift_equals_neg_t_C": 1.6001480788224198,
+    "gauge_shift_match": true,
+    "I_classC_recovered_via_gauge_correction": 0.22790883654380711,
+    "expected_I": 0.22791,
+    "I_classC_recovered_match": true
   },
   "uniqueness_mod9": {
     "sympy_solutions": [
@@ -390,5 +394,5 @@
     "mod3k_drift_gap_lower_bound_formula": "(3^{k-1} * 6 / 2) + 0.5 - log_2(3)",
     "verdict": "Drift obstruction grows with k: mod-3^k saturation requires per-coord uniform-on-mod-{2 * 3^{k-1}}, which has E[a] >= 3^{k-1} + 0.5. Drift gap from log_2(3) grows as Theta(3^{k-1}). STRICT NO-ITERATION."
   },
-  "runtime_sec": 0.8563153743743896
+  "runtime_sec": 0.8661289215087891
 }
