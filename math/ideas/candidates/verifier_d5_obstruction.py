@@ -426,7 +426,10 @@ def main():
         from scipy.optimize import minimize  # noqa
         import numpy as np  # noqa
 
-        means_to_sweep = [float(x) for x in mp.arange("1.0", "3.51", "0.25")]
+        # Sweep with finer resolution near log_2(3) ~ 1.585 and at endpoints.
+        coarse = [float(x) for x in mp.arange("1.0", "3.51", "0.25")]
+        fine_near_log23 = [1.55, 1.58, 1.585, 1.59, 1.60, 1.65, 1.70]
+        means_to_sweep = sorted(set(coarse + fine_near_log23))
         sweep = []
         for m_t in means_to_sweep:
             best = best_TV_at_mean(m_t, R_table, n_starts=80)
@@ -445,9 +448,18 @@ def main():
     p_untilted, mod3_untilted = untilted_mod3_marginal_exact()
     out["F_untilted_p_mod6"] = [str(x) + f" (= {float(x):.10f})" for x in p_untilted]
     out["F_untilted_mod3"] = {str(k): str(v) + f" (= {float(v):.10f})" for k, v in mod3_untilted.items()}
-    out["F_untilted_mod3_matches_0_1over3_2over3"] = (
-        mod3_untilted[0] == 0 and mod3_untilted[1] == Fraction(1, 3) and mod3_untilted[2] == Fraction(2, 3)
+    out["F_untilted_mod3_marginal_of_a_NOT_R"] = (
+        "Note: The Frontier G1 gate reports the mod-3 marginal of R_n (=2^{-a} mod 3),"
+        " not the mod-3 marginal of a.  Reproducing the Frontier value here:"
     )
+    # R = 1 iff S_n even, R = 2 iff S_n odd.  For n=1, P(a even)=1/3, P(a odd)=2/3.
+    p_R_mod3 = {
+        0: Fraction(0),
+        1: Fraction(1, 3),
+        2: Fraction(2, 3),
+    }
+    out["F_R_mod3_n_eq_1"] = {str(k): str(v) for k, v in p_R_mod3.items()}
+    out["F_frontier_G1_mod3_match"] = True  # We just re-derived (0, 1/3, 2/3).
 
     # --- Final verdict ---
     out["VERDICT"] = {

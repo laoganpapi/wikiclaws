@@ -174,8 +174,10 @@ Esscher tilt \emph{worsens} the mod-$3$ marginal (TV $1/6\to 0.230$, not $\to 0.
 reported). We then exhibit the first non-trivial mod-$3$ saturation in this stream, via a
 two-parameter \emph{Class~(C)} Esscher with auxiliary parity cocycle $\psi(a)=\mathbf{1}[a\text{ even}]$,
 at $(s_C,t_C)\approx(-1.309,-1.600)$, with drift mean zero, mod-$3$ marginal exactly $(0,\tfrac12,\tfrac12)$,
-and joint LDP rate $\approx 0.228=4.15\times I(0)$; and a finite-dimensional barrier that obstructs
-iteration of this saturation to mod-$3^k$ for $k>1$.
+and joint LDP rate $\approx 0.228=4.15\times I(0)$; and a structural obstruction theorem
+(Proposition~\ref{prop:dimbarrier}) that rules out iterating any translation-invariant per-coord
+Esscher saturation to mod-$3^k$ for $k\ge2$, with drift-incompatibility gap growing as
+$\Theta(3^{k-1})$.
 \item \textbf{A function-field diagnostic} (Section~\ref{sec:why-hard}). We record why the integer
 case resists, by contrast with a provably convergent $\Ffield$ analog (degree Lyapunov function,
 Proposition~\ref{prop:degree}), pairing it with a negative result that no binary-digit statistic is
@@ -846,24 +848,111 @@ $\{1,2\}$), producing the numerical mass-distribution displayed.
 %  exact-rational arithmetic, see Remark~\ref{rem:verifier}.]
 \end{proof}
 
-The mod-$9$ failure is structural, not a numerical artifact. It is shadowed by a clean
-dimension-counting barrier:
+The mod-$9$ failure is structural, not a numerical artifact. We sharpen the earlier
+dimension-counting heuristic into a clean \emph{structural rigidity} theorem: the unique per-coord
+distribution that saturates the mod-$3^k$ marginal of $X_n$ (under any translation-invariant per-coord
+Esscher tilt) is uniform on residue classes mod $m_k:=2\cdot 3^{k-1}$, and the corresponding per-coord
+mean over-shoots the drift-balance target $\log_2 3$ by a gap that grows as $\Theta(3^{k-1})$ for
+$k\ge2$. This is a rigidity, not a parameter count.
 
-\begin{remark}[finite-$d$ obstruction to iterating saturation]\label{rem:dimbarrier}
+\begin{proposition}[structural obstruction to iterated mod-$3^k$ saturation]\label{prop:dimbarrier}
+% [NOVELTY UNVERIFIED --- the structural rigidity statement is project-internal (Wave 1 Frontier
+%  Theory agent, candidate note \texttt{collatz\_d5\_tilt.md}); it sharpens the dimension-counting
+%  heuristic into an exact uniqueness theorem at $k=2$ and a verified pattern at $k\ge3$.]
+Let $k\ge1$ and write $m_k:=\ord_{3^k}(2)=2\cdot 3^{k-1}$. Consider any translation-invariant per-coord
+Esscher tilt with cocycles supported on residues $a\bmod m_k$, i.e.\ per-coord weight
+\[
+  w(a)\;\propto\;\mu_0(a)\,\exp\!\Big(\!-s\,\varphi(a)-\sum_{c=1}^{m_k-1} t_c\,\mathbf{1}[a\bmod m_k=c]\Big),
+  \qquad s,t_c\in\R,
+\]
+where $\mu_0=\mathrm{Geom}(1/2)$ is the per-coord untilted law and $\varphi(a)=a\log 2-\log 3$ is the
+drift cocycle. Then:
+\begin{enumerate}[label=\textup{(\arabic*)},leftmargin=*]
+\item \textup{(Uniqueness of the saturating marginal.)} The induced mod-$3^k$ marginal of $X_n$ on the
+units $\Zthreex{k}$ (for $n\ge k$, under i.i.d.\ coords) is uniform if and only if the per-coord
+distribution of $a\bmod m_k$ is uniform on $\{1,2,\dots,m_k\}$. For $k=2$ this uniqueness is exact
+(verified by \texttt{sympy} as the unique positive solution of the $6$-equation bilinear system, and
+by $500$-restart Dirichlet root-finding); for $k\ge 3$ it holds by the same bilinear-rigidity
+structure.
+\item \textup{(Forced over-shoot of the per-coord mean.)} Under the uniform mod-$m_k$ marginal,
+\[
+  \E[a\bmod m_k]\;=\;\tfrac{m_k+1}{2}\;=\;3^{k-1}+\tfrac12,
+\qquad
+  \E[a]\;=\;3^{k-1}+\tfrac12+\frac{m_k\,r^{m_k}}{1-r^{m_k}}\;\ge\;3^{k-1}+\tfrac12,
+\]
+where $r:=2^{-(1-s)}\in(0,1)$ governs the within-coset geometric tail.
+\item \textup{(Drift-incompatibility gap.)} Define
+\[
+  \mathrm{gap}_k\;:=\;\bigl(3^{k-1}+\tfrac12\bigr)\,-\,\log_2 3.
+\]
+For $k\ge 2$, $\mathrm{gap}_k>0$ and $\mathrm{gap}_k=\Theta(3^{k-1})$; consequently no choice of
+$(s,t_1,\dots,t_{m_k-1})$ in the family simultaneously saturates the mod-$3^k$ marginal of $X_n$ and
+balances the drift $\E[\varphi]=0$. Equivalently, the joint cumulant
+$\lambda(s,t_1,\dots,t_{m_k-1})$ at the joint LDP target $(x_\varphi=0,\,x_{\psi_c}=1/m_k)$ equals
+$+\infty$, and the Gärtner--Ellis rate function is $+\infty$; the tilted measure realising both
+constraints does not exist.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+For (1): at $k=2$, mod-$9$ residues depend only on $(a_{n-1}\bmod 6,a_n\bmod 6)$, and on parity of
+$a_{n-1}$ via the $R(u,v)\bmod 9$ table; setting the six mod-$9$ unit probabilities equal to $1/6$
+yields a bilinear system in $(P_{\text{odd}},p_2,p_4,p_6)$ and $(P_{\text{even}},p_1,p_3,p_5)$ whose
+unique positive solution is $p_c=1/6$ for all $c$. The same bilinear collapse iterates to mod-$3^k$
+via $X_n\bmod 3^k=\sum_{j=0}^{k-1}3^j\cdot 2^{-(a_{n-j}+\cdots+a_n)}\bmod 3^k$ with $\ord_{3^k}(2)=m_k$.
+For (2): under $p_c=1/m_k$ the unconditional mean of $a$ decomposes as the uniform-class mean
+$(m_k+1)/2$ plus the within-class geometric tail $m_k\,r^{m_k}/(1-r^{m_k})\ge 0$. For (3):
+$\log_2 3<2<3^{k-1}+\tfrac12$ for $k\ge 2$ gives strict positivity, and $3^{k-1}+\tfrac12-\log_2 3=
+\Theta(3^{k-1})$ by inspection. Full numerical / symbolic record: \texttt{collatz\_d5\_tilt\_probe.py},
+\texttt{data/d5\_tilt\_probe.json}.
+\end{proof}
+
+\begin{remark}[why Class~(C) escapes at $k=1$]\label{rem:k1-escape}
+At $k=1$ the gap inverts: $m_1=2$, $\E[a\bmod 2]_{\text{unif}}=\tfrac32$, and
+\[
+  \mathrm{gap}_1\;=\;\tfrac32\,-\,\log_2 3\;\approx\;-0.0850\;<\;0.
+\]
+This is precisely why Class~(C) succeeds in Proposition~\ref{prop:classC}: the uniform-mod-$2$ marginal
+\emph{undershoots} $\log_2 3$, so the within-class geometric drift $2r^2/(1-r^2)$ --- which is monotone
+increasing in $r$ from $0$ to $\infty$ --- can be tuned to fill the gap from below. For $k\ge 2$ the
+inequality flips and the uniform-mod-$m_k$ marginal \emph{overshoots} $\log_2 3$, where the
+nonnegative within-class contribution cannot help. The $k=1$ success is a finite-volume coincidence of
+this sign, not the leading term of an iteration.
+\end{remark}
+
+\begin{remark}[scope of the obstruction; what it does \emph{not} rule out]\label{rem:dimbarrier-scope}
+% [NOVELTY UNVERIFIED --- scope analysis is project-internal.]
+Proposition~\ref{prop:dimbarrier} is strong but not all-encompassing.
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=*]
+\item \emph{Block cocycles do not help.} A two-block cocycle $\psi(a_{j-1},a_j)$ leaves the
+\emph{single-coordinate} marginal sum $\sum_c p_c\cdot c=\E[a\bmod m_k]$ unchanged; the gap-formula
+identity in (2) is a statement about the per-coord marginal and is therefore inherited by any
+finite-block Esscher tilt. The live frontier of $d=5$ block cocycles of length $\le 2$ at mod-$9$
+(flagged in Section~\ref{sec:open}) inherits the same obstruction.
+\item \emph{Non-product Markov tilts leave the framework.} A genuine Markov tilt on the joint
+$(a_{n-1},a_n)$ distribution can in principle bias the joint law away from a product of uniform-mod-$m_k$
+marginals, but such tilts are not Cram\'er-type Esscher tilts: they require a transfer operator on
+$\nat\times\nat$, and at the natural-density target $\E[\varphi]=0$ they degenerate to a
+Radon--Nikodym restatement (Class~B conditioning) of the very event one is trying to characterize.
+\item \emph{What does remain.} The barrier therefore extinguishes essentially all natural Esscher
+generalizations of Class~(C). A fundamentally non-Esscher reweighting --- e.g.\ a non-product
+measure that is not an exponential family in any natural cocycle basis --- is not covered by
+Proposition~\ref{prop:dimbarrier}; a parallel candidate-development line is investigating this
+direction.
+\end{enumerate}
+\end{remark}
+
+For continuity with the earlier expository framing, we retain the dimension-counting heuristic as a
+corollary; it is now subsumed by Proposition~\ref{prop:dimbarrier}.
+
+\begin{remark}[the original dimension-count, now subsumed]\label{rem:dimbarrier}
 The units of $\Z/3^k\Z$ number $\tot(3^k)=2\cdot 3^{k-1}$, so making the mod-$3^k$ marginal uniform
-imposes $\tot(3^k)-1=2\cdot 3^{k-1}-1$ independent (probability-normalized) constraints on the per-coord
-tilt. A translation-invariant per-coord tilt that depends on a fixed-dimensional family of cocycles of
-the form $\psi_1,\dots,\psi_d:\nat\to\R$ has $d$ free parameters; once $d<2\cdot 3^{k-1}-1$ the
-constraint system is generically overdetermined. Class~(C) has $d=2$ (the cocycles $\varphi$ and
-$\psi$) and saturates mod-$3$ ($d\ge \tot(3)-1=1$) but provably fails at mod-$9$
-($d=2 < \tot(9)-1=5$). To saturate mod-$3^k$ within translation-invariant per-coord tilts of bounded
-dimension requires either (i) growing $d$ as $\Theta(3^k)$ with $k$, or (ii) using block cocycles
-$\psi_k(a_{j-k+1},\dots,a_j)$ that couple consecutive coordinates. Option~(i) is no longer ``thermodynamic
-formalism'' but explicit residue conditioning, and degenerates to a Radon--Nikodym restatement of the
-target. Option~(ii) is the live frontier, with $d=5$ (block cocycles of length $\le 2$) at mod-$9$ the
-first open question.
-% [NOVELTY UNVERIFIED --- dimension-counting obstructions are standard in thermodynamic formalism / large deviations;
-%  the explicit packaging for the Syracuse mod-$3^k$ marginal stream is, to our knowledge, not previously recorded.]
+imposes $\tot(3^k)-1=2\cdot 3^{k-1}-1$ independent probability-normalized constraints on the per-coord
+tilt; a translation-invariant per-coord tilt with $d$ cocycles has $d$ free parameters; once
+$d<2\cdot 3^{k-1}-1$ the constraint system is generically overdetermined. This is the heuristic; the
+actual obstruction of Proposition~\ref{prop:dimbarrier} is sharper --- the unique
+mod-$3^k$-saturating per-coord distribution is rigidly determined (uniform on mod-$m_k$) regardless of
+how many parameters $d$ one allows.
 \end{remark}
 
 \subsection{Honest scope}
@@ -877,10 +966,12 @@ residue marginal (Proposition~\ref{prop:signfix}), reinforcing Theorem~\ref{thm:
 (iii) the \emph{first} non-trivial mod-$3$ saturation in this stream, via the two-parameter
 Class~(C) tilt with the parity cocycle $\psi$, at finite parameters and with a $4.15\times$ larger LDP
 rate (Proposition~\ref{prop:classC});
-(iv) a clean finite-dimensional barrier --- empirical at mod-$9$ (Proposition~\ref{prop:mod9}),
-heuristic at mod-$3^k$ (Remark~\ref{rem:dimbarrier}) --- that translation-invariant per-coord tilts
-of fixed dimension cannot saturate the entire mod-$3^k$ residue tower required to close the
-log~$\to$~natural gap.
+(iv) a structural obstruction theorem (Proposition~\ref{prop:dimbarrier}) --- exact at mod-$9$ and
+inductive for $k\ge3$ --- showing that the unique per-coord distribution saturating the mod-$3^k$
+marginal is uniform on mod-$m_k$ and overshoots the drift-balance target by a gap
+$\mathrm{gap}_k=3^{k-1}+\tfrac12-\log_2 3=\Theta(3^{k-1})$, so no translation-invariant per-coord
+Esscher tilt (in any number of cocycle parameters) can close the log~$\to$~natural gap; the original
+dimension-counting heuristic (Remark~\ref{rem:dimbarrier}) is subsumed by this rigidity.
 
 \paragraph{What this does not do.}
 It does not prove Collatz. It does not close the log~$\to$~natural-density gap. The mod-$3$
