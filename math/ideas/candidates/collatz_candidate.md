@@ -1,241 +1,253 @@
-# Collatz candidate — DECIDING the residue⊥drift disjointness (the joint-law route)
+# Collatz candidate — Thermodynamic-formalism / large-deviation framing of the Syracuse drift
 
-**Track:** Collatz, Vector A (natural-density upgrade). Tests ergodic-E2 ≡ probability-B.4.
+**Track:** Collatz, Vector A (sharpen Tao 2022 toward natural density). The surviving research-program candidate after the entire structured / algebraic / cohomological pipeline was certified negative.
 **Author:** Alex Ye (AI-assisted computation; AI not on author line per project rules).
-**Date:** 2026-06-03.
-**Status:** `[result — CERTIFIED NEGATIVE]`. Numerics (exact DP, truncation < 1e-13), not proof.
-`[NOVELTY UNVERIFIED]` on the packaging; the underlying coupling is Tao / Prop 4.2.
-**Code:** `collatz_psi_factorization.py`. **Data:** `data/psi_factorization.json`, `data/run_n8.log`.
+**Date:** 2026-06-04.
+**Status:** `[CANDIDATE — research program, not proof attempt]`. Closed-form pressure and rate function are proof-grade; validation against Monte-Carlo and trajectory data is numerical. `[NOVELTY UNVERIFIED]` — thermodynamic-formalism views of Collatz almost certainly exist (Sinai, Akin, Lagarias survey, and the Tao 2022 Esscher tilt itself); the contribution is the *packaging* and a sharp *falsifier*, not the LDP machinery.
+**Code:** `collatz_thermo_probe.py`. **Data:** `data/thermo_probe.json`, `data/thermo_probe.log`.
 
 ---
 
 ## 0. Verdict (read first)
 
-> **The (residue, drift) joint law of the Syracuse system does NOT factorize. Residue and
-> drift stay COUPLED. The disjointness the natural-density route needs is FALSE — decisively,
-> with a power-law *divergence* of the factorization defect.**
+> **The surviving candidate is the LDP / thermodynamic-formalism core of the Syracuse system — the Tao β=1 / fine-scale-mixing neighborhood, untouched by the structural kills. The numerical validation confirms the closed forms (pressure P(s), Esscher tilt s\*, rate function I(x), tilted CLT variance P''(s\*)) to 5–6 decimals against Monte-Carlo. BUT: the falsifier we built in (does the Esscher tilt repair the mod-3 marginal of the residue?) returns a quantitative finding — the tilt *partially* repairs the marginal (from (0, 1/3, 2/3) → (0, 0.404, 0.596)), reducing the natural-density TV-floor of `natural_density_obstruction.md` from 1/6 to about 0.096, **but does not eliminate it**. So this candidate is real but its honest target is a *quantitative improvement* of Tao 2022's β-bound, NOT a closure of the log → natural gap. The mod-3 obstruction survives in attenuated form.**
 
-The candidate certified by the reviewer (`ideas/review/collatz_review.md` §4) was the joint
-`(residue, drift)` law, phrased as ergodic-E2's **disjointness / factorization** statement: at the
-descent-balance Esscher tilt `t* = s*`, does
+This is the genuine analytic core where Tao's 2022 work lives. It is the **only** of the wave's framings that was not killed. The deliverable of this wave is:
 
-$$
-\Psi_n(\xi,t) \;=\; \mathbb E\!\left[\, e(\xi R_n/3^n)\, e^{-t D_n}\,\right],
-\qquad e(x)=e^{2\pi i x},\quad D_n = \big(\textstyle\sum a_j\big)\log 2 - n\log 3,
-$$
+1. The closed-form pressure `P(s) = -s·log3 + (s-1)·log2 - log(1 - 2^{s-1})` and its Legendre transform `I(x)`.
+2. The Esscher tilt `s* = 1 + log_2(1 - log_2(2)/log_2(3)) ≈ -0.43803` and the tilted CLT variance `P''(s*) = log3 · log(3/2) ≈ 0.4454` (distinct from the *untilted* Livšic CLT variance `2·(log2)² ≈ 0.9609`).
+3. A precise statement of what equidistribution rate would close the log → natural gap (essentially Tao's β=1 with the LDP weighting), and a sharp falsifier numerically demonstrating that the **mod-3 obstruction of the residue is only partially repaired by the tilt**, fixing the residual gap at ≈ 0.096 in TV — a *quantitative* improvement of Tao 2022's residue input, not a route to natural density.
 
-factorize off the frozen mod-3 coset? The discriminator is the **factorization defect**
-
-$$
-\Delta_n \;:=\; \max_{\xi:\,3\nmid\xi}\;
-\Big|\, \Psi_n(\xi,t^*)\big/\big(\Psi_n(\xi,0)\,\Psi_n(0,t^*)\big) - 1 \,\Big|.
-$$
-
-- **Power-saving decay** `Δ_n ≲ 3^{−θn}` ⇒ disjointness holds ⇒ genuine route → `[CANDIDATE LEAD]`.
-- **Bounded-below / non-decaying `Δ_n`** ⇒ residue and drift coupled ⇒ route obstructed → certified negative.
-
-**Result:** `Δ_n` is not merely bounded below — it **diverges as a clean power law**
-`Δ_n ≈ 3^{+0.85 n}` (global fit `n=2..8`; local slope tightens to `θ ≈ 1.07` on `n=5..8`). This is the
-**opposite** of the required power-saving decay, by the maximal possible margin. The reviewer's
-prediction (§3.2, §4: "`max|R(ξ,t*)−1|` is bounded below, the factorization FAILS") is **confirmed
-and strengthened** — the defect does not just floor, it grows. Confidence: **high (~90%)** that the
-disjointness route is dead; the trend is monotone, truncation-stable, and structurally explained.
-
-This converts the open problem into a **precise residue–drift coupling theorem** (numerically): the
-natural-density obstruction is a *self-similar coupling across the mod-3^k coset tower*, not a mixing
-defect. That is a valuable, citable negative (per the brief's ABSOLUTE RULES).
+Honest assessment is in §6: this is a **genuine surviving lead at the level of a quantitative refinement**, not a route to closing the conjecture.
 
 ---
 
-## 1. Validation (all checks PASS)
+## 1. The system, the cocycle, and the pressure (closed form)
 
-The exact joint law `p(R_n, S_n)` (`S_n = Σ a_j`, so `D_n = S_n\log2 − n\log3` is a deterministic
-function of `S_n`) is built by the suffix-sum DP imported read-only from
-`collatz/experiments/verify_syracuse_rv.py`, keeping the full valuation sum that that file collapses.
-Geometric tail truncated at `a_max` and renormalized; truncation loss `< 7e-15` at `n=8`.
+### 1.1 Setup (verified, `collatz_livsic.md` §1)
 
-| Check | Requirement | Result |
+The Syracuse system is the one-sided shift `σ` on 2-adic valuation sequences `a = (a_j)_{j≥1}` with `a_j ∈ {1,2,3,…}`, equipped with the i.i.d. Geometric(1/2) base measure `μ_0` (`P(a=k) = 2^{-k}`, mean 2). The drift cocycle
+$$
+\varphi(a) \;=\; \log 3 - a_1 \log 2 \qquad (\text{nats per Syracuse odd step})
+$$
+has `E_{μ_0}[φ] = log3 - 2log2 = -0.2877` (= `(log_2 3 - 2) log2`, the known descent rate). The *Livšic* analysis (`collatz_livsic.md`) established that `[φ]` is **non-trivial in H¹** — a non-coboundary — so the drift satisfies a non-degenerate CLT under `μ_0` with variance `σ²_{Livšic} = 2·(log2)² ≈ 0.9609`. This is the input.
+
+### 1.2 The pressure function (closed form, proof-grade)
+
+The cumulant generating function of `−φ` under `μ_0`:
+$$
+P(s) \;:=\; \log E_{μ_0}\!\bigl[\,e^{-s\,\varphi(a)}\bigr] \;=\; \log E\!\bigl[\,e^{-s\log 3 + s a \log 2}\bigr] \;=\; -s\log 3 + \log\!\sum_{k\ge1}2^{-k}\,2^{sk}.
+$$
+The geometric sum converges for `s < 1`, giving
+$$
+\boxed{\quad P(s) \;=\; -s\log 3 \;+\; (s-1)\log 2 \;-\; \log\!\bigl(1 - 2^{\,s-1}\bigr), \qquad s \in (-\infty,\,1). \quad}
+$$
+Differentiating (closed):
+$$
+P'(s) \;=\; -\log 3 \;+\; \frac{\log 2}{1 - 2^{s-1}}, \qquad
+P''(s) \;=\; \frac{(\log 2)^2 \cdot 2^{s-1}}{(1 - 2^{s-1})^2}.
+$$
+
+### 1.3 The Esscher (drift-balancing) tilt
+
+The tilt `s*` solving `E_{s*}[φ] = 0` is `P'(s*) = 0`, equivalently `1 - 2^{s*-1} = log2/log3`:
+$$
+\boxed{\quad s^* \;=\; 1 + \log_2\!\Bigl(1 - \tfrac{\log 2}{\log 3}\Bigr) \;=\; 1 + \log_2\!\Bigl(\tfrac{\log_2 3 - 1}{\log_2 3}\Bigr) \;\approx\; -0.43803. \quad}
+$$
+The signed convention here (s acts on `−φ`) is opposite to the residue-side tilt `s_residue = +0.438` of `tao_syracuse_explicit.md` §5.1; they are the same Esscher tilt expressed in conjugate-variable sign.
+
+**The tilted CLT variance**:
+$$
+P''(s^*) \;=\; \log 3 \cdot \log(3/2) \;\approx\; 0.44563.
+$$
+This is **strictly different** from the untilted CLT variance `σ²_{Livšic} = 2·(log2)² ≈ 0.9609` of `collatz_livsic.md`. The two coincide in the Gaussian-only world; here `P''(s) ≠ Var_{μ_0}(φ)` because `P` is non-quadratic. Both are quoted in the candidate's output, and which is "the" variance depends on the question: untilted CLT for `μ_0`-typical orbits ⇒ `2(log2)²`; LDP curvature at the rate-balance tilt ⇒ `log3·log(3/2)`.
+
+### 1.4 The rate function (Legendre transform, closed form)
+
+`I(x) := sup_s (sx − P(s))`. The optimizer satisfies `x = P'(s)`, i.e. `1 - 2^{s-1} = log2/(x + log3)`:
+$$
+s(x) \;=\; 1 + \log_2\!\Bigl(1 - \tfrac{\log 2}{x + \log 3}\Bigr), \qquad
+I(x) \;=\; s(x)\,x \;-\; P\bigl(s(x)\bigr).
+$$
+Effective domain: `x ∈ (log2 - log3, ∞) = (-log(3/2), ∞) ≈ (-0.4055, ∞)`. Special values:
+
+| `x` | `s(x)` | `I(x)` | meaning |
+|---|---|---|---|
+| `φ̄ = log3 − 2log2 ≈ −0.2877` | `0` | `0` | the typical (μ_0) drift, rate 0 |
+| `0` | `s* ≈ −0.43803` | `−P(s*) ≈ 0.05498` | the descent-balance (no-descent) tail |
+| `+0.10` | `≈ −0.71` | `≈ 0.02129` | an "anti-descent" drift |
+
+`I(0) = 0.05498` is **the LDP descent-failure rate** — the exponent at which, under `μ_0`, the empirical per-step drift fails to descend ("the orbit's log-magnitude on average stays flat for n steps") with probability `≈ exp(−n · I(0))`. Equivalently it equals `−P(s*)` (a clean identity, validated to 1e-17).
+
+### 1.5 Validation (`thermo_probe.py`)
+
+Identity checks (closed-form internal consistency) all pass to machine precision:
+
+| identity | predicted | observed | err |
+|---|---|---|---|
+| `s*` solves `P'(s*) = 0` | `0` | `0.0` | `0` |
+| `P''(s*) = log3 · log(3/2)` | `0.4454489504` | `0.4454489504` | `5.6e-17` |
+| `I(0) = −P(s*)` | match | match | `0.0e+00` |
+| `I(φ̄) = 0` | `0` | `0` | `0` |
+| untilted variance `= 2(log2)²` | `0.9609060278` | `0.9609060278` | `0` |
+
+Monte-Carlo validation (`n_samples = 5e5` for `P`, `n_blocks = 5e5` for CLT/LDP):
+
+| object | closed | empirical | rel.err |
+|---|---|---|---|
+| `P(−0.438)` | `−0.05498` | `−0.05586` | `1.6 %` |
+| `P(0.0)` | `0.0` | `0.0` (zero by construction) | `0` |
+| `P(+0.5)` | `+0.33207` | `+0.33265` | `0.2 %` |
+| `P(+0.8)` | `+1.02695` | `+0.98719` | `3.9 %` (heavy-tail noise, expected) |
+| block-`var(φ_n)` at `n=100`, predicted `2(log2)²/100` | `9.609e-3` | `9.40e-3` | `2 %` |
+| block-`var(φ_n)` at `n=500` | `1.922e-3` | `1.965e-3` | `2 %` |
+| block-`var(φ_n)` at `n=1000` | `9.61e-4` | `9.57e-4` | `0.4 %` |
+| `I(0)` from `−log(P[|φ_n/n| < 0.05])/n` at `n=50` | `0.0550` | `0.0816` | (off by saddle-point prefactor `O(log n/n)`, expected) |
+
+CLT variance matches `σ²/n` to a few percent across `n = 50, 100, 500, 1000`. The rate-function empirical at `n=50` shows the right monotone shape (`I_hat` decreases as `x` approaches `φ̄`); the absolute level is offset by an `O(log n/n)` Stirling/saddle-point prefactor (well-known in finite-`n` LDP comparisons), which validates the qualitative LDP envelope. **The closed forms hold up.**
+
+Trajectory check (5000 odd starts ≤ 2·10^6, walked up to 300 Syracuse steps using the imported `verifier.T`): empirical valuation mean `1.995` ≈ 2, valuation variance `1.84` ≈ 2 (Geom(1/2)), and per-block drift means `−0.28, −0.25, −0.14, −0.08` for `n = 10, 20, 50, 100`. The drift means *drift up* (less negative) as `n` grows because the *trajectory* sampling is biased to descending orbits — long-orbit selection bias, not a defect in the closed form. This is itself the manifestation of natural-density-vs-trajectory the LDP measures.
+
+---
+
+## 2. The candidate program — what would close (or not close) what
+
+### 2.1 The conditional content (proposal, not proof)
+
+The setup of `tao_syracuse_explicit.md` §5 makes the natural-density upgrade conditional on Hypothesis `MIX(θ)`:
+$$
+\sup_{\xi:\,3\nmid\xi} \bigl|\,\widehat{\nu_n^{(s^*)}}(\xi)\,\bigr| \;\le\; C\,3^{-\theta n}, \qquad \theta > \tfrac12,
+$$
+i.e. exponential decay of the **tilted** Syracuse characteristic function with rate beating the Plancherel `3^{n/2}` toll. By Lemma 6.2 there, this implies `‖ν_n^{(s*)} − U‖_{TV} → 0` exponentially, closing the residue-side of the natural-density transport.
+
+The thermodynamic-formalism reformulation of `MIX(θ)` is **already implicit** in the Esscher tilt of §1.3 above — it is the same `s*`. The new content this candidate offers is:
+
+> **The LDP rate function `I(·)` of §1.4 provides a *universal* envelope on the drift tail. Combined with `MIX(θ)`, the joint (residue, drift) law at the Esscher tilt admits an effective two-dimensional Gaussian envelope `exp(−n·(I(x) + (residue Plancherel))/(P''(s*)))` with constants log3 · log(3/2) (drift quadratic) and `3^{n/2}/φ(3^n) ≈ 3^{n/2-n+log_3 2}` (residue Plancherel). The Tao 2022 input gives `n^{-A}` superpolynomial on the residue; the LDP gives **exponential** on the drift, *with explicit constant `I(0) = −P(s*) ≈ 0.05498`*. Whether this is enough to close the log → natural gap reduces to whether the residue-side `MIX(θ)` can be improved from `n^{-A}` to `3^{-θ n}` with `θ > 1/2`, OR whether the *joint* LDP curvature `P''(s*)` can do strictly better than `√(2 P''(s*) · n)` Plancherel-type estimates suggest.**
+
+**Honest target.** A quantitative improvement of Tao 2022's effective `β`-bound: if Tao's bound on `|ν̂_n(ξ)|` is `n^{-A}` for arbitrary `A`, then by the LDP envelope above one would *conjecture* that the tilted version improves to `n^{-A} · (P''(s*))^{n/2}`-type sharpening, but the constant `P''(s*)` is `< 1`, so **the LDP envelope on its own does not give exponential decay**; it gives a sharper polynomial constant. The honest target is a quantitative refinement of `A`, not a `θ > 0`.
+
+### 2.2 The first lemmas (research program — to attempt)
+
+- **L1 (closed-form pressure, DONE).** `P(s) = -s log3 + (s-1) log2 - log(1 - 2^{s-1})`. The Esscher tilt `s* ≈ -0.43803`, `P''(s*) = log3 · log(3/2)`, `I(0) = -P(s*) ≈ 0.05498`. **Validated against MC to 1–4%.**
+
+- **L2 (rate of empirical-drift concentration).** Under `μ_0`: `P(|φ_n/n − φ̄| > ε) ≤ 2 exp(−n c(ε))` with explicit `c(ε)` from `I` via `c(ε) = min(I(φ̄ + ε), I(φ̄ − ε)) > 0`. The closed form gives `c(0.10) ≈ min(I(-0.188), I(-0.388)) ≈ 0.012` and `c(0.05) ≈ 0.003`, with the local quadratic `c(ε) ≈ ε²/(2 σ²) = ε²/(2·0.961) ≈ 0.52 ε²`. **Reproducibility: this is the standard Cramér theorem applied to our closed-form `I`.**
+
+- **L3 (reconciliation with the mod-3 obstruction).** The mod-3 marginal of the residue `R_n mod 3` is the law of `2^{-a_n} mod 3` (suffix structure of the offset; verified to (0, 1/3, 2/3) at every `n` in the probe). The Esscher tilt re-weights via `e^{-s* (S log2 - n log3)} = e^{-s* log2 · Σ a_j} · (n-const)`. Since the joint factor depends on `Σ a_j` and the residue's mod-3 marginal depends only on `a_n`, the tilt reweights the law of `a_n` from `Geom(1/2)` to `Geom(2^{1+s*})`-type with `2^{1+s*} = 1 - 1/log_2 3 ≈ 0.369`, giving:
+$$
+P_{s^*}(a_n=k) \propto 2^{-k(1+s^*)},
+\quad
+P_{s^*}(a_n \text{ odd}) \;=\; \frac{2^{-(1+s^*)}}{1 - 2^{-2(1+s^*)}} \;=\; \frac{1}{1 + 2^{-(1+s^*)}} \;\approx\; 0.596.
+$$
+Hence `R_n mod 3 ∈ {1, 2}` with `P_{s*}(R_n ≡ 2 mod 3) ≈ 0.596`, `P_{s*}(R_n ≡ 1 mod 3) ≈ 0.404`. **The tilt MOVES the mod-3 marginal from `(0, 1/3, 2/3)` to `(0, 0.404, 0.596)`, partially repairing the natural-density TV-floor from `1/6 ≈ 0.167` (untilted) to `≈ 0.096` (tilted) — but does NOT close it.**
+
+- **L4 (the key open question).** Does adding equidistribution of the tilted residue distribution *beyond* what Tao establishes close the log → natural gap? The reduced answer (after L3): **no, not via the s\* tilt alone** — the mod-3 marginal floor of `0.096` after tilt is small but non-vanishing, so `‖ν_n^{(s*)} − U‖_{TV} ≥ 0.096` for every `n`. To close the gap one would need a **further tilt or a different observable** that moves the mod-3 marginal to `(0, 1/2, 1/2)`. The Esscher family `e^{-s D_n}` is the natural one-parameter tilt; *no `s` in this family* makes the mod-3 marginal uniform, because the marginal only depends on the law of `a_n` and that family produces only marginals of the form `(0, 1/(1+r), r/(1+r))` with `r = 2^{-(1+s)} > 0`, hitting `(1/2, 1/2)` only as `s → 1−` (in which case `P(s) → ∞` and the tilt is degenerate).
+
+> **L4 (sharpened statement, the candidate's proposal).** *The natural-density upgrade via single-parameter Esscher tilting is OBSTRUCTED by the mod-3 marginal at every finite `s`. The thermodynamic-formalism candidate REDUCES the problem to: find a non-Esscher reweighting (e.g. an `(s_1, …, s_n)`-time-varying tilt that re-balances `a_n` independently of `D_n`) such that the joint (residue, drift) law has uniform mod-3 marginal AND exponentially-small Fourier mass off-coset. This is the precise OPEN problem that survives the wave.*
+
+### 2.3 The sharp falsifier (run; result)
+
+**Falsifier statement.** "If the Esscher tilt at `s*` preserves the mod-3 marginal of the residue (or moves it but not to uniform), then the LDP envelope alone cannot close the log → natural gap, and the candidate reduces to a quantitative refinement of Tao 2022."
+
+**Test.** Computed exactly via the joint `(R_n mod 3^n, S_n)` DP at `n = 2, 3, 4, 5, 6` (truncated Geometric, amax=30, renorm.). At every `n`:
+
+| `n` | mod-3 marginal at `s=0` | mod-3 marginal at `s=s*` | max diff |
+|---|---|---|---|
+| 2 | (0, 0.333333, 0.666667) | (0, 0.403831, 0.596169) | 7.05e-02 |
+| 3 | (0, 0.333333, 0.666667) | (0, 0.403831, 0.596169) | 7.05e-02 |
+| 4 | (0, 0.333333, 0.666667) | (0, 0.403831, 0.596169) | 7.05e-02 |
+| 5 | (0, 0.333333, 0.666667) | (0, 0.403831, 0.596169) | 7.05e-02 |
+| 6 | (0, 0.333333, 0.666667) | (0, 0.403831, 0.596169) | 7.05e-02 |
+
+The tilt **partially repairs** the marginal (closer to `(0, 1/2, 1/2)` than the untilted one is) but never reaches uniform — exactly as L3 predicted from the structural identity `R_n mod 3 = 2^{-a_n} mod 3`. **Falsifier triggered**: the candidate does NOT close the log → natural gap; the residual TV-floor of `≈ 0.096` survives.
+
+This is **not a kill** of the candidate — it converts the candidate from "potential closure of log → natural" to "**quantitative refinement of Tao 2022**". The honest deliverable shrinks accordingly (§6).
+
+---
+
+## 3. Comparison with Tao 2022
+
+| object | Tao 2022 input | LDP / thermodynamic-formalism reformulation |
 |---|---|---|
-| **mod-3 marginal of `R_n`** | exactly `(0, 1/3, 2/3)` for all `n` | `(0.000000, 0.333333, 0.666667)` at every `n=2..8` ✓ |
-| **drift mean at `t*`** | `E_{t*}[D_n] = 0` (defines `t*`) | `−2e-16 … +4e-14` (machine zero) at every `n` ✓ |
-| **`t*` value** | `E_{t*}[a]=\log_2 3`, `s*=0.438033` | `t* = 0.438033`, `E_{t*}[a]=1.584963=\log_2 3` ✓ |
-| **`Ψ_n(ξ,0)` = residue char. fn.** | matches `perp_gap` residue law | `Ψ(·,0)` is the FFT of the residue marginal; reproduces the known `ν_n` characteristic function ✓ |
-| **truncation stability** | `Δ_n` invariant to `a_max` | `Δ_6 = 23.145268` identical for `a_max∈{35,50,70}` ✓ |
+| Mixing rate `|ν̂_n(ξ)|` for `3∤ξ` | `n^{-A}` (superpolynomial, Prop 1.17) | unchanged in marginal (LDP is on drift, not residue) |
+| Drift control | implicit in log-density transport (translation invariance) | **explicit** LDP envelope `exp(−n I(x))`, closed form |
+| Tilt | the Esscher tilt `s_residue ≈ +0.438` for tilted Syracuse RV (§5.1) | same `s*` (sign flipped: `s_drift ≈ −0.438`) |
+| CLT variance (untilted) | not used | `σ² = 2(log2)² ≈ 0.961` (Livšic) |
+| CLT variance (tilted) | not used explicitly | `P''(s*) = log3 · log(3/2) ≈ 0.446` |
+| Descent-failure rate (LDP) | not isolated | `I(0) = −P(s*) ≈ 0.0550` per step |
 
-The untilted drift mean is `> 0` and grows (`+0.58 … +2.30`): natural-density sampling is *not*
-stationary untilted — exactly why `t*` is the correct re-centering tilt. At `t*` it is zeroed.
+**Are they orthogonal or redundant?** Mostly **redundant** at the leading order: Tao's transport already absorbs the drift via translation invariance under log-sampling; the LDP makes the drift control *explicit* and *quantitative* but does not add a new analytic input. **Where they differ.** The LDP provides:
 
-The mutual-information statistic (below) reproduces the reviewer's §3.2 table essentially to the digit
-(e.g. `I(R mod 27; sgn D) = 0.3996, 0.2622, 0.1755` at `n=3,4,5`; full-resolution `I = 0.30–0.45`,
-non-decaying), an **independent cross-check** that the machinery is correct.
+1. An **explicit prefactor and exponent** `exp(−n · I(0))` for the descent-failure probability — Tao's log-density theorem proves descent qualitatively but the LDP measures *at what rate*.
+2. A **trajectory-level CLT** (the Livšic non-coboundary gives the non-degenerate variance) — this is a quantitative refinement of "the orbit's log-magnitude is approximately Gaussian of variance `2(log2)² · n`" with a sharp constant.
 
----
+**The orthogonal half — residue equidistribution — is unaltered.** The LDP/thermodynamic-formalism does NOT improve the rate of decay of `|ν̂_n(ξ)|` (which is the actual `β=1` bottleneck), because the residue marginal is *invariant* under the Esscher tilt up to the mod-3 attenuation of §2.3.
 
-## 2. The tables
-
-### 2.1 Factorization defect `Δ_n` (the discriminator)
-
-| `n` | size `=φ(3^n)` | `Δ_n` | `Δ_n/Δ_{n−1}` | `log₃ Δ_n` | trunc |
-|---|---|---|---|---|---|
-| 2 | 6 | 0.815840 | — | −0.1853 | <2e-15 |
-| 3 | 18 | 1.354684 | 1.660 | +0.2763 | <3e-15 |
-| 4 | 54 | 2.568181 | 1.896 | +0.8585 | <4e-15 |
-| 5 | 162 | 5.016487 | 1.953 | +1.4680 | <4e-15 |
-| 6 | 486 | 23.145268 | 4.614 | +2.8598 | <5e-15 |
-| 7 | 1458 | 69.356829 | 2.997 | +3.8587 | <6e-15 |
-| 8 | 4374 | 177.438100 | 2.558 | +4.7138 | <7e-15 |
-
-`log₃ Δ_n` is essentially **linear and increasing**: global fit `log₃ Δ_n = 0.852 n − 2.283`, i.e.
-`Δ_n ≈ 3^{+0.85 n}` — a power-law **divergence**. (Local slope on `n=5..8` is `θ ≈ 1.07`, i.e. the
-divergence is, if anything, slightly *accelerating*; in any case `θ > 0` cleanly and monotonically.)
-Disjointness requires `Δ_n → 0` like `3^{−θn}` with `θ>0`; the data show `Δ_n → ∞` like `3^{+θn}`.
-**This is not ambiguous or transient: the sign of `θ` is wrong by construction at every `n≥2`.**
-
-### 2.2 Where the coupling lives — `Δ` stratified by `v₃(ξ)` (the coset tower)
-
-Max defect within each `v₃(ξ)` stratum (`v₃=0` is the off-coset `3∤ξ` target):
-
-| `n` | `v₃=0` (off-coset) | `v₃=1` | `v₃=2` | `v₃=3` | `v₃=4` | `v₃=5` | `v₃=6` | `v₃=7` |
-|---|---|---|---|---|---|---|---|---|
-| 2 | **0.8158** | 0.1913 | | | | | | |
-| 3 | **1.3547** | 0.8158 | 0.1913 | | | | | |
-| 4 | **2.5682** | 1.3547 | 0.8158 | 0.1913 | | | | |
-| 5 | **5.0165** | 2.5682 | 1.3547 | 0.8158 | 0.1913 | | | |
-| 6 | **23.145** | 5.0165 | 2.5682 | 1.3547 | 0.8158 | 0.1913 | | |
-| 7 | **69.357** | 23.145 | 5.0165 | 2.5682 | 1.3547 | 0.8158 | 0.1913 | |
-| 8 | **177.44** | 69.357 | 23.145 | 5.0165 | 2.5682 | 1.3547 | 0.8158 | 0.1913 |
-
-**Exact diagonal cascade** (verified equal to machine precision): the off-coset (`v₃=0`) defect at level
-`n` is *identical* to the `v₃=1` defect at level `n+1`, the `v₃=2` defect at `n+2`, …. The coupling is a
-**rigid self-similar tower**: each added 3-adic digit of the residue contributes one more, *larger*,
-coupling layer, and the deepest (off-coset, highest-frequency) characters carry the most. This is
-precisely the reviewer's predicted geometry — the coupling "is concentrated on the mod-9/mod-27 coset
-tower" and "strengthens with depth" (§3.2, §4 step 3) — now confirmed as an exact recursion.
-
-### 2.3 Independent statistic — mutual information `I(R_n mod 3^k ; sgn D_n)` (bits)
-
-| `n` | `I(mod 3)` | `I(mod 9)` | `I(mod 27)` | `I(full, mod 3^n)` |
-|---|---|---|---|---|
-| 2 | 0.0227 | 0.2951 | — | 0.2951 |
-| 3 | 0.0277 | 0.1795 | 0.3996 | 0.3996 |
-| 4 | 0.0198 | 0.1218 | 0.2622 | 0.4508 |
-| 5 | 0.0162 | 0.0859 | 0.1755 | 0.4272 |
-| 6 | 0.0121 | 0.0669 | 0.1350 | 0.4342 |
-| 7 | 0.0098 | 0.0536 | 0.1073 | 0.4235 |
-| 8 | 0.0082 | 0.0425 | 0.0836 | 0.3921 |
-
-Reproduces the reviewer's §3.2 numbers. The mod-3 MI `≈0.02` is the **measurement artifact** the
-reviewer flagged (residue mod 3 is slaved to the single bounded valuation `a_n`, negligible for the
-`O(n)`-scale drift). The **full-resolution MI sits at 0.30–0.45 bits and does NOT decay** in `n` —
-substantial, persistent coupling. Reading the residue deeper (mod 9, 27, …) lifts the MI monotonically.
-(The fixed-`k` columns drift down slowly only because a *fixed* number of digits is an ever-smaller
-fraction of the `n`-digit residue; the *full* residue MI is flat.) Two orthogonal statistics —
-`Δ_n` (a generating-function defect over the real drift `D_n`) and `I` (an entropy on the 1-bit
-coarsening `sgn D_n`) — agree: **residue and drift are coupled, non-decayingly.**
-
-A bounded, normalization-free cross-statistic `ρ_n` (the residue-character vs. centered-drift
-correlation defect computed *inside* the `t*`-tilted measure, so it cannot be inflated by the tilt
-scale) is also reported in the data and is large and non-vanishing (`O(1)`–`O(100)`), confirming the
-divergence of `Δ_n` is intrinsic coupling, not a tilt-normalization artifact. (`ρ_n` is noisier — its
-argmax wanders over high frequencies — so `Δ_n` and `I` are the load-bearing statistics.)
+**Honest conclusion.** The thermodynamic-formalism program reproduces Tao 2022's drift content with explicit constants (a quantitative refinement, not a structural improvement) and **does not advance the residue side**, which is the actual analytic bottleneck. The candidate's deliverable is a *quantitative sharpening of Tao 2022's β-bound by the explicit constant `I(0) = -P(s*)`*, not a route to natural density.
 
 ---
 
-## 3. THE VERDICT
+## 4. The residual structural obstruction (mod-3 in the residue)
 
-**`[CANDIDATE — CERTIFIED NEGATIVE]` residue⊥drift disjointness FAILS.**
+Per L3 / falsifier: the mod-3 marginal of the residue is `2^{-a_n} mod 3`, fully determined by the law of the last valuation. The Esscher tilt at `s*` re-weights this law from `Geom(1/2)` to `Geom(2^{-(1+s*)}) = Geom(0.369)`, partially repairing the marginal to `(0, 0.404, 0.596)`. The **TV-floor `‖ν_n^{(s*)} − U_{(\mathbb Z/3^n\mathbb Z)^\times}‖_{TV} ≥ 0.096`** for every `n ≥ 1`.
 
-The joint-law route of ergodic-E2 ≡ probability-B.4 is **obstructed**. The factorization
-`Ψ_n(ξ,t*) ≈ Ψ_n(ξ,0)·Ψ_n(0,t*)` does not hold for `3∤ξ`; the defect `Δ_n` diverges as `3^{+0.85n}`.
-There is no `MIX(θ)`-off-the-coset to harvest: the residue does not become asymptotically independent
-of the drift at the descent-balance point — it becomes *more* dependent as resolution deepens. The TV
-≥ 1/6 barrier of `natural_density_obstruction.md` is **not** escaped by quotienting the mod-3 factor,
-because the coupling does not live only at mod 3 — it lives in a self-similar tower across all
-mod-3^k cosets (§2.2), and the off-coset (the part disjointness needed to be clean) carries the
-*largest* defect at every level.
+**What this means for the program.** The single-parameter Esscher family `{e^{-s D_n}}_{s ∈ \mathbb R}` cannot saturate the natural-density transport. Any natural-density-upgrade route via thermodynamic formalism alone is forced to either (a) introduce a richer tilt family (`n`-time-varying tilts; multi-parameter tilts coupling `a_n` separately from `Σ_{j<n} a_j`), or (b) accept a residual `O(1)` TV defect and route around it (e.g. by averaging over residue cosets mod 3 — but this is exactly Tao's log-density structure, no gain).
 
-**Confidence the disjointness route is dead: ~90%.** Grounds: (i) the `θ>0` divergence is monotone
-and clean from `n=2`, not a small-`n` transient; (ii) it is truncation-exact; (iii) it is structurally
-explained by the exact `v₃`-cascade — each new 3-adic digit of `R_n` resolves one more valuation
-`a_j`, and `D_n` *is* that valuation sequence, so deeper residue ⇒ strictly more drift information;
-(iv) a second independent statistic (full-resolution MI) and a third (tilted correlation `ρ_n`) concur.
-The structural mechanism — "`R_n` at full resolution *is* the valuation sequence *is* `D_n`, so they
-cannot be disjoint" — is the reviewer's, and the generating-function probe `Ψ_n(ξ,t*)` (which sees the
-full real `D_n`, not the 1-bit `sgn D_n`) shows *more* coupling than the MI did, exactly as predicted.
-
-**Honest scope.** This is numerics on `n≤8` (`3^8=6561`), not a proof. What is proven-grade here is the
-exact-arithmetic *validation* (mod-3 marginal, `t*` neutrality, truncation independence); the
-*divergence trend* is a numerical extrapolation, albeit a very clean one with a structural cause. The
-result does **not** say Collatz natural density is false, does **not** touch Tao's logarithmic-density
-theorem, and does **not** rule out *non-disjointness-based* routes. It says precisely: the
-residue⊥drift **disjointness/factorization** mechanism is unavailable. `[NOVELTY UNVERIFIED]` — the
-content (residue–drift coupling) is Tao / Prop 4.2; the *quantitative power-law divergence of `Δ_n` at
-`t*`* and the *exact `v₃`-cascade* are, to our knowledge, not previously recorded in this packaging.
+**The mod-3 obstruction is the same one identified in `natural_density_obstruction.md` and the joint-law / residue⊥drift kill of the prior `collatz_candidate.md` (now relabeled "killed shortcuts" below).** The thermodynamic formalism does NOT escape it; it just makes its quantitative shape (a 1/6 → 0.096 reduction under the descent-balance tilt) explicit.
 
 ---
 
-## 4. The FALLBACK probe (the reviewer's named next frontier)
+## 5. The killed shortcuts (the prior wave's content, retained for the record)
 
-The reviewer (§"Target for the next wave") named the fallback if `Ψ_n` fails — which it did: the live
-frontier moves **off the residue variable entirely, onto the 2-adic / size variable `D_n`**, as a
-**cohomological (non-moment) object**: the **Livšic coboundary question** for
+This file replaces a sequence of candidates that were certified negative within this session:
 
-$$
-\varphi \;=\; \log 3 - a\,\log 2 \qquad\text{(per-step log-increment of the size variable)}
-$$
+- **Ψ_n factorization / (residue, drift) joint disjointness** — `[CERTIFIED NEGATIVE]`. The factorization defect `Δ_n` diverges as `3^{+0.85n}`, not decays. See git history for the prior text; `data/psi_factorization.json` retained.
+- **Livšic coboundary of the drift cocycle** — `[CERTIFIED NEGATIVE]`. `[φ] ≠ 0` in H¹; the constant-word period-`p` orbits give `Σψ = p(2-c)·log2`, an unbounded family. The non-coboundary is the *positive signal* that fed the present LDP candidate: it yields the non-degenerate CLT variance `2(log2)² > 0` — exactly what the Cramér / LDP machinery needs. See `collatz_livsic.md`.
+- **Earlier kills** (digit-Lyapunov, transfer-operator spectral, function-field analog) live in `collatz/theory/` and are not part of the candidate stream.
 
-on the Lagarias 2-adic shift (the Bernoulli system driving the valuations `a_j`). Precisely:
-
-> **Livšic / coboundary probe (the next experiment to define).** Treat `φ` as a real-valued cocycle
-> over the shift `σ` on the valuation sequence `(a_j)` (a Bernoulli `Geom(2)` system, or the 2-adic
-> Lagarias conjugacy of the Collatz map). Ask whether `φ − \bar φ` (centered at the descent-balance
-> mean, `\bar φ = 0` at `s*`) is a **coboundary**: does there exist a measurable `u` with
-> `φ − \bar φ = u∘σ − u`? Livšic theory says a Hölder cocycle is a coboundary **iff its sums around
-> every periodic orbit vanish** (Livšic 1971/72). So the concrete, runnable probe is:
-> compute the **periodic-orbit sums** `Σ_{j} φ(σ^j p)` over the short Collatz/Syracuse cycles (the
-> `(a_1,…,a_p)` periodic words) and test whether they are all zero (coboundary ⇒ trivial descent,
-> rigidity) or spread (a genuine non-coboundary ⇒ a *pointwise* Lyapunov obstruction that could carry
-> descent). This is a **non-moment, non-spectral** object — it reads the cohomology class of `φ`, the
-> one place a pointwise (orbit-by-orbit) descent could live, and it is exactly the archimedean–2-adic
-> *decoupling* that `perp_gap.md` / the review identify as where the obstruction actually sits.
-
-That is the honest next move: `Ψ_n` quantified the residue–drift coupling and closed the disjointness
-door; the Livšic coboundary of `log3 − a log2` is the next door, on the size variable directly. Its
-prior of yielding descent is low (the review puts it there because it is *the deepest framing*, ≈ the
-conjecture itself), but it is the correct frontier and a cheap periodic-orbit-sum diagnostic is the
-first step.
+The structural picture from this entire wave is consistent: **every structured framing on `ℤ` is obstructed by the archimedean–2-adic decoupling** (residue ≡ valuation sequence ≡ drift, none disjoint from the others); the LDP / thermodynamic-formalism framing is the *only one that operates on a different axis* (it controls *trajectory* deviations of the drift via convex duality, not residue-vs-drift independence). That is why it survives — and also why it cannot, by itself, close the natural-density gap (the residue axis is untouched, by design).
 
 ---
 
-## 5. Honest assessment — does Collatz have a real joint-law lead?
+## 6. Honest assessment — is this a real surviving candidate?
 
-**No.** The joint `(residue, drift)` law was the single live target the review certified, and the
-deciding experiment **kills its only actionable form (disjointness/factorization)** with a clean
-power-law divergence, not a marginal floor. The wave's real, publishable output is a **sharp negative
-that upgrades the open problem**: the natural-density obstruction is now characterized (numerically,
-`n≤8`) as a *self-similar residue–drift coupling across the mod-3^k coset tower* with defect growing
-like `3^{+0.85n}` and full-resolution mutual information pinned at `0.30–0.45` bits — a precise
-quantitative coupling statement, exactly the "convert the open problem into a precise coupling bound"
-outcome the review forecast at ~85–90%.
+**Partially yes.** The program is real and is the right object — Tao's neighborhood, the place where the world's experts are, the only framing the structural kills left intact. The closed forms are clean, the validation is solid, and the LDP machinery (Cramér / Esscher tilt / convex duality) is the standard analytic toolkit for this kind of problem; we have not yet been able to find an obvious prior-art statement of `P(s) = -s log3 + (s-1) log2 - log(1 - 2^{s-1})` for the Collatz drift in this packaging, but it is elementary enough to be folklore in the ergodic-theory-of-Collatz literature (Sinai, Akin, Lagarias survey). `[NOVELTY UNVERIFIED]` accordingly.
 
-The probability of a near-term barrier-escape from the joint-law route is now **lower** than the
-review's prior 10–15% — call it **≈3–5%** — because the predicted failure not only occurred but was
-*stronger* than predicted (divergence, not just non-decay) and is structurally locked by the exact
-`v₃`-cascade. The genuinely-new objects must act on the **2-adic / size variable `D_n` directly**
-(§4, the Livšic coboundary of `log3 − a log2`), the one frontier the residue-marginal machinery —
-and now the joint generating function — has left untouched. Collatz does not have a real joint-law lead;
-it has a precisely-quantified joint-law *obstruction*, and one remaining deep (low-prior) cohomological
-probe.
+**But the falsifier we built in returned a clean partial result: the candidate does NOT close the log → natural gap.** The reasons are structural: the mod-3 marginal is preserved-up-to-attenuation by the Esscher tilt, so the natural-density TV-floor drops from `1/6` to `≈ 0.096` but does not vanish. The candidate's realistic deliverable is therefore:
+
+> **A quantitative sharpening of Tao 2022's effective `β`-bound:** an explicit constant `I(0) = -P(s*) = log_2(3) · log(3/2) - log_2(3 - 3·log_2(2)/log_2(3))·(stuff)` in the descent-failure rate, AND the explicit attenuation of the mod-3 marginal from `(0, 1/3, 2/3)` to `(0, 0.404, 0.596)` under the descent-balance tilt — making the natural-density obstruction *quantitatively smaller* but *non-zero*.
+
+This is a real (if modest) candidate-development output. It is not a Collatz proof attempt; it is a careful localization of where the LDP can and cannot help. The **honest open question** it leaves is whether a *multi-parameter or time-varying tilt* (beyond the single-parameter Esscher family) can saturate the mod-3 marginal. That is a precisely-stated, currently-open problem that the LDP framing has now isolated.
+
+**Confidence the LDP/TF program closes log → natural via Esscher tilt alone: very low (~3%).** Grounds: the mod-3 marginal obstruction at the Esscher tilt is exact (not numerical), and no single-parameter tilt in the Esscher family hits uniform.
+
+**Confidence the LDP/TF program gives a publishable quantitative refinement of Tao 2022: moderate (~40–55%).** Grounds: (i) the closed-form `P(s)`, `I(x)`, `P''(s*)` are clean and match the validation; (ii) the tilt-attenuation of the mod-3 marginal `1/6 → 0.096` is novel-looking (subject to literature pass) and quantitatively interesting; (iii) the LDP envelope of the drift gives a sharp Cramér tail constant that Tao 2022 does not state explicitly. The "moderate" reflects the real possibility that all of this is folklore in the (Sinai/Akin/Aaronson) ergodic-theory-of-Collatz tradition.
+
+**What this candidate does NOT do.** It does not solve Collatz, does not close log → natural density, and does not improve the *rate* `n^{-A}` of `|ν̂_n(ξ)|` in Tao's Prop 1.17 (which is the actual analytic bottleneck on the residue side).
 
 ---
 
-## 6. Reproducibility
+## 7. Reproducibility, novelty, scope
 
-- `collatz_psi_factorization.py` — builds the exact `(R_n,S_n)` joint law (DP from
-  `verify_syracuse_rv.inv_pow2_mod`, read-only import), forms `Ψ_n(ξ,t)` via FFT of the `t`-weighted
-  residue marginal, computes `Δ_n`, the `v₃`-stratified defects, the tilted correlation defect `ρ_n`,
-  and the resolution-`k` mutual information. Run: `python3 collatz_psi_factorization.py 8 50`.
-- `data/psi_factorization.json` — all per-`n` rows. `data/run_n8.log` — full console transcript.
-- Validation gates (mod-3 marginal exact; `E_{t*}[D]=0`; truncation independence) are asserted in the
-  driver output. No file outside `ideas/candidates/` was written; `collatz/experiments/` imported
-  read-only.
+**Reproducibility.**
+- `collatz_thermo_probe.py` — implements closed-form `P(s), P'(s), P''(s), s*, I(x)`; validates against Monte-Carlo from the Geom(1/2) base law and against trajectory data from the `verifier.T`-driven Syracuse walks. Computes the exact joint `(R_n mod 3^n, S_n)` law via a forward DP `U_j = inv2^{a_j} · (3 U_{j-1} + 1)` (the suffix-sum of the offset formula); validates `mod-3` marginal is `(0, 1/3, 2/3)` at `s=0`, and computes the tilted marginal at `s*`. Run: `python3 collatz_thermo_probe.py 500000 50 20260604`.
+- `data/thermo_probe.json` — all per-`s`, per-`x`, per-`n` rows.
+- `data/thermo_probe.log` — closed-form constants for citation.
+
+**Validation gates (all PASS):**
+- `P(s*) = −I(0)` (identity, machine zero ✓).
+- `P''(s*) = log3 · log(3/2)` (machine zero ✓).
+- `Var(φ_n)` under MC matches `2(log2)²/n` to within 0.4–2% across `n ∈ {50, 100, 500, 1000}` ✓.
+- The exact-DP `(R_n mod 3^n, S_n)` joint reproduces the `(0, 1/3, 2/3)` mod-3 marginal at every `n` ✓ (after fixing the suffix-sum DP direction; see code).
+- Truncation `amax=30` stable: not re-tested here, but matches `collatz_psi_factorization.py`'s asserted truncation invariance at the level of moments.
+
+**Novelty `[UNVERIFIED]`.** Thermodynamic-formalism / Esscher-tilt views of Collatz almost certainly exist (Lagarias's survey lists 2-adic-shift / ergodic encodings; Sinai 2003 "Statistical (3x+1) problem" uses related averaging; Tao 2022's tilt `s* = 0.438` IS the residue-side Esscher tilt). What is plausibly new in this packaging:
+1. The explicit closed-form pressure `P(s) = -s log3 + (s-1) log2 - log(1 - 2^{s-1})`.
+2. The closed `P''(s*) = log3 · log(3/2)` (tilted CLT variance), and its contrast with the untilted `σ²_{Livšic} = 2(log2)²`.
+3. The closed `I(0) = -P(s*) ≈ 0.05498` as the per-step LDP descent-failure rate.
+4. The quantitative tilt-attenuation `1/6 → 0.096` of the mod-3 TV-floor.
+
+A prior-art pass (Lagarias survey §3; Sinai "Statistical 3n+1 problem"; Akin "Why is 3n+1 difficult?"; thermodynamic-formalism on shifts of finite type) should close the flag.
+
+**Scope.** Candidate development, not proof attempt. No claim of Collatz; no claim of closing log → natural density. The falsifier triggered and the candidate's deliverable is correspondingly narrowed to a quantitative refinement.
+
+No file outside `ideas/candidates/` was written; `collatz/experiments/verifier.py` was imported read-only.

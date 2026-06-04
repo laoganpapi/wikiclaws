@@ -1,0 +1,870 @@
+{
+  "parasite_check": {
+    "rows": [
+      {
+        "name": "n5_F3a_minimal",
+        "n": 5,
+        "masks": [
+          0,
+          16,
+          31
+        ],
+        "abs_size_F": 3,
+        "abs_size_L": 3,
+        "true_abundance": 0.6666666666666666,
+        "power_mean_density": 0.4444444444444444,
+        "target_LHS_minus_RHS": -2,
+        "distributive": true,
+        "modular": true,
+        "lower_semimodular": true,
+        "upper_semimodular": true
+      },
+      {
+        "name": "n4_F3",
+        "n": 4,
+        "masks": [
+          0,
+          8,
+          15
+        ],
+        "abs_size_F": 3,
+        "abs_size_L": 3,
+        "true_abundance": 0.6666666666666666,
+        "power_mean_density": 0.4666666666666666,
+        "target_LHS_minus_RHS": -1,
+        "distributive": true,
+        "modular": true,
+        "lower_semimodular": true,
+        "upper_semimodular": true
+      },
+      {
+        "name": "n5_F3b",
+        "n": 5,
+        "masks": [
+          0,
+          16,
+          23
+        ],
+        "abs_size_F": 3,
+        "abs_size_L": 3,
+        "true_abundance": 0.6666666666666666,
+        "power_mean_density": 0.4666666666666666,
+        "target_LHS_minus_RHS": -1,
+        "distributive": true,
+        "modular": true,
+        "lower_semimodular": true,
+        "upper_semimodular": true
+      },
+      {
+        "name": "n5_F5",
+        "n": 5,
+        "masks": [
+          0,
+          8,
+          16,
+          24,
+          31
+        ],
+        "abs_size_F": 5,
+        "abs_size_L": 5,
+        "true_abundance": 0.6,
+        "power_mean_density": 0.4666666666666667,
+        "target_LHS_minus_RHS": -3,
+        "distributive": true,
+        "modular": true,
+        "lower_semimodular": true,
+        "upper_semimodular": true
+      },
+      {
+        "name": "n5_F6",
+        "n": 5,
+        "masks": [
+          0,
+          8,
+          16,
+          23,
+          24,
+          31
+        ],
+        "abs_size_F": 6,
+        "abs_size_L": 6,
+        "true_abundance": 0.6666666666666666,
+        "power_mean_density": 0.4743589743589744,
+        "target_LHS_minus_RHS": -4,
+        "distributive": true,
+        "modular": true,
+        "lower_semimodular": true,
+        "upper_semimodular": true
+      },
+      {
+        "name": "n5_F7",
+        "n": 5,
+        "masks": [
+          0,
+          8,
+          15,
+          16,
+          23,
+          24,
+          31
+        ],
+        "abs_size_F": 7,
+        "abs_size_L": 7,
+        "true_abundance": 0.5714285714285714,
+        "power_mean_density": 0.4957983193277311,
+        "target_LHS_minus_RHS": -1,
+        "distributive": false,
+        "modular": false,
+        "lower_semimodular": true,
+        "upper_semimodular": false
+      }
+    ],
+    "n_parasites": 6,
+    "n_parasites_that_are_USM": 5,
+    "premise_holds": false,
+    "premise_text": "Program premise: all 6 parasite families are NON-upper-semimodular. If any parasite is USM, the cone-blocked-class candidate is structurally false: USM does NOT exclude the parasite mechanism."
+  },
+  "census_summary": {
+    "total_families": 29723,
+    "by_class": {
+      "all": {
+        "count": 29723,
+        "min_pm": 0.4444444444444444,
+        "worst": {
+          "n": 5,
+          "masks": [
+            0,
+            16,
+            31
+          ],
+          "true_abundance": 0.6666666666666666,
+          "power_mean_density": 0.4444444444444444,
+          "target_LHS_minus_RHS": -2
+        },
+        "n_target_F_fail": 6,
+        "n_above_half_target_fail": 6,
+        "n_at_half": 39
+      },
+      "distributive": {
+        "count": 649,
+        "min_pm": 0.4444444444444444,
+        "worst": {
+          "n": 5,
+          "masks": [
+            0,
+            16,
+            31
+          ],
+          "true_abundance": 0.6666666666666666,
+          "power_mean_density": 0.4444444444444444,
+          "target_LHS_minus_RHS": -2
+        },
+        "n_target_F_fail": 5,
+        "n_above_half_target_fail": 5,
+        "n_at_half": 39
+      },
+      "modular": {
+        "count": 815,
+        "min_pm": 0.4444444444444444,
+        "worst": {
+          "n": 5,
+          "masks": [
+            0,
+            16,
+            31
+          ],
+          "true_abundance": 0.6666666666666666,
+          "power_mean_density": 0.4444444444444444,
+          "target_LHS_minus_RHS": -2
+        },
+        "n_target_F_fail": 5,
+        "n_above_half_target_fail": 5,
+        "n_at_half": 39
+      },
+      "lower_semimodular": {
+        "count": 2811,
+        "min_pm": 0.4444444444444444,
+        "worst": {
+          "n": 5,
+          "masks": [
+            0,
+            16,
+            31
+          ],
+          "true_abundance": 0.6666666666666666,
+          "power_mean_density": 0.4444444444444444,
+          "target_LHS_minus_RHS": -2
+        },
+        "n_target_F_fail": 6,
+        "n_above_half_target_fail": 6,
+        "n_at_half": 39
+      },
+      "upper_semimodular": {
+        "count": 941,
+        "min_pm": 0.4444444444444444,
+        "worst": {
+          "n": 5,
+          "masks": [
+            0,
+            16,
+            31
+          ],
+          "true_abundance": 0.6666666666666666,
+          "power_mean_density": 0.4444444444444444,
+          "target_LHS_minus_RHS": -2
+        },
+        "n_target_F_fail": 5,
+        "n_above_half_target_fail": 5,
+        "n_at_half": 39
+      }
+    },
+    "usm_target_F_strict_count": 886,
+    "usm_target_F_equality_count": 50,
+    "usm_target_F_failure_count": 5,
+    "usm_at_half_families": [
+      {
+        "n": 1,
+        "masks": [
+          0,
+          1
+        ],
+        "distributive": true,
+        "|L|": 2,
+        "height": 1,
+        "width": 1
+      },
+      {
+        "n": 2,
+        "masks": [
+          0,
+          3
+        ],
+        "distributive": true,
+        "|L|": 2,
+        "height": 1,
+        "width": 1
+      },
+      {
+        "n": 2,
+        "masks": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "distributive": true,
+        "|L|": 4,
+        "height": 2,
+        "width": 2
+      },
+      {
+        "n": 2,
+        "masks": [
+          0,
+          2
+        ],
+        "distributive": true,
+        "|L|": 2,
+        "height": 1,
+        "width": 1
+      },
+      {
+        "n": 3,
+        "masks": [
+          0,
+          7
+        ],
+        "distributive": true,
+        "|L|": 2,
+        "height": 1,
+        "width": 1
+      },
+      {
+        "n": 3,
+        "masks": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "distributive": true,
+        "|L|": 8,
+        "height": 3,
+        "width": 3
+      },
+      {
+        "n": 3,
+        "masks": [
+          0,
+          3,
+          4,
+          7
+        ],
+        "distributive": true,
+        "|L|": 4,
+        "height": 2,
+        "width": 2
+      },
+      {
+        "n": 3,
+        "masks": [
+          0,
+          3
+        ],
+        "distributive": true,
+        "|L|": 2,
+        "height": 1,
+        "width": 1
+      },
+      {
+        "n": 3,
+        "masks": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "distributive": true,
+        "|L|": 4,
+        "height": 2,
+        "width": 2
+      },
+      {
+        "n": 3,
+        "masks": [
+          0,
+          4
+        ],
+        "distributive": true,
+        "|L|": 2,
+        "height": 1,
+        "width": 1
+      },
+      {
+        "n": 4,
+        "masks": [
+          0,
+          15
+        ],
+        "distributive": true,
+        "|L|": 2,
+        "height": 1,
+        "width": 1
+      },
+      {
+        "n": 4,
+        "masks": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "distributive": true,
+        "|L|": 16,
+        "height": 4,
+        "width": 6
+      },
+      {
+        "n": 4,
+        "masks": [
+          0,
+          1,
+          2,
+          3,
+          12,
+          13,
+          14,
+          15
+        ],
+        "distributive": true,
+        "|L|": 8,
+        "height": 3,
+        "width": 3
+      },
+      {
+        "n": 4,
+        "masks": [
+          0,
+          7,
+          8,
+          15
+        ],
+        "distributive": true,
+        "|L|": 4,
+        "height": 2,
+        "width": 2
+      },
+      {
+        "n": 4,
+        "masks": [
+          0,
+          3,
+          12,
+          15
+        ],
+        "distributive": true,
+        "|L|": 4,
+        "height": 2,
+        "width": 2
+      },
+      {
+        "n": 4,
+        "masks": [
+          0,
+          7
+        ],
+        "distributive": true,
+        "|L|": 2,
+        "height": 1,
+        "width": 1
+      },
+      {
+        "n": 4,
+        "masks": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "distributive": true,
+        "|L|": 8,
+        "height": 3,
+        "width": 3
+      },
+      {
+        "n": 4,
+        "masks": [
+          0,
+          3,
+          8,
+          11
+        ],
+        "distributive": true,
+        "|L|": 4,
+        "height": 2,
+        "width": 2
+      },
+      {
+        "n": 4,
+        "masks": [
+          0,
+          12
+        ],
+        "distributive": true,
+        "|L|": 2,
+        "height": 1,
+        "width": 1
+      },
+      {
+        "n": 4,
+        "masks": [
+          0,
+          4,
+          8,
+          12
+        ],
+        "distributive": true,
+        "|L|": 4,
+        "height": 2,
+        "width": 2
+      },
+      {
+        "n": 4,
+        "masks": [
+          0,
+          8
+        ],
+        "distributive": true,
+        "|L|": 2,
+        "height": 1,
+        "width": 1
+      },
+      {
+        "n": 5,
+        "masks": [
+          0,
+          31
+        ],
+        "distributive": true,
+        "|L|": 2,
+        "height": 1,
+        "width": 1
+      },
+      {
+        "n": 5,
+        "masks": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31
+        ],
+        "distributive": true,
+        "|L|": 32,
+        "height": 5,
+        "width": 10
+      },
+      {
+        "n": 5,
+        "masks": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31
+        ],
+        "distributive": true,
+        "|L|": 16,
+        "height": 4,
+        "width": 6
+      },
+      {
+        "n": 5,
+        "masks": [
+          0,
+          7,
+          8,
+          15,
+          16,
+          23,
+          24,
+          31
+        ],
+        "distributive": true,
+        "|L|": 8,
+        "height": 3,
+        "width": 3
+      },
+      {
+        "n": 5,
+        "masks": [
+          0,
+          3,
+          12,
+          15,
+          16,
+          19,
+          28,
+          31
+        ],
+        "distributive": true,
+        "|L|": 8,
+        "height": 3,
+        "width": 3
+      },
+      {
+        "n": 5,
+        "masks": [
+          0,
+          15,
+          16,
+          31
+        ],
+        "distributive": true,
+        "|L|": 4,
+        "height": 2,
+        "width": 2
+      },
+      {
+        "n": 5,
+        "masks": [
+          0,
+          7,
+          24,
+          31
+        ],
+        "distributive": true,
+        "|L|": 4,
+        "height": 2,
+        "width": 2
+      },
+      {
+        "n": 5,
+        "masks": [
+          0,
+          15
+        ],
+        "distributive": true,
+        "|L|": 2,
+        "height": 1,
+        "width": 1
+      },
+      {
+        "n": 5,
+        "masks": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "distributive": true,
+        "|L|": 16,
+        "height": 4,
+        "width": 6
+      },
+      {
+        "n": 5,
+        "masks": [
+          0,
+          1,
+          2,
+          3,
+          12,
+          13,
+          14,
+          15
+        ],
+        "distributive": true,
+        "|L|": 8,
+        "height": 3,
+        "width": 3
+      },
+      {
+        "n": 5,
+        "masks": [
+          0,
+          7,
+          16,
+          23
+        ],
+        "distributive": true,
+        "|L|": 4,
+        "height": 2,
+        "width": 2
+      },
+      {
+        "n": 5,
+        "masks": [
+          0,
+          3,
+          12,
+          15
+        ],
+        "distributive": true,
+        "|L|": 4,
+        "height": 2,
+        "width": 2
+      },
+      {
+        "n": 5,
+        "masks": [
+          0,
+          7
+        ],
+        "distributive": true,
+        "|L|": 2,
+        "height": 1,
+        "width": 1
+      },
+      {
+        "n": 5,
+        "masks": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "distributive": true,
+        "|L|": 8,
+        "height": 3,
+        "width": 3
+      },
+      {
+        "n": 5,
+        "masks": [
+          0,
+          12,
+          16,
+          28
+        ],
+        "distributive": true,
+        "|L|": 4,
+        "height": 2,
+        "width": 2
+      },
+      {
+        "n": 5,
+        "masks": [
+          0,
+          24
+        ],
+        "distributive": true,
+        "|L|": 2,
+        "height": 1,
+        "width": 1
+      },
+      {
+        "n": 5,
+        "masks": [
+          0,
+          8,
+          16,
+          24
+        ],
+        "distributive": true,
+        "|L|": 4,
+        "height": 2,
+        "width": 2
+      },
+      {
+        "n": 5,
+        "masks": [
+          0,
+          16
+        ],
+        "distributive": true,
+        "|L|": 2,
+        "height": 1,
+        "width": 1
+      }
+    ],
+    "usm_at_half_count": 39,
+    "falsifier_witnesses": [
+      {
+        "n": 4,
+        "masks": [
+          0,
+          8,
+          15
+        ],
+        "true_abundance": 0.6666666666666666,
+        "pm_density": 0.4666666666666666,
+        "target_slack": -1,
+        "distributive": true,
+        "modular": true
+      },
+      {
+        "n": 5,
+        "masks": [
+          0,
+          8,
+          16,
+          23,
+          24,
+          31
+        ],
+        "true_abundance": 0.6666666666666666,
+        "pm_density": 0.4743589743589744,
+        "target_slack": -4,
+        "distributive": true,
+        "modular": true
+      },
+      {
+        "n": 5,
+        "masks": [
+          0,
+          8,
+          16,
+          24,
+          31
+        ],
+        "true_abundance": 0.6,
+        "pm_density": 0.4666666666666667,
+        "target_slack": -3,
+        "distributive": true,
+        "modular": true
+      },
+      {
+        "n": 5,
+        "masks": [
+          0,
+          16,
+          31
+        ],
+        "true_abundance": 0.6666666666666666,
+        "pm_density": 0.4444444444444444,
+        "target_slack": -2,
+        "distributive": true,
+        "modular": true
+      },
+      {
+        "n": 5,
+        "masks": [
+          0,
+          16,
+          23
+        ],
+        "true_abundance": 0.6666666666666666,
+        "pm_density": 0.4666666666666666,
+        "target_slack": -1,
+        "distributive": true,
+        "modular": true
+      }
+    ],
+    "n_falsifier_witnesses": 5
+  }
+}
