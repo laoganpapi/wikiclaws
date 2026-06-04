@@ -1,5 +1,13 @@
 # An explicit LDP/thermodynamic-formalism refinement of Tao 2022's descent estimate
 
+> ## ⚠️ CORRECTION (post-multi-tilt deciding experiment) — READ FIRST
+> The parallel multi-tilt agent (`collatz_multitilt.md`) caught and I independently verified (3-line algebra from first principles) that the residue-side numbers in this writeup are **WRONG**:
+> - **The drift-balancing single-parameter Esscher tilt s* does NOT attenuate the mod-3 marginal to (0.404, 0.596) with TV ≈ 0.096.** It produces (0, 0.270, 0.730) with TV-on-units ≈ **0.230 — *worse* than untilted (0.167)**. The "(0.404, 0.596) / 0.096" numbers came from a *non*-drift-balancing tilt (a sign-convention slip: under the +s parameterisation, drift-balance is s = +0.438, not −0.438).
+> - **Therefore Theorem 2.2(iii), Remark 2.3's "mod-3 attenuation", and every "1/6 → 0.096" appearance in the comparison table are wrong as stated.** The drift-side claims (LDP rate I(0), CLT variance P″(s*)) are unaffected — they're computed at the actual drift-balancing tilt and remain correct.
+> - **Corrected picture (stronger, not weaker):** single-parameter drift-balancing Esscher *worsens* the mod-3 marginal; the **first** mod-3 improvement of any kind in this candidate stream is the multi-tilt **Class (C) two-parameter Esscher** (with auxiliary cocycle ψ(a) = [a even]), which *saturates* the mod-3 marginal to exactly uniform, with drift mean 0 AND a **4.15× larger LDP rate (I ≈ 0.228)**. It does not iterate to mod-9 (provable obstruction; finite-d translation-invariant per-coordinate tilts can't scale).
+>
+> **The headline of the writeup should be Class (C), not the single-parameter LDP.** A revised version will fold this in; for now the writeup below is left intact with this correction banner, and §6's open question is now partially answered: yes for mod-3 (Class C), no for mod-3^n (obstruction proven). See `collatz_multitilt.md` for the corrected picture.
+
 **Track:** Collatz, Vector A. The publishable form of the surviving thermodynamic-formalism candidate (cf. `collatz_candidate.md`, "the LDP / thermodynamic-formalism core of the Syracuse system").
 **Author:** Alex Ye (no AI on the author line per project rules; computational assistance is acknowledged separately).
 **Date:** 2026-06-04.

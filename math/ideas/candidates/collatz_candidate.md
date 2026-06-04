@@ -1,5 +1,11 @@
 # Collatz candidate — Thermodynamic-formalism / large-deviation framing of the Syracuse drift
 
+> ## ⚠️ CORRECTION (post-multi-tilt) — READ FIRST
+> The multi-tilt deciding experiment + independent algebraic verification overturned **the residue-side narrative in this document** (every "tilt partially repairs mod-3 to 0.404 / 0.596 / TV 0.096" claim, including §2.3 / L3 / §4 / §5):
+> - At the actual drift-balancing Esscher tilt s ≈ −0.438 (under the convention used in `collatz_thermo_probe.py`), the mod-3 marginal is **(0, 0.270, 0.730), TV-on-units ≈ 0.230 — *worse* than untilted (0.167)**. The "(0.404, 0.596)" figures came from a non-drift-balancing tilt (sign-convention slip: drift-balance under the +s parameterisation is s = +0.438, not −0.438; under the −s parameterisation it's s = −0.438 but with a different mapping to the marginal).
+> - **Strengthened, corrected picture:** single-parameter drift-balancing Esscher *worsens* the mod-3 marginal; the **multi-tilt Class (C) two-parameter Esscher** (with auxiliary cocycle ψ(a) = [a even]) at (s, t) = (−1.309, −1.600) is the first mod-3 *saturation* in this stream — exact uniform marginal, drift mean 0, **LDP rate I ≈ 0.228 = 4.15× the single-parameter 0.0550**. It does NOT iterate (mod-9 TV = 0.313; provable finite-d obstruction).
+> - **The candidate's drift-side claims are unaffected** (closed-form pressure P(s), rate I(0) ≈ 0.0550, tilted CLT variance P″(s*) ≈ 0.4454 — all computed at the actual drift-balancing tilt). The CORRECT residue-side story is in `collatz_multitilt.md`; this document is left intact with this banner rather than silently rewritten.
+
 **Track:** Collatz, Vector A (sharpen Tao 2022 toward natural density). The surviving research-program candidate after the entire structured / algebraic / cohomological pipeline was certified negative.
 **Author:** Alex Ye (AI-assisted computation; AI not on author line per project rules).
 **Date:** 2026-06-04.
