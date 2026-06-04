@@ -5,6 +5,7 @@
 **Date:** 2026-06-04.
 **Status:** `[CANDIDATE — research program, not proof attempt]`. Closed-form pressure and rate function are proof-grade; validation against Monte-Carlo and trajectory data is numerical. `[NOVELTY UNVERIFIED]` — thermodynamic-formalism views of Collatz almost certainly exist (Sinai, Akin, Lagarias survey, and the Tao 2022 Esscher tilt itself); the contribution is the *packaging* and a sharp *falsifier*, not the LDP machinery.
 **Code:** `collatz_thermo_probe.py`. **Data:** `data/thermo_probe.json`, `data/thermo_probe.log`.
+**Publishable form:** `collatz_thermo_writeup.md` (theorem-style writeup, ready for red-team; states the LDP-vs-Tao comparison theorem with the explicit constant `I(0) = -P(s*) ≈ 0.05498` and the explicit `P''(s*) = log3 · log(3/2) ≈ 0.44545`, and pins down the open multi-parameter-tilt question this candidate isolates).
 
 ---
 
