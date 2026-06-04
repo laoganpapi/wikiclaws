@@ -1,0 +1,153 @@
+{
+  "solver": "cvxpy 1.9.1 + SCS 3.2.11",
+  "validation_cube_pct_half": {
+    "note": "lb = 0.5 exactly at every multiplier degree (the proven ceiling, never exceeded)",
+    "cube_2^[1]": {
+      "mult1": 0.5,
+      "mult2": 0.5
+    },
+    "cube_2^[2]": {
+      "mult1": 0.5,
+      "mult2": 0.5
+    },
+    "cube_2^[3]": {
+      "mult1": 0.5,
+      "mult2": 0.5
+    }
+  },
+  "incidence_SDP_lb1_vs_lb2": {
+    "n4_F3": {
+      "n": 4,
+      "freqs": [
+        1,
+        1,
+        1,
+        2
+      ],
+      "true_ab": 0.6667,
+      "lb1_mult1": 0.4167,
+      "lb2_mult2": 0.4167,
+      "gap": 0.0,
+      "note": "degree-4 = degree-2 EXACTLY: COLLAPSE. cross-checked == freq Hankel d=1 (0.4167)."
+    },
+    "n5_F3a_minimal": {
+      "n": 5,
+      "freqs": [
+        1,
+        1,
+        1,
+        1,
+        2
+      ],
+      "true_ab": 0.6667,
+      "lb1_mult1": 0.4,
+      "lb2_mult2": "SDP_size_explosion (529x529 localizing block, SCS did not converge in budget)",
+      "note": "lb_1 = 0.4000 = freq Hankel d1 exactly (the barrier, sub-1/2). Degree-4 at n5 explodes."
+    }
+  },
+  "freq_only_Hankel_control": {
+    "note": "no union-closure; the d=2 lift is moment-determinacy (tracks #distinct freq values), NOT Frankl",
+    "n5_F3a": {
+      "freqs": [
+        1,
+        1,
+        1,
+        1,
+        2
+      ],
+      "Ndistinct": 2,
+      "true": 0.6667,
+      "powermean": 0.4444,
+      "hankel_d1": 0.4,
+      "hankel_d2": 0.6667
+    },
+    "n4_F3": {
+      "freqs": [
+        1,
+        1,
+        1,
+        2
+      ],
+      "Ndistinct": 2,
+      "true": 0.6667,
+      "powermean": 0.4667,
+      "hankel_d1": 0.4167,
+      "hankel_d2": 0.6667
+    },
+    "n5_F3b": {
+      "freqs": [
+        1,
+        1,
+        1,
+        0,
+        2
+      ],
+      "Ndistinct": 3,
+      "true": 0.6667,
+      "powermean": 0.4667,
+      "hankel_d1": 0.3333,
+      "hankel_d2": 0.5442
+    },
+    "n5_F5": {
+      "freqs": [
+        1,
+        1,
+        1,
+        3,
+        3
+      ],
+      "Ndistinct": 2,
+      "true": 0.6,
+      "powermean": 0.4667,
+      "hankel_d1": 0.36,
+      "hankel_d2": 0.6
+    },
+    "n5_F6": {
+      "freqs": [
+        2,
+        2,
+        2,
+        3,
+        4
+      ],
+      "Ndistinct": 3,
+      "true": 0.6667,
+      "powermean": 0.4744,
+      "hankel_d1": 0.4333,
+      "hankel_d2": 0.6343
+    },
+    "n5_F7": {
+      "freqs": [
+        3,
+        3,
+        3,
+        4,
+        4
+      ],
+      "Ndistinct": 2,
+      "true": 0.5714,
+      "powermean": 0.4958,
+      "hankel_d1": 0.4857,
+      "hankel_d2": 0.5714
+    }
+  },
+  "distinct_value_control": {
+    "2distinct_n31": {
+      "freqs": "[1x30,8]",
+      "Ndistinct": 2,
+      "true": 0.889,
+      "hankel_d2": 0.889,
+      "note": "lifts at d=2 even at n=31 -> determinacy, not Frankl"
+    },
+    "9distinct_n9": {
+      "freqs": "[1..8,40]",
+      "Ndistinct": 9,
+      "true": 0.833,
+      "hankel_d2": 0.81,
+      "hankel_d3": 0.833,
+      "note": "does NOT lift at d=2"
+    }
+  },
+  "verdict": "COLLAPSE: lb_2 = lb_1 in the incidence SDP (n4 exact). Degree-4 SOS does not escape the barrier.",
+  "environment_note": "Pure-Python build + SCS. n<=4 fully solved (cube, n4 collapse exact). n5 degree-2 solved (lb_1=0.4000); n5 degree-4 localizing matrix is 529x529 -> SDP-size explosion, not solved here."
+}
