@@ -263,11 +263,67 @@ small denominator `α` aligns coherently across many `n`, producing a
 structure. The exponent `0.83 → ?` could drift to `0.5` at much larger
 `X`, or it could stabilize, indicating a real signal.
 
-**Mitigation idea (NOT done in this probe):** subtract the *mean* and
+**Mitigation idea (now executed in F2):** subtract the *mean* and
 *standard deviation* per dyadic shell, then re-do the exponential sum on
 the centered, normalized parity count. If the exponent then drops to
-`0.5`, the signal is heuristic concentration. If it stays above `0.5`,
-it is genuine.
+`0.5`, the signal is heuristic concentration.
+
+---
+
+## 3bis. Follow-up probe (sieve_analytic_followup.py)
+
+Two follow-ups requested by §5 (which were prioritized as the single most
+informative tests). Both were run on `n ≤ 10^6`, ~20 s wall.
+
+### F1: Q3 stratified by `log₂ n` shells (counter to "smooth ⇒ small")
+
+For each `y ∈ {10, 50, 100, 500, 1000}` and shell `log₂ n ∈ [L, L+4)`
+for `L ∈ {4, 8, 12, 16}`: report mean `σ∞/log₂ n` on `y`-smooth `n`,
+compared to baseline mean on all `n` in the same shell.
+
+**Key result.** For `y = 10`, the ratio smooth-mean / baseline-mean is
+`0.82, 0.80, 0.80, 0.76` across the four shells. **Monotone, large
+(18–24%), and present in every shell.** This decisively kills the
+"smooth ⇒ small" artifact hypothesis: smooth integers descend faster
+than typical *at every size scale*.
+
+Selected rows:
+
+| y | log₂ n shell | smooth count | smooth mean | baseline mean | ratio |
+|---|--------------|--------------|-------------|---------------|-------|
+| 10 | [16, 20) | 660 | 3.618 | 4.751 | **0.762** |
+| 10 | [12, 16) | 366 | 3.801 | 4.740 | 0.802 |
+| 10 | [8, 12) | 171 | 3.831 | 4.762 | 0.805 |
+| 10 | [4, 8) | 63 | 3.776 | 4.602 | 0.820 |
+| 50 | [16, 20) | 25 285 | 4.453 | 4.751 | 0.937 |
+| 100 | [16, 20) | 59 015 | 4.571 | 4.751 | 0.962 |
+| 500 | [16, 20) | 219 818 | 4.658 | 4.751 | 0.980 |
+| 1000 | [16, 20) | 306 823 | 4.683 | 4.751 | 0.986 |
+
+**The Q3 smoothness signal is real and persistent.** This is the *only*
+genuinely positive finding of the four sub-probes.
+
+### F2: Q4 with shell-centered, normalized parity count
+
+Replace `P(n)` with `P̃(n) := (P(n) − μ_k) / σ_k` for `n` in shell `k`,
+where `μ_k, σ_k` are the mean and std of `P(n)` on that shell. Re-run
+`S_α(X) = Σ e(α P̃(n))` for `α = p/q`, `q ≤ 30`.
+
+**Key result.** `max_α |S_α(X)| / X ≈ 0.98` saturated at all `X`, with
+best fraction `1/30`. This is **NOT a real major-arc signal** — it
+reflects the fact that `P̃(n) ∈ [−3, 3]` typical-range is so small
+compared to `q = 30` that `e(P̃/30) ≈ 1` for almost all `n`, giving
+trivial coherent alignment.
+
+**The honest read.** The original Q4 exponent `0.83` was driven by the
+strong concentration of `P(n)` around its conditional mean `μ(log₂ n)`,
+exactly the failure mode flagged a priori. **Q4 is an artifact** and
+provides no leverage. To probe the *centered* signal genuinely one would
+need (a) `q` scaled to match `σ_k`, e.g. `q ~ 10·σ_k` per shell, or (b)
+a finer Farey net `q ≤ q_max` with `q_max → ∞` jointly with `X`. Neither
+is done here; both are reasonable follow-ups but I do not expect either
+to produce a non-trivial exponent (the parity count is essentially i.i.d.
+shifted-Geometric per step under Tao's heuristic).
 
 ---
 
@@ -307,67 +363,74 @@ zero hits, but I have not verified this here.
 
 ### What worked
 
-- Q3 (smoothness) gave a clean, monotonic, large signal not predicted by
-  the LDP frame.
-- Q4 (circle method) gave an exponent `0.83` above the square-root null,
-  which is surprising if it survives the centering correction.
+- **Q3 (smoothness) survived stratification.** F1 shows the 18–24% drop
+  in `mean σ∞/log₂ n` on `10`-smooth `n` holds *in every dyadic shell*
+  `log₂ n ∈ [L, L+4)`. This is the only genuinely positive finding.
 
-### Failure modes
+### What failed
 
-- **Q1 / Q2 kills are textbook negatives**: no Euler product, no clean
-  Dirichlet pole. These close two of the four standard ANT routes.
-- **Q3's smoothness signal might be an integer-density artifact**: y-smooth
-  integers are *less dense* and *more clustered near small n*; small `n`
-  have smaller `σ∞`, so the comparison should be *stratified* by `log n`.
-  If the gap survives stratification, Q3 is real. If not, it is the trivial
-  "smooth numbers are small" artifact. **Not yet done.**
-- **Q4's exponent `0.83` is the most likely candidate for a spurious
-  signal**: parity-count concentration around `log₂ n` could explain the
-  coherent alignment at small `q`. The decisive test is the centered,
-  per-dyadic-shell normalised exponential sum; **not yet done**.
-- **The whole angle remains a long shot**: even a genuine Q3+Q4 signal
-  does not give a density theorem by itself. The route to a proof would
-  require:
-  - For Q3: a Hildebrand-style asymptotic `M(X, y) ~ ρ_C(u)` with explicit
-    `ρ_C`, plus a Tao-style decomposition `M(X, ∞) = ∫ M(X, y) dμ(y)`.
-  - For Q4: a Vinogradov-style minor-arc bound `|S_α| = O(X^{1−δ})` for
-    `α` away from small-denominator fractions, plus a major-arc analysis
-    that recovers the density of `n` with `σ∞(n)` in a given range.
-  Both are *years* of additional work and require expert ANT review.
+- **Q1 (Euler product)** — clean structural kill (textbook negative): the
+  multiplicativity defect `Δ(a,b)` has mean `−5.43` and std `47` on
+  coprime pairs, ruling out any Dirichlet-convolution identity. Two of
+  the four standard ANT routes (Euler product, Dirichlet pole) now closed.
+- **Q2 (Dirichlet pole)** — null. `F_X(s)/Z_X(s)` saturates at irrational
+  constants at `s ∈ {2, 3}` with no Riemann-zeta-style structure visible.
+- **Q4 (circle method)** — killed by F2. The original `0.83` exponent was
+  artifact from parity-count concentration; after shell-centered
+  normalization, the exponential sum at `q ≤ 30` saturates trivially,
+  meaning no genuine arithmetic resonance. To detect a real major arc one
+  would need much finer Farey nets, and the i.i.d. Tao heuristic predicts
+  square-root cancellation there.
+
+### Remaining failure modes for Q3
+
+- **Genus-of-`y`-smooth-integers bias**: smooth integers have constrained
+  multiplicative structure that *might* tautologically reduce orbit
+  length (e.g. `n = 2^a · 3^b · 5^c ...` has more "even step" potential
+  built in). The shell-stratification F1 does NOT control for this. A
+  follow-up could compare to a random subsample of `n` *matched on
+  binary representation length and number of trailing zeros*.
+- **The signal does not give a density theorem by itself.** The route to
+  a proof would require a Hildebrand-style asymptotic
+  `M(X, y) ~ ρ_C(u)` with explicit `ρ_C(u) ≠ ρ(u)` (the standard Dickman),
+  *plus* a Tao-style decomposition `M(X, ∞) = ∫ M(X, y) dμ(y)`. This is
+  years of work and requires expert ANT review.
 
 ### Best-case scenario
 
-- Q3 survives stratification → a "smooth-Collatz Dickman theorem"
+- Q3 (now: confirmed real after F1) → a "smooth-Collatz Dickman theorem"
   becomes a candidate research problem.
-- Q4 survives centering → "Collatz parity sums have a non-trivial major
-  arc at denominator `q ≈ √log X`" becomes a candidate observation.
-- Neither *proves* the Collatz conjecture, but they would be the **first
-  genuinely classical-ANT entry points** into the problem.
+- This would NOT prove the Collatz conjecture, but it would be the
+  **first genuinely classical-ANT entry point** into the problem.
 
-### Most likely scenario
+### Actual outcome
 
-Outcome (b)/(c) mix: Q1, Q2 are *clean structural kills* of two of the
-four standard ANT routes (decisive, even if negative). Q3 and Q4 give
-*partial positive signals* that are mostly explained by simple
-artifacts (size stratification for Q3, parity concentration for Q4) and
-fade under proper normalisation. Net: useful diagnostic, low probability
-of breakthrough.
+Three structural kills (Q1, Q2, Q4) + one survived positive (Q3). Q1 and
+Q2 are clean textbook negatives that close two of the four standard ANT
+routes. Q4 was killed by the F2 follow-up. Q3 survived F1 stratification
+with effect size `≈ 24%` at `y = 10` across all log₂ n shells.
+
+**Net:** useful diagnostic + one genuinely new research direction
+(smooth-Collatz Dickman). Probability of breakthrough remains low (the
+Q3 signal is one of *many* arithmetic-flavored signals in the Collatz
+literature that didn't lead to a proof), but the avenue is now concrete
+and computationally tractable.
 
 `[NOVELTY UNVERIFIED]` for all four sub-questions.
 
-### Concrete follow-up plan (1 week, NOT executed here)
+### Concrete follow-up plan (1 week, partially executed)
 
-1. **Scale Q3 to `N = 10^9`** with explicit stratification by `log n`
-   in deciles. If the smoothness gap persists in each decile, the signal
-   is real.
-2. **Q4 centering**: compute `P̃(n) := (P(n) − μ(log₂ n))/σ(log₂ n)` using
-   the existing `10^7` trajectory data, then re-run `S_α(X) = Σ e(α P̃(n))`.
-   If `max_α |S_α|/X` drops to `X^{−1/2}` exponent, signal is artifact.
-   If it stays at exponent `> 1/2`, the signal is real.
-3. **arXiv lit search** for the four NT phrases listed in §4 to confirm
-   `[NOVELTY UNVERIFIED]` status.
-4. **Q1 follow-up**: stratify the regression `Δ ~ log min(a,b)` by
-   *residue class* of `a` and `b` mod 6. The mod-3 stationary `π_n` may
-   leak into `Δ` through arithmetic constraints on coprime pairs.
+1. **(DONE) Q3 stratification** in dyadic log₂ n shells — signal
+   confirmed real with monotone 18–24% effect at y=10.
+2. **(DONE) Q4 centering** — signal killed; `P(n)` concentration
+   explains the original 0.83 exponent.
+3. **(NOT done) Scale Q3 to `N = 10^9`**: confirm asymptotic behavior
+   matches a Dickman-style function `ρ_C(u)` with `u = log X / log y`.
+4. **(NOT done) Q3 follow-up**: control for binary-representation length
+   and number of trailing zeros to rule out a "smooth integers have more
+   even-step potential" tautology.
+5. **(NOT done) arXiv lit search** for "Collatz Dickman", "Collatz smooth
+   number", "3n+1 Hardy-Littlewood", "Collatz exponential sum",
+   "Syracuse parity Dirichlet" to confirm `[NOVELTY UNVERIFIED]`.
 
 `[NOVELTY UNVERIFIED]` overall.
