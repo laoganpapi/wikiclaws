@@ -372,11 +372,11 @@ def non_stationary_tests() -> list:
     # coords give P(a = 1 mod 6) = 1, not 1/6. The CESARO mod-6 marginal:
     #   P(a = 1 mod 6) = rho * 1 + (1-rho)/6 = (5*rho + 1)/6.
     # For mod-6 saturation, need (5*rho + 1)/6 = 1/6  =>  rho = 0. Contradiction.
-    rho_needed = Fraction(7, 2) - mp.log(3) / mp.log(2)  # approx
+    rho_needed_num = float(Fraction(7, 2)) - log2(3)  # approx 1.915
     results.append({
         "name": "Mostly point-mass at 1, occasional Unif{1..6}",
         "construction": "delta_1 with density rho, Unif{1..6} with density 1-rho",
-        "drift_balance_rho": float(rho_needed / Fraction(5, 2)),
+        "drift_balance_rho": rho_needed_num / 2.5,
         "mod6_class_1_prob_at_that_rho": "((5*rho+1)/6) != 1/6 unless rho = 0",
         "joint_feasibility": False,
         "reason": "Cannot simultaneously balance drift and have uniform mod-6 Cesaro marginal.",
