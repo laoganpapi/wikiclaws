@@ -3,8 +3,8 @@
 **Track:** Collatz Vector A — Wave 5 alt-angle (sieve / analytic number theory).
 **Author:** Alex Ye.
 **Date:** 2026-06-08.
-**Status:** `[CANDIDATE — outcome (b)/(c) mix: two clean nulls (Q1 Euler-product, Q2 Dirichlet pole), TWO non-trivial positive signals (Q3 smoothness, Q4 circle-method exponent 0.83 above √-cancellation)]`. `[NOVELTY UNVERIFIED]`.
-**Code:** `sieve_analytic_probe.py`. **Data:** `data/sieve_analytic_probe.json`, `data/sieve_analytic_probe.log`.
+**Status:** `[CANDIDATE — outcome (b)/(c) mix: THREE clean structural kills (Q1 Euler-product, Q2 Dirichlet pole, Q4 circle method killed by follow-up F2), ONE survived stratification (Q3 smoothness: 24% speedup at y=10 across all log2 n dyadic shells)]`. `[NOVELTY UNVERIFIED]`.
+**Code:** `sieve_analytic_probe.py`, `sieve_analytic_followup.py`. **Data:** `data/sieve_analytic_probe.{json,log}`, `data/sieve_analytic_followup.{json,log}`.
 
 ---
 
@@ -53,13 +53,18 @@
 > | Q4 | best fraction at `X = 10^6` | `12/29` |
 > | Q4 | implied exponent `log|S|/log X` | `0.832` |
 >
-> **Plausibility (1–5): 2.5**, *up from my a-priori estimate of 2*. The Q4
-> exponent `0.83 > 0.5` is unexpected and the smoothness signal Q3 is
-> bigger than expected. Both deserve a 10^9-scale follow-up.
+> **Plausibility (1–5): 2.5**, *up from my a-priori estimate of 2*. The Q3
+> smoothness signal SURVIVED dyadic-shell stratification (F1 follow-up:
+> 24% drop at y=10 in the [16,20) shell, even AFTER conditioning on
+> log₂ n), so the effect is *not* a "smooth numbers are small" artifact.
+> The Q4 circle-method exponent `0.83` was KILLED by the F2 follow-up:
+> after centering and normalizing P(n) within each log₂ n shell, the
+> exponential sum at small `q ≤ 30` becomes trivially saturated, which
+> means the original exponent was driven by the concentration of `P(n)`
+> around its conditional mean — exactly the failure mode I had flagged a
+> priori. So **Q4 is artifact**; **Q3 is real**.
 >
-> See §5 for full honest assessment, including the most likely *failure
-> mode* of the Q4 signal (parity-count finite-mean concentration causing
-> spurious major-arc concentration at small `q`).
+> See §5 for full honest assessment.
 
 ---
 
