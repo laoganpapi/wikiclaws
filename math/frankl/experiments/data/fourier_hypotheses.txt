@@ -1,0 +1,110 @@
+Boolean-Fourier hypothesis tests
+================================================================
+Records tested: 29744 UC orbit reps (n ≤ 5)
+
+H1 — min_i Inf_i / (p · (1−abund_max))
+  Tested non-degenerate: 29743
+  min ratio: 0.000000
+    witness F = [0, 1], n=1, size=2, abund_max=0.5000, min_inf=0.000000
+  max ratio: 2.500000
+  Families with abund_max = 1/2 exactly: 39, their min_inf range starts at 0.0
+  VERDICT: no positive lower-bound constant — min ratio can be 0
+
+H2 — Total influence I[f] vs abund_max (lower envelope)
+  abund_max (rounded) -> min total influence:
+    0.00 -> 0.078125
+    0.50 -> 0.000000
+    0.52 -> 0.078125
+    0.53 -> 0.125000
+    0.55 -> 0.171875
+    0.56 -> 0.265625
+    0.57 -> 0.187500
+    0.58 -> 0.281250
+    0.59 -> 0.234375
+    0.60 -> 0.234375
+    0.61 -> 0.328125
+    0.62 -> 0.250000
+    0.63 -> 0.359375
+    0.64 -> 0.265625
+    0.65 -> 0.296875
+  ...
+    0.91 -> 0.359375
+    0.92 -> 0.359375
+    0.93 -> 0.359375
+    0.94 -> 0.296875
+    1.00 -> 0.078125
+
+H3 — Low-level Fourier concentration C_k(F) = Σ_{|S|≤k} f̂² / p
+  n=1:  C_0 ∈ [0.5000, 1.0000] mean 0.6667
+         C_1 ∈ [1.0000, 1.0000] mean 1.0000
+  n=2:  C_0 ∈ [0.2500, 1.0000] mean 0.5278
+         C_1 ∈ [0.5000, 1.0000] mean 0.8426
+         C_2 ∈ [1.0000, 1.0000] mean 1.0000
+  n=3:  C_0 ∈ [0.1250, 1.0000] mean 0.4696
+         C_1 ∈ [0.2500, 1.0000] mean 0.7360
+         C_2 ∈ [0.7500, 1.0000] mean 0.9423
+  n=4:  C_0 ∈ [0.0625, 1.0000] mean 0.4537
+         C_1 ∈ [0.1250, 1.0000] mean 0.6865
+         C_2 ∈ [0.6250, 1.0000] mean 0.8913
+  n=5:  C_0 ∈ [0.0312, 1.0000] mean 0.4597
+         C_1 ∈ [0.0625, 1.0000] mean 0.6778
+         C_2 ∈ [0.4375, 1.0000] mean 0.8509
+  VERDICT: no uniform concentration. UC families can have arbitrarily-spread spectra.
+
+H4 — Noise stability Stab_ρ / p vs abund_max (lower envelope)
+  ρ = 0.25:
+    abund=0.00 -> min Stab/p = 0.0954
+    abund=0.50 -> min Stab/p = 0.1028
+    abund=0.52 -> min Stab/p = 0.9708
+    abund=0.53 -> min Stab/p = 0.5022
+    abund=0.55 -> min Stab/p = 0.9135
+    ...
+    abund=0.93 -> min Stab/p = 0.5272
+    abund=0.94 -> min Stab/p = 0.5985
+    abund=1.00 -> min Stab/p = 0.0954
+  ρ = 0.5:
+    abund=0.00 -> min Stab/p = 0.2373
+    abund=0.50 -> min Stab/p = 0.2383
+    abund=0.52 -> min Stab/p = 0.9754
+    abund=0.53 -> min Stab/p = 0.5992
+    abund=0.55 -> min Stab/p = 0.9266
+    ...
+    abund=0.93 -> min Stab/p = 0.6392
+    abund=0.94 -> min Stab/p = 0.7073
+    abund=1.00 -> min Stab/p = 0.2373
+  ρ = 0.75:
+    abund=0.00 -> min Stab/p = 0.5129
+    abund=0.50 -> min Stab/p = 0.5129
+    abund=0.52 -> min Stab/p = 0.9843
+    abund=0.53 -> min Stab/p = 0.7634
+    abund=0.55 -> min Stab/p = 0.9518
+    ...
+    abund=0.93 -> min Stab/p = 0.7894
+    abund=0.94 -> min Stab/p = 0.8362
+    abund=1.00 -> min Stab/p = 0.5129
+  ρ = 0.9:
+    abund=0.00 -> min Stab/p = 0.7738
+    abund=0.50 -> min Stab/p = 0.7738
+    abund=0.52 -> min Stab/p = 0.9927
+    abund=0.53 -> min Stab/p = 0.8963
+    abund=0.55 -> min Stab/p = 0.9770
+    ...
+    abund=0.93 -> min Stab/p = 0.9068
+    abund=0.94 -> min Stab/p = 0.9291
+    abund=1.00 -> min Stab/p = 0.7738
+
+H5 — FUCC in Fourier form: ∃ i with f̂({i}) ≤ 0
+  Families where min_i f̂({i}) ≤ 0:  29738 / 29738
+  Counterexamples (FUCC violation):    0
+  ⇒  FUCC verified Fourier-style on all UC families with n ≤ 5.
+
+H6 — Rotation-invariant level-1 control bound
+  Bound:  max ab_i ≥ (1 − √(W¹/(n p²))) / 2
+  Families where this bound exceeds 1/2: 0 / 29743
+  max value of bound across all UC F:    0.500000
+  ⇒  the level-1 SPECTRAL WEIGHT alone gives no useful bound — it caps at 1/2.
+  (Structural fact: W¹ is invariant under sign-flipping each f̂({i}), so it cannot
+   detect whether ANY singleton coefficient is non-positive.)
+
+H7 — KKL-style: not applicable, 1_F is not monotone.  Skipped formal test.
+

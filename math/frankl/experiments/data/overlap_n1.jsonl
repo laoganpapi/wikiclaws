@@ -1,0 +1,1 @@
+{"n": 1, "mL": 2, "mF": 2, "n_ji": 1, "P1": 1, "P2": 1, "OVL": 1, "JIOVL": 1, "JIOVL_lb": 1, "sum_ji_filter": 1, "maxfib": 1, "true_abund_L": 0.5, "true_abund_F": 0.5, "pm_density_L": 0.5, "pm_density_F": 0.5, "target_L_holds": true, "target_F_holds": true, "target_L_slack": 0, "target_F_slack": 0, "is_cube": true, "family": [0, 1]}

@@ -1,0 +1,556 @@
+{
+  "n_max": 5,
+  "per_n": {
+    "0": 0,
+    "1": 1,
+    "2": 6,
+    "3": 33,
+    "4": 362,
+    "5": 29321
+  },
+  "min_lp_minmax": 0.0,
+  "min_lp_minmax_family": [
+    [],
+    [
+      0
+    ]
+  ],
+  "min_true_abundance": 0.5,
+  "min_true_abundance_family": [
+    [],
+    [
+      0
+    ]
+  ],
+  "min_abund_lb_avg_over_n": 0.1,
+  "min_abund_lb_avg_over_n_family": [
+    [],
+    [
+      4
+    ]
+  ],
+  "reimer_violations": 0,
+  "lp_minmax_below_half": 20240,
+  "lp_minmax_below_half_examples": [
+    {
+      "sets": [
+        [],
+        [
+          0
+        ]
+      ],
+      "lp_minmax": 0.0,
+      "true_abundance": 0.5
+    },
+    {
+      "sets": [
+        [],
+        [
+          0,
+          1
+        ]
+      ],
+      "lp_minmax": 0.0,
+      "true_abundance": 0.5
+    },
+    {
+      "sets": [
+        [],
+        [
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "lp_minmax": 0.0,
+      "true_abundance": 0.6666666666666666
+    },
+    {
+      "sets": [
+        [],
+        [
+          0
+        ],
+        [
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "lp_minmax": 0.0,
+      "true_abundance": 0.5
+    },
+    {
+      "sets": [
+        [],
+        [
+          1
+        ]
+      ],
+      "lp_minmax": 0.0,
+      "true_abundance": 0.5
+    },
+    {
+      "sets": [
+        [],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "lp_minmax": 0.0,
+      "true_abundance": 0.5
+    },
+    {
+      "sets": [
+        [],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "lp_minmax": 0.0,
+      "true_abundance": 0.6666666666666666
+    },
+    {
+      "sets": [
+        [],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "lp_minmax": 0.0,
+      "true_abundance": 0.75
+    },
+    {
+      "sets": [
+        [],
+        [
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "lp_minmax": 0.0,
+      "true_abundance": 0.8
+    },
+    {
+      "sets": [
+        [],
+        [
+          2
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "lp_minmax": 0.0,
+      "true_abundance": 0.6666666666666666
+    }
+  ],
+  "true_below_half": 0,
+  "n_families": 29723,
+  "cover_proves_frankl": 29717,
+  "cover_fails": 6,
+  "cover_fail_examples": [
+    {
+      "sets": [
+        [
+          2
+        ],
+        [
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          1,
+          2,
+          3
+        ]
+      ],
+      "cover_certified_lb": 0.45,
+      "true_abundance": 0.8,
+      "m": 5,
+      "n_ground": 4
+    },
+    {
+      "sets": [
+        [
+          3
+        ],
+        [
+          4
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          0,
+          3,
+          4
+        ],
+        [
+          1,
+          3,
+          4
+        ],
+        [
+          0,
+          1,
+          3,
+          4
+        ]
+      ],
+      "cover_certified_lb": 0.4666666666666667,
+      "true_abundance": 0.8888888888888888,
+      "m": 9,
+      "n_ground": 5
+    },
+    {
+      "sets": [
+        [
+          3
+        ],
+        [
+          4
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          1,
+          2,
+          4
+        ],
+        [
+          1,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          1,
+          2,
+          3,
+          4
+        ]
+      ],
+      "cover_certified_lb": 0.46,
+      "true_abundance": 0.8,
+      "m": 10,
+      "n_ground": 5
+    },
+    {
+      "sets": [
+        [
+          3
+        ],
+        [
+          4
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          0,
+          3,
+          4
+        ],
+        [
+          1,
+          3,
+          4
+        ],
+        [
+          0,
+          1,
+          3,
+          4
+        ]
+      ],
+      "cover_certified_lb": 0.4666666666666667,
+      "true_abundance": 0.7777777777777778,
+      "m": 9,
+      "n_ground": 5
+    },
+    {
+      "sets": [
+        [
+          4
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          0,
+          1,
+          3,
+          4
+        ]
+      ],
+      "cover_certified_lb": 0.48,
+      "true_abundance": 0.8,
+      "m": 5,
+      "n_ground": 5
+    },
+    {
+      "sets": [
+        [
+          3
+        ],
+        [
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4
+        ]
+      ],
+      "cover_certified_lb": 0.4,
+      "true_abundance": 0.8,
+      "m": 5,
+      "n_ground": 5
+    }
+  ],
+  "min_cover_certified_lb": 0.4,
+  "min_cover_certified_lb_family": [
+    [
+      3
+    ],
+    [
+      4
+    ],
+    [
+      2,
+      4
+    ],
+    [
+      3,
+      4
+    ],
+    [
+      2,
+      3,
+      4
+    ]
+  ],
+  "power_mean_below_half": 6,
+  "min_power_mean_lb": 0.4444444444444444,
+  "min_power_mean_family": [
+    [],
+    [
+      4
+    ],
+    [
+      0,
+      1,
+      2,
+      3,
+      4
+    ]
+  ],
+  "max_gap_true_minus_minmax": 0.9411764705882353,
+  "max_gap_family": {
+    "sets": [
+      [],
+      [
+        4
+      ],
+      [
+        0,
+        4
+      ],
+      [
+        1,
+        4
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        0,
+        1,
+        4
+      ],
+      [
+        0,
+        2,
+        4
+      ],
+      [
+        0,
+        3,
+        4
+      ],
+      [
+        1,
+        2,
+        4
+      ],
+      [
+        1,
+        3,
+        4
+      ],
+      [
+        2,
+        3,
+        4
+      ],
+      [
+        0,
+        1,
+        2,
+        4
+      ],
+      [
+        0,
+        1,
+        3,
+        4
+      ],
+      [
+        0,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    ],
+    "true_abundance": 0.9411764705882353,
+    "lp_minmax": 0.0
+  }
+}

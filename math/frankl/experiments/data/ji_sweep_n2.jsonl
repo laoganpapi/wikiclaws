@@ -1,0 +1,6 @@
+{"n": 2, "m": 2, "ab": 0.5, "maxji": 0.5, "maxco": 1.0, "max_mi": 0.0, "principal": {"0": true, "1": true}, "freq_sorted": [1, 1]}
+{"n": 2, "m": 3, "ab": 0.6666666666666666, "maxji": 0.6666666666666666, "maxco": 0.6666666666666666, "max_mi": 0.6666666666666666, "principal": {"0": true, "1": true}, "freq_sorted": [2, 1]}
+{"n": 2, "m": 3, "ab": 0.6666666666666666, "maxji": 0.6666666666666666, "maxco": 0.6666666666666666, "max_mi": 0.6666666666666666, "principal": {"0": true, "1": true}, "freq_sorted": [2, 1]}
+{"n": 2, "m": 4, "ab": 0.5, "maxji": 0.5, "maxco": 0.5, "max_mi": 0.5, "principal": {"0": true, "1": true}, "freq_sorted": [2, 2]}
+{"n": 2, "m": 4, "ab": 0.5, "maxji": 0.5, "maxco": 0.5, "max_mi": 0.5, "principal": {"0": true, "1": true}, "freq_sorted": [2, 2]}
+{"n": 2, "m": 2, "ab": 0.5, "maxji": 0.5, "maxco": 1.0, "max_mi": 0.0, "principal": {"0": null, "1": true}, "freq_sorted": [1, 0]}

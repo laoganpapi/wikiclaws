@@ -1,0 +1,497 @@
+{
+  "constants": {
+    "THETA_STAR": -0.43803265928220214,
+    "EBAR_nats": -0.2876820724517808,
+    "P_at_THETA_STAR": -0.054979472810817054,
+    "I_one_at_0": 0.054979472810817054
+  },
+  "gate_G1": {
+    "theta": 0.0,
+    "r_exact": "1/2",
+    "marg_exact": [
+      "0",
+      "1/3",
+      "2/3"
+    ],
+    "tv_vs_uniform_exact": "1/6",
+    "tv_float": 0.16666666666666666,
+    "expected": "(0, 1/3, 2/3); TV = 1/6 ~ 0.16667",
+    "pass": true
+  },
+  "gate_G2": {
+    "theta_star": -0.43803265928220214,
+    "r_float": 0.6773778228378636,
+    "r_closed_form": 0.6773778228378637,
+    "marg_float": [
+      0.0,
+      0.40383139303215854,
+      0.5961686069678416
+    ],
+    "tv_vs_uniform_float": 0.09616860696784152,
+    "expected_marg": "(0, 0.40383, 0.59617)",
+    "expected_tv": "(1-r)/(2(1+r)) ~ 0.09617",
+    "match_marg": true,
+    "match_tv": true
+  },
+  "joint_DP_reconciliation_n4": {
+    "n": 4,
+    "amax": 80,
+    "marg_untilted": [
+      0.0,
+      0.3333333333333339,
+      0.6666666666666679
+    ],
+    "tv_untilted": 0.16666666666666696,
+    "marg_joint_DP_at_THETA_STAR": [
+      0.0,
+      0.403831393032161,
+      0.5961686069678432
+    ],
+    "tv_joint_DP_at_THETA_STAR": 0.09616860696784113,
+    "marg_pressure_at_THETA_STAR": [
+      0.0,
+      0.26957728969081485,
+      0.7304227103091842
+    ],
+    "tv_pressure_at_THETA_STAR": 0.23042271030918465
+  },
+  "classA": {
+    "sweep": [
+      {
+        "theta_n": -0.99,
+        "r": 0.9930924954370359,
+        "Z_per_coord": 143.7700817110848,
+        "mean_a_under_tilt": 144.7700817110848,
+        "marg": [
+          0.0,
+          0.49826713898658037,
+          0.5017328610134196
+        ],
+        "tv_vs_uniform": 0.0017328610134196287
+      },
+      {
+        "theta_n": -0.95,
+        "r": 0.9659363289248455,
+        "Z_per_coord": 28.35678887321642,
+        "mean_a_under_tilt": 29.35678887321642,
+        "marg": [
+          0.0,
+          0.4913365273905428,
+          0.5086634726094572
+        ],
+        "tv_vs_uniform": 0.008663472609457212
+      },
+      {
+        "theta_n": -0.9,
+        "r": 0.9330329915368074,
+        "Z_per_coord": 13.932726172912965,
+        "mean_a_under_tilt": 14.932726172912965,
+        "marg": [
+          0.0,
+          0.48267825516781476,
+          0.5173217448321853
+        ],
+        "tv_vs_uniform": 0.017321744832185265
+      },
+      {
+        "theta_n": -0.8,
+        "r": 0.8705505632961241,
+        "Z_per_coord": 6.725023958872574,
+        "mean_a_under_tilt": 7.725023958872574,
+        "marg": [
+          0.0,
+          0.46539803861923645,
+          0.5346019613807635
+        ],
+        "tv_vs_uniform": 0.034601961380763546
+      },
+      {
+        "theta_n": -0.7,
+        "r": 0.8122523963562355,
+        "Z_per_coord": 4.326299673562901,
+        "mean_a_under_tilt": 5.326299673562901,
+        "marg": [
+          0.0,
+          0.44820048133989093,
+          0.5517995186601091
+        ],
+        "tv_vs_uniform": 0.051799518660109095
+      },
+      {
+        "theta_n": -0.6,
+        "r": 0.757858283255199,
+        "Z_per_coord": 3.1298129601266687,
+        "mean_a_under_tilt": 4.129812960126669,
+        "marg": [
+          0.0,
+          0.43112592776921604,
+          0.568874072230784
+        ],
+        "tv_vs_uniform": 0.06887407223078398
+      },
+      {
+        "theta_n": -0.5,
+        "r": 0.7071067811865476,
+        "Z_per_coord": 2.414213562373096,
+        "mean_a_under_tilt": 3.414213562373096,
+        "marg": [
+          0.0,
+          0.4142135623730951,
+          0.585786437626905
+        ],
+        "tv_vs_uniform": 0.08578643762690494
+      },
+      {
+        "theta_n": -0.438,
+        "r": 0.6773624887426839,
+        "Z_per_coord": 2.0994536131369443,
+        "mean_a_under_tilt": 3.0994536131369443,
+        "marg": [
+          0.0,
+          0.4038259429841076,
+          0.5961740570158924
+        ],
+        "tv_vs_uniform": 0.0961740570158924
+      },
+      {
+        "theta_n": -0.3,
+        "r": 0.6155722066724582,
+        "Z_per_coord": 1.6012687359157085,
+        "mean_a_under_tilt": 2.6012687359157085,
+        "marg": [
+          0.0,
+          0.3810242613298804,
+          0.6189757386701197
+        ],
+        "tv_vs_uniform": 0.11897573867011965
+      },
+      {
+        "theta_n": -0.2,
+        "r": 0.5743491774985174,
+        "Z_per_coord": 1.3493435161787264,
+        "mean_a_under_tilt": 2.3493435161787266,
+        "marg": [
+          0.0,
+          0.36481689431254416,
+          0.6351831056874558
+        ],
+        "tv_vs_uniform": 0.13518310568745584
+      },
+      {
+        "theta_n": -0.1,
+        "r": 0.5358867312681466,
+        "Z_per_coord": 1.1546464351954588,
+        "mean_a_under_tilt": 2.154646435195459,
+        "marg": [
+          0.0,
+          0.34891032024586677,
+          0.6510896797541332
+        ],
+        "tv_vs_uniform": 0.15108967975413323
+      },
+      {
+        "theta_n": 0.0,
+        "r": 0.5,
+        "Z_per_coord": 1.0,
+        "mean_a_under_tilt": 2.0,
+        "marg": [
+          0.0,
+          0.3333333333333333,
+          0.6666666666666666
+        ],
+        "tv_vs_uniform": 0.16666666666666666
+      },
+      {
+        "theta_n": 0.2,
+        "r": 0.43527528164806206,
+        "Z_per_coord": 0.7707742684229334,
+        "mean_a_under_tilt": 1.7707742684229333,
+        "marg": [
+          0.0,
+          0.30326954502292763,
+          0.6967304549770724
+        ],
+        "tv_vs_uniform": 0.1967304549770724
+      },
+      {
+        "theta_n": 0.5,
+        "r": 0.3535533905932738,
+        "Z_per_coord": 0.5469181606780271,
+        "mean_a_under_tilt": 1.5469181606780271,
+        "marg": [
+          0.0,
+          0.2612038749637415,
+          0.7387961250362586
+        ],
+        "tv_vs_uniform": 0.23879612503625855
+      },
+      {
+        "theta_n": 0.8,
+        "r": 0.2871745887492587,
+        "Z_per_coord": 0.402868057474796,
+        "mean_a_under_tilt": 1.402868057474796,
+        "marg": [
+          0.0,
+          0.22310461320426225,
+          0.7768953867957378
+        ],
+        "tv_vs_uniform": 0.2768953867957378
+      }
+    ],
+    "saturation": {
+      "saturation_theta_n": -1.0,
+      "degenerate": true,
+      "marg_at_saturation": "(0, 1/2, 1/2) -- but tilt is improper",
+      "reason": "r=1 makes sum_k r^k divergent",
+      "per_step_LDP_rate_at_bulk_tilt_theta_star": 0.054979472810817054,
+      "comment": "Single-coordinate end-load saturates only as theta_n -> -1, where the per-coord measure becomes improper.  The per-step LDP rate is unaffected as n -> infinity (one coord contributes O(1)), but at any FINITE n the average drift shifts by (mean_a_theta_n - 2)*log2/n which BLOWS UP as theta_n -> -1.  So Class (A) does NOT saturate without degeneracy."
+    }
+  },
+  "classA_tradeoff": [
+    {
+      "theta_n": -0.999,
+      "r_pressure": 0.25017334686564513,
+      "marg_R1": 0.20011092661098862,
+      "marg_R2": 0.7998890733890114,
+      "tv_vs_uniform": 0.2998890733890114,
+      "per_coord_KL_wrt_bulk": -0.34591624279893574,
+      "per_step_LDP_cost_as_n_to_inf": 0.0
+    },
+    {
+      "theta_n": -0.99,
+      "r_pressure": 0.2517388875141797,
+      "marg_R1": 0.20111134201007877,
+      "marg_R2": 0.7988886579899213,
+      "tv_vs_uniform": 0.29888865798992126,
+      "per_coord_KL_wrt_bulk": -0.34075415870277503,
+      "per_step_LDP_cost_as_n_to_inf": 0.0
+    },
+    {
+      "theta_n": -0.95,
+      "r_pressure": 0.2588162309603444,
+      "marg_R1": 0.20560287085184376,
+      "marg_R2": 0.7943971291481563,
+      "tv_vs_uniform": 0.2943971291481563,
+      "per_coord_KL_wrt_bulk": -0.317732348648165,
+      "per_step_LDP_cost_as_n_to_inf": 0.0
+    },
+    {
+      "theta_n": -0.9,
+      "r_pressure": 0.2679433656340733,
+      "marg_R1": 0.21132124107142602,
+      "marg_R2": 0.788678758928574,
+      "tv_vs_uniform": 0.288678758928574,
+      "per_coord_KL_wrt_bulk": -0.2887500208187487,
+      "per_step_LDP_cost_as_n_to_inf": 0.0
+    },
+    {
+      "theta_n": -0.8,
+      "r_pressure": 0.2871745887492587,
+      "marg_R1": 0.22310461320426225,
+      "marg_R2": 0.7768953867957378,
+      "tv_vs_uniform": 0.2768953867957378,
+      "per_coord_KL_wrt_bulk": -0.2299328896909852,
+      "per_step_LDP_cost_as_n_to_inf": 0.0
+    },
+    {
+      "theta_n": -0.7,
+      "r_pressure": 0.3077861033362291,
+      "marg_R1": 0.2353489630689996,
+      "marg_R2": 0.7646510369310004,
+      "tv_vs_uniform": 0.26465103693100045,
+      "per_coord_KL_wrt_bulk": -0.16962006435094495,
+      "per_step_LDP_cost_as_n_to_inf": 0.0
+    },
+    {
+      "theta_n": -0.6,
+      "r_pressure": 0.32987697769322355,
+      "marg_R1": 0.2480507469686566,
+      "marg_R2": 0.7519492530313434,
+      "tv_vs_uniform": 0.2519492530313434,
+      "per_coord_KL_wrt_bulk": -0.10726545175091635,
+      "per_step_LDP_cost_as_n_to_inf": 0.0
+    },
+    {
+      "theta_n": -0.5,
+      "r_pressure": 0.3535533905932738,
+      "marg_R1": 0.2612038749637415,
+      "marg_R2": 0.7387961250362586,
+      "tv_vs_uniform": 0.23879612503625855,
+      "per_coord_KL_wrt_bulk": -0.04214790300807203,
+      "per_step_LDP_cost_as_n_to_inf": 0.0
+    },
+    {
+      "theta_n": -0.438,
+      "r_pressure": 0.36907860142070825,
+      "marg_R1": 0.26958174719677247,
+      "marg_R2": 0.7304182528032275,
+      "tv_vs_uniform": 0.2304182528032275,
+      "per_coord_KL_wrt_bulk": 2.263792694983523e-05,
+      "per_step_LDP_cost_as_n_to_inf": 0.0
+    },
+    {
+      "theta_n": -0.3,
+      "r_pressure": 0.40612619817811774,
+      "marg_R1": 0.2888262793939301,
+      "marg_R2": 0.71117372060607,
+      "tv_vs_uniform": 0.21117372060606995,
+      "per_coord_KL_wrt_bulk": 0.10057884307674425,
+      "per_step_LDP_cost_as_n_to_inf": 0.0
+    },
+    {
+      "theta_n": -0.2,
+      "r_pressure": 0.43527528164806206,
+      "marg_R1": 0.30326954502292763,
+      "marg_R2": 0.6967304549770724,
+      "tv_vs_uniform": 0.1967304549770724,
+      "per_coord_KL_wrt_bulk": 0.18130685530497348,
+      "per_step_LDP_cost_as_n_to_inf": 0.0
+    },
+    {
+      "theta_n": -0.1,
+      "r_pressure": 0.4665164957684037,
+      "marg_R1": 0.3181120001817404,
+      "marg_R2": 0.6818879998182596,
+      "tv_vs_uniform": 0.18188799981825962,
+      "per_coord_KL_wrt_bulk": 0.27143442496267295,
+      "per_step_LDP_cost_as_n_to_inf": 0.0
+    },
+    {
+      "theta_n": 0.0,
+      "r_pressure": 0.5,
+      "marg_R1": 0.3333333333333333,
+      "marg_R2": 0.6666666666666666,
+      "tv_vs_uniform": 0.16666666666666666,
+      "per_coord_KL_wrt_bulk": 0.37465577318768534,
+      "per_step_LDP_cost_as_n_to_inf": 0.0
+    },
+    {
+      "theta_n": 0.1,
+      "r_pressure": 0.5358867312681466,
+      "marg_R1": 0.34891032024586677,
+      "marg_R2": 0.6510896797541332,
+      "tv_vs_uniform": 0.15108967975413323,
+      "per_coord_KL_wrt_bulk": 0.49647894220723465,
+      "per_step_LDP_cost_as_n_to_inf": 0.0
+    },
+    {
+      "theta_n": 0.2,
+      "r_pressure": 0.5743491774985174,
+      "marg_R1": 0.36481689431254416,
+      "marg_R2": 0.6351831056874558,
+      "tv_vs_uniform": 0.13518310568745584,
+      "per_coord_KL_wrt_bulk": 0.6454232499465193,
+      "per_step_LDP_cost_as_n_to_inf": 0.0
+    },
+    {
+      "theta_n": 0.5,
+      "r_pressure": 0.7071067811865476,
+      "marg_R1": 0.4142135623730951,
+      "marg_R2": 0.585786437626905,
+      "tv_vs_uniform": 0.08578643762690494,
+      "per_coord_KL_wrt_bulk": 1.452517110108897,
+      "per_step_LDP_cost_as_n_to_inf": 0.0
+    },
+    {
+      "theta_n": 0.9,
+      "r_pressure": 0.9330329915368074,
+      "marg_R1": 0.48267825516781476,
+      "marg_R2": 0.5173217448321853,
+      "tv_vs_uniform": 0.017321744832185265,
+      "per_coord_KL_wrt_bulk": 11.60641568473292,
+      "per_step_LDP_cost_as_n_to_inf": 0.0
+    }
+  ],
+  "classB": {
+    "theta_used": -0.43803265928220214,
+    "r": 0.6773778228378636,
+    "g_1": 1.0,
+    "g_2_for_saturation": 0.6773778228378636,
+    "Z_per_coord_under_g": 1.695769535819803,
+    "mod3_marginal_under_g": [
+      0.0,
+      0.5,
+      0.5
+    ],
+    "tv_vs_uniform": 0.0,
+    "I0_per_step_LDP_rate_unchanged": 0.054979472810817054,
+    "per_step_LDP_cost_of_g_tilt": 0.0,
+    "comment": "Class (B) saturates mod-3 with NO per-step LDP cost: g only touches a_n, contributing an O(1) factor to the log-partition, an O(1/n) correction to the LDP exponent. But this is essentially tautological: g couples to R_n by design, so OF COURSE it can fix the mod-3 marginal. The honest question is mod 3^k for k > 1, requiring g to couple to the last k valuations -- equivalent to conditioning on R_n mod 3^k itself.  See classB_mod9 below for the next test."
+  },
+  "classB_mod9": {
+    "marg_mod9_untilted": {
+      "0": 0.0,
+      "1": 0.12698412698412698,
+      "2": 0.25396825396825395,
+      "3": 0.0,
+      "4": 0.1746031746031746,
+      "5": 0.06349206349206349,
+      "6": 0.0,
+      "7": 0.031746031746031744,
+      "8": 0.3492063492063492
+    },
+    "marg_mod9_esscher_thetastar": {
+      "0": 0.0,
+      "1": 0.1638615321133137,
+      "2": 0.24190566414887751,
+      "3": 0.0,
+      "4": 0.16478351838386093,
+      "5": 0.11099616786979323,
+      "6": 0.0,
+      "7": 0.07518634253498653,
+      "8": 0.24326677494917587
+    },
+    "tv_mod9_esscher_vs_uniform_on_units": 0.15183910576471615,
+    "marg_mod9_under_saturating_g": {
+      "0": 0.0,
+      "1": 0.16666666666666666,
+      "2": 0.16666666666666666,
+      "3": 0.0,
+      "4": 0.16666666666666666,
+      "5": 0.16666666666666666,
+      "6": 0.0,
+      "7": 0.16666666666666666,
+      "8": 0.16666666666666666
+    },
+    "tv_mod9_under_saturating_g": 0.0,
+    "comment": "g(R_n mod 9) saturates the mod-9 marginal by construction (it's a Radon-Nikodym derivative).  This is tautological and gives NO information on the FULL TV(nu, U) on Z/9Z, since the conditional distribution given R_n mod 9 is unchanged.  Scaling to mod 3^k requires g coupling to the last k valuations; in the limit k=n this conditions on R_n EXACTLY and saturates ALL marginals -- but the tilted measure then IS just U itself, which has nothing to do with the LDP envelope on the drift."
+  },
+  "classC": {
+    "convention": "pressure-side throughout",
+    "rsq_saturation": 0.04075013372747417,
+    "r_sat": 0.20186662360943716,
+    "s_sat_pressure": -1.3085256980051088,
+    "t_sat": -1.600148078822421,
+    "Z(s_sat, t_sat)": 0.4208843403728685,
+    "P_even_check_should_be_0.5": 0.49999999999999994,
+    "E[a]_at_saturation": 1.584962500721156,
+    "drift_residual_should_be_0": 2.220446049250313e-16,
+    "lambda(s_sat, t_sat)": 0.5721652028674027,
+    "I_two(0, 1/2)": 0.22790883654380778,
+    "I_one(0) single_param baseline": 0.054979472810817054,
+    "ratio_I_two_over_I_one": 4.1453441601383885,
+    "gate_G3_t=0_reduction_to_single_param_err": 1.6653345369377348e-16,
+    "comment": "Class (C) saturates mod-3 EXACTLY at finite (s_sat, t_sat) = (-1.30853, -1.60015) with drift mean = 0 and I_two = 0.22791.  Compare baseline single-param I_one = 0.05498.  Ratio = 4.145.  If ratio > 0, LDP envelope is PRESERVED."
+  },
+  "classC_mod9": {
+    "n_for_mod9_eval": 2,
+    "(s_sat, t_sat)": [
+      -1.3085256980051088,
+      -1.600148078822421
+    ],
+    "marg_mod9_under_classC_tilt": {
+      "0": 0.0,
+      "1": 0.24960174684808412,
+      "2": 0.24960174684808412,
+      "3": 0.0,
+      "4": 0.24022694858924115,
+      "5": 0.010171304562670581,
+      "6": 0.0,
+      "7": 0.010171304562670581,
+      "8": 0.2402269485892412
+    },
+    "tv_mod9_vs_uniform_units": 0.31299072420798807,
+    "comment": "Class (C) saturates mod-3 but NOT mod-9: the tilt is still per-coord (independent), so the joint distribution on (a_{n-1}, a_n) is a product, and the resulting mod-9 marginal differs from uniform.  Scaling to mod-3^k requires growing the tilt family dimension by O(3^k), which is a NEW (strictly stronger) barrier than the single-parameter Esscher one."
+  },
+  "runtime_sec": 9.229414463043213
+}

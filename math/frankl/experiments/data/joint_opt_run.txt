@@ -1,0 +1,17 @@
+==========================================================================
+Joint optimization of the entropy-method bound (single-letter)
+==========================================================================
+closed-form psi = 0.3819660112501051
+--------------------------------------------------------------------------
+  base i.i.d.          c = 0.38196592  Δψ=-9.28e-08  [verified]  bracket=(0.381966,0.381966)
+  reweighting (Cambie) c = 0.38196592  Δψ=-9.28e-08  [verified]  bracket=(0.381966,0.381966)
+--------------------------------------------------------------------------
+Auxiliary U (conditional-i.i.d., diagonal / valid reconstruction):
+  aux |U|=2 [diagonal] c = 0.38190421  Δψ=-6.18e-05  [verified]  bracket=(0.381904,0.381904)
+  aux |U|=4 [diagonal] c = 0.38190421  Δψ=-6.18e-05  [verified]  bracket=(0.381904,0.381904)
+  aux |U|=8 [diagonal] c = 0.38190421  Δψ=-6.18e-05  [verified]  bracket=(0.381904,0.381904)
+  aux |U|=16 [diagonal] c = 0.38190421  Δψ=-6.18e-05  [verified]  bracket=(0.381904,0.381904)
+--------------------------------------------------------------------------
+Liu's 0.38271 functional requires his exact I(C;U)/I(A;U) bookkeeping,
+which we could NOT retrieve (arXiv blocked) nor reliably reconstruct
+(see conditional_U_functional 'liu_refund'). All certified values = psi.

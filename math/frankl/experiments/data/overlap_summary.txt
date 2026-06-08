@@ -1,0 +1,50 @@
+# JI-overlap <-> abundance identity & the target overlap inequality
+# families (|F|>=2, n<=5): 29723
+# per-n counts: {0: 0, 1: 1, 2: 6, 3: 33, 4: 362, 5: 29321}
+# elapsed 34.1s
+
+IDENTITY  P2 = Sum_x|Fib(x)|^2 = Sum_{A,B in L}|A cap B| = OVL :  0 violations / 29723  (asserted exact)
+
+TARGET-L:  2*OVL >= |L| * Sum_A|A|   (sufficient for max|Fib| >= |L|/2)
+  holds on 29711 / 29723;  FAILS on 12
+  TARGET-L equality (slack==0) families: 87
+
+TARGET-F:  2*OVL >= |F| * Sum_A|A|   (sufficient for abundance >= |F|/2)
+  holds on 29717 / 29723;  FAILS on 6
+  TARGET-F equality (slack==0) families: 51
+
+CUBE TIGHTNESS (the unique extremizer must satisfy with EQUALITY):
+  cube families found: 5  (n=0..5)
+  cube TARGET-L slacks (2*OVL-|L|*P1): [0]
+  cube TARGET-F slacks (2*OVL-|F|*P1): [0]
+
+POWER-MEAN lever achieved value (min over families):
+  min P2/(P1*|L|)  = 0.444444   (need >= 0.5 for Frankl-L)
+  min P2/(P1*|F|)  = 0.444444   (need >= 0.5 for Frankl-F)
+
+DECOUPLING CHECK (does the lever touch the Frankl-tight families?):
+  abundance-1/2 families (L-norm): 63;  all satisfy TARGET-L with equality? True
+  abundance-1/2 families (F-norm): 39;  all satisfy TARGET-F with equality? True
+
+TARGET-L COUNTEREXAMPLES (worst slack first):
+  n=5 |F|=5 |L|=6 abund_L=0.6667 abund_F=0.8000 pmL=0.4744 slackL=-4 F=[8, 16, 23, 24, 31]
+  n=5 |F|=6 |L|=6 abund_L=0.6667 abund_F=0.6667 pmL=0.4744 slackL=-4 F=[0, 8, 16, 23, 24, 31]
+  n=5 |F|=4 |L|=5 abund_L=0.6000 abund_F=0.7500 pmL=0.4667 slackL=-3 F=[8, 16, 24, 31]
+  n=5 |F|=5 |L|=5 abund_L=0.6000 abund_F=0.6000 pmL=0.4667 slackL=-3 F=[0, 8, 16, 24, 31]
+  n=5 |F|=2 |L|=3 abund_L=0.6667 abund_F=1.0000 pmL=0.4444 slackL=-2 F=[16, 31]
+  n=5 |F|=3 |L|=3 abund_L=0.6667 abund_F=0.6667 pmL=0.4444 slackL=-2 F=[0, 16, 31]
+  n=4 |F|=2 |L|=3 abund_L=0.6667 abund_F=1.0000 pmL=0.4667 slackL=-1 F=[8, 15]
+  n=4 |F|=3 |L|=3 abund_L=0.6667 abund_F=0.6667 pmL=0.4667 slackL=-1 F=[0, 8, 15]
+  n=5 |F|=6 |L|=7 abund_L=0.5714 abund_F=0.6667 pmL=0.4958 slackL=-1 F=[8, 15, 16, 23, 24, 31]
+  n=5 |F|=7 |L|=7 abund_L=0.5714 abund_F=0.5714 pmL=0.4958 slackL=-1 F=[0, 8, 15, 16, 23, 24, 31]
+  n=5 |F|=2 |L|=3 abund_L=0.6667 abund_F=1.0000 pmL=0.4667 slackL=-1 F=[16, 23]
+  n=5 |F|=3 |L|=3 abund_L=0.6667 abund_F=0.6667 pmL=0.4667 slackL=-1 F=[0, 16, 23]
+
+TARGET-F COUNTEREXAMPLES (worst slack first):
+  n=5 |F|=6 |L|=6 abund_F=0.6667 pmF=0.4744 slackF=-4 F=[0, 8, 16, 23, 24, 31]
+  n=5 |F|=5 |L|=5 abund_F=0.6000 pmF=0.4667 slackF=-3 F=[0, 8, 16, 24, 31]
+  n=5 |F|=3 |L|=3 abund_F=0.6667 pmF=0.4444 slackF=-2 F=[0, 16, 31]
+  n=4 |F|=3 |L|=3 abund_F=0.6667 pmF=0.4667 slackF=-1 F=[0, 8, 15]
+  n=5 |F|=7 |L|=7 abund_F=0.5714 pmF=0.4958 slackF=-1 F=[0, 8, 15, 16, 23, 24, 31]
+  n=5 |F|=3 |L|=3 abund_F=0.6667 pmF=0.4667 slackF=-1 F=[0, 16, 23]
+

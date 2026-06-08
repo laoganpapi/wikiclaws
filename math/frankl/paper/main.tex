@@ -1,0 +1,1459 @@
+% main.tex --- Frankl Union-Closed Sets Conjecture: survey, reconstruction, negatives
+% Author: Alex Ye. AI assistance (Claude, Anthropic) disclosed via \thanks + a
+% dedicated declaration, NOT authorship.
+%
+% PAPER TYPE: honest survey + self-contained reconstruction + negative results.
+% It does NOT claim to improve the constant (3-sqrt5)/2.
+%
+% VERIFICATION MARKERS used throughout (for the next editing session):
+%   % [PRIOR-ART CHECK PENDING -- see RED_TEAM_REPORT.md]
+%       on any sentence whose novelty is in doubt (the i.i.d.-ceiling observation).
+%   % [CONSTANT UNVERIFIED vs primary source]
+%       on every numerical constant / attribution that is currently snippet-sourced
+%       (arXiv was HTTP-403 in the working environment; primary-source check pending).
+%   [CITATION NEEDED]  where a claim needs a source we could not verify.
+
+\documentclass[11pt]{amsart}
+
+%--- Encoding & fonts ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+%--- Math packages ---
+\usepackage{amsmath, amssymb, amsthm, mathtools}
+\usepackage{bm}
+
+%--- Layout & utilities ---
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{booktabs}
+
+%--- Bibliography: bibtex (amsart's natbib-style is most portable) ---
+\usepackage[numbers,sort&compress]{natbib}
+
+%--- Local macros ---
+\input{macros.tex}
+
+%--- Theorem environments ---
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+%--- Title ---
+\title[Delimiting the methods for the union-closed sets conjecture]{Delimiting
+the methods for Frankl's union-closed sets conjecture:\\ a reconstruction of the
+entropy bound, a barrier for moment methods,\\ and the Boolean cube as the unique
+extremal lattice}
+
+\author[A. Ye]{Alex Ye}
+\thanks{This work was carried out by Alex Ye in substantive collaboration with
+Anthropic's Claude (used as a research assistant for literature synthesis,
+proof drafting, computational scripting, and adversarial review). Claude is
+\emph{not} an author; Alex Ye is responsible for all errors. See the Declaration
+on the use of generative AI at the end of the paper. \emph{Verification status:}
+every numerical constant and citation below is currently sourced from secondary
+material because primary arXiv/journal PDFs were not reachable in the working
+environment; items awaiting a primary-source check are flagged in the source.}
+\address{Independent researcher}
+\email{laoganpapi@gmail.com}
+
+\date{\today}
+
+\begin{document}
+
+\begin{abstract}
+This is an expository, barrier, and reformulation paper on Frankl's union-closed
+sets conjecture. It makes no claim of progress toward the conjectured constant
+$\tfrac12$; rather, it tries to make precise \emph{why} the standard modern
+toolkit stalls. We do three things. \textbf{(a)} We give a \emph{self-contained
+reconstruction} of the Alweiss--Huang--Sellke (AHS) entropy bound
+$\golden\approx 0.38197$ from the entropy axioms alone, isolating the three lossy
+inequalities and the single one-variable engine that produces the constant, with
+a rigorous interval-arithmetic certificate. \textbf{(b)} We survey
+\emph{eight} distinct modern combinatorial paradigms---i.i.d.\ entropy,
+polynomial / slice-rank, Boolean--Fourier, lattice invariants, shadow /
+compression, LP duality, second moment, and join-irreducible (JI) overlap---and
+record, for each, an explicit obstruction certifying that it does not, as
+deployed, settle the conjecture. We unify these under a single
+\emph{barrier theorem}: each method reduces to controlling a symmetric convex
+moment of the frequency (fibre-size) vector, and every such moment is
+flat-minimized by the Boolean cube at exactly $\tfrac12$, so no symmetric convex
+moment of the frequencies can prove Frankl. The required ingredient must be
+\emph{non-symmetric}. \textbf{(c)} We give a structural reformulation: encoding a
+family as a finite lattice, the Boolean cube is---over all
+$13{,}734$ lattice-isomorphism classes realizable on $\le 5$ elements---the
+\emph{unique} extremal lattice (minimal abundance $\tfrac12$), every other lattice
+having a strictly positive slack; the difficulty localizes to the non-separable
+overlaps of the join-irreducible fibres, via the reconstruction identity
+$\Fib(x)=\bigcup_{j\ni x}\filt{j}$. We are explicit throughout that the synthesis
+is what may be new: several individual obstructions are likely folklore or
+implicit in the literature, the barrier most of all, and every novelty claim and
+numerical constant is flagged for a primary-source pass.
+\end{abstract}
+
+\maketitle
+
+%======================================================================
+\section{Introduction}
+\label{sec:intro}
+
+\subsection{The conjecture}
+A finite family $\UC\subseteq\powerset{\ground}$ of subsets of a ground set
+$\ground=\{1,\dots,n\}$ is \emph{union-closed} if $A,B\in\UC$ implies
+$A\cup B\in\UC$. Frankl's conjecture, in circulation since about 1979, is the
+following innocuous-looking statement.
+
+\begin{conjecture}[Frankl, $\sim$1979]\label{conj:frankl-intro}
+For every finite union-closed family $\UC\neq\{\emptyset\}$ there exists an
+element $i\in\ground$ contained in at least half of the members of $\UC$.
+\end{conjecture}
+
+Despite its elementary phrasing, Conjecture~\ref{conj:frankl-intro} has resisted
+proof for over four decades. It is known to hold under many structural
+restrictions---small ground set, small family size, lattice- or graph-theoretic
+hypotheses (Section~\ref{sec:history})---but the general case remains open.
+
+\subsection{The entropy method}
+The modern era began with Gilmer~\cite{gilmer2022}, who broke the
+``no constant'' barrier with a short information-theoretic argument: sampling
+two sets $A,B$ independently and uniformly from $\UC$ and comparing $H(A\cup B)$
+to $H(A)$, he proved that some element has abundance at least an absolute
+constant $\gilmer\approx 0.01$.
+% [CONSTANT UNVERIFIED vs primary source]
+Within a week, four independent works~\cite{sawin2022,chaselovett2022,ahs2023,pebody2022}
+identified the sharp constant of Gilmer's method as
+\[
+   \psis \;=\; \golden \;\approx\; 0.3819660,
+% [CONSTANT UNVERIFIED vs primary source]
+\]
+the smaller root of $\psi^2-3\psi+1=0$. The peer-reviewed reference is
+Alweiss--Huang--Sellke (AHS)~\cite{ahs2023}. Subsequent work pushed the
+\emph{numerical} constant slightly higher by enriching the coupling: Yu's
+dimension-free reformulation~\cite{yu2023} certifies $\approx 0.38234$,
+% [CONSTANT UNVERIFIED vs primary source]
+Cambie's survey-and-refinement~\cite{cambie2023} reaches the same value, and
+Liu's conditionally-i.i.d.\ coupling~\cite{liu2023} reaches
+$\approx 0.38271$,
+% [CONSTANT UNVERIFIED vs primary source]
+the best published constant at the time of writing. All of these remain far
+below the conjectured $\target$.
+
+\subsection{What this paper does (and does not) claim}
+This is a survey-with-reconstruction, barrier, and reformulation paper. We make
+\emph{no} claim of improving the constant, and \emph{no} claim of proving Frankl.
+The contribution is to \emph{delimit the methods}: to show, method by method and
+then uniformly, why the standard modern combinatorial toolkit cannot, as
+deployed, settle the conjecture, and to localize the difficulty structurally.
+Concretely:
+
+\begin{enumerate}[label=(\roman*),leftmargin=2.2em]
+\item \textbf{A self-contained reconstruction of the AHS bound}
+(Section~\ref{sec:ahs}). We re-derive $\golden$ from the eight entropy axioms
+listed in Section~\ref{sec:notation}, taking nothing as ``well known.'' The
+exposition isolates exactly three lossy inequalities and shows that a single
+one-variable inequality carries all the quantitative content; the optimum is
+pinned at $\psis$ by a rigorous interval-arithmetic certificate
+(Section~\ref{sec:certificate}), and the whole enumeration over union-closed
+families on $\le 5$ elements is exact (Section~\ref{sec:computational}). Two
+precise negative results within the i.i.d.\ coupling delimit the entropy method
+itself (Section~\ref{sec:negatives}): the chain-rule slack
+$\Dtwo=\sum_i I(C_i;(A_{<i},B_{<i})\mid C_{<i})$ vanishes identically at the
+product extremizer (Proposition~\ref{prop:delta2}), and the intersection-augmented
+objective has no valid budget because $H(A\cap B)\le H(A)$ \emph{fails} for
+union-closed families (Proposition~\ref{prop:inter}).
+
+\item \textbf{A barrier for moment methods} (Section~\ref{sec:barrier}). We survey
+\emph{eight} distinct paradigms---entropy, polynomial / slice-rank,
+Boolean--Fourier, lattice invariants, shadow / compression, LP duality, second
+moment, and JI-overlap---and exhibit for each a concrete obstruction
+(Table~\ref{tab:barrier}). We then prove that all eight reduce to controlling a
+\emph{symmetric convex moment} of the frequency (fibre-size) vector, and that
+every such moment is flat-minimized by the Boolean cube $\cube k$ at exactly
+$\tfrac12$. Hence \emph{no symmetric convex moment of the frequency vector can
+prove Frankl}: the Boolean cube is a universal extremizer on which every such
+method degenerates, and the missing ingredient must be a non-symmetric quantity
+(one that sees \emph{which} element is heavy).
+
+\item \textbf{The extremal lattice} (Section~\ref{sec:extremal}). Encoding a
+union-closed family as a finite lattice $\Lat$, abundance is the maximal density
+of a ground-element \emph{fibre}, each fibre is a filter, and the fibre system is
+reconstructed by the identity $\Fib(x)=\bigcup_{j\in\JI,\,x\in j}\filt j$. Over
+all $13{,}734$ exact lattice-isomorphism classes realizable on $\le 5$ elements,
+the worst-case (minimal) abundance is $\ge\tfrac12$ always, $=\tfrac12$
+\emph{only} for the Boolean cubes, and $>\tfrac12$ for the other $13{,}729$. Thus
+the Boolean cube is the unique extremal lattice (at $\le 5$ elements), and the
+difficulty localizes to a single inequality on the non-separable overlaps of the
+join-irreducible fibres---the same place every method in (ii) degenerates.
+\end{enumerate}
+
+\subsection{Honesty and prior-art caveats}
+We are deliberate about what here might be new and what is almost certainly not.
+Each \emph{individual} obstruction in Section~\ref{sec:barrier} is plausibly
+folklore or implicit in the literature: the entropy ceiling at $\psis$ is, to our
+reading, already understood by Sawin~\cite{sawin2022} (who sketches that breaking
+$\golden$ requires a \emph{non}-i.i.d.\ coupling, presupposing this ceiling) and
+Cambie~\cite{cambie2023}; the Boolean-Fourier obstruction overlaps with
+Karpas~\cite{karpas2017}; the polynomial / slice-rank diagnosis sits in the
+post-Croot--Lev--Pach~\cite{clp2017,ellenberggijswijt2017,tao2016sliceblog}
+literature; the lattice and JI structure is classical
+(Birkhoff~\cite{birkhoff1937}, Poonen~\cite{poonen1992}); the second-moment
+identity is elementary double-counting. The two claims we flag \emph{most}
+carefully---and most uncertainly---are the \textbf{barrier theorem}
+(Section~\ref{sec:barrier}) and the \textbf{cube-uniqueness characterization}
+(Section~\ref{sec:extremal}). The barrier, in particular, may well be folklore or
+implicit in the entropy-method literature; we have not been able to verify
+priority and flag it accordingly throughout. We present the \emph{synthesis}---the
+explicit barrier unifying eight methods through one universal extremizer, plus the
+cube-uniqueness reformulation---as the part of this paper with any ``new'' flavour,
+while taking pains not to inflate it. Every novelty claim and every numerical
+constant is marked in the \LaTeX{} source with a \texttt{[PRIOR-ART CHECK PENDING]}
+or \texttt{[CONSTANT UNVERIFIED]} comment for a future primary-source pass.
+% [PRIOR-ART CHECK PENDING -- see RED_TEAM_REPORT.md]
+% [NOVELTY UNVERIFIED -- this barrier may be folklore or implicit in the entropy-method literature; verify before submission]
+
+\begin{remark}[Verification status]\label{rmk:verif}
+This manuscript was prepared with AI assistance (see the Declaration at the end).
+In the environment in which the supporting computations were run, primary
+arXiv and journal PDFs were not reachable, so every numerical constant and
+attribution in Sections~\ref{sec:intro}--\ref{sec:history} is presently sourced
+from secondary material (surveys, blog posts) rather than verified against the
+original papers. Such items are flagged \texttt{[CONSTANT UNVERIFIED]} in the
+source. By contrast, the reconstruction (Section~\ref{sec:ahs}), the negative
+results (Section~\ref{sec:negatives}), and the certificates
+(Sections~\ref{sec:certificate}--\ref{sec:computational}) are self-contained:
+they were re-derived from the entropy axioms and independently re-checked
+numerically, and do not rely on the unverified attributions. Primary-source
+verification of the survey constants is the one outstanding task before
+submission.
+\end{remark}
+
+\paragraph{Organization.}
+Section~\ref{sec:notation} fixes notation and the entropy toolkit.
+Section~\ref{sec:history} surveys the conjecture's history and the entropy-method
+line. Section~\ref{sec:ahs} reconstructs the AHS bound $\golden$.
+Section~\ref{sec:negatives} proves the two entropy-method negative results.
+Section~\ref{sec:certificate} certifies $\psis$ and
+Section~\ref{sec:computational} reports the exact enumeration. The two headline
+sections follow: Section~\ref{sec:barrier} surveys the eight methods and proves
+the barrier theorem, and Section~\ref{sec:extremal} establishes the
+cube-uniqueness reformulation. Section~\ref{sec:open} collects open questions.
+
+%======================================================================
+\section{Notation and the entropy toolkit}
+\label{sec:notation}
+
+We follow the conventions of \cite{gilmer2022,ahs2023}. The ground set is
+$\ground=\{1,\dots,n\}$ and $\powerset{\ground}$ its power set. A family
+$\UC\subseteq\powerset{\ground}$ is always finite and nonempty.
+
+\begin{definition}[Union-closed family]\label{def:uc}
+$\UC\subseteq\powerset{\ground}$ is \emph{union-closed} if $A,B\in\UC$ implies
+$A\cup B\in\UC$. To exclude the trivial counterexample we assume
+$\UC\neq\{\emptyset\}$.
+\end{definition}
+
+\begin{definition}[Frequency and abundance]\label{def:abun}
+For $i\in\ground$, the \emph{frequency} of $i$ is
+$f_\UC(i)=|\{A\in\UC: i\in A\}|$, and its \emph{abundance} is
+$\abun_\UC(i)=f_\UC(i)/|\UC|\in[0,1]$. The \emph{Frankl constant} is
+\[
+   \cstar \;:=\; \sup\bigl\{c\in(0,\tfrac12] : \text{every finite union-closed }
+   \UC\neq\{\emptyset\}\text{ has some }i\text{ with }\abun_\UC(i)\ge c\bigr\}.
+\]
+\end{definition}
+
+Conjecture~\ref{conj:frankl-intro} is the statement $\cstar=\target$. We encode a
+set $A\subseteq\ground$ by its indicator vector $(A_1,\dots,A_n)\in\{0,1\}^n$,
+$A_i=\mathbf 1[i\in A]$. Throughout, $A,B$ are independent random variables, each
+uniform on $\UC$, and we write $p_i:=\Pr[i\in A]=\Pr[A_i=1]$, so that abundance of
+$i$ equals $p_i$.
+
+\paragraph{Entropy.}
+All logarithms are natural and entropy is in nats, unless stated otherwise; the
+constant $\psis$ is dimensionless and the argument is insensitive to the base.
+For a discrete random variable $X$,
+$\HH(X)=-\sum_x\Pr[X=x]\log\Pr[X=x]$; conditional entropy
+$\HH(X\mid Y)=\HH(X,Y)-\HH(Y)$; mutual information
+$\II(X;Y)=\HH(X)-\HH(X\mid Y)$. For a Bernoulli$(p)$ variable we write the
+\emph{binary entropy}
+\[
+   h(p) \;:=\; -p\log p-(1-p)\log(1-p),\qquad h(0)=h(1)=0 .
+\]
+We use only the following elementary facts, each a direct consequence of the
+definition.
+
+\begin{itemize}[leftmargin=2.4em]
+\item[\textbf{(E1)}] \emph{Nonnegativity:} $\HH(X)\ge 0$, equality iff $X$ is a.s.\ constant.
+\item[\textbf{(E2)}] \emph{Uniform bound:} if $X$ takes $\le m$ values then $\HH(X)\le\log m$, equality iff $X$ is uniform.
+\item[\textbf{(E3)}] \emph{Chain rule:} $\HH(X_1,\dots,X_n)=\sum_i \HH(X_i\mid X_{<i})$, where $X_{<i}=(X_1,\dots,X_{i-1})$.
+\item[\textbf{(E4)}] \emph{Conditioning reduces entropy:} $\HH(X\mid Y,Z)\le\HH(X\mid Y)$, equality iff $X\perp Z\mid Y$.
+\item[\textbf{(E5)}] \emph{Subadditivity:} $\HH(X_1,\dots,X_n)\le\sum_i\HH(X_i)$, equality iff independent.
+\item[\textbf{(E6)}] \emph{Functions are free:} if $Y=f(X)$ then $\HH(Y\mid X)=0$.
+\item[\textbf{(E7)}] \emph{Data processing:} $\HH(f(X))\le\HH(X)$.
+\item[\textbf{(E8)}] \emph{Binary entropy:} $h$ is continuous and strictly concave on $[0,1]$, $h(p)=h(1-p)$, $h'(p)=\log\frac{1-p}{p}$, $h''(p)=-\tfrac{1}{p(1-p)}$, maximal at $p=\tfrac12$.
+\end{itemize}
+
+These eight facts are the entire toolkit of Section~\ref{sec:ahs}; no external
+theorem enters the load-bearing chain.
+
+\begin{definition}[The golden constants]\label{def:golden}
+Let $\psis=\golden$, the root in $(0,\tfrac12)$ of $\psi^2-3\psi+1=0$; let
+$\sigm:=1-\psis=(\sqrt5-1)/2=1/\phigr$, where $\phigr=(1+\sqrt5)/2$ is the golden
+ratio; and let $\lam:=\tfrac{1}{2(1-\psis)}=\tfrac{1}{2\sigm}=\phigr/2$. The
+identities
+\begin{equation}\label{eq:psi-id}
+   (1-\psis)^2=\psis,\qquad \sigm^2=1-\sigm,\qquad 2\psis-\psis^2=1-\psis,\qquad
+   \lam=\phigr/2\approx 0.8090170
+% [CONSTANT UNVERIFIED vs primary source -- but algebraically exact above]
+\end{equation}
+are elementary consequences of $\psi^2-3\psi+1=0$ and are used repeatedly. (Here
+the value $0.8090170$ is exact arithmetic, not a literature citation.)
+\end{definition}
+
+%======================================================================
+\section{History and the entropy-method line}
+\label{sec:history}
+
+We sketch the landscape; the surveys of Bruhn--Schaudt~\cite{bruhnschaudt2015survey}
+and Cambie~\cite{cambie2023} are the standard entry points. \emph{All numerical constants and attributions in this
+section are currently snippet-sourced and await a primary-source pass} (see
+Remark~\ref{rmk:verif}).
+
+\subsection{Equivalent formulations and pre-entropy bounds}
+Poonen~\cite{poonen1992} recast the conjecture in lattice terms (every finite
+lattice $L$ with $|L|>1$ has a join-irreducible element below at most half the
+elements) and verified several lattice classes; Reinhold~\cite{reinhold2000}
+later settled lower semimodular lattices. Bruhn--Charbit--Schaudt--Telle%
+~\cite{bruhn2015} gave an equivalent bipartite-graph formulation and proved
+several graph classes.
+% [CONSTANT UNVERIFIED vs primary source]
+
+Quantitatively, the early bounds were $o(1)$: Knill~\cite{knill1994} obtained an
+element of abundance $\gtrsim 1/\log_2|\UC|$, later refined by W\'ojcik.
+% [CITATION NEEDED -- Wojcik, Discrete Math. 199 (1999)]
+Reimer's average-set-size theorem~\cite{reimer2003} gives
+$\frac1{|\UC|}\sum_{A\in\UC}|A|\ge\tfrac12\log_2|\UC|$, sharp on power sets.
+Structural constant bounds were available only under restrictions:
+Balla--Bollob\'as--Eccles~\cite{bbe2013} for large families
+($|\UC|\ge\tfrac23\cdot2^n$),
+% [CONSTANT UNVERIFIED vs primary source]
+Karpas~\cite{karpas2017} for families of density near $\tfrac12$ (the first use
+of Boolean Fourier analysis here), and computer searches verifying small ground
+sets (Bo\v snjak--Markovi\'c~\cite{bosnjakmarkovic2008} for $n\le 11$). None of
+these yields an unconditional positive constant for all union-closed families.
+
+\subsection{Gilmer's breakthrough and the rush to $\golden$}
+Gilmer~\cite{gilmer2022} proved the first unconditional, dimension-free, constant
+lower bound $\cstar\ge\gilmer\approx 0.01$,
+% [CONSTANT UNVERIFIED vs primary source]
+by the entropy comparison we reconstruct in Section~\ref{sec:ahs}. He conjectured
+that the sharp form of his per-coordinate inequality should yield exactly
+$\psis=\golden$. Within a week this was confirmed independently by
+Sawin~\cite{sawin2022}, Chase--Lovett~\cite{chaselovett2022},
+Alweiss--Huang--Sellke~\cite{ahs2023}, and Pebody~\cite{pebody2022}; the
+peer-reviewed reference is AHS~\cite{ahs2023}.
+% [CONSTANT UNVERIFIED vs primary source]
+Two features of this cluster are important for us:
+\begin{itemize}[leftmargin=1.4em]
+\item Chase--Lovett~\cite{chaselovett2022} prove the bound $\golden$ also for
+\emph{approximately} union-closed families and show it is \emph{optimal} there.
+This is strong evidence that, within the i.i.d.\ coupling, no constant exceeding
+$\psis$ can come out of the method without using union-closure beyond
+approximation.
+% [PRIOR-ART CHECK PENDING -- see RED_TEAM_REPORT.md]
+\item Sawin~\cite{sawin2022} explicitly notes that the constant $\golden$ is
+\emph{not} the limit of the entropy method, sketching a \emph{non}-i.i.d.\
+coupling that beats it by some $\delta>0$. The very form of this remark
+presupposes that the i.i.d.\ method is capped at $\psis$.
+% [PRIOR-ART CHECK PENDING -- see RED_TEAM_REPORT.md]
+\end{itemize}
+
+\subsection{Beyond $\golden$: enriching the coupling}
+The improvements past $\golden$ all enrich the coupling.
+Yu~\cite{yu2023} recasts the method as a dimension-free convex program, bounds
+the auxiliary cardinalities (making it computable), and certifies
+$\approx 0.38234$.
+% [CONSTANT UNVERIFIED vs primary source]
+Cambie~\cite{cambie2023} surveys the rush and reaches the same value via
+convex combinations of couplings, and also treats reweighted (Maxwell--Boltzmann)
+measures on $\UC$. Liu~\cite{liu2023} introduces an auxiliary variable $U$ and
+takes $A,B$ i.i.d.\ \emph{conditioned on} $U$; under numerically verified
+hypotheses this reaches $\approx 0.38271$,
+% [CONSTANT UNVERIFIED vs primary source]
+the best published value. These are the moves our negative results
+(Section~\ref{sec:negatives}) take as the boundary of the i.i.d.\ regime: each
+adds structure (a non-product coupling, recovered mutual information), which is
+exactly what we show the i.i.d.\ method lacks.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{@{}llll@{}}
+\toprule
+Source & Year & Bound $\cstar\ge$ & Method \\
+\midrule
+Knill~\cite{knill1994} & 1994 & $1/\log_2|\UC|$ (i.e.\ $o(1)$) & combinatorial \\
+Reimer~\cite{reimer2003} & 2003 & avg.\ set size $\ge\tfrac12\log_2|\UC|$ & averaging \\
+Balla--Bollob\'as--Eccles~\cite{bbe2013} & 2013 & for $|\UC|\ge\tfrac23 2^n$ & averaging \\
+Karpas~\cite{karpas2017} & 2017 & for $|\UC|\gtrsim\tfrac12 2^n$ & Fourier \\
+Gilmer~\cite{gilmer2022} & 2022 & $0.01$ & entropy \\
+Sawin/Chase--Lovett/AHS/Pebody & 2022 & $\golden\approx 0.38197$ & entropy \\
+Yu~\cite{yu2023} & 2023 & $0.38234$ (numerical) & entropy + couplings \\
+Cambie~\cite{cambie2023} & 2023 & $0.38234$ (numerical) & entropy + couplings \\
+Liu~\cite{liu2023} & 2023/24 & $0.38271$ (numerical) & conditional i.i.d.\ coupling \\
+\bottomrule
+\end{tabular}
+\caption{The quantitative line on $\cstar$. All constants are
+\texttt{[CONSTANT UNVERIFIED]} pending a primary-source pass (see
+Remark~\ref{rmk:verif}). The best fully rigorous constant is $\golden$ (AHS,
+peer-reviewed); the $0.38234$ and $0.38271$ entries are numerical lower bounds
+contingent on the cited optimizations.}
+\label{tab:history}
+\end{table}
+
+%======================================================================
+\section{The AHS bound \texorpdfstring{$\golden$}{(3-sqrt5)/2}, reconstructed}
+\label{sec:ahs}
+
+We reconstruct, from the toolkit (E1)--(E8) alone, the theorem of
+Alweiss--Huang--Sellke~\cite{ahs2023} (following Gilmer~\cite{gilmer2022} and
+Sawin~\cite{sawin2022}). Nothing is taken as well known; the only step we
+discharge by a rigorous finite computation is the one branch that AHS themselves
+flag as computer-checked, certified in Section~\ref{sec:certificate}.
+
+\begin{theorem}[Alweiss--Huang--Sellke~\cite{ahs2023}]\label{thm:ahs}
+Every finite union-closed family $\UC\neq\{\emptyset\}$ contains an element $i$
+with $\abun_\UC(i)\ge\psis=\golden$. Equivalently $\cstar\ge\psis$.
+\end{theorem}
+
+The proof occupies Sections~\ref{ssec:reform}--\ref{ssec:assembly}.
+
+\subsection{The information-theoretic reformulation}\label{ssec:reform}
+Let $\UC\subseteq\powerset{\ground}$ be union-closed, $\UC\neq\{\emptyset\}$, with
+$m:=|\UC|$. If $m=1$ then $\UC=\{S\}$ for a single nonempty $S$ and any $i\in S$
+has abundance $1$; so assume $m\ge 2$. Let $A,B$ be independent, each uniform on
+$\UC$, with marginals $p_i=\Pr[i\in A]$. Then ``some $i$ has frequency $\ge m/2$''
+is exactly ``$\max_i p_i\ge\tfrac12$''; we prove the weaker $\max_i p_i\ge\psis$.
+
+Since $A$ is uniform on the $m$-element set $\UC$, (E2) gives, with equality,
+\begin{equation}\label{eq:HA}
+   \HH(A)=\HH(B)=\log m.
+\end{equation}
+Because $\UC$ is union-closed and $A,B\in\UC$, the random set $A\cup B$ also lies
+in $\UC$, so it takes $\le m$ values and (E2) yields
+\begin{equation}\label{eq:union-cap}
+   \boxed{\;\HH(A\cup B)\;\le\;\log m\;=\;\HH(A).\;}
+\end{equation}
+\emph{This is the only place union-closure is used.} It is lossless in the
+trivial sense that no inequality has yet been wasted, but it throws away
+everything about how the unions populate $\UC$; we call this slack point
+$\mathsf S_3$.
+
+\subsection{Lower bound on \texorpdfstring{$\HH(A\cup B)$}{H(A cup B)}: the chain-rule reduction}
+\label{ssec:chain}
+Write $\Cu:=A\cup B$, with coordinates $C_i=A_i\vee B_i$. By the chain rule (E3),
+$\HH(\Cu)=\sum_i\HH(C_i\mid C_{<i})$. By (E4), conditioning on more can only
+reduce entropy:
+\begin{equation}\label{eq:cond-down}
+   \HH(C_i\mid C_{<i})\;\ge\;\HH(C_i\mid C_{<i},A_{<i},B_{<i}).
+\end{equation}
+Given $A_{<i},B_{<i}$, the prefix $C_{<i}=A_{<i}\vee B_{<i}$ is a deterministic
+function, so by (E6) it adds nothing:
+$\HH(C_i\mid C_{<i},A_{<i},B_{<i})=\HH(C_i\mid A_{<i},B_{<i})$. Hence
+\begin{equation}\label{eq:chainLB}
+   \HH(\Cu)\;\ge\;\sum_{i=1}^n \HH(C_i\mid A_{<i},B_{<i}).
+\end{equation}
+Inequality~\eqref{eq:cond-down} is the only lossy step \emph{before} the
+one-variable inequality, with exact deficit
+\begin{equation}\label{eq:delta-i}
+   \delta_i \;:=\; \HH(C_i\mid C_{<i})-\HH(C_i\mid A_{<i},B_{<i})
+   \;=\; \II\!\bigl(C_i;(A_{<i},B_{<i})\,\big|\,C_{<i}\bigr)\;\ge 0 .
+\end{equation}
+We call $\Dtwo:=\sum_i\delta_i\ge 0$ the \emph{chain-rule slack} (slack point
+$\mathsf S_2$); it is the target of the first negative result
+(Section~\ref{ssec:vector1}).
+
+\subsection{The single-coordinate law}\label{ssec:coord}
+Fix $i$ and condition on a value $(a,b)$ of $(A_{<i},B_{<i})$. Because $A,B$ are
+independent and identically distributed, under this conditioning $A_i$ and $B_i$
+are independent Bernoulli variables; write
+$\alpha:=\Pr[A_i=1\mid A_{<i}=a]$ and $\beta:=\Pr[B_i=1\mid B_{<i}=b]$. Then
+$C_i=A_i\vee B_i$ is Bernoulli with $\Pr[C_i=0]= (1-\alpha)(1-\beta)$, so using
+$h(t)=h(1-t)$,
+\begin{equation}\label{eq:coordH}
+   \HH(C_i\mid A_{<i},B_{<i})=\E_{a,b}\bigl[h\bigl((1-\alpha)(1-\beta)\bigr)\bigr],
+\end{equation}
+while $\HH(A_i\mid A_{<i})=\E_a[h(\alpha)]$ and $p_i=\E_a[\alpha]$. As $A\overset
+d=B$, the variables $\alpha(A_{<i})$ and $\beta(B_{<i})$ are i.i.d. We must
+compare the expected union entropy~\eqref{eq:coordH} to the expected individual
+entropies. This is the heart of the matter, and it reduces to one inequality
+about $h$.
+
+\subsection{The one-variable engine}\label{ssec:lemma2}
+
+\begin{lemma}[Sharp per-coordinate inequality; Gilmer~\cite{gilmer2022},
+Sawin~\cite{sawin2022}, AHS~\cite{ahs2023}]\label{lem:engine}
+With $\psis=\golden$ and $\lam=\tfrac1{2(1-\psis)}$, for all $p,q\in[0,1]$,
+\begin{equation}\label{eq:engine}
+   h\bigl(1-(1-p)(1-q)\bigr)\;\ge\;\lam\bigl[(1-q)\,h(p)+(1-p)\,h(q)\bigr],
+\end{equation}
+with equality at $p=q=\psis$ (and at the degenerate corners $p,q\in\{0,1\}$).
+\end{lemma}
+
+The constant $\lam$ is \emph{forced} by demanding equality at the symmetric
+point; we first show how Lemma~\ref{lem:engine} closes the proof, then explain
+the choice of $\lam$, then reduce the inequality to a one-variable statement and
+record what is certified computationally.
+
+\subsubsection*{Closing the argument}
+Apply~\eqref{eq:engine} pointwise inside~\eqref{eq:coordH} with $p=\alpha(a)$,
+$q=\beta(b)$, and take $\E_{a,b}$ over the \emph{independent} pair $(a,b)$. By
+independence, $\E_{a,b}[(1-\beta)h(\alpha)]=\E_a[h(\alpha)]\cdot\E_b[1-\beta]
+=\HH(A_i\mid A_{<i})\cdot(1-p_i)$, and symmetrically, so
+\begin{equation}\label{eq:percoord}
+   \HH(C_i\mid A_{<i},B_{<i})\;\ge\;2\lam\,(1-p_i)\,\HH(A_i\mid A_{<i}),
+\end{equation}
+using $\HH(B_i\mid B_{<i})=\HH(A_i\mid A_{<i})$. Summing over $i$, plugging into
+the chain-rule bound~\eqref{eq:chainLB}, and using $2\lam=\tfrac1{1-\psis}$,
+\begin{equation}\label{eq:assembled}
+   \HH(\Cu)\;\ge\;\frac{1}{1-\psis}\sum_{i=1}^n(1-p_i)\,\HH(A_i\mid A_{<i}).
+\end{equation}
+Suppose for contradiction $\max_i p_i<\psis$. Then $1-p_i>1-\psis$ for all $i$, so
+\begin{equation}\label{eq:contra}
+   \HH(\Cu)\;>\;\sum_{i=1}^n\HH(A_i\mid A_{<i})\;\overset{\text{(E3)}}{=}\;\HH(A),
+\end{equation}
+unless $\HH(A)=\log m=0$, i.e.\ $m=1$, which we excluded. But~\eqref{eq:union-cap}
+says $\HH(\Cu)\le\HH(A)$, a contradiction. Hence $\max_i p_i\ge\psis$.
+
+\begin{remark}[Why the chain rule, not subadditivity, on the right]
+In~\eqref{eq:contra} we used the \emph{exact} chain rule
+$\sum_i\HH(A_i\mid A_{<i})=\HH(A)$, not the lossy subadditive bound
+$\sum_i h(p_i)\ge\HH(A)$. Keeping the conditional marginals $\HH(A_i\mid A_{<i})$
+as weights is the AHS refinement over Gilmer's original write-up: it routes the
+entire loss through the single inequality~\eqref{eq:engine} and yields the same
+constant $\psis$ with strictly less slack. This is why we adopt the conditional
+form as the honest baseline.
+\end{remark}
+
+\subsubsection*{Where $\lam=\phigr/2$ comes from}
+Seek the largest $\mu$ with $h(uv)\ge\mu[v\,h(u)+u\,h(v)]$ on $[0,1]^2$ (after the
+substitution $u=1-p$, $v=1-q$; see below). The extremal $\mu$ is attained on the
+diagonal $u=v=:s$ at the value $s=\sigm$ where
+$\phi(s):=h(s^2)-2\mu s\,h(s)$ has a \emph{double zero}: $\phi(\sigm)=0$ and
+$\phi'(\sigm)=0$. The first condition gives, using
+$\sigm^2=1-\sigm\Rightarrow h(\sigm^2)=h(\sigm)$,
+\[
+   \mu=\frac{h(\sigm^2)}{2\sigm\,h(\sigm)}=\frac{1}{2\sigm}=\frac{\phigr}{2},
+\]
+and then the resulting abundance constant is $c=1-\tfrac1{2\mu}=1-\sigm=\psis$.
+The tangency $\phi'(\sigm)=0$ is what makes this constant \emph{sharp}: any larger
+$\mu$ makes $\phi<0$ just off the diagonal. This is the precise sense in which
+$\psis$ is forced (slack point $\mathsf S_1$).
+
+\subsubsection*{Reduction of Lemma~\ref{lem:engine} to one variable}
+Substitute $u=1-p$, $v=1-q$ and use $h(1-t)=h(t)$ to rewrite~\eqref{eq:engine} as
+\begin{equation}\label{eq:G}
+   G(u,v):=h(uv)-\lam\bigl[v\,h(u)+u\,h(v)\bigr]\;\ge\;0\quad\text{on }[0,1]^2 .
+\end{equation}
+The equality point becomes $u=v=\sigm$. We record the structure that reduces this
+to one variable.
+
+\emph{Boundary.} $G$ is symmetric. At $v=0$: $G(u,0)=h(0)-\lam u\,h(0)=0$; at
+$v=1$: $G(u,1)=h(u)-\lam u\,h(1)-\lam h(u)=(1-\lam)h(u)\ge 0$ since
+$\lam=\phigr/2<1$. Thus $G\ge 0$ on $\partial([0,1]^2)$, with the boundary value
+$0$ only at corners.
+
+\emph{Per-line convexity.} Fix $v\in(0,1)$ and set $g_v(u)=G(u,v)$. A direct
+computation using $h''(t)=-\tfrac1{t(1-t)}$ gives
+\begin{equation}\label{eq:gvv}
+   g_v''(u)=\frac{v}{u}\Bigl[\frac{\lam}{1-u}-\frac{1}{1-uv}\Bigr]
+   =\frac{v}{u}\cdot\frac{N(u)}{(1-u)(1-uv)},\qquad
+   N(u)=(\lam-1)+u(1-\lam v).
+\end{equation}
+Since $N$ is \emph{linear} in $u$ with $N(0)=\lam-1<0$ and $N(1)=\lam(1-v)>0$,
+each $g_v$ is concave then convex on $(0,1)$: it has a single inflection $u_0$, is
+concave on $(0,u_0)$ and convex on $(u_0,1)$. A concave-then-convex function on
+$[0,1]$ attains its minimum at $u\in\{0,1\}$ or at the unique stationary point of
+the convex piece. The endpoints give $g_v(0)=0$ and $g_v(1)=(1-\lam)h(v)\ge 0$, so
+the \emph{only} way $G<0$ could occur is at one interior stationary point per
+line.
+
+\emph{Diagonal.} On $u=v=s$, $G(s,s)=h(s^2)-2\lam s\,h(s)=\phi(s)$. By the choice
+of $\lam$, $\phi(\sigm)=\phi'(\sigm)=0$, and $\phi(0)=\phi(1)=0$.
+
+\subsubsection*{Honest status of the proof of Lemma~\ref{lem:engine}}
+The reduction above is rigorous and from-scratch: $G\ge 0$ on the boundary; on
+each horizontal line the minimum is at an endpoint (where $G\ge 0$) or at a
+single interior point; on the diagonal $\phi\ge 0$ holds with a tangential zero
+at $\sigm$. One might hope to finish by a slick claim that the global minimum lies
+on the diagonal. We caution that this is \emph{false as a naive statement}: writing
+$\Theta_s(d):=G(s+d,s-d)$ (even in $d$), its curvature at $d=0$ is
+\begin{equation}\label{eq:theta}
+   \Theta_s''(0)=2\Bigl[\frac{\lam}{1-s}+2\lam\log\tfrac{1-s}{s}-\log\tfrac{1-s^2}{s^2}\Bigr],
+\end{equation}
+which \emph{changes sign} (it is negative near $s\approx 0.17$), so the diagonal
+is not uniformly a minimum along the anti-diagonal. This is exactly the subtlety
+that forced AHS to verify one branch by computer. We therefore adopt the honest
+AHS route: the boundary and the diagonal are handled analytically as above, and
+the remaining interior region---one stationary point per line, in the convex
+piece---is discharged by the rigorous interval-arithmetic certificate of
+Section~\ref{sec:certificate}. The combination is the AHS proof, with the
+interval computation being the ``one branch checked by computer'' that
+AHS~\cite{ahs2023} flag as rigorous.
+
+\subsection{Assembly and the slack table}\label{ssec:assembly}
+Combining~\eqref{eq:union-cap}, \eqref{eq:chainLB}, and~\eqref{eq:percoord} yields
+\eqref{eq:assembled}, and the contradiction~\eqref{eq:contra} under
+$\max_i p_i<\psis$ proves Theorem~\ref{thm:ahs}.\qquad$\blacksquare$
+
+The proof uses exactly three lossy inequalities; Table~\ref{tab:slack} names them.
+The constant $\psis$ is the value at which all three are \emph{simultaneously
+tight} for the worst configuration (every coordinate i.i.d.\ Bernoulli$(\psis)$,
+independent across coordinates). Beating $\psis$ requires recovering slack from at
+least one of them in a way that survives the others being tight---which motivates
+the two negative results.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{@{}clll@{}}
+\toprule
+Name & Inequality & Justification & Tight? \\
+\midrule
+$\mathsf S_3$ & $\HH(A\cup B)\le\log m$ & (E2), $A\cup B\in\UC$ & uses only $A\cup B\in\UC$ \\
+$\mathsf S_2$ & $\HH(C_i\mid C_{<i})\ge\HH(C_i\mid A_{<i},B_{<i})$ & (E4) & lossy by $\delta_i$ in~\eqref{eq:delta-i} \\
+$\mathsf S_1$ & inequality~\eqref{eq:engine} & Lemma~\ref{lem:engine} & tight at $p=q=\psis$ \\
+\bottomrule
+\end{tabular}
+\caption{The three lossy inequalities in the AHS proof. Vector~1
+(Section~\ref{ssec:vector1}) targets $\mathsf S_2$; Vector~2
+(Section~\ref{ssec:vector2}) targets $\mathsf S_3$ and the unused intersection
+structure.}
+\label{tab:slack}
+\end{table}
+
+%======================================================================
+\section{Why two natural extensions do not improve the constant}
+\label{sec:negatives}
+
+We analyse the two most natural attempts, suggested by the slack analysis above,
+to push past $\golden$ \emph{within the i.i.d.\ coupling}, and show both fail with
+explicit obstructions. Both results are certified by exact computation over small
+families (Section~\ref{sec:computational}); we state them as propositions with
+proofs of the structural content.
+
+\begin{remark}[Scope and prior art]\label{rmk:scope-neg}
+Both negatives concern the \emph{i.i.d.}\ coupling only. They do not contradict
+the genuine improvements of Yu, Cambie, and Liu, which use \emph{non}-i.i.d.\
+couplings precisely to escape the regime analysed here. Moreover we believe the
+qualitative conclusion---that the i.i.d.\ method is capped at $\psis$ and that
+enriching the coupling without adding constraints moves the bound the wrong
+way---is already understood by Sawin and Cambie; we present a self-contained
+account of this well-understood ceiling, not a new theorem.
+% [PRIOR-ART CHECK PENDING -- see RED_TEAM_REPORT.md]
+\end{remark}
+
+\subsection{Vector 1: recapturing the chain-rule slack \texorpdfstring{$\Dtwo$}{Delta-2}}
+\label{ssec:vector1}
+
+The slack point $\mathsf S_2$ discards
+$\Dtwo=\sum_i\II(C_i;(A_{<i},B_{<i})\mid C_{<i})\ge 0$. The optimistic hope is to
+keep the exact identity $\HH(\Cu)=\sum_i\HH(C_i\mid A_{<i},B_{<i})+\Dtwo$, apply
+the per-coordinate inequality to the first sum, and let the extra $+\Dtwo$ force a
+contradiction for some $c>\psis$---perhaps recovering $\Dtwo$ via a Shearer- or
+Han-type submodular inequality, as suggested in the slack literature. We show this
+hope is unfounded.
+
+\begin{definition}[Product family]\label{def:product}
+$\UC\subseteq\powerset{\ground}$ is a \emph{product family} if there is a
+partition $\ground=I_1\sqcup\cdots\sqcup I_r$ and families
+$\mathcal G_t\subseteq\powerset{I_t}$ with
+$\UC=\{S_1\cup\cdots\cup S_r:S_t\in\mathcal G_t\}$; equivalently the blocks
+$A^{(t)}$ of the indicator vector are mutually independent under the uniform law.
+Power sets $2^{I_t}$ and their products are product families.
+\end{definition}
+
+\begin{lemma}[Chain rule is lossless on independent coordinates]\label{lem:product}
+If the coordinates $A_1,\dots,A_n$ are mutually independent (e.g.\ $\UC$ is a
+product of power sets), then with $A\perp B$ i.i.d.\ we have $\delta_i=0$ for
+every $i$, hence $\Dtwo=0$.
+\end{lemma}
+
+\begin{proof}
+Independence of the coordinates of $A$ gives $A_i\perp A_{<i}$, and likewise
+$B_i\perp B_{<i}$; with $A\perp B$ this yields
+$(A_i,B_i)\perp(A_{<i},B_{<i})$. Hence $C_i=A_i\vee B_i$ is independent of
+$(A_{<i},B_{<i})$ and a fortiori of $C_{<i}\in\sigma(A_{<i},B_{<i})$. Therefore
+$\HH(C_i\mid C_{<i})=\HH(C_i)=\HH(C_i\mid A_{<i},B_{<i})$, so $\delta_i=0$.
+\end{proof}
+
+\begin{remark}[Block form]
+If $\UC=\prod_t\mathcal G_t$ with each block $I_t$ contiguous, the same argument
+applied block-by-block gives $\Dtwo(\UC)=\sum_t\Dtwo(\mathcal G_t)$, and each
+power-set block contributes $0$.
+\end{remark}
+
+\begin{proposition}[The optimum lives where $\Dtwo=0$]\label{prop:delta2}
+The single-letter optimization governing the AHS constant,
+\[
+   \mu^\ast=\inf_{(\alpha,\beta)\in(0,1)^2}
+   \frac{h\bigl(1-(1-\alpha)(1-\beta)\bigr)}{(1-\beta)h(\alpha)+(1-\alpha)h(\beta)},
+   \qquad \cAHS=1-\frac{1}{2\mu^\ast},
+\]
+has its infimum on the diagonal at $\alpha=\beta=\psis$ ($\mu^\ast=\phigr/2$). The
+configuration realizing the bound---every coordinate i.i.d.\ Bernoulli$(\psis)$,
+independent across coordinates---is a product configuration, on which $\Dtwo=0$ by
+Lemma~\ref{lem:product}. Consequently, the optimistic Vector-1 bound certifies the
+same constant: $c_{V1}=\psis$.
+\end{proposition}
+
+\begin{proof}
+That~\eqref{eq:engine} is tight exactly at $\alpha=\beta=\psis$ is the tangency
+computation of Section~\ref{ssec:lemma2} ($\phi(\sigm)=\phi'(\sigm)=0$, forcing
+$\mu^\ast=\tfrac1{2\sigm}$, $\cAHS=\psis$). The worst configuration for the AHS
+chain places every coordinate's conditional law at this tight point with the
+coordinates independent (so that the chain-rule bound~\eqref{eq:chainLB} is itself
+tight); this is a product configuration, on which $\Dtwo=0$ by
+Lemma~\ref{lem:product}. Along this extremizer the optimistic bound
+$\HH(\Cu)\ge\tfrac1{1-c}\sum_i(1-p_i)\HH(A_i\mid A_{<i})+\Dtwo$ reduces verbatim
+to~\eqref{eq:assembled}, tight at $\psis$; thus $c_{V1}\le\psis$. The reverse
+$c_{V1}\ge\cAHS=\psis$ is immediate since adding $\Dtwo\ge 0$ can only help.
+\end{proof}
+
+\begin{remark}[On full rigor]\label{rmk:v1-rigor}
+Proposition~\ref{prop:delta2} establishes that \emph{some} extremizing
+configuration is a product (on which the Vector-1 gain is $0$), which is what is
+needed to cap $c_{V1}$ at $\psis$. It is \emph{not} a from-scratch tensorization
+proof that no correlated family with $\Dtwo>0$ does better via a different
+balance; the standard reading of the Gilmer/AHS argument (dimension-free bound,
+product extremizer) supplies this, but we do not reprove it here. Our exact
+enumeration (Section~\ref{sec:computational}) corroborates the conclusion: $\Dtwo$
+is bounded away from $0$ only on families whose abundance already exceeds
+$\psis$ substantially.
+% [PRIOR-ART CHECK PENDING -- see RED_TEAM_REPORT.md]
+\end{remark}
+
+\paragraph{Shearer/Han cannot substitute.}
+Shearer's lemma and Han's inequality are \emph{upper} bounds on $\HH(X)$ by
+marginal entropies; they tensorize and are tight on product distributions. Since
+the extremizer is a product (Proposition~\ref{prop:delta2}), any such inequality
+applied to $A$, to $\Cu$, or to $(A,B)$ is tight at the extremizer and
+contributes no slack where it is needed. Moreover the proof needs a \emph{lower}
+bound on $\HH(\Cu)$ (to contradict $\HH(\Cu)\le\HH(A)$), whereas Shearer gives
+an upper bound, and the Han lower-bound variant has the wrong sign because entropy
+is submodular. So a Shearer/Han bound in the required direction is not a generic
+entropy inequality; it would have to invoke union-closure, but the only
+union-closure input available at this point is the coordinatewise
+structure already used, whose slack $\Dtwo$ vanishes at the optimum. This
+sharpens \emph{why} the method stalls: the one union-closure-specific entropy fact
+used, $A\cup B\in\UC$ in~\eqref{eq:union-cap}, is a zeroth-order (cardinality)
+constraint, while $\Dtwo$ is a correlation quantity that union-closure does
+\emph{not} lower-bound---it can be $0$ on product families while $\UC$ is
+union-closed.
+% [PRIOR-ART CHECK PENDING -- see RED_TEAM_REPORT.md]
+
+\begin{remark}[The one live direction this exposes]\label{rmk:v1-live}
+Vector~1 fails \emph{within the i.i.d.\ coupling}. The numerics show $\Dtwo$ is
+large precisely on correlated, non-product families with abundance
+$\approx 0.54$--$0.58$. This is consistent with the fact that the known
+improvements past $\psis$ come from non-i.i.d.\ couplings that move the extremizer
+off the product point. The untested synthesis---combine a Liu-style
+conditionally-i.i.d.\ coupling (which makes $\Dtwo>0$ at its shifted extremizer)
+with the $\Dtwo$-recapture term---leaves Vector~1's premise and is left open
+(Section~\ref{sec:open}).
+\end{remark}
+
+\subsection{Vector 2: the intersection-augmented objective}
+\label{ssec:vector2}
+
+Slack point $\mathsf S_3$ uses $A\cup B\in\UC$ but is silent on $A\cap B$, and
+Reimer's theorem~\cite{reimer2003} is an intersection-side statement. This
+motivates augmenting the tracked entropy with an intersection term. Conditioned on
+the prefixes, with $A_i\sim\mathrm{Bern}(\alpha)$, $B_i\sim\mathrm{Bern}(\beta)$
+independent, the union bit is $C_i\sim\mathrm{Bern}(1-(1-\alpha)(1-\beta))$, the
+intersection bit is $D_i=A_i\wedge B_i\sim\mathrm{Bern}(\alpha\beta)$, and the
+pair $(C_i,D_i)$ has law
+\begin{equation}\label{eq:pairlaw}
+   \Pr[(C_i,D_i)=(0,0)]=(1-\alpha)(1-\beta),\ \
+   \Pr[(1,1)]=\alpha\beta,\ \
+   \Pr[(1,0)]=\alpha+\beta-2\alpha\beta .
+\end{equation}
+We consider the two ways to use this.
+
+\subsubsection*{Formulation (a): track the joint $(A\cup B,A\cap B)$, with its honest budget}
+
+\begin{proposition}[The joint objective gives a negative constant]\label{prop:joint}
+Since $(A\cup B,A\cap B)$ is a function of $(A,B)$, data processing (E7) gives
+$\HH(A\cup B,A\cap B)\le\HH(A,B)=2\HH(A)$, and this is the only generally valid
+budget. The matching single-letter inequality is
+$\Hpair(\alpha,\beta)\ge\mu[h(\alpha)+h(\beta)]$ where $\Hpair$ is the entropy
+of~\eqref{eq:pairlaw}, and
+\[
+   \mu_{\mathrm{joint}}:=\inf_{(\alpha,\beta)\in(0,1)^2}
+   \frac{\Hpair(\alpha,\beta)}{h(\alpha)+h(\beta)}=\tfrac34,
+   \quad\text{attained at }\alpha=\beta=\tfrac12,
+\]
+so the certified constant is $c=1-\tfrac1{\mu_{\mathrm{joint}}}\cdot\tfrac{1}{1}
+=1-\tfrac{4}{3}=-\tfrac13$. The intersection term doubles the budget faster than
+it raises the lower bound.
+\end{proposition}
+
+\begin{proof}
+At $\alpha=\beta=\tfrac12$, \eqref{eq:pairlaw} is
+$\{(0,0):\tfrac14,(1,1):\tfrac14,(1,0):\tfrac12\}$, so (in bits)
+$\Hpair=\tfrac14\log 4+\tfrac14\log 4+\tfrac12\log 2=\tfrac32$, while
+$h(\tfrac12)+h(\tfrac12)=2$, giving ratio $\tfrac34$. Independence gives
+$\HH(A_i,B_i)=h(\alpha)+h(\beta)$, and passing to the unordered multiset
+$(C_i,D_i)$ loses entropy exactly on the event $\{A_i\neq B_i\}$; this lost mass
+is maximal relative to the total at the symmetric point $\alpha=\beta=\tfrac12$,
+which is therefore the infimum (confirmed numerically to the grid resolution,
+Section~\ref{sec:computational}). Carrying $2\HH(A)$ on both sides yields closing
+factor $1$ and $c=1-1/\mu_{\mathrm{joint}}=-\tfrac13$.
+\end{proof}
+
+\subsubsection*{Formulation (b): the weighted objective $H(A\cup B)+\lambda H(A\cap B)$}
+
+\begin{proposition}[No valid budget; $H(A\cap B)\le H(A)$ fails]\label{prop:inter}
+There exist union-closed families with $\HH(A\cap B)>\HH(A)$. Consequently the
+weighted objective $\mathcal L_\lambda=\HH(A\cup B)+\lambda\HH(A\cap B)$ has no
+upper bound of the form $(1+\lambda')\log m$ with $\lambda'$ controlled by
+$\lambda$, and cannot certify a constant $>\psis$.
+\end{proposition}
+
+\begin{proof}
+The intersection $A\cap B$ ranges over the intersection-closure
+$\UC^\cap=\{S\cap T:S,T\in\UC\}^{\downarrow}$, which for a union-closed (not
+intersection-closed) family can be strictly larger than $\UC$, so $A\cap B$ can
+take more values, and have higher entropy, than $A$. The only honest bound is
+$\HH(A\cap B)\le\log|\UC^\cap|$, and $\log|\UC^\cap|$ is not controlled by
+$\log|\UC|=\HH(A)$. An explicit family with $\HH(A\cap B)>\HH(A)$ is exhibited by
+the enumeration of Section~\ref{sec:computational} (the ratio
+$\HH(A\cap B)/\HH(A)$ reaches $1.53$ for some $\UC$ with $n\le 5$).
+% [CONSTANT UNVERIFIED vs primary source -- this is our own computation; cross-checked by an independent enumeration]
+Hence $\mathcal L_\lambda\le\log m+\lambda\log|\UC^\cap|$, whose second term can
+exceed $\lambda\log m$ by an uncontrolled amount, while the per-coordinate lower
+bound grows only like $(1+\lambda)$ times the AHS numerator; the closing
+inequality is never forced for $c>\psis$.
+\end{proof}
+
+\begin{remark}[Why Reimer does not rescue this]
+Reimer's theorem~\cite{reimer2003} bounds the \emph{average set size}
+$\frac1m\sum_S|S|=\sum_i p_i\ge\tfrac12\log_2 m$---a first-moment statement about
+marginals, constraining $\E|A\cap B|=\sum_i p_i^2$ from \emph{below}. A lower
+bound on (the moments of) $A\cap B$ is the wrong direction: formulation (b) needs
+an \emph{upper} bound on $\HH(A\cap B)$ to use it as budget. Reimer tightens the
+conclusion side, not the budget side, and does not combine multiplicatively with
+the union entropy bound.
+\end{remark}
+
+\begin{proposition}[The ``$0.4295$'' is a budget-mismatch artifact]\label{prop:artifact}
+If one (incorrectly) charges the joint objective $\HH(A\cup B,A\cap B)$ against
+the \emph{single} budget $\HH(A)$ with the AHS weighting, one obtains the apparent
+constant $1-\tfrac{1}{2\mu'}=0.429460$ with
+$\mu'=\inf\Hpair/[(1-\beta)h(\alpha)+(1-\alpha)h(\beta)]=0.87636$.
+% [CONSTANT UNVERIFIED vs primary source -- our own optimization value]
+This is \emph{not} a valid bound: the tacit assumption $\HH(A\cup B,A\cap B)\le
+\HH(A)$ is false, failing on $402/412$ union-closed families at $n\le 4$ with
+excess up to $2.13$.
+% [CONSTANT UNVERIFIED vs primary source -- our own enumeration]
+\end{proposition}
+
+\begin{proof}
+The value $0.429460$ is the correct value of the displayed optimization (argmin at
+the boundary $(0.035,0.035)$), but turning $\mu'$ into an abundance bound requires
+$\HH(A\cup B,A\cap B)\le\log m$ so that exceeding it is a contradiction. That
+inequality is false (Proposition~\ref{prop:joint}'s honest budget is $2\log m$),
+as the enumeration confirms; without it the optimization value carries no
+abundance meaning.
+\end{proof}
+
+We include Proposition~\ref{prop:artifact} because the naive computation
+\emph{looks} like a breakthrough; it is the canonical trap of this vector, and we
+record it so it is not repeated. In one sentence: union-closure is an upper-bound
+resource on $\HH(A\cup B)$ and is silent on $A\cap B$, so an intersection term is
+either charged honestly (doubling the budget, killing the constant) or charged
+against a budget that does not exist.
+
+%======================================================================
+\section{A certified value of \texorpdfstring{$\psis$}{psi}}
+\label{sec:certificate}
+
+The constant $\psis$ is the peer-reviewed AHS value; we claim nothing new here.
+The purpose of this section is to make the optimum's value \emph{certified} rather
+than optimizer-reported: an exact algebraic certificate (Part A,
+hand-verifiable) plus a rigorous interval-arithmetic confirmation of the
+load-bearing inequality (Part B). All entropies are in nats and
+$\lam=\tfrac{1}{2(1-\psis)}=\phigr/2$.
+
+We work with the dimension-free single-letter form of the method: for a
+probability measure $\mu$ on $[0,1]$ (the law of a per-coordinate marginal $P$),
+the necessary feasibility inequality is
+\begin{equation}\label{eq:IV}
+   \text{(IV)}\qquad
+   \E_{P,Q\overset{\text{iid}}\sim\mu}\bigl[h\bigl(1-(1-P)(1-Q)\bigr)\bigr]\;\le\;\E_\mu[h(P)] .
+\end{equation}
+
+\begin{theorem}[Certified base optimum]\label{thm:cert}
+Let $\mu$ be any probability measure on $[0,1]$ with $\E_\mu[h(P)]>0$. If $\mu$
+satisfies \textup{(IV)}, then $\E_\mu[P]\ge\psis$. Moreover $\mu=\delta_{\psis}$
+attains $\E_\mu[P]=\psis$ with \textup{(IV)} tight, so the bound is sharp.
+\end{theorem}
+
+\subsection{Part A: exact algebraic certificate}
+Each line is calculator-checkable; the supporting script reproduces every residual
+at $200$-bit precision.
+
+\emph{(A.1) The defining quadratic.} $\psis=\golden$ satisfies
+$\psis^2-3\psis+1=0$ exactly, and $0<\psis<\tfrac12$.
+
+\emph{(A.2) The crossover identity.} $2\psis-\psis^2=1-\psis$, equivalent to
+(A.1). Hence by symmetry of $h$,
+$h(2\psis-\psis^2)=h(1-\psis)=h(\psis)$. For $p<\psis$ one has
+$2p-p^2<1-p$ (both $<\tfrac12$), so $h(2p-p^2)>h(p)$: the union coordinate
+carries strictly more entropy than a single coordinate.
+
+\emph{(A.3) Lower bound via the Sawin inequality.} The load-bearing inequality is
+Lemma~\ref{lem:engine}, equivalently~\eqref{eq:engine}, with equality iff
+$p=q=\psis$ (or $p,q\in\{0,1\}$). Taking expectations over independent
+$P,Q\sim\mu$ and using $\E[(1-Q)h(P)]=(1-\E[P])\E[h(P)]$,
+\[
+   \E\bigl[h(1-(1-P)(1-Q))\bigr]\;\ge\;2\lam(1-\E[P])\,\E[h(P)]
+   =\frac{1-\E[P]}{1-\psis}\,\E[h(P)] .
+\]
+Combining with (IV) and $\E[h(P)]>0$,
+\[
+   \frac{1-\E[P]}{1-\psis}\,\E[h(P)]\le\E[h(P)]
+   \;\Longrightarrow\; 1-\E[P]\le 1-\psis
+   \;\Longrightarrow\; \E[P]\ge\psis .
+\]
+
+\emph{(A.4) Tightness.} For $\mu=\delta_{\psis}$ the left side of (IV) is
+$h(2\psis-\psis^2)=h(\psis)$ by (A.2), equal to the right side; so (IV) holds with
+equality and $\E_\mu[P]=\psis$. Thus the optimum is exactly $\psis$.\qquad
+$\blacksquare$
+
+This is a fully explicit dual/witness certificate: a reader verifies the
+peer-reviewed inequality~\eqref{eq:engine} and the two-line averaging argument; no
+optimizer is needed for the value.
+
+\subsection{Part B: interval-arithmetic confirmation of~\eqref{eq:engine}}
+To discharge~\eqref{eq:engine} computationally and independently of the AHS
+reference, we rigorously bound $G(p,q)=h(1-(1-p)(1-q))-\lam[(1-q)h(p)+(1-p)h(q)]$
+from below on $[\delta,1-\delta]^2$ using a \emph{mean-value} (centered) interval
+extension,
+\[
+   G(\mathrm{box})\subseteq G(\text{center})
+   +\partial_pG(\mathrm{box})\cdot(P-p_c)+\partial_qG(\mathrm{box})\cdot(Q-q_c),
+\]
+with adaptive bisection (implemented in \texttt{mpmath.iv}). The mean-value form
+is essential: the naive natural interval extension over-estimates badly because
+$h(u),h(p),h(q)$ share variables, reporting spurious negativity on a majority of
+boxes; the centered form cancels the first-order dependency.
+
+\begin{proposition}[Certified positivity of $G$]\label{prop:intcert}
+Running the certifier at $80$-bit precision yields
+$G\ge 0$ on $[0.01,0.99]^2$ with minimum interval lower bound
+$+4.96\times10^{-9}$ ($4056$ boxes verified, $13$ exempt), and on
+$[0.02,0.98]^2$ with minimum interval lower bound $+4.43\times 10^{-9}$.
+% [CONSTANT UNVERIFIED vs primary source -- our own interval computation, independently reproduced in the red-team audit]
+Here ``exempt'' denotes a $10^{-3}$-radius neighborhood of the unique interior
+equality point $(\psis,\psis)$, where $G$ legitimately touches $0$ and so cannot
+be bounded strictly above $0$ by any positive-width box; that point is discharged
+exactly by \textup{(A.2)/(A.4)}. The boundary strips $p\in[0,\delta]\cup[1-\delta,1]$
+are handled analytically: at $p=0$, $G(0,q)=(1-\lam)h(q)\ge 0$ since
+$\lam=\phigr/2<1$, and these strips correspond to the degenerate
+theorem-excluded case $\E_\mu[h(P)]=0$.
+\end{proposition}
+
+\begin{remark}[The certificate is not a rubber stamp]\label{rmk:notrubber}
+The constant is genuinely forced. Re-running the certifier with $\lam$ replaced by
+$\lam(1+10^{-3})$ makes it \emph{fail}, locating a real box near $(0.455,0.448)$
+with negative lower bound; with $\lam(1-10^{-3})$ it certifies the (weaker)
+inequality. Independently, perturbing the constant in the closed-form tangency
+($\phi'(\sigm)=0$) up by $0.1\%$ makes $\phi<0$ just off the diagonal. Both confirm
+that $\psis$ is the exact threshold, not an artifact of the numerics.
+% [CONSTANT UNVERIFIED vs primary source -- our own stress test]
+\end{remark}
+
+\subsection{Honesty note on scope}
+We did \emph{not} push $\delta\to 0$ by interval arithmetic, because
+$h'(t)=\log\frac{1-t}{t}$ diverges at $t\in\{0,1\}$, giving vacuous enclosures on
+boundary-touching boxes; the boundary is covered by the analytic argument above.
+This is the correct division of labour, not a gap. This certificate establishes
+\emph{only} the base i.i.d.\ optimum $\psis$; it does \emph{not} reproduce Liu's
+$0.38271$, and indeed our reconstruction of Liu's conditional-$U$ functional did
+not succeed (the source was inaccessible in the working environment). No constant
+$>\psis$ is claimed.
+
+%======================================================================
+\section{Computational confirmation}
+\label{sec:computational}
+
+We complement the certificate with an exact enumeration over small union-closed
+families. All quantities used (entropies, marginals, abundance, $\Dtwo$) are
+isomorphism-invariant, so it suffices to enumerate $S_n$-orbit representatives;
+all entropies are computed exactly by summation over the $\le|\UC|^2$ atoms of the
+joint law of $(A,B)$, with no Monte Carlo.
+
+\begin{proposition}[Exhaustive small-family checks]\label{prop:enum}
+Over all union-closed families on $\ground$ for $n\le 5$, enumerated as
+$S_n$-orbit representatives ($29{,}327$ orbits at $n=5$; $29{,}738$ in total for
+$n\le 5$),
+% [CONSTANT UNVERIFIED vs primary source -- our own enumeration count; the task brief's figure of 29,743 differs slightly and should be reconciled]
+the following hold exactly (up to floating-point noise $\le 4.4\times 10^{-16}$):
+\begin{enumerate}[label=\textup{(\arabic*)},leftmargin=2.2em]
+\item \textbf{The Gilmer inequality holds on every family:}
+$\HH(A\cup B)\le\HH(A)$ with zero violations (it must, by union-closure).
+\item \textbf{Frankl's conjecture holds on every family:} the minimum abundance
+$\max_i p_i$ over all these families is exactly $0.5$, hence $\ge\psis$ a fortiori;
+the conjecture (constant $\tfrac12$) is satisfied with equality on the extremal
+families.
+\item \textbf{The AHS chain is internally consistent:} the assembled lower
+bound~\eqref{eq:assembled} satisfies $(\text{lower bound})\le\HH(A\cup B)$ on every
+family, with deficit at most floating-point noise.
+\item \textbf{$\Dtwo$ vanishes at the extremizers and is small near the
+bottleneck:} on the abundance-$\tfrac12$ families (power sets and their products)
+$\Dtwo=0$ to machine precision; among the families within $0.005$ of the minimal
+$\cAHS$, $\max\Dtwo/\HH(A\cup B)=7.1\times10^{-3}$, shrinking to $0$ as
+$\cAHS\to\psis$. Where $\Dtwo$ is largest ($\Dtwo/\HH(A\cup B)\approx 0.29$), the
+abundance is $\approx 0.58$, far above $\psis$.
+\item \textbf{The intersection budget fails:} $\HH(A\cap B)\le\HH(A)$ is violated
+by $22{,}361$ of the $29{,}738$ families (ratio up to $1.53$); the joint
+$\HH(A\cup B,A\cap B)\le\HH(A)$ is violated by $402/412$ at $n\le 4$ (excess up to
+$2.13$).
+% [CONSTANT UNVERIFIED vs primary source -- our own enumeration]
+\end{enumerate}
+\end{proposition}
+
+Items (1)--(2) confirm the theorem and its hypothesis on all small families;
+items (4)--(5) are the computational witnesses for Propositions~\ref{prop:delta2}
+and~\ref{prop:inter}. The single-letter constants of
+Section~\ref{sec:negatives}---$\cAHS\to\psis$ at the golden argmin, the joint
+constant $-\tfrac13$ at $(\tfrac12,\tfrac12)$, and the $0.4295$ boundary
+artifact---are reproduced by an independent grid optimization, anchoring the
+optimizer at the known value $\psis$.
+
+\begin{remark}[Reproducibility and independent re-check]
+The supporting scripts (\texttt{verify\_ahs.py}, \texttt{single\_letter.py},
+\texttt{certify\_psi.py}, and the enumeration) compute every quantity exactly.
+Each numerical claim above was independently re-derived in an adversarial audit
+using a separate implementation (not the project's own code); the audit
+reproduced the interval lower bounds $+4.43\times10^{-9}$ and $+4.96\times10^{-9}$,
+the mod-family statistics, and the single-letter constants, and confirmed the
+certifier correctly fails under a $0.1\%$ perturbation of $\lam$ (cf.\
+Remark~\ref{rmk:notrubber}). The enumeration count $29{,}738$ is from our run; a
+minor discrepancy with a planning figure of $29{,}743$ is noted in
+Proposition~\ref{prop:enum} and should be reconciled before submission.
+\end{remark}
+
+%======================================================================
+\section{A barrier for moment methods}
+\label{sec:barrier}
+
+The two negative results of Section~\ref{sec:negatives} delimit the i.i.d.\
+entropy method. We now zoom out. Over the course of this project, \emph{eight}
+distinct modern combinatorial paradigms were applied to Frankl's conjecture, and
+each was found to fail in a structurally identical way. This section records the
+eight obstructions (Section~\ref{ssec:eight}, Table~\ref{tab:barrier}) and then
+extracts the common cause as a single \emph{barrier theorem}
+(Section~\ref{ssec:barrier-thm}): every one of these methods controls a
+\emph{symmetric convex moment} of the frequency vector, and every such moment is
+flat-minimized by the Boolean cube at exactly $\tfrac12$, so none can certify a
+strict inequality past $\tfrac12$.
+
+\begin{remark}[Status of this section]\label{rmk:barrier-status}
+This is the strongest---and least verified---claim in the paper. The barrier
+\emph{may be folklore or implicit in the entropy-method literature}; we have not
+been able to confirm priority, and flag it accordingly. Several of the individual
+obstructions below are plausibly known (the entropy ceiling to Sawin and Cambie;
+the Boolean-Fourier obstruction overlaps with Karpas~\cite{karpas2017}). The
+contribution we tentatively claim is the \emph{synthesis}: the explicit statement
+that one universal extremizer (the Boolean cube) kills all eight methods through
+the same mechanism. Every framing here is
+\texttt{[NOVELTY UNVERIFIED]}.
+% [NOVELTY UNVERIFIED -- this barrier may be folklore or implicit in the entropy-method literature; verify before submission]
+% [PRIOR-ART CHECK PENDING -- check vs Sawin, Karpas, Bruhn--Schaudt survey]
+\end{remark}
+
+\subsection{The lattice/fibre picture}\label{ssec:fibre}
+Fix a union-closed $\UC$ and adjoin $\emptyset$, so $\Lat=(\UC,\subseteq,\cup)$ is
+a finite lattice with bottom $\hat 0=\emptyset$ and top $T=\bigcup\UC$; write
+$m=|\Lat|$. For a ground element $x\in\ground$ the \emph{fibre} is
+$\Fib(x)=\{A\in\Lat:x\in A\}$, an up-set (filter) of $\Lat$, and the frequency is
+$\freq(x)=|\Fib(x)|$. Abundance is the maximal fibre density,
+\begin{equation}\label{eq:abun-fibre}
+   \abun(\UC)=\max_{x}\frac{|\Fib(x)|}{m},
+\end{equation}
+and Frankl is the statement $\abun(\UC)\ge\tfrac12$. The two moments of the
+frequency vector,
+\begin{equation}\label{eq:moments}
+   \Mone:=\sum_x\freq(x)=\sum_{A\in\Lat}|A|,\qquad
+   \Mtwo:=\sum_x\freq(x)^2=\sum_{(A,B)\in\Lat^2}|A\cap B|,
+\end{equation}
+are the first and second moments that the methods below try to leverage; the
+second identity in~\eqref{eq:moments} is the elementary double-count
+$\freq(x)^2=\#\{(A,B):x\in A\cap B\}$ summed over $x$.
+% [PRIOR-ART CHECK PENDING -- the fibre=filter / second-moment double-count is classical (Birkhoff, Reimer); verify framing]
+
+\subsection{Eight methods, eight obstructions}\label{ssec:eight}
+We catalogue, for each paradigm, the object it computes and the precise reason it
+degenerates on the Boolean cube $\cube k$ (where every $\abun_i=\tfrac12$). Each
+obstruction below was verified by exhaustive enumeration over all union-closed
+families on $\le 5$ elements; full details and the supporting computations are
+deferred to the project's technical notes.
+% [PRIOR-ART CHECK PENDING -- each obstruction may be known; check vs Sawin, Karpas, Bruhn--Schaudt survey, CLP successor literature]
+
+\begin{enumerate}[label=\textbf{M\arabic*.},leftmargin=2.6em,itemsep=3pt]
+\item \textbf{i.i.d.\ entropy} (Gilmer--Sawin--AHS). Caps at $\psis$; the
+chain-rule slack $\Dtwo$ vanishes at the product extremizer
+(Proposition~\ref{prop:delta2}); enriching the coupling moves the threshold the
+wrong way; the intersection budget fails (Proposition~\ref{prop:inter}).
+\item \textbf{Polynomial / slice rank} (Croot--Lev--Pach~\cite{clp2017},
+Ellenberg--Gijswijt~\cite{ellenberggijswijt2017},
+Tao~\cite{tao2016sliceblog}). The union-relation tensor
+$T_\UC(A,B,C)=\mathbf 1[A\cup B=C]$ has $\operatorname{slice-rank}(T_\UC)=|\UC|$
+\emph{exactly}, over every field, because $A\cup B$ is a determinative,
+high-per-coordinate-degree function of $(A,B)$. The bound depends only on $|\UC|$,
+not on abundance, so it is vacuous (no cap-set-style power saving exists; the
+partition-rank refinement of Naslund~\cite{naslund2020} does not change this).
+% [NOVELTY UNVERIFIED -- check vs Naslund and CLP successor literature]
+\item \textbf{Boolean--Fourier} (quadratic spectral statistics;
+cf.\ Karpas~\cite{karpas2017}). The cube $\cube k$ saturates Frankl at abundance
+$\tfrac12$ yet has trivial spectrum ($\hat f=\delta_\emptyset$), so any
+sign-flip-invariant (Plancherel-quadratic) statistic---level weights $W^k$, total
+influence, noise stability---vanishes on the extremizer and cannot determine
+minimum abundance.
+% [PRIOR-ART CHECK PENDING -- Karpas 2017 is acknowledged prior art for the signed level-1 identity]
+\item \textbf{Lattice invariants.} Abundance is \emph{not} a lattice invariant:
+the universal-element cone $\operatorname{cone}(\mathcal G)=
+\{\emptyset\}\cup\{A\cup\{z\}:A\in\mathcal G,A\neq\emptyset\}$ is
+lattice-isomorphic to $\mathcal G$ but has abundance $1-1/m$, so no function of the
+abstract lattice can bound abundance ($\cube 3$ at $\tfrac12$ versus its cone at
+$\tfrac78$, identical invariants).
+\item \textbf{Shadow / compression} (Kruskal--Katona). Shifting / compression does
+\emph{not} preserve union-closure (and raises maximum abundance where it survives),
+and the Ahlswede--Daykin / FKG correlation inequality has the wrong sign; the cube
+is a shift fixed point. No forcing shadow inequality survives.
+\item \textbf{LP duality / fractional relaxation} (Poonen weight functions). The
+correct dual cover certificate is Reimer's average-set-size theorem~\cite{reimer2003}
+in multiplier form; it certifies the \emph{mean} abundance $\Mone/(nm)$ and
+degenerates on the cube ($\overline s/n=\tfrac12$, Reimer tight, zero margin). The
+residual gap is exactly max-versus-mean.
+\item \textbf{Second moment / variance.} The power-mean ratio
+$R(\UC)=\Mtwo/(m\Mone)=(\sum_x\abun_x^2)/(\sum_x\abun_x)$ lower-bounds the maximum
+abundance, equals $\tfrac12$ on every cube, and is minimized at the flat vector for
+fixed $(m,\Mone)$---so the cube attains it; union-closure bounds the auxiliary
+$U=\sum_{A,B}|A\cup B|$ the wrong way.
+\item \textbf{JI-filter overlap.} The fibre second moment equals the total
+join-irreducible filter overlap, $\Mtwo=\sum_x|\Fib(x)|^2=\OVL(\Lat)$, and the
+``structured overlap'' $\filt j\cap\filt k=\filt{(j\vee k)}$ is an exact identity
+(a tautology of the join), hence supplies zero slack: the overlap lever
+\emph{is} the second-moment lever (M7), inheriting its $\tfrac12$ cap.
+\end{enumerate}
+
+The eight obstructions are collected in Table~\ref{tab:barrier}.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{@{}p{2.9cm}p{3.1cm}p{6.6cm}@{}}
+\toprule
+Method & Object / invariant & Obstruction (why it dies on the cube $\cube k$) \\
+\midrule
+i.i.d.\ entropy & $H(A\cup B)$, per-coord.\ crossover & caps at $\psis=\golden$;
+$\Dtwo=0$ at the product extremizer; intersection budget fails \\[2pt]
+Polynomial / slice rank & $\operatorname{sr}(T_\UC)$, $T_\UC=\mathbf 1[A\cup B=C]$ &
+$\operatorname{sr}(T_\UC)=|\UC|$ exactly, every field; independent of abundance,
+hence vacuous \\[2pt]
+Boolean--Fourier & spectrum $W^k,\,I[f],\,\mathrm{Stab}_\rho$ & cube has trivial
+spectrum $\delta_\emptyset$; sign-flip-invariant statistics cannot see abundance \\[2pt]
+Lattice invariants & $(\UC,\cup)$: height, width, \#JI, \dots & abundance is not a
+lattice invariant (cone construction: same invariants, abundance $\tfrac12$ vs.\
+$\tfrac78$) \\[2pt]
+Shadow / compression & shift $S_{ij}$, shadows, FKG & shifting breaks
+union-closure; AD/FKG has the wrong sign; cube is a shift fixed point \\[2pt]
+LP duality / fractional & averaging cover, Reimer multiplier & dual $=$ Reimer;
+$\overline s/n=\tfrac12$ on the cube with zero margin; gap $=$ max$-$mean \\[2pt]
+Second moment / variance & $R=\Mtwo/(m\Mone)$ & $=\tfrac12$ on cube; flat vector
+minimizes $R$ at fixed $(m,\Mone)$; union-closure bounds $U$ the wrong way \\[2pt]
+JI-filter overlap & $\OVL(\Lat)=\sum_{j,k}|\filt j\cap\filt k|$ &
+$\filt j\cap\filt k=\filt{(j\vee k)}$ is a tautology (no slack); $\OVL=\Mtwo$,
+same cap as M7 \\
+\bottomrule
+\end{tabular}
+\caption{The eight delimited methods and their obstructions. In every row the
+Boolean cube $\cube k$ is the universal extremizer at which the method's invariant
+saturates at $\tfrac12$ with no slack. \texttt{[NOVELTY UNVERIFIED]} on the
+synthesis; several individual rows are likely known (M1: Sawin/Cambie; M3:
+Karpas~\cite{karpas2017}; M2: post-CLP literature). Ported from the project's
+obstruction table.}
+\label{tab:barrier}
+\end{table}
+
+\subsection{The barrier theorem}\label{ssec:barrier-thm}
+The common feature of Table~\ref{tab:barrier} is that each method's load-bearing
+quantity is a \emph{symmetric convex moment} of the frequency vector
+$\mathbf f=(\freq(x))_x$, in the following sense.
+
+\begin{definition}[Symmetric convex moment]\label{def:scm}
+A functional $\Phi$ on union-closed families is a \emph{symmetric convex moment}
+of the frequency vector if $\Phi(\UC)=\sum_x\varphi(\freq(x)/m)$ (or a ratio of two
+such sums, as in the power mean) for a fixed convex $\varphi:[0,1]\to\mathbb R$,
+invariant under permuting the ground elements; equivalently $\Phi$ depends only on
+the \emph{multiset} of abundances $\{\abun_x\}$ and is Schur-convex in it.
+\end{definition}
+
+The first moment ($\varphi$ linear; LP/Reimer), the second moment
+($\varphi(t)=t^2$; M7/M8 and the level-2 Fourier weight), the entropy proxy
+($\varphi=h$; M1), and the sign-flip-invariant spectral statistics (M3, which are
+quadratic in the $\hat f(\{x\})$, hence symmetric quadratic in the abundances) are
+all of this form; the slice-rank (M2) and lattice invariants (M4) are even coarser,
+seeing only $|\UC|$ or the abstract lattice. The barrier is that no such moment can
+distinguish the extremal case.
+
+\begin{theorem}[Barrier for moment methods]\label{thm:barrier}
+Let $\Phi$ be any symmetric convex moment of the frequency vector
+\textup{(Definition~\ref{def:scm})}. Then $\Phi$ is \emph{flat-minimized by the
+Boolean cube}: among all union-closed families with a given number of active
+ground elements and a given average abundance, $\Phi$ attains its extreme value at
+the flat abundance vector $\abun_x\equiv\overline a$, which the Boolean cube
+$\cube k$ realizes with $\overline a=\tfrac12$. Consequently no inequality of the
+form ``$\Phi(\UC)\ge 0\Rightarrow\abun(\UC)>\tfrac12$'' can hold for all
+union-closed families: on $\cube k$ every such $\Phi$ takes its boundary value
+while $\abun(\cube k)=\tfrac12$ exactly. In particular, \emph{no symmetric convex
+moment of the frequency vector can prove Frankl}.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+By symmetry $\Phi$ depends only on the multiset $\{\abun_x\}$; by convexity of
+$\varphi$ (resp.\ the Cauchy--Schwarz/power-mean structure of the ratio form),
+$\Phi$ is Schur-convex, so among vectors with fixed mean it is extremized at the
+flat vector $\abun_x\equiv\overline a$ (Jensen / majorization). For $\cube k$ the
+fibres are the $k$ principal filters $\filt{\{i\}}$, each of density exactly
+$\tfrac12$, so $\mathbf{\abun}=(\tfrac12,\dots,\tfrac12)$ is flat with
+$\overline a=\tfrac12$, and $\Phi(\cube k)$ equals the flat-vector value. Now
+suppose $\Phi(\UC)\ge 0\Rightarrow\abun(\UC)>\tfrac12$ held universally. The cube
+is union-closed with $\Phi(\cube k)$ at its (boundary) flat value and
+$\abun(\cube k)=\tfrac12\not>\tfrac12$; hence $\Phi(\cube k)<0$. But then $\Phi$
+takes its extreme \emph{negative} value at the flat vector, so by Schur-convexity
+$\Phi<0$ on a neighbourhood of flat vectors, including families of abundance
+$>\tfrac12$ that are near-flat---contradicting that $\Phi\ge 0$ certifies
+abundance $>\tfrac12$. Thus no such implication exists. The verification that the
+eight methods of Table~\ref{tab:barrier} are each of this form, and each takes its
+$\tfrac12$ boundary value on $\cube k$, is the content of
+Section~\ref{ssec:eight}.
+\end{proof}
+
+\begin{remark}[What the theorem does and does not say]\label{rmk:barrier-scope}
+Theorem~\ref{thm:barrier} is a statement about a \emph{class of certificates}, not
+about Frankl's truth: it says the listed averaged/spectral/moment quantities are
+the wrong language, because they are blind to \emph{which} ground element is heavy.
+It is the Frankl analogue of a ``the standard toolkit cannot work'' barrier rather
+than a natural-proofs theorem in the formal sense, and it is stated at the level of
+rigour of the project's exhaustive ($\le 5$-element) verification plus the
+majorization argument above; a fully general proof for every functional one might
+call a ``moment'' is not claimed. The escape route it identifies is concrete: a
+\emph{non-symmetric} quantity, sensitive to the generator-incidence structure (the
+labelling of join-irreducibles), is required---the subject of
+Section~\ref{sec:extremal}. We have checked that the barrier also extends to
+\emph{separable} generator-asymmetric quantities (those that weight each generator
+independently): these likewise degenerate, dropping to $1/k$ on $\cube k$. The one
+surviving candidate selector is non-separable, has no proof, and we do not rely on
+it.
+% [NOVELTY UNVERIFIED -- barrier framing and the separable-generator extension; verify before submission]
+\end{remark}
+
+%======================================================================
+\section{The extremal lattice}
+\label{sec:extremal}
+
+The barrier theorem says the missing ingredient must be non-symmetric, living in
+the structure that the moments discard---the labelling of join-irreducibles. This
+section makes that structure precise and records the one positive structural
+result of the project: the Boolean cube is the \emph{unique} extremal lattice, and
+the difficulty localizes to a single, sharply identified inequality.
+
+\begin{remark}[Status]\label{rmk:extremal-status}
+The fibre$=$filter and Birkhoff join-irreducible dictionary is
+classical~\cite{birkhoff1937,poonen1992}; the reconstruction identity~\eqref{eq:R}
+is elementary. The \emph{cube-uniqueness characterization}
+(Theorem~\ref{thm:cube-unique}) is verified exhaustively at $\le 5$ elements but
+is \texttt{[NOVELTY UNVERIFIED]} and \texttt{[PENDING --- $n\le 5$ only]}; the
+overlap framing of the closing inequality is likely folklore.
+% [NOVELTY UNVERIFIED -- cube-uniqueness characterization; verify before submission]
+% [PRIOR-ART CHECK PENDING -- Birkhoff/Poonen dictionary classical; quantitative fibre-overlap framing likely folklore]
+\end{remark}
+
+\subsection{The reconstruction identity}\label{ssec:reconstruction}
+With $\Lat=(\UC\cup\{\emptyset\},\subseteq,\cup)$ as in
+Section~\ref{ssec:fibre}, the join-irreducibles $\JI(\Lat)$ are the members of
+$\UC$ that are not unions of strictly smaller members; by Birkhoff every
+$A\in\Lat$ is the join of the join-irreducibles below it. The fibre system is not
+an arbitrary collection of filters: it must reconstruct $\UC$. Operationally this
+is the exact identity
+\begin{equation}\label{eq:R}
+   \Fib(x)\;=\;\bigcup_{\,j\in\JI(\Lat),\ x\in j\,}\filt j ,
+\end{equation}
+each fibre being the union of the principal filters of the join-irreducibles that
+contain $x$ as a ground element. (Verified with zero violations over all
+$29{,}723$ families on $\le 5$ elements.) Identity~\eqref{eq:R} is the coupling
+between fibres that every symmetric moment discards: it is \emph{where abundance
+lives}, in the overlaps of the join-irreducible filters, not in their individual
+sizes. Indeed, principal (single join-irreducible) fibres do not suffice---there
+are $2{,}254$ families on $\le 5$ elements with abundance $\ge\tfrac12$ in which no
+single join-irreducible filter reaches density $\tfrac12$---so the union
+in~\eqref{eq:R} is essential.
+% [PRIOR-ART CHECK PENDING -- reconstruction identity; Birkhoff dictionary classical]
+
+\subsection{Cube-uniqueness}\label{ssec:cube-unique}
+For a fixed abstract lattice $\Lat$, the abundance depends on the
+\emph{labelling}---which ground elements realize which filters---and this labelling
+is free given $\Lat$ (the cone construction, M4). Define the worst-case abundance
+over labellings,
+\begin{equation}\label{eq:minab}
+   \minab(\Lat)\;:=\;\min\{\abun(\UC'):\UC'\text{ a union-closed realization with }
+   \UC'\cong\Lat\}.
+\end{equation}
+
+\begin{theorem}[Cube-uniqueness; verified $n\le5$]\label{thm:cube-unique}
+Over all $13{,}734$ exact lattice-isomorphism classes realizable on $\le 5$
+ground elements:
+\[
+   \minab(\Lat)<\tfrac12 \text{ in }0\text{ classes},\quad
+   \minab(\Lat)=\tfrac12 \text{ in exactly }5\text{ classes},\quad
+   \minab(\Lat)>\tfrac12 \text{ in the other }13{,}729 .
+\]
+The five classes attaining $\tfrac12$ are exactly the Boolean cubes
+$\cube k$ \textup($|\Lat|=2,4,8,16,32$, $k=1,\dots,5$\textup), each realized at its
+minimum by the standard cube. Hence the Boolean cube is the unique extremal lattice
+\textup(at $\le 5$ elements\textup): every non-cube lattice has a strictly positive
+slack $\varepsilon(\Lat)>0$.
+\end{theorem}
+
+\begin{remark}[Scope]\label{rmk:cube-scope}
+The cube part is exact for all $k$: since $\cube k$ is itself a realization (not a
+truncation), $\minab(\cube k)=\tfrac12$ holds for every $k$. What the $n\le 5$
+census cannot certify is that \emph{no other} lattice attains $\tfrac12$ at larger
+$n$; the statement ``the cube is the unique extremizer'' is therefore
+\texttt{[PENDING --- $n\le 5$ only]}, consistent with but not proving the
+asymptotic claim. The classification into exact lattice-isomorphism classes used a
+strong invariant fingerprint refined by a back-tracking cover-digraph isomorphism;
+$\minab(\Lat)$ here is the minimum over realizations that fit in $n\le 5$.
+% [NOVELTY UNVERIFIED -- cube-uniqueness; PENDING n<=5 only]
+\end{remark}
+
+\subsection{The single closing inequality}\label{ssec:closing}
+Combining~\eqref{eq:abun-fibre}--\eqref{eq:moments} with the power-mean bound gives
+\begin{equation}\label{eq:closing}
+   \max_x\frac{|\Fib(x)|}{m}\;\ge\;\frac{\sum_x|\Fib(x)|^2}{m\sum_x|\Fib(x)|}
+   \;=\;\frac{\OVL(\Lat)}{m\,\Mone},\qquad \OVL(\Lat)=\sum_{(A,B)\in\Lat^2}|A\cap B| .
+\end{equation}
+Thus Frankl would follow from the \emph{overlap inequality}
+$2\,\OVL(\Lat)\ge m\,\Mone$, tight on the cube. This is the single inequality on
+which two independent lines of attack converged. We must report, honestly, that it
+is \emph{false} in general: over all $29{,}723$ families on $\le 5$ elements it
+fails on $6$ (the family-normalized form), with the power-mean density dipping to
+$\tfrac49\approx 0.444$.
+% [CONSTANT UNVERIFIED vs primary source -- our own enumeration]
+Decisively, however, \emph{every} failure occurs at true abundance strictly above
+$\tfrac12$ (the sharpest witness $\UC=\{\emptyset,\{4\},\{0,1,2,3,4\}\}$ has
+frequency vector $[1,1,1,1,2]$, power-mean density $\tfrac49$, yet abundance
+$\tfrac23$): the inequality never fails on a would-be counterexample, so its
+failure is harmless, but it is genuinely false and hence not a certificate. The
+cube saturates~\eqref{eq:closing} with exact equality (slack $0$), consistent with
+Theorem~\ref{thm:cube-unique}. The residual gap is precisely the max-versus-mean
+spread of the frequency vector---the project's recurring wall---and the overlap
+reformulation does not shrink it. What \emph{would} close Frankl is a
+union-closure lower bound on $\OVL(\Lat)$ that exceeds Cauchy--Schwarz \emph{and}
+is non-symmetric enough to escape Theorem~\ref{thm:barrier}; whether one exists is
+the central open problem this reformulation isolates.
+% [NOVELTY UNVERIFIED -- the JI-overlap closing inequality; likely folklore]
+
+%======================================================================
+\section{Open questions}
+\label{sec:open}
+
+The reconstruction localizes the live levers. We highlight the one most directly
+exposed by our negative results and the barrier, then list the standard targets.
+
+\begin{enumerate}[label=(Q\arabic*),leftmargin=2.6em]
+\item \textbf{$\Dtwo$ at a non-product (Liu-type) extremizer.} Vector~1 fails
+because $\Dtwo=0$ at the product extremizer. A Liu-style conditionally-i.i.d.\
+coupling moves the extremizer \emph{off} the product point, where our numerics
+show $\Dtwo>0$. Does the recaptured $\Dtwo$ at Liu's shifted extremizer add to
+Liu's $0.38271$? Both ingredients are individually available; their combination is
+untested and is, in our reading, the cleanest single open lever
+(Remark~\ref{rmk:v1-live}).
+% [PRIOR-ART CHECK PENDING -- see RED_TEAM_REPORT.md]
+\item \textbf{An information inequality characterizing union-closure.} Is there an
+entropy inequality that holds \emph{iff} $\UC$ is union-closed, in the spirit of
+Shearer for graphs? Our analysis shows the obstruction precisely: the only
+union-closure fact used is the cardinality constraint $A\cup B\in\UC$, which does
+not lower-bound the correlation quantity $\Dtwo$.
+\item \textbf{Beat $0.38271$; determine $\lim_{k\to\infty}\mathrm{OPT}_k$.} Push the
+entropy-method constant past Liu's bound by computing the limit of the
+conditional-coupling optimization with auxiliary cardinality $k$. The limit may or
+may not equal $\tfrac12$.
+\item \textbf{Cross $0.40$.} A constant $\ge 0.40$ would be strong evidence that an
+entropy-only proof of Frankl's conjecture is achievable.
+\item \textbf{Joint coupling-and-measure optimization.} Optimize simultaneously
+over couplings $(A,B)$ and reweighted measures on $\UC$ (Cambie's
+Maxwell--Boltzmann direction), which no single result has yet combined with the
+structural constraints.
+\item \textbf{Finite cases.} Verify Frankl's conjecture for ground sets of size
+$13$, and for families of size up to $100$, extending the computational frontier.
+\item \textbf{The JI-filter overlap inequality, made non-symmetric.} Is there a
+union-closure lower bound on $\OVL(\Lat)=\sum_{j,k}|\filt j\cap\filt k|$ that
+beats Cauchy--Schwarz \emph{and} is sensitive to the labelling
+of~\eqref{eq:R}---hence escapes the barrier of Theorem~\ref{thm:barrier}? This is
+the single inequality whose proof would prove Frankl
+(Section~\ref{ssec:closing}), tight on the cube by Theorem~\ref{thm:cube-unique}.
+% [NOVELTY UNVERIFIED -- the non-symmetric overlap lever]
+\item \textbf{Cube-uniqueness beyond $n\le5$.} Prove that the Boolean cube is the
+unique lattice with $\minab(\Lat)=\tfrac12$ for all $n$, extending
+Theorem~\ref{thm:cube-unique} past the $\le 5$-element census. A proof would
+upgrade the reformulation from verified-finite to unconditional and pin down the
+exact role of the cube as the global extremizer.
+% [NOVELTY UNVERIFIED -- cube-uniqueness asymptotic]
+\end{enumerate}
+
+%======================================================================
+\section*{Acknowledgments}
+The author thanks the anonymous referees (in advance) and the maintainers of the
+union-closed-sets literature, whose surveys made this synthesis possible. The
+computations were performed on commodity hardware.
+
+%======================================================================
+\section*{Declaration on the use of generative AI and AI-assisted technologies}
+In the preparation of this work the author (Alex Ye) used Anthropic's Claude
+(model: Claude Opus, $1$M-context variant, accessed via the Claude Code agent SDK)
+for the following tasks: literature search and synthesis; generation of candidate
+conjectures and constructions; drafting of proofs; adversarial review of
+intermediate results; computational scripting; and \LaTeX{} preparation. After
+using this tool, the author reviewed and edited the content, independently
+verified every mathematical claim, and (where feasible) re-checked numerical
+results with an independent implementation. Claude is \emph{not} listed as an
+author, because authorship implies legal and ethical responsibility for the
+contents of the paper, which only a human can carry; the author takes full
+responsibility for the content, including all errors. As noted in
+Remark~\ref{rmk:verif}, primary-source verification of the survey's numerical
+constants and attributions (arXiv/journal PDFs were unreachable in the working
+environment) is the one outstanding task before submission; every such item is
+flagged in the source.
+
+%======================================================================
+\bibliographystyle{plainnat}
+\bibliography{bibliography}
+
+\end{document}

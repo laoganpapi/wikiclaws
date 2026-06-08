@@ -1,0 +1,69 @@
+% macros.tex --- Notation and shortcuts for the Frankl paper
+% Authors: Alex Ye with Claude (Anthropic)
+
+%--- Common math operators ---
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\img}{img}
+\DeclareMathOperator{\rank}{rank}
+
+%--- Probability / information theory ---
+\newcommand{\E}{\mathbb{E}}         % expectation
+\renewcommand{\Pr}{\mathbb{P}}      % probability (override amsmath default)
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\HH}{\operatorname{H}}  % Shannon entropy
+\newcommand{\II}{\operatorname{I}}  % mutual information
+\newcommand{\KL}{\operatorname{D}}  % Kullback-Leibler divergence
+\newcommand{\Renyi}{\operatorname{H}_\alpha} % Renyi entropy
+
+%--- Union-closed setup ---
+\newcommand{\UC}{\mathcal{F}}                       % a union-closed family
+\newcommand{\UCfam}{union-closed family}
+\newcommand{\abun}{\operatorname{abun}}             % abundance of an element
+\newcommand{\Frankl}{\textsc{Frankl}}               % Frankl conjecture marker
+\newcommand{\ground}{[n]}                           % ground set
+\newcommand{\powerset}[1]{2^{#1}}                   % powerset
+
+%--- Constants in the literature ---
+\newcommand{\gilmer}{c_{\text{Gilmer}}}             % Gilmer's constant ~0.01
+\newcommand{\golden}{\tfrac{3-\sqrt{5}}{2}}         % ~0.38
+\newcommand{\target}{\tfrac{1}{2}}                  % the conjectured 1/2
+\newcommand{\psis}{\psi}                            % psi = (3-sqrt5)/2
+\newcommand{\sigm}{\sigma}                          % sigma = 1-psi = 1/phi
+\newcommand{\lam}{\lambda}                          % lambda = 1/(2(1-psi)) = phi/2
+\newcommand{\phigr}{\varphi}                        % golden ratio
+\newcommand{\cAHS}{c_{\mathrm{AHS}}}                % the AHS constant
+\newcommand{\cstar}{c^{\ast}}                       % the Frankl constant
+\newcommand{\Dtwo}{\Delta_2}                        % chain-rule slack
+\newcommand{\Cu}{C}                                 % C = A cup B (\Cup is amsmath's big union)
+\newcommand{\Hpair}{H_{\mathrm{pair}}}             % entropy of the (union,intersection) pair
+
+%--- Lattice / barrier / extremal-lattice section ---
+\newcommand{\Lat}{L}                                % the lattice (F with bottom adjoined)
+\newcommand{\JI}{\mathrm{JI}}                       % set of join-irreducibles
+\newcommand{\Fib}{\mathrm{Fib}}                     % the fibre Fib(x)={A : x in A}
+\newcommand{\filt}[1]{{\uparrow}#1}                 % principal filter up-set
+\newcommand{\minab}{\operatorname{minab}}           % minimal abundance over relabellings
+\newcommand{\OVL}{\mathrm{OVL}}                     % total filter overlap
+\newcommand{\freq}{\mathrm{freq}}                   % frequency of a ground element
+\newcommand{\cube}[1]{2^{[#1]}}                     % Boolean cube on [k]
+\newcommand{\Mone}{M_1}                             % first moment
+\newcommand{\Mtwo}{M_2}                             % second moment
+
+%--- Theorem-like environments are declared in main.tex via amsthm ---
+
+%--- Workflow markers ---
+\newcommand{\TODO}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
+\newcommand{\NOTE}[1]{\textcolor{blue}{\textbf{[NOTE: #1]}}}
+% Verification markers. These render as small bracketed flags in the PDF so a
+% reader/referee sees exactly which items still need primary-source checking,
+% and also appear as LaTeX comments (%) at each use site in the source.
+\newcommand{\priorart}{\textsuperscript{\textcolor{orange}{\,[prior-art check pending]}}}
+\newcommand{\constun}{\textsuperscript{\textcolor{orange}{\,[constant unverified]}}}
+\newcommand{\citeneeded}{\textcolor{red}{\textbf{[CITATION NEEDED]}}}
+
+%--- Misc shorthands ---
+\newcommand{\eps}{\varepsilon}
+\newcommand{\half}{\tfrac{1}{2}}
+\newcommand{\bigO}{O}
+\newcommand{\given}{\,|\,}

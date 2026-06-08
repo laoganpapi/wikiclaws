@@ -1,0 +1,74 @@
+% macros.tex --- Notation and shortcuts for the Collatz paper
+% Authors: Alex Ye with Claude (Anthropic)
+
+%--- Lagarias-convention operators ---
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\val}{v}             % 2-adic valuation
+\DeclareMathOperator{\sgn}{sgn}
+
+%--- The Collatz map and iterates ---
+\newcommand{\T}{T}                          % Collatz / Syracuse map
+\newcommand{\Tit}[1]{T^{#1}}                % T^k
+\newcommand{\Cmap}{C}                       % accelerated Syracuse: C(n) = (3n+1)/2^{v_2(3n+1)}
+
+%--- Stopping times ---
+% Note: \stop is a primitive LaTeX command, so we override with \renewcommand.
+\renewcommand{\stop}{\sigma}                % stopping time (first n -> below n)
+\newcommand{\totstop}{\sigma_\infty}        % total stopping time (first reach 1)
+\newcommand{\stoptime}[1]{\stop(#1)}
+\newcommand{\totstoptime}[1]{\totstop(#1)}
+
+%--- Parity vector / Q-functions ---
+\newcommand{\pv}{Q}                         % parity vector / Q-function
+\newcommand{\pvk}[2]{Q_{#1}(#2)}            % first k entries of parity vector for n
+\newcommand{\trajectory}[1]{\mathcal{O}(#1)}% forward orbit
+
+%--- Density / measure ---
+\newcommand{\logdens}{\overline{d_{\log}}}  % logarithmic density (upper)
+\newcommand{\logdenslow}{\underline{d_{\log}}}
+\newcommand{\nat}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Zp}{\mathbb{Z}_p}              % p-adic integers
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\F}{\mathbb{F}}                 % finite field
+
+%--- Tao framework ---
+\newcommand{\TaoConst}{c}                   % the implicit constant in Tao 2019
+\newcommand{\logbound}{f(N)}                % function s.t. orbits go below f(N)
+\newcommand{\Colmin}{\mathrm{Col}_{\min}}   % minimal orbit value
+\newcommand{\Syrmin}{\mathrm{Syr}_{\min}}   % minimal Syracuse orbit value
+\newcommand{\Syr}{\mathrm{Syr}}             % Syracuse map (largest odd divisor of 3n+1)
+\newcommand{\Syrac}{\mathrm{Syrac}}         % Syracuse random variable
+\newcommand{\Zthree}[1]{\Z/3^{#1}\Z}        % Z/3^n Z
+\newcommand{\Zthreex}[1]{(\Z/3^{#1}\Z)^{\times}} % units
+\newcommand{\tot}{\varphi}                  % Euler totient
+\newcommand{\TV}{\mathrm{TV}}               % total variation
+\DeclareMathOperator{\Geom}{Geom}
+\newcommand{\charfn}[1]{\widehat{\nu}_{#1}} % characteristic function
+\newcommand{\Esstar}{s^{*}}                 % descent-balance tilt
+\newcommand{\CP}{\mathrm{CP}}               % collision probability
+\newcommand{\Edist}{E}                      % collision diagnostic E_n
+
+%--- Transfer-operator section ---
+\newcommand{\Pop}{P}                        % transfer / Frobenius-Perron operator P_n
+\newcommand{\Vsub}{V}                       % mod-3 invariant subspace
+\newcommand{\charpoly}{\chi}                % characteristic polynomial
+\newcommand{\statproj}{\Pi}                 % rank-1 stationary projector
+\newcommand{\Ffield}{\mathbb{F}_2[T]}       % function field polynomial ring
+\newcommand{\Phimap}{\Phi}                  % F_2[T] Collatz analog map
+\newcommand{\degmap}{\deg}                  % polynomial degree
+
+%--- Workflow markers ---
+\newcommand{\TODO}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
+\newcommand{\NOTE}[1]{\textcolor{blue}{\textbf{[NOTE: #1]}}}
+
+%--- Misc shorthands ---
+\newcommand{\eps}{\varepsilon}
+\newcommand{\half}{\tfrac{1}{2}}
+\newcommand{\bigO}{O}
+\newcommand{\given}{\,|\,}
+\newcommand{\E}{\mathbb{E}}
+\renewcommand{\Pr}{\mathbb{P}}
+\newcommand{\PP}{\mathbb{P}}

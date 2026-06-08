@@ -1,0 +1,10 @@
+{
+  "total": 29723,
+  "recon_violations": 0,
+  "union_strictly_beats_single_ji": 11230,
+  "min_max_single_ji_density": 0.23529411764705882,
+  "max_jis_per_fibre_overall": 6,
+  "abund_ge_single_ji": 29723,
+  "max_gap_abund_minus_singleji": 0.5833333333333333,
+  "need_union_for_half": 2254
+}

@@ -1,0 +1,128 @@
+{
+  "27": {
+    "orbit_length": 40,
+    "E_a": 1.65,
+    "heisenberg_disc_B4": 0.084375,
+    "heisenberg_disc_mean": 0.015625,
+    "heisenberg_disc_std": 0.028470104934825935,
+    "x_disc": 0.03125,
+    "y_disc": 0.03125,
+    "z_disc": 0.09375,
+    "residue_mod9_fourier_max_nontrivial": 0.3700000000000003,
+    "nilseq_correlation_max": 0.22368608120143735,
+    "nilseq_correlation_mean": 0.043202038405020654,
+    "pseudorandom_baseline": 0.049690399499995326
+  },
+  "871": {
+    "orbit_length": 64,
+    "E_a": 1.703125,
+    "heisenberg_disc_B4": 0.109375,
+    "heisenberg_disc_mean": 0.015625,
+    "heisenberg_disc_std": 0.03149319432929121,
+    "x_disc": 0.015625,
+    "y_disc": 0.015625,
+    "z_disc": 0.03125,
+    "residue_mod9_fourier_max_nontrivial": 0.37377929687500033,
+    "nilseq_correlation_max": 0.19458533349134904,
+    "nilseq_correlation_mean": 0.03708731927659227,
+    "pseudorandom_baseline": 0.039283710065919304
+  },
+  "6171": {
+    "orbit_length": 95,
+    "E_a": 1.694736842105263,
+    "heisenberg_disc_B4": 0.10016447368421053,
+    "heisenberg_disc_mean": 0.015625,
+    "heisenberg_disc_std": 0.029066274179323188,
+    "x_disc": 0.020723684210526318,
+    "y_disc": 0.020723684210526318,
+    "z_disc": 0.05296052631578947,
+    "residue_mod9_fourier_max_nontrivial": 0.3518005540166207,
+    "nilseq_correlation_max": 0.058805253847564014,
+    "nilseq_correlation_mean": 0.017343515857243613,
+    "pseudorandom_baseline": 0.03224338889377829
+  },
+  "77031": {
+    "orbit_length": 128,
+    "E_a": 1.6953125,
+    "heisenberg_disc_B4": 0.078125,
+    "heisenberg_disc_mean": 0.015625,
+    "heisenberg_disc_std": 0.028370779387370995,
+    "x_disc": 0.015625,
+    "y_disc": 0.015625,
+    "z_disc": 0.03125,
+    "residue_mod9_fourier_max_nontrivial": 0.4039916992187502,
+    "nilseq_correlation_max": 0.11590270210558785,
+    "nilseq_correlation_mean": 0.029141476165679508,
+    "pseudorandom_baseline": 0.027777777777777776
+  },
+  "837799": {
+    "orbit_length": 194,
+    "E_a": 1.675257731958763,
+    "heisenberg_disc_B4": 0.07715850515463918,
+    "heisenberg_disc_mean": 0.015625,
+    "heisenberg_disc_std": 0.028100005426346022,
+    "x_disc": 0.010631443298969073,
+    "y_disc": 0.010631443298969073,
+    "z_disc": 0.02545103092783505,
+    "residue_mod9_fourier_max_nontrivial": 0.37753746413008843,
+    "nilseq_correlation_max": 0.01727420825357344,
+    "nilseq_correlation_mean": 0.00619078876685826,
+    "pseudorandom_baseline": 0.022563248114080423
+  },
+  "bit_carry": {
+    "n_triples": 20,
+    "linear_R2": 0.9674148435277399,
+    "first_triples": [
+      [
+        4,
+        6,
+        12
+      ],
+      [
+        3,
+        2,
+        1
+      ],
+      [
+        5,
+        6,
+        15
+      ],
+      [
+        5,
+        7,
+        19
+      ],
+      [
+        4,
+        4,
+        6
+      ],
+      [
+        5,
+        8,
+        20
+      ],
+      [
+        3,
+        2,
+        1
+      ],
+      [
+        5,
+        6,
+        15
+      ],
+      [
+        5,
+        8,
+        21
+      ],
+      [
+        3,
+        2,
+        1
+      ]
+    ]
+  }
+}

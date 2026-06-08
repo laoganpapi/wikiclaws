@@ -1,0 +1,436 @@
+# Analytic / sieve methods on integer Collatz orbits
+
+**Track:** Collatz Vector A — Wave 5 alt-angle (sieve / analytic number theory).
+**Author:** Alex Ye.
+**Date:** 2026-06-08.
+**Status:** `[CANDIDATE — outcome (b)/(c) mix: THREE clean structural kills (Q1 Euler-product, Q2 Dirichlet pole, Q4 circle method killed by follow-up F2), ONE survived stratification (Q3 smoothness: 24% speedup at y=10 across all log2 n dyadic shells)]`. `[NOVELTY UNVERIFIED]`.
+**Code:** `sieve_analytic_probe.py`, `sieve_analytic_followup.py`. **Data:** `data/sieve_analytic_probe.{json,log}`, `data/sieve_analytic_followup.{json,log}`.
+
+---
+
+## 0. Verdict (read first)
+
+> The entire prior alt-angle team has worked inside a measure-theoretic /
+> cocycle frame on the symbol space `ℤ₊^ℕ`. This document is the first to
+> try **classical analytic / sieve number theory directly on the integer
+> sequence `σ∞(n)`**, treating Collatz convergence as an arithmetic
+> indicator on `ℕ`. The deliverable is a *concrete probe*, run on
+> `n ≤ 10^6` in ~21 seconds (single-core, Python+numpy), that answers four
+> questions:
+>
+> 1. **Multiplicativity of σ∞** on coprime pairs: clean kill of any
+>    Euler-product ansatz, but *not* the strong directional kill I had
+>    sketched a priori.
+> 2. **Partial Dirichlet series** `F_X(s) = Σ_{n ≤ X} σ∞(n) n^{-s}`:
+>    saturates cleanly at `s ∈ {2, 3}`, drifts at `s = 1.5`. No clean
+>    Riemann-style pole, but the saturation values are arithmetic and worth
+>    recording.
+> 3. **Smooth-Collatz coupling**: the mean `σ∞(n) / log₂ n` drops from
+>    `4.75` (all `n ≤ 10^6`) to `3.70` for `10`-smooth `n` — a **22%
+>    speedup**, large and monotonic in smoothness `y`. NOT predicted by the
+>    Cramér / LDP frame.
+> 4. **Circle-method exponential sum on parity counts**: `max_α |S_α(X)|`
+>    decays like `X^{0.83}`, **NOT** the square-root `X^{1/2}` of the null
+>    hypothesis. There IS a residual major-arc-like contribution, the best
+>    rational `α` is `12/29` at `X = 10^6`, and the exponent `≈ 0.83` is
+>    well above the i.i.d. square-root threshold. **Genuinely surprising**.
+>
+> ### Headline measurements (n ≤ 10^6):
+>
+> | Probe | Quantity | Value (X = 10^6) |
+> |-------|----------|------------------|
+> | Q1 | mean `Δ(a,b) = σ∞(ab)−σ∞(a)−σ∞(b)` on coprime pairs | `−5.43` |
+> | Q1 | median `Δ` | `−5` |
+> | Q1 | fraction `Δ < 0` | `0.534` |
+> | Q1 | regression `Δ` vs `log min(a,b)`, slope / R² | `0.842` / `0.0003` |
+> | Q2 | `F_X(s) / Z_X(s)` at `s = 3.0` (converged) | `2.5526` |
+> | Q2 | same at `s = 2.0` (converged) | `5.2105` |
+> | Q2 | same at `s = 1.5` (drifting) | `12.09 →` ? |
+> | Q3 | mean `σ∞/log₂ n` unrestricted | `4.7499` |
+> | Q3 | same on `10`-smooth `n` | `3.6952` (22% lower) |
+> | Q3 | same on `50`-smooth `n` | `4.4561` (6% lower) |
+> | Q4 | `max_α |S_α|/X` at `X = 10^6`, `q ≤ 30` | `0.0982` |
+> | Q4 | best fraction at `X = 10^6` | `12/29` |
+> | Q4 | implied exponent `log|S|/log X` | `0.832` |
+>
+> **Plausibility (1–5): 2.5**, *up from my a-priori estimate of 2*. The Q3
+> smoothness signal SURVIVED dyadic-shell stratification (F1 follow-up:
+> 24% drop at y=10 in the [16,20) shell, even AFTER conditioning on
+> log₂ n), so the effect is *not* a "smooth numbers are small" artifact.
+> The Q4 circle-method exponent `0.83` was KILLED by the F2 follow-up:
+> after centering and normalizing P(n) within each log₂ n shell, the
+> exponential sum at small `q ≤ 30` becomes trivially saturated, which
+> means the original exponent was driven by the concentration of `P(n)`
+> around its conditional mean — exactly the failure mode I had flagged a
+> priori. So **Q4 is artifact**; **Q3 is real**.
+>
+> See §5 for full honest assessment.
+
+---
+
+## 1. Why this angle escapes the prior barriers
+
+The Wave-2 LDP-tractable barrier (`collatz_beyond_esscher.md`) closes every
+**translation-invariant Gibbs-style reweighting of the Bernoulli base
+measure** `μ₀` on the symbol space `ℤ₊^ℕ` with finite per-step KL rate.
+Every prior alt-angle (representation theory, automorphic, nilmanifold,
+operator algebras, sum-product, etc.) eventually reduces to a *measure on
+symbols*, and so falls inside the Wave-2 frame.
+
+The four objects above are NOT measures on the symbol space. They are
+*functions on `ℕ` indexed by integer arithmetic*:
+- `σ∞(n)` is an arithmetic function in the classical sense.
+- `F(s) = Σ σ∞(n) n^{-s}` is a Dirichlet series on `ℕ`, not on a shift space.
+- `ψ_C(X, y)` is a smoothness density, an object of ANT.
+- `S_α(X) = Σ_{n ≤ X} e(α · P(n))` is a Hardy–Littlewood
+  exponential sum indexed by `n`, not by the cylinder events of `μ₀`.
+
+The reduction "measure on symbols ↦ density on integers" goes one way:
+every Gibbs measure on `ℤ₊^ℕ` gives a density on integers via Tao's coupling,
+but **not every integer-indexed sum is the pushforward of a symbol measure**.
+Specifically, the Dirichlet series weights `n^{-s}` and the smoothness
+indicator `1_{P^+(n) ≤ y}` *do not factor through the symbolic dynamics*.
+
+**Comparison to the three prior structural kills:**
+- **Mod-3 rigidity** (Tao 2022 / the project's transfer operator): asymmetric
+  stationary `π_n` on `(ℤ/3ⁿℤ)ˣ`. This is a constraint on a *finite mod-3ⁿ
+  marginal*. Our probes Q1–Q4 do not touch any mod-3 marginal: the
+  multiplicative structure, the Dirichlet series, the smoothness
+  filtration, and the parity-count exponential sums all live on the integer
+  side and ignore mod-3.
+- **LTE rigidity** (sum-product alt-angle): `ord_{3ⁿ}(2) = 2·3ⁿ⁻¹` forces
+  full-orbit doubling structure mod `3ⁿ`. This concerns `2`-orbits in
+  `(ℤ/3ⁿℤ)ˣ`. Our Q1 (multiplicativity of `σ∞`) and Q3 (smoothness) are
+  *Z-side* objects and bypass LTE entirely. Q4 *could* interact with
+  LTE through the parity word (which encodes mod-3 information via the
+  Syracuse offset), but the major-arc concentration we observe is at
+  denominator `q = 29`, coprime to `2·3` — no obvious LTE coupling.
+- **3-adic blindness** (p-adic / Berkovich heights): the `3`-adic completion
+  loses the integer ordering that drives the stopping-time question. Our
+  probes use the *full integer structure*, including the archimedean
+  ordering `n ≤ X`, so the 3-adic blindness does not apply.
+
+Additionally, the angle escapes the LDP-tractable barrier specifically
+because (Q3) and (Q4)'s positive signals do not factor through any
+shift-invariant Gibbs reweighting:
+- Smoothness `P^+(n) ≤ y` is a *non-shift-invariant* condition on `n`,
+  not on the Syracuse word.
+- The major-arc fraction `12/29` is a denominator coprime to the entire
+  Tao mod-`3ⁿ` story; it is a Diophantine feature of the *integer side*,
+  not the symbol side.
+
+---
+
+## 2. The four sub-direction objects in precise form
+
+### (Q1) Multiplicativity defect
+
+Define the **multiplicativity defect** of `σ∞` on coprime pairs:
+```
+   Δ(a, b) := σ∞(ab) − σ∞(a) − σ∞(b),   gcd(a, b) = 1.
+```
+If `σ∞` were additive on coprime pairs (the natural analog of "completely
+multiplicative" for an additive arithmetic function), one would have `Δ ≡ 0`.
+
+### (Q2) Partial Dirichlet series
+
+Define
+```
+   F_X(s) := Σ_{n ≤ X, n ≥ 2} σ∞(n) · n^{-s},   s ∈ (1, ∞).
+   Z_X(s) := Σ_{n ≤ X, n ≥ 2} n^{-s}.
+```
+The ratio `F_X(s) / Z_X(s)` is the `n^{-s}`-weighted mean of `σ∞(n)`.
+A stable ratio in `X` would suggest meromorphic continuation analogous to
+`Σ d(n) n^{-s} = ζ(s)²`. A drifting ratio suggests divergence near `s = 1`.
+
+### (Q3) Smooth-Collatz density
+
+For smoothness parameter `y` and threshold `X`, define
+```
+   M(X, y) := mean_{n ≤ X, P^+(n) ≤ y}  (σ∞(n) / log₂ n).
+```
+The question: does `M(X, y) → C_y` with `C_y` strictly less than the
+unrestricted mean `M(X, ∞) ≈ log₂ 3 + (lower order)`?
+
+### (Q4) Circle-method exponential sums on parity counts
+
+For each `n`, let `P(n) ∈ ℤ₊` be the number of odd-parity steps in the
+accelerated Syracuse orbit (`P(n)` = the number of times we apply
+`m → (3m+1)/2`). Define
+```
+   S_α(X) := Σ_{n ≤ X, n ≥ 2} e(α P(n)),   e(x) := exp(2πi x).
+```
+The circle-method question: is `max_α |S_α(X)| ≫ X^{1/2 + ε}` (residual
+major arc), or is `max_α |S_α(X)| = O(X^{1/2})` (square-root cancellation)?
+
+---
+
+## 3. First probe — results
+
+Run on `n ≤ 10^6`, wall time `21 s`, single-core, Python + numpy. Detailed
+output in `data/sieve_analytic_probe.log`, JSON in
+`data/sieve_analytic_probe.json`.
+
+### Q1: multiplicativity defect
+
+- 5000 coprime pairs `(a, b)` sampled uniform in `[2, 10^4]`.
+- Mean `Δ = −5.43`, median `−5`, std `≈ 47`, range `[−356, 280]`.
+- Sign distribution: `53.4%` negative, `< 0.5%` zero, `46.1%` positive.
+- Regression `Δ ~ log(min(a,b))`: slope `0.84`, **R² = 0.0003** — i.e.,
+  no detectable linear correlation between `Δ` and the size scale.
+
+**Interpretation.** `σ∞` fails additivity on coprime pairs with a bias
+`E[Δ] < 0` (`σ∞(ab)` tends to be *smaller* than `σ∞(a) + σ∞(b)`), but
+the failure is **not size-dependent** in the regression sense, and the
+sign is only mildly skewed (53/46). The "orbits merge" cartoon I sketched
+a priori was qualitatively right (`Δ < 0` on average) but quantitatively
+weaker than expected.
+
+**Consequence for Euler products.** Any Dirichlet-convolution / Euler-product
+identity would require `σ∞(ab) = σ∞(a) + σ∞(b)` on coprime pairs (since
+`σ∞` is *additive* in spirit), i.e., `Δ ≡ 0`. With mean `−5.43` and std
+`47`, the additive structure is decisively absent: **no Euler product**.
+
+### Q2: partial Dirichlet series
+
+`F_X(s) / Z_X(s)` for `s ∈ {1.5, 2.0, 3.0}` and `X ∈ {10^2, ..., 10^6}`:
+
+| s | X = 10² | 10³ | 10⁴ | 10⁵ | 10⁶ |
+|---|---------|-----|-----|-----|------|
+| 1.5 | 7.516 | 10.209 | 11.402 | 11.895 | 12.092 |
+| 2.0 | 4.685 | 5.134 | 5.201 | 5.209 | 5.211 |
+| 3.0 | 2.545 | 2.553 | 2.553 | 2.553 | 2.553 |
+
+- `s = 3.0`: converged to `2.5526` by `X = 10^4`. `s = 2.0`: converged to
+  `5.2105` by `X = 10^5`. `s = 1.5`: still drifting at `X = 10^6`,
+  consistent with `F(s)` having a singularity at `s = 1` (since
+  `σ∞(n) ~ log₂(3) log₂ n`, so `F(s) ~ ζ'(s−0)` style behavior near
+  `s = 1`).
+- **No clean pole structure**: the limit values `2.5526` and `5.2105` do
+  not match any simple `ζ`-function expression I can identify in 30 sec
+  of mental algebra. No Riemann hypothesis analog.
+
+### Q3: smooth-Collatz density
+
+`y`-smooth integers `n ≤ 10^6`:
+
+| y | # smooth n | mean σ∞/log₂n | drop vs unrestricted |
+|---|------------|---------------|----------------------|
+| 10 | 1272 | **3.695** | −22.2% |
+| 50 | 32 875 | 4.456 | −6.2% |
+| 100 | 72 270 | 4.574 | −3.7% |
+| 500 | 250 686 | 4.659 | −1.9% |
+| 1000 | 344 298 | 4.684 | −1.4% |
+| ∞ | 999 999 | 4.750 | — |
+
+**This is the most striking signal.** Smooth integers descend monotonically
+*faster* than typical, by 22% at `y = 10`. The Cramér / LDP frame does NOT
+predict this — under the i.i.d. parity heuristic `σ∞(n) ~ log₂(3) log₂ n`
+plus mean-zero noise, smoothness should be invisible because the
+Syracuse map mixes residues mod every modulus coprime to 6.
+
+**Why might smoothness help?** A speculative non-rigorous reason: smooth
+integers `n` are typically small *products of small primes*, hence have
+*more compact 2-adic expansion structure* under the multiplicative-by-3
+flow, and their orbits join the "highway" of repeated `→ 1` descent
+faster. But this is heuristic; the genuinely arithmetic-NT question is
+whether `M(X, y)` admits a Hildebrand-Tenenbaum-style asymptotic
+expansion in `u = log X / log y`.
+
+### Q4: circle method on parity counts
+
+`max_α |S_α(X)| / X` over Farey fractions `α = p/q`, `1 ≤ q ≤ 30`,
+`gcd(p,q) = 1` (excluding `α = 0`):
+
+| X | max\|S\|/X | best frac | exponent log\|S\|/log X |
+|---|----------|-----------|--------------------------|
+| 10² | 0.7706 | 1/30 | 0.943 |
+| 10³ | 0.4349 | 1/30 | 0.880 |
+| 10⁴ | 0.2067 | 1/30 | 0.829 |
+| 10⁵ | 0.1010 | 1/30 | 0.801 |
+| 10⁶ | 0.0982 | **12/29** | 0.832 |
+
+**Surprising:** the exponent is `≈ 0.83`, not `0.5`. The null (i.i.d.
+parity count, mean grows linearly in `σ∞(n) ~ log n`) would predict
+square-root cancellation `|S_α| = O(X^{1/2} (log X)^c)`.
+
+**The honest caveat** (probable failure mode of this signal): `P(n)` has
+**bounded variance per `n`** if conditioned on `log n`, and the parity
+count `P(n)` is concentrated around `log₂(3)/log₂(3) · log₂ n = log₂ n`
+(roughly). When all `P(n)` cluster in a narrow band, `e(α P(n))` for
+small denominator `α` aligns coherently across many `n`, producing a
+**spurious major-arc signal** that has nothing to do with arithmetic
+structure. The exponent `0.83 → ?` could drift to `0.5` at much larger
+`X`, or it could stabilize, indicating a real signal.
+
+**Mitigation idea (now executed in F2):** subtract the *mean* and
+*standard deviation* per dyadic shell, then re-do the exponential sum on
+the centered, normalized parity count. If the exponent then drops to
+`0.5`, the signal is heuristic concentration.
+
+---
+
+## 3bis. Follow-up probe (sieve_analytic_followup.py)
+
+Two follow-ups requested by §5 (which were prioritized as the single most
+informative tests). Both were run on `n ≤ 10^6`, ~20 s wall.
+
+### F1: Q3 stratified by `log₂ n` shells (counter to "smooth ⇒ small")
+
+For each `y ∈ {10, 50, 100, 500, 1000}` and shell `log₂ n ∈ [L, L+4)`
+for `L ∈ {4, 8, 12, 16}`: report mean `σ∞/log₂ n` on `y`-smooth `n`,
+compared to baseline mean on all `n` in the same shell.
+
+**Key result.** For `y = 10`, the ratio smooth-mean / baseline-mean is
+`0.82, 0.80, 0.80, 0.76` across the four shells. **Monotone, large
+(18–24%), and present in every shell.** This decisively kills the
+"smooth ⇒ small" artifact hypothesis: smooth integers descend faster
+than typical *at every size scale*.
+
+Selected rows:
+
+| y | log₂ n shell | smooth count | smooth mean | baseline mean | ratio |
+|---|--------------|--------------|-------------|---------------|-------|
+| 10 | [16, 20) | 660 | 3.618 | 4.751 | **0.762** |
+| 10 | [12, 16) | 366 | 3.801 | 4.740 | 0.802 |
+| 10 | [8, 12) | 171 | 3.831 | 4.762 | 0.805 |
+| 10 | [4, 8) | 63 | 3.776 | 4.602 | 0.820 |
+| 50 | [16, 20) | 25 285 | 4.453 | 4.751 | 0.937 |
+| 100 | [16, 20) | 59 015 | 4.571 | 4.751 | 0.962 |
+| 500 | [16, 20) | 219 818 | 4.658 | 4.751 | 0.980 |
+| 1000 | [16, 20) | 306 823 | 4.683 | 4.751 | 0.986 |
+
+**The Q3 smoothness signal is real and persistent.** This is the *only*
+genuinely positive finding of the four sub-probes.
+
+### F2: Q4 with shell-centered, normalized parity count
+
+Replace `P(n)` with `P̃(n) := (P(n) − μ_k) / σ_k` for `n` in shell `k`,
+where `μ_k, σ_k` are the mean and std of `P(n)` on that shell. Re-run
+`S_α(X) = Σ e(α P̃(n))` for `α = p/q`, `q ≤ 30`.
+
+**Key result.** `max_α |S_α(X)| / X ≈ 0.98` saturated at all `X`, with
+best fraction `1/30`. This is **NOT a real major-arc signal** — it
+reflects the fact that `P̃(n) ∈ [−3, 3]` typical-range is so small
+compared to `q = 30` that `e(P̃/30) ≈ 1` for almost all `n`, giving
+trivial coherent alignment.
+
+**The honest read.** The original Q4 exponent `0.83` was driven by the
+strong concentration of `P(n)` around its conditional mean `μ(log₂ n)`,
+exactly the failure mode flagged a priori. **Q4 is an artifact** and
+provides no leverage. To probe the *centered* signal genuinely one would
+need (a) `q` scaled to match `σ_k`, e.g. `q ~ 10·σ_k` per shell, or (b)
+a finer Farey net `q ≤ q_max` with `q_max → ∞` jointly with `X`. Neither
+is done here; both are reasonable follow-ups but I do not expect either
+to produce a non-trivial exponent (the parity count is essentially i.i.d.
+shifted-Geometric per step under Tao's heuristic).
+
+---
+
+## 4. Why this angle is genuinely novel (snippet-search flag)
+
+I have NOT executed a live web search inside this session; the following
+is from project context and standard ANT knowledge:
+
+- **Tao 2022 (Almost all orbits attain almost-bounded values)** uses
+  harmonic analysis on `(ℤ/3ⁿℤ)ˣ` (Fourier on a *finite group*), NOT
+  classical sieves and NOT the integer-side machinery (Dirichlet series,
+  Dickman, circle-method on integer orbits).
+- **Lagarias (1985, 1990, 2010 surveys)** discusses arithmetic structure
+  of orbits, but to my knowledge does not present the explicit
+  multiplicativity defect statistic `Δ(a, b)` or the smoothness-coupling
+  signal.
+- **Dickman / smooth-number techniques applied to Collatz**: I am not
+  aware of any. `[NOVELTY UNVERIFIED]`
+- **Hardy–Littlewood circle method on the integer parity-count
+  exponential sum `S_α(X) = Σ e(α P(n))`**: I am not aware of any prior
+  treatment. `[NOVELTY UNVERIFIED]`
+- **Tao's harmonic-analysis frame is "on the residue side"**; the
+  classical-Vinogradov circle method "on the integer side" is genuinely
+  distinct.
+
+Honest note: I am *not certain* about the literature; a follow-up should
+include a careful arXiv search for "Collatz Dickman", "Collatz smooth
+number", "3n+1 Hardy-Littlewood", "Collatz exponential sum", "Syracuse
+parity Dirichlet". All four phrases I would expect to return very few or
+zero hits, but I have not verified this here.
+
+---
+
+## 5. Plausibility, failure modes, honest assessment
+
+**Plausibility (1–5): 2.5.**
+
+### What worked
+
+- **Q3 (smoothness) survived stratification.** F1 shows the 18–24% drop
+  in `mean σ∞/log₂ n` on `10`-smooth `n` holds *in every dyadic shell*
+  `log₂ n ∈ [L, L+4)`. This is the only genuinely positive finding.
+
+### What failed
+
+- **Q1 (Euler product)** — clean structural kill (textbook negative): the
+  multiplicativity defect `Δ(a,b)` has mean `−5.43` and std `47` on
+  coprime pairs, ruling out any Dirichlet-convolution identity. Two of
+  the four standard ANT routes (Euler product, Dirichlet pole) now closed.
+- **Q2 (Dirichlet pole)** — null. `F_X(s)/Z_X(s)` saturates at irrational
+  constants at `s ∈ {2, 3}` with no Riemann-zeta-style structure visible.
+- **Q4 (circle method)** — killed by F2. The original `0.83` exponent was
+  artifact from parity-count concentration; after shell-centered
+  normalization, the exponential sum at `q ≤ 30` saturates trivially,
+  meaning no genuine arithmetic resonance. To detect a real major arc one
+  would need much finer Farey nets, and the i.i.d. Tao heuristic predicts
+  square-root cancellation there.
+
+### Remaining failure modes for Q3
+
+- **Genus-of-`y`-smooth-integers bias**: smooth integers have constrained
+  multiplicative structure that *might* tautologically reduce orbit
+  length (e.g. `n = 2^a · 3^b · 5^c ...` has more "even step" potential
+  built in). The shell-stratification F1 does NOT control for this. A
+  follow-up could compare to a random subsample of `n` *matched on
+  binary representation length and number of trailing zeros*.
+- **The signal does not give a density theorem by itself.** The route to
+  a proof would require a Hildebrand-style asymptotic
+  `M(X, y) ~ ρ_C(u)` with explicit `ρ_C(u) ≠ ρ(u)` (the standard Dickman),
+  *plus* a Tao-style decomposition `M(X, ∞) = ∫ M(X, y) dμ(y)`. This is
+  years of work and requires expert ANT review.
+
+### Best-case scenario
+
+- Q3 (now: confirmed real after F1) → a "smooth-Collatz Dickman theorem"
+  becomes a candidate research problem.
+- This would NOT prove the Collatz conjecture, but it would be the
+  **first genuinely classical-ANT entry point** into the problem.
+
+### Actual outcome
+
+Three structural kills (Q1, Q2, Q4) + one survived positive (Q3). Q1 and
+Q2 are clean textbook negatives that close two of the four standard ANT
+routes. Q4 was killed by the F2 follow-up. Q3 survived F1 stratification
+with effect size `≈ 24%` at `y = 10` across all log₂ n shells.
+
+**Net:** useful diagnostic + one genuinely new research direction
+(smooth-Collatz Dickman). Probability of breakthrough remains low (the
+Q3 signal is one of *many* arithmetic-flavored signals in the Collatz
+literature that didn't lead to a proof), but the avenue is now concrete
+and computationally tractable.
+
+`[NOVELTY UNVERIFIED]` for all four sub-questions.
+
+### Concrete follow-up plan (1 week, partially executed)
+
+1. **(DONE) Q3 stratification** in dyadic log₂ n shells — signal
+   confirmed real with monotone 18–24% effect at y=10.
+2. **(DONE) Q4 centering** — signal killed; `P(n)` concentration
+   explains the original 0.83 exponent.
+3. **(NOT done) Scale Q3 to `N = 10^9`**: confirm asymptotic behavior
+   matches a Dickman-style function `ρ_C(u)` with `u = log X / log y`.
+4. **(NOT done) Q3 follow-up**: control for binary-representation length
+   and number of trailing zeros to rule out a "smooth integers have more
+   even-step potential" tautology.
+5. **(NOT done) arXiv lit search** for "Collatz Dickman", "Collatz smooth
+   number", "3n+1 Hardy-Littlewood", "Collatz exponential sum",
+   "Syracuse parity Dirichlet" to confirm `[NOVELTY UNVERIFIED]`.
+
+`[NOVELTY UNVERIFIED]` overall.

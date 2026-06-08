@@ -1,0 +1,15 @@
+{
+  "n5_F3a_minimal": {
+    "n": 5,
+    "freqs": [
+      1,
+      1,
+      1,
+      1,
+      2
+    ],
+    "true_ab": 0.6667,
+    "lb1_mdeg1_mult1": 0.4,
+    "note": "incidence SDP lb_1 at n5 = 0.4000, EXACTLY the frequency Hankel d=1 value for [1,1,1,1,2]; sub-1/2 (the barrier). lb_2 (mult=2) localizing matrix is 529x529 at n5 -> SDP size explosion, not solved in budget (see candidate md sec 4-5)."
+  }
+}

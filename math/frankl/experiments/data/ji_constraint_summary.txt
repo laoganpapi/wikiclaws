@@ -1,0 +1,26 @@
+========================================================================
+FIBRE-SYSTEM RECONSTRUCTION CONSTRAINT (Alex Ye) [NOVELTY UNVERIFIED]
+========================================================================
+total families (n<=5): 29723  (31.5s)
+reconstruction Fib(x)=union of JI-filters: 0 violations (expect 0)
+
+--- single JI-filter vs the union (abundance) ---
+  abundance >= max single-JI-filter density: 29723 / 29723 (expect ALL)
+  abundance STRICTLY beats best single JI-filter (union effect needed): 11230
+  min over families of (max single-JI-filter density): 0.2353  (<1/2 => single JI NEVER suffices for those)
+  max gap abundance - max_single_ji_density: 0.5833
+  max #JIs whose filters union to one fibre: 6
+
+--- families where abundance>=1/2 but NO single JI-filter reaches 1/2 (the UNION is essential): 2254 ---
+  sets=[[0, 1], [0, 2], [1, 2], [0, 1, 2]] m=5 #JI=3 ab=0.6 max_single_ji=0.4
+  sets=[[], [0, 1], [0, 2], [1, 2], [0, 1, 2]] m=5 #JI=3 ab=0.6 max_single_ji=0.4
+  sets=[[0, 1], [0, 2, 3], [1, 2, 3], [0, 1, 2, 3]] m=5 #JI=3 ab=0.6 max_single_ji=0.4
+  sets=[[0, 1, 3], [0, 2, 3], [1, 2, 3], [0, 1, 2, 3]] m=5 #JI=3 ab=0.8 max_single_ji=0.4
+  sets=[[0, 1], [0, 3], [1, 3], [0, 1, 3], [2, 3], [0, 2, 3], [1, 2, 3], [0, 1, 2, 3]] m=9 #JI=4 ab=0.7778 max_single_ji=0.4444
+  sets=[[0, 1, 2], [0, 3], [1, 3], [0, 1, 3], [2, 3], [0, 2, 3], [1, 2, 3], [0, 1, 2, 3]] m=9 #JI=4 ab=0.7778 max_single_ji=0.4444
+  sets=[[], [0, 1, 2], [0, 3], [1, 3], [0, 1, 3], [2, 3], [0, 2, 3], [1, 2, 3], [0, 1, 2, 3]] m=9 #JI=4 ab=0.7778 max_single_ji=0.4444
+  sets=[[0, 1], [0, 1, 2], [0, 3], [1, 3], [0, 1, 3], [2, 3], [0, 2, 3], [1, 2, 3], [0, 1, 2, 3]] m=10 #JI=5 ab=0.7 max_single_ji=0.4
+  sets=[[], [0, 1], [0, 1, 2], [0, 3], [1, 3], [0, 1, 3], [2, 3], [0, 2, 3], [1, 2, 3], [0, 1, 2, 3]] m=10 #JI=5 ab=0.7 max_single_ji=0.4
+  sets=[[0, 2], [1, 2], [0, 1, 2], [0, 3], [1, 3], [0, 1, 3], [2, 3], [0, 2, 3], [1, 2, 3], [0, 1, 2, 3]] m=11 #JI=5 ab=0.6364 max_single_ji=0.3636
+  sets=[[], [0, 2], [1, 2], [0, 1, 2], [0, 3], [1, 3], [0, 1, 3], [2, 3], [0, 2, 3], [1, 2, 3], [0, 1, 2, 3]] m=11 #JI=5 ab=0.6364 max_single_ji=0.3636
+  sets=[[0, 1], [0, 2], [1, 2], [0, 1, 2], [0, 3], [1, 3], [0, 1, 3], [2, 3], [0, 2, 3], [1, 2, 3], [0, 1, 2, 3]] m=12 #JI=6 ab=0.5833 max_single_ji=0.3333

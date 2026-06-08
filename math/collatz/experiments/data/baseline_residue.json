@@ -1,0 +1,569 @@
+{
+  "levels": [
+    {
+      "k": 4,
+      "num_residues": 16,
+      "a_histogram": [
+        1,
+        4,
+        6,
+        4,
+        1
+      ],
+      "a_histogram_binomial_check": {
+        "expected_binomial": [
+          1,
+          4,
+          6,
+          4,
+          1
+        ],
+        "matches": true,
+        "max_diff": 0
+      },
+      "odd_density": 0.5,
+      "min_b": 0,
+      "max_b": 80,
+      "mean_b": 11.6875,
+      "median_b": 3.0,
+      "b_mod_3": {
+        "b_mod_3_counts": [
+          1,
+          5,
+          10
+        ],
+        "expected_uniform": 5,
+        "max_dev_from_uniform": 4
+      },
+      "c_offset": {
+        "c_min": 0,
+        "c_max": 65,
+        "c_mean": 16.0,
+        "c_std": 16.355427233796124,
+        "c_zero_count": 1
+      },
+      "descent": {
+        "k": 4,
+        "threshold_a": 2.5237190142858297,
+        "descent_fraction": 0.6875,
+        "random_model_probability": 0.6875,
+        "match": true
+      },
+      "a_extrema": [
+        {
+          "kind": "max_a (most odd steps; trajectory grows)",
+          "entries": [
+            {
+              "r": 15,
+              "a": 4,
+              "b": 80
+            },
+            {
+              "r": 7,
+              "a": 3,
+              "b": 13
+            },
+            {
+              "r": 9,
+              "a": 3,
+              "b": 17
+            },
+            {
+              "r": 11,
+              "a": 3,
+              "b": 20
+            },
+            {
+              "r": 14,
+              "a": 3,
+              "b": 26
+            }
+          ]
+        },
+        {
+          "kind": "min_a (most even steps; trajectory shrinks fastest)",
+          "entries": [
+            {
+              "r": 0,
+              "a": 0,
+              "b": 0
+            },
+            {
+              "r": 4,
+              "a": 1,
+              "b": 1
+            },
+            {
+              "r": 5,
+              "a": 1,
+              "b": 1
+            },
+            {
+              "r": 8,
+              "a": 1,
+              "b": 2
+            },
+            {
+              "r": 10,
+              "a": 1,
+              "b": 2
+            }
+          ]
+        }
+      ],
+      "compute_seconds": 0.00014295099992978066
+    },
+    {
+      "k": 8,
+      "num_residues": 256,
+      "a_histogram": [
+        1,
+        8,
+        28,
+        56,
+        70,
+        56,
+        28,
+        8,
+        1
+      ],
+      "a_histogram_binomial_check": {
+        "expected_binomial": [
+          1,
+          8,
+          28,
+          56,
+          70,
+          56,
+          28,
+          8,
+          1
+        ],
+        "matches": true,
+        "max_diff": 0
+      },
+      "odd_density": 0.5,
+      "min_b": 0,
+      "max_b": 6560,
+      "mean_b": 158.48046875,
+      "median_b": 27.0,
+      "b_mod_3": {
+        "b_mod_3_counts": [
+          1,
+          85,
+          170
+        ],
+        "expected_uniform": 85,
+        "max_dev_from_uniform": 84
+      },
+      "c_offset": {
+        "c_min": 0,
+        "c_max": 6305,
+        "c_mean": 512.0,
+        "c_std": 694.587287531236,
+        "c_zero_count": 1
+      },
+      "descent": {
+        "k": 8,
+        "threshold_a": 5.047438028571659,
+        "descent_fraction": 0.85546875,
+        "random_model_probability": 0.85546875,
+        "match": true
+      },
+      "a_extrema": [
+        {
+          "kind": "max_a (most odd steps; trajectory grows)",
+          "entries": [
+            {
+              "r": 255,
+              "a": 8,
+              "b": 6560
+            },
+            {
+              "r": 239,
+              "a": 7,
+              "b": 2051
+            },
+            {
+              "r": 191,
+              "a": 7,
+              "b": 1640
+            },
+            {
+              "r": 169,
+              "a": 7,
+              "b": 1457
+            },
+            {
+              "r": 159,
+              "a": 7,
+              "b": 1367
+            }
+          ]
+        },
+        {
+          "kind": "min_a (most even steps; trajectory shrinks fastest)",
+          "entries": [
+            {
+              "r": 0,
+              "a": 0,
+              "b": 0
+            },
+            {
+              "r": 80,
+              "a": 1,
+              "b": 1
+            },
+            {
+              "r": 84,
+              "a": 1,
+              "b": 1
+            },
+            {
+              "r": 64,
+              "a": 1,
+              "b": 1
+            },
+            {
+              "r": 170,
+              "a": 1,
+              "b": 2
+            }
+          ]
+        }
+      ],
+      "plot_a": "/home/user/wikiclaws/math/collatz/experiments/figures/residue_a_k8.png",
+      "plot_b": "/home/user/wikiclaws/math/collatz/experiments/figures/residue_b_k8.png",
+      "compute_seconds": 0.00033281299999998737
+    },
+    {
+      "k": 12,
+      "num_residues": 4096,
+      "a_histogram": [
+        1,
+        12,
+        66,
+        220,
+        495,
+        792,
+        924,
+        792,
+        495,
+        220,
+        66,
+        12,
+        1
+      ],
+      "a_histogram_binomial_check": {
+        "expected_binomial": [
+          1,
+          12,
+          66,
+          220,
+          495,
+          792,
+          924,
+          792,
+          495,
+          220,
+          66,
+          12,
+          1
+        ],
+        "matches": true,
+        "max_diff": 0
+      },
+      "odd_density": 0.5,
+      "min_b": 0,
+      "max_b": 531440,
+      "mean_b": 2192.199462890625,
+      "median_b": 267.0,
+      "b_mod_3": {
+        "b_mod_3_counts": [
+          1,
+          1365,
+          2730
+        ],
+        "expected_uniform": 1365,
+        "max_dev_from_uniform": 1364
+      },
+      "c_offset": {
+        "c_min": 0,
+        "c_max": 527345,
+        "c_mean": 12288.0,
+        "c_std": 22221.207066673942,
+        "c_zero_count": 1
+      },
+      "descent": {
+        "k": 12,
+        "threshold_a": 7.5711570428574895,
+        "descent_fraction": 0.80615234375,
+        "random_model_probability": 0.80615234375,
+        "match": true
+      },
+      "a_extrema": [
+        {
+          "kind": "max_a (most odd steps; trajectory grows)",
+          "entries": [
+            {
+              "r": 4095,
+              "a": 12,
+              "b": 531440
+            },
+            {
+              "r": 3943,
+              "a": 11,
+              "b": 170585
+            },
+            {
+              "r": 3839,
+              "a": 11,
+              "b": 166076
+            },
+            {
+              "r": 3711,
+              "a": 11,
+              "b": 160541
+            },
+            {
+              "r": 3071,
+              "a": 11,
+              "b": 132860
+            }
+          ]
+        },
+        {
+          "kind": "min_a (most even steps; trajectory shrinks fastest)",
+          "entries": [
+            {
+              "r": 0,
+              "a": 0,
+              "b": 0
+            },
+            {
+              "r": 2560,
+              "a": 1,
+              "b": 2
+            },
+            {
+              "r": 1365,
+              "a": 1,
+              "b": 1
+            },
+            {
+              "r": 1364,
+              "a": 1,
+              "b": 1
+            },
+            {
+              "r": 1344,
+              "a": 1,
+              "b": 1
+            }
+          ]
+        }
+      ],
+      "plot_a": "/home/user/wikiclaws/math/collatz/experiments/figures/residue_a_k12.png",
+      "plot_b": "/home/user/wikiclaws/math/collatz/experiments/figures/residue_b_k12.png",
+      "compute_seconds": 0.005889296999953331
+    },
+    {
+      "k": 16,
+      "num_residues": 65536,
+      "a_histogram": [
+        1,
+        16,
+        120,
+        560,
+        1820,
+        4368,
+        8008,
+        11440,
+        12870,
+        11440,
+        8008,
+        4368,
+        1820,
+        560,
+        120,
+        16,
+        1
+      ],
+      "a_histogram_binomial_check": {
+        "expected_binomial": [
+          1,
+          16,
+          120,
+          560,
+          1820,
+          4368,
+          8008,
+          11440,
+          12870,
+          11440,
+          8008,
+          4368,
+          1820,
+          560,
+          120,
+          16,
+          1
+        ],
+        "matches": true,
+        "max_diff": 0
+      },
+      "odd_density": 0.5,
+      "min_b": 0,
+      "max_b": 43046720,
+      "mean_b": 33807.74085998535,
+      "median_b": 2371.0,
+      "b_mod_3": {
+        "b_mod_3_counts": [
+          1,
+          21845,
+          43690
+        ],
+        "expected_uniform": 21845,
+        "max_dev_from_uniform": 21844
+      },
+      "c_offset": {
+        "c_min": 0,
+        "c_max": 42981185,
+        "c_mean": 262144.0,
+        "c_std": 631479.332491175,
+        "c_zero_count": 1
+      },
+      "descent": {
+        "k": 16,
+        "threshold_a": 10.094876057143319,
+        "descent_fraction": 0.8949432373046875,
+        "random_model_probability": 0.8949432373046875,
+        "match": true
+      },
+      "plot_a": "/home/user/wikiclaws/math/collatz/experiments/figures/residue_a_k16.png",
+      "plot_b": "/home/user/wikiclaws/math/collatz/experiments/figures/residue_b_k16.png",
+      "compute_seconds": 0.11846877599998606
+    },
+    {
+      "k": 20,
+      "num_residues": 1048576,
+      "a_histogram": [
+        1,
+        20,
+        190,
+        1140,
+        4845,
+        15504,
+        38760,
+        77520,
+        125970,
+        167960,
+        184756,
+        167960,
+        125970,
+        77520,
+        38760,
+        15504,
+        4845,
+        1140,
+        190,
+        20,
+        1
+      ],
+      "a_histogram_binomial_check": {
+        "expected_binomial": [
+          1,
+          20,
+          190,
+          1140,
+          4845,
+          15504,
+          38760,
+          77520,
+          125970,
+          167960,
+          184756,
+          167960,
+          125970,
+          77520,
+          38760,
+          15504,
+          4845,
+          1140,
+          190,
+          20,
+          1
+        ],
+        "matches": true,
+        "max_diff": 0
+      },
+      "odd_density": 0.5,
+      "min_b": 0,
+      "max_b": 3486784400,
+      "mean_b": 530033.4204244614,
+      "median_b": 21140.0,
+      "b_mod_3": {
+        "b_mod_3_counts": [
+          1,
+          349525,
+          699050
+        ],
+        "expected_uniform": 349525,
+        "max_dev_from_uniform": 349524
+      },
+      "c_offset": {
+        "sampled": true,
+        "sample_size": 1000000,
+        "c_min": "0",
+        "c_max": "1936053869"
+      },
+      "descent": {
+        "k": 20,
+        "threshold_a": 12.618595071429148,
+        "descent_fraction": 0.8684120178222656,
+        "random_model_probability": 0.8684120178222656,
+        "match": true
+      },
+      "plot_a": "/home/user/wikiclaws/math/collatz/experiments/figures/residue_a_k20.png",
+      "plot_b": "/home/user/wikiclaws/math/collatz/experiments/figures/residue_b_k20.png",
+      "compute_seconds": 2.2841791190001004
+    }
+  ],
+  "tao_descent_table": [
+    {
+      "k": 4,
+      "threshold_a": 2.5237190142858297,
+      "descent_fraction": 0.6875,
+      "random_model_probability": 0.6875,
+      "match": true
+    },
+    {
+      "k": 8,
+      "threshold_a": 5.047438028571659,
+      "descent_fraction": 0.85546875,
+      "random_model_probability": 0.85546875,
+      "match": true
+    },
+    {
+      "k": 12,
+      "threshold_a": 7.5711570428574895,
+      "descent_fraction": 0.80615234375,
+      "random_model_probability": 0.80615234375,
+      "match": true
+    },
+    {
+      "k": 16,
+      "threshold_a": 10.094876057143319,
+      "descent_fraction": 0.8949432373046875,
+      "random_model_probability": 0.8949432373046875,
+      "match": true
+    },
+    {
+      "k": 20,
+      "threshold_a": 12.618595071429148,
+      "descent_fraction": 0.8684120178222656,
+      "random_model_probability": 0.8684120178222656,
+      "match": true
+    }
+  ]
+}
