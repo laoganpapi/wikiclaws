@@ -1,0 +1,171 @@
+{
+  "N": 100000000,
+  "shell": [
+    20,
+    26
+  ],
+  "y_values": [
+    10
+  ],
+  "seed": 20260608,
+  "n_boot": 500,
+  "v2_buckets": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5+"
+  ],
+  "log2k_buckets": [
+    "0-2",
+    "3-5",
+    "6-8",
+    "9-11",
+    "12-14",
+    "15+"
+  ],
+  "shell_size_all": 66060288,
+  "shell_mean_baseline": 4.761275645265211,
+  "per_y": {
+    "10": {
+      "y": 10,
+      "n_smooth": 1888,
+      "smooth_mean": 3.745637930903718,
+      "shell_mean_baseline": 4.761275645265211,
+      "raw_drop_pct": 21.331210163635063,
+      "c1_v2_only": {
+        "n_matched": 1888,
+        "matched_mean": 4.374593133685737,
+        "drop_pct": 14.377455995595733,
+        "bootstrap_ci": {
+          "smooth_mean": 3.745637930903718,
+          "matched_mean": 4.374593133685737,
+          "point_gap_pct": 14.377455995595733,
+          "gap_ci_lo_pct": 12.169631085086296,
+          "gap_ci_hi_pct": 16.471611918067154,
+          "n_boot": 500,
+          "n_smooth": 1888,
+          "n_matched": 1888
+        },
+        "achieved_hist": {
+          "0": 204,
+          "1": 187,
+          "2": 172,
+          "3": 159,
+          "4": 147,
+          "5+": 1019
+        },
+        "pool_hist": {
+          "0": 33029940,
+          "1": 16514885,
+          "2": 8257364,
+          "3": 4128609,
+          "4": 2064237,
+          "5+": 2063365
+        },
+        "target_hist": {
+          "0": 204,
+          "1": 187,
+          "2": 172,
+          "3": 159,
+          "4": 147,
+          "5+": 1019
+        }
+      },
+      "joint": {
+        "n_matched": 1864,
+        "matched_mean": 3.953727132875466,
+        "drop_pct": 5.263114903440713,
+        "bootstrap_ci": {
+          "smooth_mean": 3.745637930903718,
+          "matched_mean": 3.953727132875466,
+          "point_gap_pct": 5.263114903440713,
+          "gap_ci_lo_pct": 2.7196396607251927,
+          "gap_ci_hi_pct": 7.6134418801305,
+          "n_boot": 500,
+          "n_smooth": 1888,
+          "n_matched": 1864
+        },
+        "smooth_hist": {
+          "5+|0-2": 24,
+          "5+|15+": 431,
+          "4|15+": 147,
+          "5+|9-11": 174,
+          "0|15+": 204,
+          "1|15+": 187,
+          "5+|12-14": 240,
+          "2|15+": 172,
+          "3|15+": 159,
+          "5+|6-8": 96,
+          "5+|3-5": 54
+        },
+        "coverage": {
+          "5+|0-2": {
+            "target": 24,
+            "achieved": 0,
+            "pool_supply": 0
+          },
+          "5+|15+": {
+            "target": 431,
+            "achieved": 431,
+            "pool_supply": 1965649
+          },
+          "4|15+": {
+            "target": 147,
+            "achieved": 147,
+            "pool_supply": 2064237
+          },
+          "5+|9-11": {
+            "target": 174,
+            "achieved": 174,
+            "pool_supply": 10578
+          },
+          "0|15+": {
+            "target": 204,
+            "achieved": 204,
+            "pool_supply": 33029940
+          },
+          "1|15+": {
+            "target": 187,
+            "achieved": 187,
+            "pool_supply": 16514885
+          },
+          "5+|12-14": {
+            "target": 240,
+            "achieved": 240,
+            "pool_supply": 85776
+          },
+          "2|15+": {
+            "target": 172,
+            "achieved": 172,
+            "pool_supply": 8257364
+          },
+          "3|15+": {
+            "target": 159,
+            "achieved": 159,
+            "pool_supply": 4128609
+          },
+          "5+|6-8": {
+            "target": 96,
+            "achieved": 96,
+            "pool_supply": 1248
+          },
+          "5+|3-5": {
+            "target": 54,
+            "achieved": 54,
+            "pool_supply": 114
+          }
+        },
+        "deficient_cells": {
+          "5+|0-2": {
+            "target": 24,
+            "achieved": 0,
+            "pool_supply": 0
+          }
+        }
+      }
+    }
+  },
+  "wall_time_seconds": 173.5726659297943
+}
