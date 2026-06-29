@@ -48,8 +48,11 @@ reading level, and fairness across groups are first-order design constraints, no
    at risk: an earlier draft measured the *strength* of the fast and slow systems, which is
    capacity. We retired that. The thinking machine measures *reliance*, which kind of thinking a
    person leans on given their mode and the stakes, and fast and slow are conditions we elicit, not
-   strengths we score. Emotional competence (System 3) carries a mild residual tension, since
-   competence implies skill; we read it through habitual behavior rather than ceiling.
+   strengths we score. System 3 was the other place at risk: an earlier draft framed it as
+   emotional intelligence and social competence, which measures skill. We retired that too. System
+   3 now measures stated or revealed preferences and tendencies in emotional and social situations,
+   not how well a person performs in them. The preference-not-ability line now holds cleanly across
+   every system.
 2. **De novo.** The manuscript presents the theory on its own terms. It does not name, map to, or
    argue against existing typologies in the body. The one external name we do use is Kahneman's
    fast and slow systems, because System 2 builds on it directly and a reviewer would expect the
@@ -82,7 +85,7 @@ essays into one theory, and it is what the instrument will read.
 |---|--------|--------|---------|
 | 1 | Social energy economy | Adopted | How social interaction is fueled, chosen, and risked |
 | 2 | The thinking machine | Adopted | What kinds of thinking a person leans on, by mode, as stakes rise |
-| 3 | Emotional intelligence and social competence | Adopted | How a person attends to and acts on emotion, and how steady it is under load |
+| 3 | Emotional and social disposition | Adopted | Preferences and tendencies in emotional and social situations, and steadiness under load |
 | 4 | Objectives | Adopted | What a person is oriented toward; the external cause |
 
 The set remains open. Neuroticism was previously a separate system; it now lives inside System 3
@@ -103,15 +106,18 @@ Candidates not yet adopted are logged in open questions.
   conditions, not scored for strength. Modulator: stakes. The output is two graphs, one per mode,
   each plotting the person's weight on the two axes as stakes rise. We measure reliance, not
   strength.
-- **System 3, Emotional intelligence and social competence.** (a) Agreeableness versus
-  Confrontation: disposition to accommodate versus to contest. (b) Introspection versus
-  Situational awareness: emotional and social attention pointed at one's own state versus the
-  field of others. (c) Emotional stability: baseline steadiness, and reactivity under load (how
-  far and fast the baseline degrades as stakes rise). The stability measure moderates the other
-  systems' stake responses.
+- **System 3, Emotional and social disposition.** Stated or revealed preferences and tendencies in
+  emotional and social situations, not competence or skill. (a) Agreeableness versus Confrontation:
+  tendency to accommodate versus to contest. (b) Introspection versus Situational awareness: which
+  a person tends to orient by, their own emotional state versus the field of others (target of
+  attention, not accuracy of reading it). (c) Emotional stability: baseline steadiness, and
+  reactivity under load (how far and fast the baseline degrades as stakes rise). The stability
+  measure moderates the other systems' stake responses.
 - **System 4, Objectives.** An open prompt of what motivates a person, coded into a motive profile
-  over: order and peace; triumph; control; power and influence; truth-seeking; novelty; validation
-  and excellence. Multi-label with weights; people carry more than one motive.
+  over: order and peace; triumph; power and influence (absorbing the earlier control motive);
+  truth-seeking; novelty. Multi-label with weights; people carry more than one motive. A
+  validation-and-excellence motive was dropped as orthogonal to motivation rather than a motive in
+  its own right.
 
 ## Cross-system links we have noticed
 

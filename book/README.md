@@ -22,10 +22,12 @@ of systems left open.
 - `03_thinking_machine.md` — Chapter 3. The thinking machine (internal/external cognitive sourcing
   and formal/informal method, fast/slow as elicited modes, stakes as modulator; output is two
   graphs of reliance, not a strength score). The centerpiece.
-- `04_emotional_intelligence.md` — Chapter 4. Emotional intelligence and social competence
+- `04_emotional_social_disposition.md` — Chapter 4. Emotional and social disposition: stated or
+  revealed preferences and tendencies in emotional and social situations, not competence
   (agreeableness/confrontation, introspection/situational awareness, and emotional stability, which
-  now subsumes neuroticism and moderates the other systems' stake responses).
-- `05_objectives.md` — Chapter 5. Objectives (open-prompt motivation coded to a motive profile).
+  subsumes neuroticism and moderates the other systems' stake responses).
+- `05_objectives.md` — Chapter 5. Objectives (open-prompt motivation coded to a five-motive
+  profile).
 
 ## Status
 

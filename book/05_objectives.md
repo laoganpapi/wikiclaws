@@ -21,13 +21,12 @@ relative weight rather than forcing a single label.
 
 - **Order and peace.** The drive toward stability, harmony, and the absence of conflict.
 - **Triumph.** The drive to win, to prevail in contest, to come out ahead.
-- **Control.** The drive to hold things in one's own hands, to reduce dependence and uncertainty.
 - **Power and influence.** The drive to move other people and outcomes, to have one's will felt
-  beyond oneself.
+  beyond oneself, and to hold things in one's own hands rather than depend on others. This motive
+  absorbs what an earlier draft separated as control; the wish to command one's circumstances and
+  the wish to move other people proved to be one drive pointed at different objects.
 - **Truth-seeking.** The drive to know what is actually the case, to understand for its own sake.
 - **Novelty.** The drive toward the new, the unexplored, the not-yet-tried.
-- **Validation and excellence.** The drive to be good, to be recognized as good, to meet and be
-  seen to meet a high standard.
 
 Coding an open response into this profile is a task an AI can do at scale, and the coding must be
 auditable: the system should be able to show which phrases in a person's own words drove each
@@ -59,13 +58,15 @@ is run.
   else.
 - Heavy on Power and influence and Triumph. Oriented to prevail and to be felt; reads contests as
   the main game and invests accordingly.
-- Heavy on Order and peace and Validation. Oriented to a stable, well-regarded life; avoids the
+- Heavy on Order and peace, light on Triumph and Power. Oriented to a stable, calm life; avoids the
   contests the previous profile seeks out.
 
 ## Open questions
 
-- Is the list of seven complete, and are the motives independent, or do some reduce to others
-  (does Control collapse into Power, does Validation collapse into Triumph)?
+- Is the list of five complete, and are the remaining motives independent? Control was folded into
+  Power and influence, and a validation-and-excellence motive was dropped as orthogonal to
+  motivation rather than a motive in its own right. We should still check that Triumph and Power do
+  not themselves collapse together.
 - Should the profile be a fixed weighting or a ranking, and how is conflict between top motives
   represented?
 - How do we keep the coding honest across a population that varies widely in how fluently it can

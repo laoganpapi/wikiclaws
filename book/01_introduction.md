@@ -62,8 +62,9 @@ The systems developed so far are four:
 2. **The thinking machine** governs which kinds of thinking a person leans on, where they source it
    and how rigorously they form it, and how that reliance moves between fast and slow modes as the
    stakes rise.
-3. **Emotional intelligence and social competence** governs how a person attends to and acts on
-   emotion, in themselves and in others, and how steady that emotional system stays under load.
+3. **Emotional and social disposition** governs a person's preferences and tendencies in emotional
+   and social situations, what they attend to and how they handle friction, and how steady that
+   emotional system stays under load. It measures disposition, not skill.
 4. **Objectives** governs what a person is oriented toward: the external cause itself.
 
 They follow.
