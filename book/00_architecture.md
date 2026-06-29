@@ -37,19 +37,19 @@ reading level, and fairness across groups are first-order design constraints, no
 - The theory is **agnostic to nature versus nurture**. The origin of a preference does not change
   what the preference is or how it operates now.
 - Personality is **distinct from intelligence**. Intelligence concerns capacity. This theory
-  concerns preference. See the amended axiom below for the one place we deliberately cross this
-  line, and why.
+  concerns preference. We hold this line across every system, including the thinking machine, which
+  measures reliance on kinds of thinking and not the strength of any of them.
 
 ## Design axioms
 
-1. **Preference, not ability (with one deliberate exception).** Most systems record what a person
-   prefers to do, not what they are capable of doing. This is the line separating the framework
-   from intelligence research. The Thinking Machine (System 2) is the deliberate exception: to
-   tell its dynamic story we measure the *strength* of the fast and slow systems as well as the
-   *preference* over thinking mode. Strength is capacity. We cross the line on purpose, we label
-   it where we cross it, and we owe the reviewer an account of how slow-system strength is not
-   simply fluid intelligence (see expected objections). Emotional competence (System 3) carries a
-   milder version of the same tension.
+1. **Preference, not ability.** Every system records what a person prefers or leans toward, not
+   what they are capable of doing. This is the line separating the framework from intelligence
+   research, and it now holds everywhere. The Thinking Machine (System 2) is the place it was most
+   at risk: an earlier draft measured the *strength* of the fast and slow systems, which is
+   capacity. We retired that. The thinking machine measures *reliance*, which kind of thinking a
+   person leans on given their mode and the stakes, and fast and slow are conditions we elicit, not
+   strengths we score. Emotional competence (System 3) carries a mild residual tension, since
+   competence implies skill; we read it through habitual behavior rather than ceiling.
 2. **De novo.** The manuscript presents the theory on its own terms. It does not name, map to, or
    argue against existing typologies in the body. The one external name we do use is Kahneman's
    fast and slow systems, because System 2 builds on it directly and a reviewer would expect the
@@ -81,63 +81,70 @@ essays into one theory, and it is what the instrument will read.
 | # | System | Status | Governs |
 |---|--------|--------|---------|
 | 1 | Social energy economy | Adopted | How social interaction is fueled, chosen, and risked |
-| 2 | The thinking machine | Adopted | Where, how, and how fast a person thinks, and how that moves under stakes |
-| 3 | Emotional intelligence and social competence | Adopted | How a person attends to and acts on emotion, in self and others |
+| 2 | The thinking machine | Adopted | What kinds of thinking a person leans on, by mode, as stakes rise |
+| 3 | Emotional intelligence and social competence | Adopted | How a person attends to and acts on emotion, and how steady it is under load |
 | 4 | Objectives | Adopted | What a person is oriented toward; the external cause |
-| 5 | Neuroticism | Adopted | Baseline emotional stability and reactivity under pressure |
 
-The set remains open. Candidates not yet adopted are logged in open questions.
+The set remains open. Neuroticism was previously a separate system; it now lives inside System 3
+as emotional stability (baseline and reactivity under load), because it belongs to the same
+emotional channel and because its main role is to moderate the other systems' stake responses.
+Candidates not yet adopted are logged in open questions.
 
 ## Measures by system (working list)
 
 - **System 1, Social energy economy.** (a) Energy gain: the sources and rates that replenish
   social energy. (b) Game choice: which social interactions a person enters and invests in.
   (c) Risk appetite: willingness to stake social standing or capital on an interaction's outcome.
-- **System 2, The thinking machine.** A plane defined by two axes plus a modal layer plus a
-  modulator. Axis A: Internal versus External sourcing (reasoning from one's own theory and models
-  versus from empirical data and the world). Axis B: Formal versus Informal method (rigorous,
-  communicable frameworks versus non-rigorous thought such as visualization and simulation). Modal
-  layer: the Fast system and the Slow system (Kahneman), each with a measured strength. Modulator:
-  stakes, how much a person has to gain or lose. The output is a trajectory across the plane and
-  between modes as stakes rise, not a single point.
+- **System 2, The thinking machine.** A plane defined by two axes of reliance, observed under two
+  modes, driven by a modulator. Axis A, cognitive sourcing: Internal versus External (reasoning
+  from one's own theory and models versus from empirical data and the world). Axis B, method:
+  Formal versus Informal (rigorous, communicable frameworks versus non-rigorous thought such as
+  visualization and simulation). Modes: the Fast system and the Slow system (Kahneman), elicited as
+  conditions, not scored for strength. Modulator: stakes. The output is two graphs, one per mode,
+  each plotting the person's weight on the two axes as stakes rise. We measure reliance, not
+  strength.
 - **System 3, Emotional intelligence and social competence.** (a) Agreeableness versus
   Confrontation: disposition to accommodate versus to contest. (b) Introspection versus
-  Situational awareness: attention to one's own emotional state versus reading the emotional field
-  of others and the situation.
-- **System 4, Objectives.** An open prompt of what motivates a person, coded into a motive
-  profile over: order and peace; triumph; control; power and influence; truth-seeking; novelty;
-  validation and excellence. Multi-label with weights; people carry more than one motive.
-- **System 5, Neuroticism.** Baseline emotional stability versus volatility and reactivity, and
-  how reactivity changes under load.
+  Situational awareness: emotional and social attention pointed at one's own state versus the
+  field of others. (c) Emotional stability: baseline steadiness, and reactivity under load (how
+  far and fast the baseline degrades as stakes rise). The stability measure moderates the other
+  systems' stake responses.
+- **System 4, Objectives.** An open prompt of what motivates a person, coded into a motive profile
+  over: order and peace; triumph; control; power and influence; truth-seeking; novelty; validation
+  and excellence. Multi-label with weights; people carry more than one motive.
 
 ## Cross-system links we have noticed
 
 These are real and should be modeled, not hidden. They are also where a reviewer will probe
 independence.
 
-- **Neuroticism moderates the thinking machine's stake response.** High reactivity likely predicts
-  faster collapse from slow to fast mode, or a sharper migration across the plane, as stakes rise.
-  Neuroticism may be best read partly through System 2's trajectory.
-- **System 2's Internal/External axis brushes System 3's Introspection/Situational awareness.**
-  Boundary we are drawing: System 2 is cognitive sourcing for reasoning and decision (theory
-  versus data); System 3 is emotional and social attention (one's own feeling versus reading
-  others). Related, separable, discriminant validity to be demonstrated.
+- **System 3's reactivity under load moderates the thinking machine's stake response.** High
+  reactivity likely predicts steeper trend lines in System 2's two graphs as stakes rise. Stability
+  is therefore read partly through the steepness of System 2's graphs, not only on its own
+  scenarios. This is the reason neuroticism was folded into System 3 rather than left standing
+  alone.
+- **System 2's Internal/External cognitive sourcing brushes System 3's Introspection/Situational
+  awareness.** Boundary we are drawing: System 2 is the source of reasoning (theory versus data);
+  System 3 is emotional and social attention (one's own feeling versus reading others). Related,
+  separable, discriminant validity to be demonstrated.
 - **System 1's risk appetite is social and domain-specific; System 2's stakes is a general
-  modulator of thinking mode.** Keep distinct; expect them to correlate.
+  modulator of thinking reliance.** Keep distinct; expect them to correlate.
 
 ## Expected objections (for the second opinion, and to pre-empt)
 
-1. **Slow-system strength versus fluid intelligence.** If we measure how strong a person's slow
-   system is, how is that not a working-memory or g measurement, which would collapse our
-   distinction from intelligence? We need a preference-aware design: measure the *disposition to
-   engage* the slow system and the *quality of mode-switching*, not raw deliberative horsepower.
+1. **Eliciting fast versus slow cleanly.** We no longer measure slow-system strength, which
+   retires the "this is just fluid intelligence" objection at the root. The narrower residual
+   concern: can the instrument elicit a genuine fast condition and a genuine slow condition well
+   enough that the two graphs are distinct measurements and not the same one taken twice? This is
+   now the live design risk in System 2, not the strength question.
 2. **Dual-process theory is contested.** Kahneman's fast/slow framing has been criticized on
-   replication and oversimplification grounds. The chapter should acknowledge this and state that
-   we use it as a modeling layer for observed mode-switching, not as a claim about brain
-   architecture.
-3. **Discriminant validity across Systems 2, 3, and 5.** Internal/external, introspection, and
-   neuroticism could be re-derivations of one or two underlying factors. We owe evidence, or at
-   least a falsifiable claim, that they separate.
+   replication and oversimplification grounds. The chapter acknowledges this and states that we use
+   it as a modeling layer for observed mode-switching, and only as two elicited conditions, not as
+   a claim about brain architecture.
+3. **Discriminant validity across Systems 2 and 3.** The thinking machine's Internal/External
+   cognitive sourcing and System 3's Introspection/Situational awareness, and within System 3 the
+   stability measure versus the attention measures, could be re-derivations of fewer underlying
+   factors. We owe evidence, or at least a falsifiable claim, that they separate.
 4. **AI coding of free text.** A reviewer will ask how reliably an AI codes a response as formal
    versus informal, or internal versus external, and whether that coding is biased by writing
    ability, language, or culture, especially in a young and diverse population.
@@ -152,11 +159,13 @@ this appears in the working paper.
 - System 1 energy gain overlaps a known energy-direction axis; the differentiator is game choice
   and risk appetite. Keep those load-bearing.
 - System 2's Internal/External and Formal/Informal axes brush a known perception axis and a known
-  need-for-cognition construct; the differentiator is the dynamic trajectory under stakes and the
-  orthogonal fast/slow layer. Keep the trajectory load-bearing.
-- Systems 3, 4, and 5 run close to three well-known broad factors. De novo presentation is a
-  stylistic choice, not a claim of unprecedented constructs; the reviewer will see the lineage, so
-  our novelty must live in the measures and the cross-system dynamics, not in renaming.
+  need-for-cognition construct; the differentiator is the two-graph reliance picture under stakes,
+  by mode. Keep the stake-conditioned graphs load-bearing.
+- System 3 now spans three well-known broad factors (agreeableness, an attention split, and
+  emotional stability), and System 4 a fourth. De novo presentation is a stylistic choice, not a
+  claim of unprecedented constructs; the reviewer will see the lineage, so our novelty must live in
+  the measures and the cross-system dynamics (stability moderating the thinking machine), not in
+  renaming.
 
 ## Style
 

@@ -10,9 +10,10 @@ that external cause directly; the others describe how a person pursues it.
 This sets the theory apart from the study of intelligence. There is a large and capable
 literature on intelligence, and we do not add to it. Intelligence concerns capacity: what a mind
 can do. This theory concerns preference: what a person tends to do, would rather do, and in fact
-does when faced with the world. The two are independent. There is one system, the thinking
-machine, where we deliberately measure a kind of strength alongside preference, because its story
-cannot be told otherwise; we mark that crossing clearly when we reach it.
+does when faced with the world. The two are independent, and we hold that line in every system.
+The thinking machine is where it was most at risk, since it deals with how a person reasons; there
+we are careful to measure which kinds of thinking a person leans on, never how strong any of them
+is.
 
 We are also deliberately silent on where preferences come from. Whether a disposition is
 inherited, learned, or built by circumstance is a real question, and not ours. The origin of a
@@ -55,14 +56,14 @@ uncover them. Each is presented the same way: the phenomenon it governs, the mea
 people vary, the rule by which those measures become a decision, the dynamics the system produces,
 illustrations, and the questions we have not yet settled.
 
-The systems developed so far are five:
+The systems developed so far are four:
 
 1. **The social energy economy** governs how social interaction is fueled, chosen, and risked.
-2. **The thinking machine** governs where a person sources their thinking, how rigorously they
-   form it, how fast they run it, and how all of that moves as the stakes rise.
+2. **The thinking machine** governs which kinds of thinking a person leans on, where they source it
+   and how rigorously they form it, and how that reliance moves between fast and slow modes as the
+   stakes rise.
 3. **Emotional intelligence and social competence** governs how a person attends to and acts on
-   emotion, in themselves and in others.
+   emotion, in themselves and in others, and how steady that emotional system stays under load.
 4. **Objectives** governs what a person is oriented toward: the external cause itself.
-5. **Neuroticism** governs baseline emotional stability and how reactivity changes under pressure.
 
 They follow.

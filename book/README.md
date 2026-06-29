@@ -19,17 +19,17 @@ of systems left open.
   theory is for.
 - `02_social_energy.md` — Chapter 2. The social energy economy (energy gain, game choice, risk
   appetite).
-- `03_thinking_machine.md` — Chapter 3. The thinking machine (internal/external and formal/informal
-  axes, fast/slow modes, stakes as modulator; output is a trajectory). The centerpiece.
+- `03_thinking_machine.md` — Chapter 3. The thinking machine (internal/external cognitive sourcing
+  and formal/informal method, fast/slow as elicited modes, stakes as modulator; output is two
+  graphs of reliance, not a strength score). The centerpiece.
 - `04_emotional_intelligence.md` — Chapter 4. Emotional intelligence and social competence
-  (agreeableness/confrontation, introspection/situational awareness).
+  (agreeableness/confrontation, introspection/situational awareness, and emotional stability, which
+  now subsumes neuroticism and moderates the other systems' stake responses).
 - `05_objectives.md` — Chapter 5. Objectives (open-prompt motivation coded to a motive profile).
-- `06_neuroticism.md` — Chapter 6. Neuroticism (baseline stability and reactivity under load;
-  moderates the other systems' stake responses).
 
 ## Status
 
-Five systems adopted and drafted. The framework is at the working-paper stage. No critique or
+Four systems adopted and drafted. The framework is at the working-paper stage. No critique or
 development harness has been run; the next natural use of one is an adversarial pass that
 simulates the academic second opinion (dual-process skeptic, psychometrician on discriminant
 validity, fairness reviewer) before that opinion is sought for real.
