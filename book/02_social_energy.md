@@ -2,11 +2,12 @@
 
 ## The phenomenon
 
-Social interaction costs something and returns something, and people differ in how they fuel,
-spend, and play it. We model this as an economy: a person has a supply of social energy, draws it
-from some sources and not others, chooses where to spend it, and deploys strategies in the
-interactions they enter. The economy governs how a person engages other people in pursuit of any
-end, including the external cause that gives the theory its purpose.
+Social interaction costs something and returns something, and people differ in how they fuel it,
+where they spend it, and how much they will risk in it. We model this as an economy: a person has
+a supply of social energy, draws it from some sources and not others, chooses where to spend it,
+and stakes more or less of what they have on the interactions they enter. The economy governs how
+a person engages other people in pursuit of any end, including the external cause that gives the
+theory its purpose.
 
 The model has three inputs.
 
@@ -25,42 +26,47 @@ relationships, another spreads across many shallow ones, a third spends almost n
 and banks the rest for non-social ends. This is a preference over the *portfolio* of
 interactions, and it is revealed most honestly by where the energy actually goes.
 
-**3. What strategies are deployed.** Within a chosen interaction, how a person plays. Some lead,
-some follow, some mirror, some withhold, some escalate warmth, some test. These are the moves a
-person reaches for, and the measure records which moves are habitual rather than which are
-available. As with every system, we record preference, not the full repertoire a person could
-produce under instruction.
+**3. Risk appetite.** How much of their social standing or capital a person is willing to stake on
+an interaction's outcome. Some will risk a relationship to win a point, raise a hard subject, or
+make a bold first move; others protect what they have and play only the interactions they expect
+to keep. This is a preference over downside, not a measure of social skill, and it is read most
+honestly by the risks a person actually takes rather than the boldness they claim. Risk appetite
+here is social and specific; it is not the same quantity as the general stakes that move a
+person's thinking mode in the next chapter, though we expect the two to correlate.
 
 ## The decision rule
 
-Faced with a social stimulus, a person's behavior is the result of supply meeting the two
-spending preferences. A depleted supply narrows the portfolio and flattens the strategies toward
-the cheapest moves; an ample supply widens both. Where stated and revealed preference diverge, a
-person who says they value many friendships but invests deeply in two is read by the investment.
-The reading privileges where the energy goes.
+Faced with a social stimulus, a person's behavior is the result of supply meeting game choice
+meeting risk appetite. A depleted supply narrows the portfolio and dampens risk-taking toward the
+safe move; an ample supply widens the portfolio and frees a person to stake more. Where stated and
+revealed preference diverge, a person who says they value many friendships but invests deeply in
+two is read by the investment, and a person who claims boldness but never risks a relationship is
+read by the caution. The reading privileges where the energy goes and what is actually staked.
 
-## The strategy layer
+## The dynamic layer
 
-This is the system where the game framing earns its keep, and it is the most developed of the
-three inputs. An interaction is a game: each party has a supply, a goal, and a set of moves, and
-the outcome depends on both parties' play. The strategies measure captures a person's typical
-play; the economy as a whole captures whether they can afford to play it. A person with strong
-strategies and a thin supply will play well but rarely; a person with an ample supply and a thin
-strategy set will engage often but bluntly.
+This is the system where the game framing earns its keep. An interaction is a game: each party has
+a supply, a goal, and a willingness to risk, and the outcome depends on both parties' play. The
+three measures locate a person in that game. Supply sets how often they can afford to play; game
+choice sets which tables they sit at; risk appetite sets how much they push when they are there. A
+person of ample supply and low risk appetite plays often but safely; a person of thin supply and
+high risk appetite plays rarely but, when they do, for high stakes.
 
 ## Illustrations
 
-- Gains energy from large gatherings, spends across a wide portfolio of shallow ties, plays by
-  escalating warmth quickly. High supply, broad spend, warm strategy.
-- Gains energy from solitude and one or two confidants, spends almost entirely on those few, plays
-  by withholding until trust is established. Modest supply, narrow spend, cautious strategy.
+- Gains energy from large gatherings, spends across a wide portfolio of shallow ties, low risk
+  appetite. High supply, broad spend, plays it safe with everyone.
+- Gains energy from solitude and one or two confidants, spends almost entirely on those few, high
+  risk appetite within them. Modest supply, narrow spend, willing to risk the few relationships on
+  hard truths.
 - Gains energy from solitude but spends a large share of it socially anyway, in service of a goal,
-  playing a deliberately led, observational strategy. Here the spend is against the grain of the
-  supply, which tells you the goal is driving the economy.
+  with risk appetite tuned to that goal. The spend runs against the grain of the supply, which
+  tells you the goal is driving the economy.
 
 ## Open questions
 
 - Is supply one quantity or several (energy for novelty, for intimacy, for conflict)?
-- Do the three inputs move independently, or does a person's strategy set constrain where they can
-  afford to spend?
+- Do the three inputs move independently, or does risk appetite depend on current supply?
+- How does social risk appetite here relate to the general stakes modulator in the thinking
+  machine? We expect correlation; we have not measured it.
 - Over what horizon is supply measured? A day, a season, a role?
