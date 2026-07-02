@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instrument Design v2 — A New Theory of Personality</title>
+<style>
+  :root {
+    --ink: #1a1d21;
+    --muted: #5b6470;
+    --line: #e3e6ea;
+    --accent: #2f5d8a;
+    --accent-soft: #eef3f8;
+    --gold: #8a7330;
+    --bg: #fbfbfa;
+    --cut: #b04a2f;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: Georgia, 'Times New Roman', serif; color: var(--ink); background: var(--bg); margin: 0; line-height: 1.55; }
+  .page { max-width: 980px; margin: 0 auto; padding: 48px 32px 80px; }
+  header { border-bottom: 3px solid var(--ink); padding-bottom: 20px; margin-bottom: 8px; }
+  h1 { font-size: 2rem; margin: 0 0 6px; letter-spacing: -0.01em; }
+  .subtitle { color: var(--muted); font-size: 1.02rem; margin: 0; font-style: italic; }
+  .vtag { display: inline-block; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; color: #fff; background: var(--accent); padding: 3px 10px; border-radius: 3px; vertical-align: 6px; margin-left: 10px; }
+  h2 { font-size: 1.28rem; margin: 42px 0 10px; }
+  h2 .num { display: inline-block; background: var(--ink); color: #fff; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.78rem; font-weight: 600; padding: 2px 9px; border-radius: 3px; margin-right: 10px; vertical-align: 2px; }
+  h3 { font-size: 1.02rem; margin: 22px 0 6px; }
+  p, li { font-size: 0.97rem; }
+  .lede { background: var(--accent-soft); border-left: 4px solid var(--accent); padding: 14px 18px; margin: 24px 0 8px; font-size: 0.95rem; }
+  .findref { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.68rem; font-weight: 600; color: var(--gold); border: 1px solid var(--gold); border-radius: 10px; padding: 0 7px; white-space: nowrap; vertical-align: 1px; }
+  table { width: 100%; border-collapse: collapse; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.85rem; background: #fff; border: 1px solid var(--line); margin: 12px 0; }
+  th { text-align: left; font-weight: 600; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); background: #f4f5f6; padding: 9px 12px; border-bottom: 2px solid var(--line); }
+  td { padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  td.k { font-weight: 600; white-space: nowrap; }
+  tr.total td { font-weight: 700; background: var(--accent-soft); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0; }
+  .card { background: #fff; border: 1px solid var(--line); padding: 16px 18px; }
+  .card h4 { margin: 0 0 8px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); }
+  .card p, .card li { font-size: 0.9rem; margin: 4px 0; }
+  .card ul { margin: 6px 0; padding-left: 18px; }
+  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 20px 0; font-family: 'Helvetica Neue', Arial, sans-serif; }
+  .tile { background: #fff; border: 1px solid var(--line); padding: 14px; text-align: center; }
+  .tile .n { font-size: 1.45rem; font-weight: 700; color: var(--accent); }
+  .tile .l { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-top: 2px; }
+  .cut { color: var(--cut); }
+  .cutlist li { font-size: 0.9rem; }
+  .policy { background: #fff; border: 1px solid var(--gold); padding: 14px 18px; }
+  .policy h4 { margin: 0 0 8px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--gold); }
+  .policy ol { margin: 6px 0; padding-left: 20px; }
+  .policy li { font-size: 0.9rem; margin: 4px 0; }
+  .note { font-size: 0.85rem; color: var(--muted); font-style: italic; }
+  .steps { counter-reset: step; list-style: none; padding: 0; margin: 14px 0; }
+  .steps li { counter-increment: step; position: relative; padding: 10px 14px 10px 52px; background: #fff; border: 1px solid var(--line); margin-bottom: 8px; font-size: 0.93rem; }
+  .steps li::before { content: counter(step); position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 26px; height: 26px; border-radius: 50%; background: var(--ink); color: #fff; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  @media (max-width: 720px) { .grid2 { grid-template-columns: 1fr; } .tiles { grid-template-columns: repeat(2, 1fr); } }
+  @media print { body { background: #fff; } .page { padding: 0; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <h1>Instrument Design <span class="vtag">V2</span></h1>
+  <p class="subtitle">A New Theory of Personality &middot; the AI-liaisoned assessment, revised against 35 verified adversarial findings &middot; with Steven Pham</p>
+</header>
+
+<div class="tiles">
+  <div class="tile"><div class="n">95 min</div><div class="l">Total burden</div></div>
+  <div class="tile"><div class="n">$1.50&ndash;4</div><div class="l">Variable / respondent</div></div>
+  <div class="tile"><div class="n">$40k&ndash;80k</div><div class="l">Pilot, all-in</div></div>
+  <div class="tile"><div class="n">35 / 35</div><div class="l">Findings applied</div></div>
+</div>
+
+<div class="lede">
+  <strong>What changed.</strong> The point economy is gone; stakes are now <strong>review
+  probability</strong> (a disclosed chance you explain your answer to the AI: none, 1-in-4,
+  certain). Per-person stake-slopes are demoted to reliability-gated categories; <strong>baselines
+  are the v1 headline</strong>. Two sittings instead of three. The ethics package is rebuilt for
+  minors. Reactivity is estimated outside the stake manipulation. All cost figures are assumptions
+  to validate, not quotes.
+</div>
+
+<h2><span class="num">A</span>The Arena — thinking machine</h2>
+<p><strong>15 scenarios</strong> (5 decision types &times; 3 review-probability tiers), tier order
+randomized <span class="findref">F3</span>. Split battery: <strong>9 fast-only, 6 slow-only</strong>
+<span class="findref">F13</span>, plus 2 two-phase revision probes and 4 counterbalanced trap items
+<span class="findref">F14</span>.</p>
+<div class="grid2">
+  <div class="card">
+    <h4>Fast items</h4>
+    <ul>
+      <li>Unlimited reading; 5-second clock starts at choice onset <span class="findref">F10</span></li>
+      <li>Concurrent load (hold a 4-digit code) on half the items</li>
+      <li>Forced binary probe under the clock: one free peek, data card vs principle card <span class="findref">F11</span></li>
+      <li>One-liner rationale coded as stated-side data; wording varies per item, near-duplicates flagged <span class="findref">F12</span></li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Slow items</h4>
+    <ul>
+      <li>Up to 4 minutes; shelf cards free but budgeted (3 non-bankable opens; dwell + scroll telemetry) <span class="findref">F5</span></li>
+      <li>Tools scored on <em>engagement</em>, not opening: tool output must be congruent with the chosen option <span class="findref">F25</span></li>
+      <li>Behavioral and text channels corroborate only if conditionally independent</li>
+    </ul>
+  </div>
+</div>
+<p><strong>Scoring.</strong> Per mode and axis: an IRT-style baseline plus a categorical stake
+response (rises / flat / falls) tested against a permutation null <span class="findref">F15</span>.
+Mode divergence disattenuated. A per-person <strong>stake-salience check</strong> gates
+interpretation of flat profiles <span class="findref">F2 F17</span>.</p>
+
+<h2><span class="num">B</span>The Ledger — social energy</h2>
+<ul>
+  <li><strong>One-day DRM</strong> (yesterday), honest 15-minute budget <span class="findref">F28</span>; day two and EMA move to phase 2</li>
+  <li>Portfolio inventory: countable recall, unchanged</li>
+  <li><strong>Risk appetite</strong>: review election (free, no fee <span class="findref">F21</span>), two message drafts, challenge election; scored only on convergence of 3+ indicators, with election-specific invariance tests and a pre-registered drop rule <span class="findref">F23</span></li>
+  <li>Stated battery: asynchronous, after both sittings</li>
+</ul>
+
+<h2><span class="num">C</span>The Room — disposition</h2>
+<ul>
+  <li>6 SJT vignettes; in two, a free probe budget splits between <em>check-your-own-reaction</em> and <em>read-the-field</em>: the behavioral attention-target indicator <span class="findref">F18</span></li>
+  <li>One dispute + one friction probe, disclosed in specific assent, debriefed, circuit-breakered <span class="findref">F22 F21</span></li>
+  <li>Probe-window behavior reported as a <strong>lower bound</strong> on reactivity <span class="findref">F26</span></li>
+  <li>Reactivity = friction recovery curve + stated stability only; moderation of S2 slopes becomes a testable cross-loading <span class="findref">F17 F31</span></li>
+</ul>
+
+<h2><span class="num">D</span>The Compass — objectives</h2>
+<ul>
+  <li>Laddered open prompt, unchanged</li>
+  <li>16 tradeoff pairs; motive contrasts disguised in scenario texture with fillers and rotated framings; cross-framing inconsistency is the integrity signal <span class="findref">F27</span></li>
+  <li>The spend: one choice among five report-deliverable options; no points; hardest-truths page adult-only <span class="findref">F32 F22</span></li>
+</ul>
+
+<h2><span class="num">&sect;</span>Use policy (binding)</h2>
+<div class="policy">
+  <h4>Finding 20 paid in full</h4>
+  <ol>
+    <li>Developmental feedback only, until criterion validity exists</li>
+    <li>Reactivity, stability, and gap metrics never released for selection use</li>
+    <li>Respondent controls release; minors' scores expire after 18 months</li>
+    <li>Minors' gaps: system level only, above a reliability floor, framed symmetrically; never in third-party reports <span class="findref">F24</span></li>
+    <li>Ethics reader signs off on this policy before any minor cohort</li>
+  </ol>
+</div>
+
+<h2><span class="num">&#9201;</span>Burden budget</h2>
+<table>
+  <thead><tr><th>Component</th><th style="width:16%">Est. minutes</th></tr></thead>
+  <tbody>
+    <tr><td>Sitting 1: intake, reading-speed calibration <span class="findref">F33</span>, 8 Arena items, DRM</td><td>40</td></tr>
+    <tr><td>Sitting 2: 7 Arena + traps, 6 SJT, probes, Compass prompt + 16 pairs, spend, debrief</td><td>45</td></tr>
+    <tr><td>Async: stated batteries (S1 + S3)</td><td>10</td></tr>
+    <tr class="total"><td>Total</td><td>95</td></tr>
+  </tbody>
+</table>
+<p class="note">Gate: prototype 3 Arena items + 1 DRM day with real teenagers before build-out. If
+the budget breaks: cut Arena to 12 items, re-run the reliability simulation, in that order.</p>
+
+<h2><span class="num">$</span>Cost model <span class="note" style="font-size:0.8rem">(assumptions to validate, not quotes)</span></h2>
+<div class="grid2">
+  <div class="card">
+    <h4>Per-respondent variable</h4>
+    <table style="margin:0">
+      <tbody>
+        <tr><td>AI liaison inference (2 sittings)</td><td>$0.75&ndash;2.50</td></tr>
+        <tr><td>Dual-pass coding, ~25 texts</td><td>$0.30&ndash;1.00</td></tr>
+        <tr><td>Infra, telemetry, storage</td><td>$0.25</td></tr>
+        <tr class="total"><td>Total</td><td>$1.50&ndash;4</td></tr>
+      </tbody>
+    </table>
+    <p class="note">A 500-student cohort: under $2k variable.</p>
+  </div>
+  <div class="card">
+    <h4>Pilot (450 starts &rarr; 300 completers)</h4>
+    <table style="margin:0">
+      <tbody>
+        <tr><td>Expert calibration coding (~750 texts)</td><td>$15k&ndash;30k</td></tr>
+        <tr><td>Incentives ($25&ndash;40 &times; 450)</td><td>$11k&ndash;18k</td></tr>
+        <tr><td>Recruitment, ops, misc</td><td>remainder</td></tr>
+        <tr class="total"><td>Order of magnitude</td><td>$40k&ndash;80k</td></tr>
+      </tbody>
+    </table>
+    <p class="note">Plus internal build labor. Item authoring is the largest fixed line (~6&ndash;10 expert-weeks, incl. parallel Form B).</p>
+  </div>
+</div>
+
+<h2><span class="num">&#8853;</span>Validation (rescoped, n = 300)</h2>
+<ul>
+  <li>Mode elicitation checked against Type-1 markers (load-task interference, probe choices), not latency compression <span class="findref">F10</span></li>
+  <li>Discriminant vs ICAR-16 on <strong>baselines only</strong>, |r| &lt; .20, reliability-corrected, multiplicity-corrected <span class="findref">F29</span></li>
+  <li>MTMM model with a coded-prose method factor for S2-sourcing vs S3-attention <span class="findref">F18</span></li>
+  <li>Retest on parallel Form B at 4&ndash;6 weeks; slope categories below r = .4 revert to cohort-level <span class="findref">F19</span></li>
+  <li>AI&ndash;human ICC &ge; .75; fairness adds precision-by-language-group and election invariance <span class="findref">F33 F23</span></li>
+  <li>Attrition analysis pre-registered; dropout is endogenous to the constructs <span class="findref">F30</span></li>
+</ul>
+
+<h2><span class="num cut" style="background:var(--cut)">&minus;</span>What v2 gives up</h2>
+<ul class="cutlist">
+  <li class="cut">Continuous per-person stake-slopes (the most novel v1 promise) until phase 2 earns them</li>
+  <li class="cut">The gamified economy and its engagement value; the review mechanic must carry stake salience alone</li>
+  <li class="cut">EMA companion and second DRM day in v1</li>
+  <li class="cut">If pilot Type-1 markers fail, Module A reverts to a single-graph instrument</li>
+</ul>
+
+<h2><span class="num">&#8594;</span>Build order</h2>
+<ol class="steps">
+  <li>Prototype 3 Arena items + 1 DRM day with 5 teenagers; validate the burden table</li>
+  <li>Author full item set + Form B; ethics package to the external reader</li>
+  <li>Coding stack on synthetic data; channel-independence checks</li>
+  <li>Assemble sittings; internal dry runs; timing re-check</li>
+  <li>Pre-register; pilot 450 starts</li>
+</ol>
+
+</div>
+</body>
+</html>
