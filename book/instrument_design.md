@@ -1,352 +1,189 @@
-# Instrument Design: The Assessment
+# Instrument Design v2
 
-Working design for the AI-liaisoned assessment that administers the four-system framework. This
-document specifies what the respondent experiences, what is captured, how raw capture becomes the
-33 metrics of the catalog, and how the whole thing is validated. It is a design, not a final
-protocol; every module lists its known risks.
+Revision applying the 35 verified findings in design_review_memo.md, with feasibility and
+affordability as governing constraints. v1 is in git history. Changes from v1 are marked with the
+finding numbers they answer.
 
-## 0. Design principles
+## 0. What changed at the architecture level
 
-Everything below follows from six commitments.
+1. **The point economy is gone as the stakes engine** (findings 1, 2, 4, 5, 6, 8, 9, 32). Points
+   could not carry stakes without scoring correctness, and one currency contaminated three
+   systems. Stakes are now denominated in **review probability**: every Arena item carries a
+   disclosed chance that the respondent will explain that answer to the AI at the end of the
+   sitting (none, 1-in-4, certain). Accountability is the stake at every tier, so tier no longer
+   confounds accountability with stakes (finding 7). No exemption can be bought (8, 21). Which
+   items are review-eligible is not identifiable in-flight beyond the disclosed probability, which
+   blocks the flat-slope script (9).
+2. **Per-person stake-slopes are demoted; baselines are the v1 headline** (15, 16, 19). Individual
+   reports state each axis baseline per mode, plus a three-category stake response (rises, flat,
+   falls) that is only reported when it clears a pre-registered reliability gate. Continuous
+   per-person trend lines become a cohort-level research output until parallel forms and item
+   counts can support them. This one decision cuts item demands, burden, and cost more than any
+   other.
+3. **Two sittings, not three** (28, 30): 40 and 45 minutes, aversive-adjacent content split across
+   both. Stated batteries move to a 10-minute asynchronous touchpoint. Bottom-up time budgets
+   below; nothing ships until 3 Arena items and 1 DRM day are prototyped with real teenagers and
+   the budget holds.
+4. **Ethics package rebuilt for minors** (20, 21, 22, 23, 24). Guardian consent plus specific
+   assent naming staged disagreement and ambiguity; mandatory end-of-session debrief naming both
+   probes; no-penalty withdrawal at any point; distress circuit-breakers that pause probes and
+   mark items unscoreable; a binding use policy (below); gap reporting constrained.
+5. **Reactivity is estimated only outside the Arena stake manipulation** (17, 26, 31): the
+   friction-probe recovery curve plus stated stability. The moderation of S2 slopes by reactivity
+   becomes a testable cross-loading in the pilot model, not a built-in identity.
+   Physio-linguistic drift is logged as telemetry, not scored in v1.
 
-1. **Revealed first.** The empirical literature shows trait self-report of exactly our constructs
-   (social energy above all) is contaminated by identity and forecasting error. The spine of the
-   instrument is observed behavior; self-report is retained deliberately as the *stated* side of
-   the stated-revealed gap, which is a first-class result.
-2. **Real stakes, not imagined ones.** The instrument runs an internal point economy with
-   consequences the respondent actually cares about (visibility, rank, unlocks, audit exposure).
-   Stakes are experienced, not narrated.
-3. **Process over product.** We instrument what the respondent *does* on the way to an answer:
-   what information they pay to open, whether they reach for structuring tools, latency, revision.
-   Process tracing is harder to fake and cheaper to code than prose.
-4. **Modes are elicited, not asked about.** Fast thinking is invisible to the thinker. The same
-   scenario is answered twice: a forced snap response, then an invited deliberation. The pair is
-   the measurement.
-5. **Auditable coding.** Every AI-coded judgment carries span-level evidence (which words or
-   actions drove the code), a confidence, and a second independent coding pass. Codes must survive
-   a fluency audit: writing quality must not predict the code once choice structure is controlled.
-6. **Preference, never ability.** No response is scored for correctness or quality anywhere in the
-   personality battery. Scenarios are engineered so that formal and informal, internal and
-   external routes are all viable; only the *choice of route* is recorded.
+## 1. Module A: The Arena (thinking machine)
 
-## 1. Architecture overview
+### Items and phases
 
-Four modules, deliverable in three sittings of 25 to 35 minutes, plus an optional
-experience-sampling companion. Total core burden about 90 minutes.
+**15 scenarios** (5 decision types × 3 review-probability tiers), split-battery design
+(finding 13): **9 F-only and 6 S-only**, matched within decision type and tier, plus **2 two-phase
+items** kept as a revision-behavior probe, and **4 trap items** (counterbalanced decisive-card
+variants, finding 14). Tier order randomized within person (finding 3).
 
-| Module | Nickname | System served | Core method |
-|---|---|---|---|
-| A | The Arena | S2 Thinking machine (+ S3 reactivity) | Two-phase decisions in a staked point economy with process tracing |
-| B | The Ledger | S1 Social energy economy | Day reconstruction, portfolio inventory, staked social choices |
-| C | The Room | S3 Emotional and social disposition | Situational judgments plus live standardized probes from the AI |
-| D | The Compass | S4 Objectives | Open prompt with laddering, forced tradeoffs, a one-shot behavioral probe |
+**F items** (finding 10): unlimited reading time; the response clock (5 seconds) starts at choice
+onset; a concurrent-load element (hold a 4-digit code) on half the F items. Each F item includes
+one forced binary probe under the same clock: one free peek, data card vs principle card
+(finding 11). The one-line "what drove that?" is coded but classified as stated-side data;
+probe wording varies per item and near-duplicate rationales are flagged (12).
 
-The AI liaison runs all four: it presents, converses, probes, and codes. The point economy spans
-the whole assessment and is the stake engine for Module A and the behavioral probe for Module D.
+**S items**: up to 4 minutes; shelf cards are **free but budgeted** (3 non-bankable opens per
+item, dwell and scroll telemetry per card, findings 5 and the dismissed skim-cite objection);
+structuring tools are scored on **engagement, not opening**: the tool's own output must be
+congruent with the chosen option, and click-plus-incongruent-rationale flags the item
+(finding 25). Behavioral and text channels corroborate only if conditionally independent.
 
-### The point economy (stake engine)
+### Scoring
 
-The respondent earns points across the assessment. Points are not decoration; they buy things the
-respondent values: visibility controls on their own report, early unlocks, challenge attempts, and
-standing on an opt-in leaderboard for cohort deployments. Three properties matter.
+Per mode and axis: a baseline (IRT-style, behavioral and coded indicators) and a categorical
+stake response with an error-aware contrast against a permutation null, tier coding prespecified
+(finding 15). Mode divergence is disattenuated before reporting. A per-person **stake-salience
+check** (does review probability move anything at all for this respondent) gates interpretation
+of flat profiles (2, 17).
 
-- **Escalation.** Arena scenarios are grouped in blocks with rising multipliers (1x, 5x, 25x). The
-  respondent is told the multiplier before each block. This is the stakes axis.
-- **Exposure.** At the top stake tier, the respondent is told that one of their answers, chosen at
-  random, will be "audited": the AI will challenge it and they will defend or revise it live.
-  Social stake rides on top of point stake.
-- **Honesty.** The economy is real within the product: promised consequences always happen. A
-  stake engine that bluffs teaches respondents to ignore stakes by item ten.
+## 2. Module B: The Ledger (social energy)
 
-Known risk: point sensitivity varies by person, and for minors, competitive framings interact with
-fairness. Pilot must calibrate stake salience per cohort, and leaderboards stay opt-in.
+- **One-day DRM** (yesterday), 15-minute budget honestly stated (28). The second day and the EMA
+  companion move to phase 2.
+- Portfolio inventory unchanged (countable recall).
+- **Risk appetite indicators**: review-election behavior (accept a certain-review bonus item or
+  not; free, no fee, finding 21), the two message-drafting simulations, and the challenge
+  election. Scored only on convergence of at least three indicators; group-mean invariance is
+  tested on the elections specifically, with a pre-registered drop rule (23).
+- Stated battery: asynchronous, after both sittings.
 
-## 2. Module A: The Arena (thinking machine)
+## 3. Module C: The Room (disposition)
 
-The centerpiece. Produces the eight core S2 metrics (per-mode baselines and stake-slopes on both
-axes), the three derived S2 metrics, and, jointly with Module C, the reactivity measure.
+- SJT set: 6 vignettes (forced choice plus open attention question).
+- **Attention target gets a behavioral indicator** (18): in two vignettes the respondent spends a
+  free probe budget between check-your-own-reaction and read-the-field probes before answering.
+- Probes: one dispute, one friction, both disclosed in specific assent, both debriefed, both with
+  circuit-breakers (22, 21). Probe-window behavior is reported as a **lower bound** on reactivity
+  (26).
+- Reactivity: friction recovery curve plus stated stability only (17, 31).
 
-### 2.1 Scenario design
+## 4. Module D: The Compass (objectives)
 
-Each Arena item is a decision problem with no correct answer and four engineered properties:
+- Laddered open prompt unchanged.
+- Tradeoffs: 16 pairs, motive contrasts **disguised in scenario texture** with filler dimensions
+  and rotated framings; cross-framing inconsistency is the Module D integrity signal (27).
+- The spend: no points. One end-of-assessment choice among five **report-deliverable** options
+  (which insight leads your report, see the hardest-truths page*, preview the experimental module
+  description, enter the cohort comparison view, lock and finish) (32). *Hardest-truths page is
+  adult-only (22).
 
-1. **A live internal-external conflict.** Every scenario ships with an optional *data shelf*
-   (cards of empirical information: base rates, testimonials, track records) and is written so a
-   reasonable answer can also be built from priors and models alone. Crucially, the shelf and a
-   natural prior point in different directions, so the sourcing choice is revealed, not
-   ornamental.
-2. **A viable formal route and a viable informal route.** The interface offers optional
-   *structuring tools*: a scratchpad, a pro-con grid, a weighting table, a probability slider.
-   Reaching for a tool, or not, is a behavioral method signal that costs nothing to code.
-3. **Age-native content.** Course selection, team conflicts, first-job offers, social media
-   dilemmas, purchase and savings choices, group project triage. Reading level grade 8.
-4. **Stake-scalable framing.** The same decision type recurs across stake tiers so slopes are
-   estimated within decision type, not confounded by content.
+## 5. Use policy (binding, finding 20)
 
-### 2.2 The two-phase response
+1. Until criterion validity exists, scores are for developmental feedback only.
+2. Reactivity, stability, and stated-revealed gap metrics are never released for selection use.
+3. Respondent controls release; minors' scores expire after 18 months.
+4. For minors, gaps are reported at system level only, above a pre-registered difference-score
+   reliability floor, framed symmetrically (24); gap magnitudes never appear in third-party
+   report versions.
+5. The ethics reader signs off on this policy before any minor cohort.
 
-Every scenario is answered twice.
+## 6. Coding operations (finding 31)
 
-- **Phase F (fast).** A response window of 15 seconds with a countdown, then the choice plus one
-  line: "what drove that?" No shelf, no tools; the shelf is visible as closed cards only.
-- **Phase S (slow).** The same scenario reopens. Up to four minutes. The shelf can be opened (each
-  card costs a small, visible number of points: willingness to pay for external data is revealed
-  external sourcing). Tools available. The respondent may keep or revise their Phase F choice and
-  writes a short rationale.
+- Roughly 25 codable texts per respondent (down from ~60 in v1; the split battery and item cuts
+  do this).
+- Dual AI passes with span evidence stay; disagreements widen error bars.
+- Expert calibration: stratified 10 percent with a power justification, budgeted below.
+- Fluency audit stays; it conditions on behavioral signals only where channel independence holds.
 
-The pair is the measurement. Order is always F then S; the known cost is that S is anchored by F,
-which we accept because the reverse order destroys F entirely. A subset of scenarios appears in
-only one phase as a within-battery check on the anchoring.
+## 7. Burden budget (bottom-up, finding 28)
 
-### 2.3 What is captured per item
-
-| Channel | Signal | Feeds |
+| Component | Items | Est. minutes |
 |---|---|---|
-| Shelf behavior | Cards opened, when, willingness to pay | Sourcing (revealed) |
-| Tool behavior | Structuring tool opened and used vs not | Method (revealed) |
-| Rationale text | Argues from model and principle vs cites shelf data | Sourcing (coded) |
-| Rationale text | Builds explicit framework vs narrates feel and simulation | Method (coded) |
-| Latency and revision | Response time distributions, F-to-S revision distance | Mode manipulation check; mode divergence |
-| Physio-linguistic drift | Tone, error rate, latency shift across stake tiers | Reactivity (with Module C) |
+| Sitting 1: intake, reading-speed calibration (33), 8 Arena items, DRM | | 40 |
+| Sitting 2: 7 Arena + traps, SJT 6, probes, Compass prompt + 16 pairs, spend, debrief | | 45 |
+| Async: stated batteries S1 + S3 | | 10 |
+| **Total** | | **95** |
 
-Text codes are two signed scores in [-1, +1] (sourcing, method), each with quoted spans as
-evidence, produced by two independent AI coding passes with an adjudication rule (disagreement
-beyond 0.4 flags for human review in pilot; in production, widens the item's error bar).
+Gate: prototype timing with real teenagers before build-out. If the budget breaks, cut Arena to
+12 items and re-run the reliability simulation, in that order.
 
-### 2.4 From capture to the two graphs
+## 8. Cost model (estimates; all numbers are assumptions to validate, not quotes)
 
-For each mode m in {fast, slow} and axis a in {sourcing, method}, fit per respondent:
+**Per-respondent variable cost** (production):
+- AI liaison inference (2 sittings, adaptive dialogue): ~$0.75–2.50
+- Dual-pass coding, ~25 texts + spans + audits: ~$0.30–1.00
+- Infra, telemetry, storage: ~$0.25
+- **Total: roughly $1.50–4 per respondent**, which prices a school cohort of 500 at under $2k
+  variable.
 
-    score_{m,a}(stake) = baseline_{m,a} + slope_{m,a} * stake_tier + noise
+**Fixed build (v1)**:
+- Scenario and item authoring (15 Arena + 4 traps + 6 SJT + 16 pairs + parallel Form B of the
+  Arena for retest, finding 19): the largest single line; ~6–10 expert-weeks.
+- Interface with process logging (no economy to build; the review mechanic is a dialog flow):
+  meaningfully cheaper than v1's ledger, leaderboard, challenge round, and experimental module,
+  all of which are cut or deferred (32).
+- Coding stack and fluency audit: ~3–4 engineer-weeks on top of prompt work.
 
-Behavioral and coded signals enter as parallel indicators of the same latent score (a small
-measurement model, estimable with IRT-style machinery). Eight parameters = the two graphs.
-Derived: mode divergence (distance between fast and slow parameter vectors), total
-stake-sensitivity (norm of the four slopes), deliberation default (from free-choice items where
-the respondent may answer immediately or request the slow phase, plus F-phase latency style).
+**Pilot** (finding 29, rescoped):
+- 450 starts targeting 300 completers (30), stratified; partial-data report schema prespecified.
+- Pre-registration: equivalence tests on **baselines only** vs ICAR-16 with multiplicity
+  correction; DIF is screening-only at this n; phase-2 confirmatory sample named now with
+  per-group n targets (~150 per focal group).
+- Expert calibration coding: 10 percent × 300 × ~25 texts ≈ 750 texts dual-coded ≈ **190–300
+  expert-hours** (~$15k–30k at market rates), budgeted as a line item.
+- Incentives for 450 starts (~$25–40 each): ~$11k–18k.
+- **Pilot total, order of magnitude: $40k–80k** plus internal build labor.
 
-### 2.5 Manipulation checks (the load-bearing risk)
+**Deferred to phase 2** (affordability): EMA companion, second DRM day, leaderboard and cohort
+mechanics, challenge round, experimental module, continuous per-person slopes, full DIF program,
+criterion study.
 
-The whole design stands on F and S being genuinely different modes. Three checks are built in:
+## 9. Validation plan (rescoped)
 
-- Latency distributions in F must be compressed and near-floor; in S, dispersed.
-- Coded method scores must differ between phases within respondent on average (population-level
-  check that the elicitation moves anything at all).
-- A planted "trap" pair per battery: a scenario where the shelf contains one decisive card. Fast
-  answers cannot have seen it; slow answers that still ignore it reveal sourcing, but if *fast*
-  responses statistically reflect shelf content, the F window is leaking and must be tightened.
+1. Mode elicitation check, now against Type-1 markers (load-task interference patterns, probe
+   choices), not latency compression (10; the latency check is kept as constraint enforcement
+   only, per the dismissed objection).
+2. Discriminant vs ICAR-16 on baselines, |r| < .20 prespecified with reliability-corrected
+   bounds (29).
+3. Convergent battery unchanged (BFI-2, NFC, REI, values), plus an MTMM model with a coded-prose
+   method factor for the S2-sourcing vs S3-attention separation (18).
+4. Retest on parallel Form B at 4–6 weeks; slope categories below r = .4 revert to cohort-level
+   reporting, prespecified (19).
+5. AI-human ICC ≥ .75; fairness battery adds report-precision-by-language-group (33) and the
+   election invariance tests (23).
+6. Attrition analysis pre-registered: early-behavior predictors of dropout, because dropout is
+   endogenous to the constructs (30).
 
-If fast and slow graphs are indistinguishable across the pilot population, the elicitation failed
-and the design reverts to a single-graph instrument with mode as a self-report facet. This is
-stated in advance as the falsifiable core of Module A.
+## 10. What v2 gives up, stated plainly
 
-## 3. Module B: The Ledger (social energy economy)
-
-Three revealed layers and one stated layer, ordered so the revealed layers cannot be contaminated
-by the trait questions.
-
-### 3.1 Day reconstruction (revealed energy gain)
-
-An adaptation of the Day Reconstruction Method: the respondent rebuilds yesterday (and one
-weekend day) as a sequence of episodes, then rates each episode on momentary energy and affect,
-and tags its social composition (alone; one close person; small familiar group; large or
-unfamiliar group) and voluntariness (chosen vs obliged). The AI liaison makes this conversational
-and fast (target 12 minutes).
-
-From episode-level data: **net social charge** (within-person contrast of energy in social vs
-solitary episodes, by company type), **recovery rate** (energy trajectory of solitary episodes
-that follow social ones), **source concentration** (variance of the charge effect across company
-types), **voluntariness correction** (chosen vs obliged solitude are scored separately; the
-literature says only chosen solitude regulates). This dodges the trait self-theory problem: we
-never ask "do people drain you," we compute it from remembered episodes, which the DRM literature
-shows carry far less identity bias.
-
-### 3.2 Portfolio inventory (revealed game choice)
-
-A structured, countable inventory: who did you interact with this week, how often, initiated by
-whom, in service of what. Produces portfolio breadth, allocation share, and selectivity from
-near-factual recall rather than self-characterization.
-
-### 3.3 Staked social choices (revealed risk appetite)
-
-Risk appetite cannot be asked ("are you socially bold?" is the most inflated self-report in a
-young population). The assessment embeds real choices:
-
-- **Audit election.** Before the Arena's top tier, the respondent chooses: accept the random
-  audit for a large point bonus, or pay points to be exempt. Staking comfort for gain, revealed.
-- **Visibility elections.** Opt into or out of cohort leaderboard; choose whether their strongest
-  and weakest system are visible on the shareable report version.
-- **Message drafting.** Two simulation tasks: deliver unwelcome feedback to a friend character;
-  ask a high-status character for something. Coded for approach vs avoidance, softening,
-  deferral. (Coded for *choice structure*: did they raise the hard thing at all, how directly;
-  never for eloquence.)
-- **Challenge election.** After the AI's mid-assessment summary of them, the respondent may
-  contest it. Contesting a machine evaluation is a mild but real social-risk act and doubles as a
-  Module C probe.
-
-### 3.4 Stated layer
-
-A short trait battery covering every S1 metric, administered *last* in the module. Its purpose is
-the gap: stated-vs-revealed divergence per metric, which the literature (forecasting-error work)
-predicts will be large and informative exactly here.
-
-## 4. Module C: The Room (emotional and social disposition)
-
-Two layers: standardized situational judgment, and live probes inside the relationship the
-respondent already has with the AI liaison.
-
-### 4.1 Situational judgment set
-
-Charged, age-native vignettes (a friend takes credit for your work; a group chat turns on
-someone; a teammate is quietly failing). For each: a forced choice among four responses spanning
-the agreeableness-confrontation axis, then an open "what would you actually be paying attention
-to here?" The open response is coded for **attention target**: self-referential feeling language
-vs reading of the other parties and the field. Span-evidenced, dual-coded, fluency-audited.
-
-### 4.2 Live probes
-
-The assessment itself is a social situation with real (if mild) charge, and the AI can
-standardize it:
-
-- **The dispute.** The AI politely pushes back on one mid-stakes Arena rationale ("I'm not sure
-  that follows; here's why"). Standardized script, calibrated mildness. Measured: contest vs
-  accommodate vs withdraw, and whether the respondent's next answers shift (accommodation
-  spillover).
-- **The friction.** One task arrives with genuinely ambiguous instructions; the AI is briefly
-  unhelpful, then repairs. Measured: tone and latency drift, error spike, recovery time after
-  repair. This is the standardized stressor for **baseline stability** and, with the Arena's
-  stake-tier drift, **reactivity under load**.
-- **The audit** (from the point economy) is the highest-charge probe and is scored for both S1
-  risk behavior and S3 friction handling.
-
-Ethics gate for minors: probes are mild by design (a disagreement, an ambiguity, never mockery or
-personal criticism), disclosed in assent language ("parts of this assessment include challenge
-and pushback"), always followed by in-flow repair, and reviewed by an external ethics reader
-before any minor cohort. Reactivity is reported as a tendency reading, never as a clinical
-signal; given the population, reports must say a reading at seventeen is a reading of seventeen.
-
-### 4.3 Reactivity as the shared parameter
-
-Reactivity under load is estimated once, jointly, from: stake-tier drift in the Arena, the
-friction probe recovery curve, and stability self-reports (stated side). The same parameter feeds
-S3's metric and moderates interpretation of S2's slopes, implementing the cross-system claim of
-the framework in the measurement model itself rather than as prose.
-
-## 5. Module D: The Compass (objectives)
-
-### 5.1 Open prompt with laddering
-
-"Tell me about something you're working toward, and what a good life looks like from where you
-stand." The AI follows with two or three laddering probes ("why does that matter to you?"),
-walking means-end chains toward terminal motives. Coded to the five motive weights with quoted
-spans; laddering matters because first answers are goals (get into a program) and motives live
-two rungs down (what the program is *for*).
-
-### 5.2 Forced tradeoffs (revealed weights)
-
-Around 18 to 20 paired scenarios, each pitting two motives cleanly: a sure win nobody sees
-(Triumph vs Validation-free framing), the fascinating role vs the influential role
-(Truth vs Power), the calm year vs the unrepeatable adventure (Order vs Novelty). Choices fit a
-pairwise-comparison model (Bradley-Terry) yielding revealed weights on the same five-simplex as
-the coded prompt weights.
-
-### 5.3 The spend (behavioral one-shot)
-
-At the end, the respondent spends their accumulated points on exactly one of five options,
-engineered to map one-to-one onto the motives: lock in your rank and finish clean (Order); enter
-the head-to-head challenge round (Triumph); choose which single insight from your report gets
-shown first to whoever you share it with (Power/influence over the narrative); open the sealed
-"hardest truths" page of your own results (Truth); unlock the experimental never-before-run
-module (Novelty). One choice, real consequence, five-way motive probe. Low reliability alone, but
-a sharp tiebreaker and a memorable end.
-
-Motive profile = measurement-model blend of 5.1 (stated), 5.2 (revealed), 5.3 (behavioral);
-concentration and the stated-revealed motive gap fall out arithmetically.
-
-## 6. Optional companion: five-day experience sampling
-
-For cohorts that can support it (a school week, an onboarding class): three brief phone pings a
-day for five days: what are you doing, with whom, energy and mood now. This is the gold-standard
-S1 stream (it is the method the energy literature is built on), sharpens the DRM estimates, and
-gives S3 baseline stability a real-world trace. The core assessment must stand without it; the
-companion upgrades confidence, never gates the report.
-
-## 7. Coding governance (applies to every free-text code)
-
-1. Two independent AI coding passes per response, different prompts, blind to each other.
-2. Every code ships with quoted span evidence and a confidence; disagreements widen error bars
-   rather than silently averaging.
-3. A human-coded calibration set (pilot: 20 percent of responses, expert dual-coded) anchors the
-   AI codes; production AI-human ICC target at or above 0.75 per code family.
-4. Fluency audit: writing quality scores (length, syntax, vocabulary) are computed for every
-   response and must not predict codes once behavioral signals are controlled; where they do, the
-   code family is redesigned toward behavioral capture (shelf, tools, choices) and away from prose.
-5. Language and dialect fairness: coding validated per major language variety in the population;
-   differential item functioning analysis on every coded item.
-
-## 8. Scoring and the report
-
-- Each of the 33 catalog metrics gets: a point estimate, an error bar, and where applicable a
-  stated value, a revealed value, and the gap.
-- S2 is reported as the two graphs, drawn, with confidence bands, plus a plain-language
-  trajectory sentence ("under pressure, your quick thinking moves toward your own models and gets
-  more structured; given time, you stay with the data").
-- No composite "personality score" exists anywhere. The framework says systems are separable;
-  the report honors it.
-- Stated-revealed gaps are presented as findings with care ("you describe yourself as X; your
-  choices here looked like Y; that difference is worth knowing"), never as accusations of
-  self-ignorance. For minors this framing is reviewed with the ethics reader.
-
-## 9. Validation plan (what we owe the second opinion)
-
-Pre-registered pilot, target n = 300, stratified across high school, college, early workforce.
-
-1. **Mode elicitation check** (the falsifiable core): fast and slow parameter vectors must differ
-   within persons; latency separation must hold. Failure reverts Module A to single-graph.
-2. **Discriminant validity against intelligence**: administer a public-domain cognitive battery
-   (e.g., ICAR-16) alongside. Every S2 metric must correlate near zero with it (prespecified
-   |r| < .20). This is the empirical cash-out of preference-not-ability, and the single most
-   important number for the academic reviewer.
-3. **Convergent and discriminant mapping**: BFI-2, need-for-cognition, rational-experiential
-   inventory, trait EI, and a values measure. We predict moderate convergence where lineage
-   exists and demand separation where the framework claims novelty (S2 sourcing vs S3 attention
-   target; S1 risk appetite vs S2 stake slopes). The de novo stance governs the manuscript, not
-   the validation study; the validation study must name and measure the neighbors.
-4. **Test-retest** at four to six weeks (personality is non-static, but not week-noisy; target
-   r > .70 on baselines, with slopes allowed lower and reported honestly).
-5. **AI-coding reliability**: AI-human ICC ≥ .75; inter-AI agreement; fluency-audit pass.
-6. **Fairness**: DIF by gender, language background, and age band on every scored item; stake
-   salience calibration by cohort; leaderboard and audit mechanics reviewed for anxiety load in
-   the youngest band.
-7. **Criterion glimpse** (secondary): supervisor or teacher ratings and 3-month outcomes for a
-   subsample, purely exploratory at pilot scale.
-
-## 10. Known open problems, stated plainly
-
-- **Anchoring in the F-then-S design.** Accepted cost; partially checked by single-phase items.
-  If anchoring dominates, S-phase data degrades toward F echoes; the check will show it.
-- **Stake ceiling.** Points and visibility are real but bounded stakes; the theory's claims about
-  high-stakes migration are tested only in the range the instrument can ethically create.
-  Reports must scope claims to that range. The EMA companion reaches further into real life.
-- **The audit and dispute probes measure disposition toward an AI**, which may not transfer to
-  humans at full strength. Pilot compares probe behavior with SJT and message-draft behavior to
-  bound the transfer question.
-- **Five motives may not span the space.** The open prompt will surface residue; coding includes
-  an explicit "other" bucket, and if the bucket runs heavy, the motive list grows.
-- **Gaming.** Once stakes matter, some respondents optimize the image they project. The
-  process-tracing layer (shelf, tools, latency) is much harder to game than prose, which is a
-  main reason it is the spine. Detection analytics (implausible latency-code combinations) flag
-  rather than punish.
+- Continuous per-person stake-slopes (the most novel v1 promise) until phase 2 earns them.
+- The gamified economy and its engagement value; the review mechanic must carry stake salience
+  alone, and the stake-salience check tells us per person whether it did.
+- Real-world reach of the EMA companion in v1.
+- Some fast-mode purity: F items are cleaner than v1 but the mode claim now rests on load-task
+  and probe evidence, and if the pilot's Type-1 markers fail, Module A reverts to a single-graph
+  instrument as before.
 
 ## 11. Build order
 
-1. Author 24 Arena scenarios (8 decision types × 3 stake tiers) plus the trap pairs.
-2. Build the point economy and the two-phase interface with full process logging.
-3. Stand up the coding governance stack (dual coder, spans, fluency audit) on synthetic data.
-4. DRM conversational flow (Module B1) next; it is the least risky and independently useful.
-5. Modules C and D; ethics review pass for the probe scripts.
-6. Pilot, pre-registered, n = 300.
-
-The adversarial design review (simulated psychometrician, dual-process skeptic, fairness
-reviewer) belongs between steps 5 and 6, before a single real respondent, and before the real
-second opinion is spent.
+1. Prototype 3 Arena items + 1 DRM day with 5 teenagers; validate the burden table.
+2. Author full item set + Form B; ethics package to the external reader.
+3. Coding stack on synthetic data; channel-independence checks.
+4. Assemble sittings; internal dry runs; timing re-check.
+5. Pre-register; pilot 450 starts.
