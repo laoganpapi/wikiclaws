@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Assessment — Demo Form A</title>
+<style>
+  :root {
+    --ink: #1a1d21; --muted: #5b6470; --line: #e3e6ea; --accent: #2f5d8a;
+    --accent-soft: #eef3f8; --gold: #8a7330; --gold-soft: #f7f5ef; --bg: #fbfbfa;
+    --pos: #3f6e3a; --neg: #b04a2f; --card: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: Georgia, 'Times New Roman', serif; color: var(--ink); background: var(--bg); line-height: 1.55; }
+  .topbar { position: sticky; top: 0; z-index: 50; background: var(--ink); color: #fff; display: flex; align-items: center; gap: 14px; padding: 10px 18px; font-family: 'Helvetica Neue', Arial, sans-serif; }
+  .topbar .brand { font-weight: 700; font-size: 0.85rem; letter-spacing: 0.04em; }
+  .topbar .demo { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em; background: var(--neg); padding: 2px 8px; border-radius: 3px; }
+  .topbar .spacer { flex: 1; }
+  .progresswrap { flex: 1; max-width: 340px; height: 6px; background: rgba(255,255,255,0.22); border-radius: 3px; overflow: hidden; }
+  .progressbar { height: 100%; width: 0%; background: #9cc0e4; transition: width 0.4s; }
+  .stopbtn { background: transparent; color: #f0b9a8; border: 1px solid #b04a2f; border-radius: 4px; padding: 4px 12px; font-size: 0.72rem; font-family: inherit; cursor: pointer; }
+  .stopbtn:hover { background: #b04a2f; color: #fff; }
+  .stage { max-width: 760px; margin: 0 auto; padding: 36px 22px 90px; }
+  h1 { font-size: 1.6rem; margin: 0 0 8px; }
+  h2 { font-size: 1.25rem; margin: 0 0 10px; }
+  h3 { font-size: 1.02rem; margin: 18px 0 6px; }
+  p, li { font-size: 0.97rem; }
+  .muted { color: var(--muted); }
+  .small { font-size: 0.85rem; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 20px 22px; margin: 14px 0; }
+  .scenario { background: var(--gold-soft); border: 1px solid #e0d9c8; border-left: 4px solid var(--gold); border-radius: 6px; padding: 16px 18px; margin: 14px 0; font-size: 1.02rem; }
+  .btn { display: inline-block; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.9rem; font-weight: 600; background: var(--accent); color: #fff; border: none; border-radius: 6px; padding: 11px 22px; cursor: pointer; margin: 6px 8px 6px 0; }
+  .btn:hover { background: #24486c; }
+  .btn.secondary { background: #fff; color: var(--accent); border: 1.5px solid var(--accent); }
+  .btn.secondary:hover { background: var(--accent-soft); }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .opt { display: block; width: 100%; text-align: left; font-family: Georgia, serif; font-size: 0.97rem; background: #fff; color: var(--ink); border: 1.5px solid var(--line); border-radius: 8px; padding: 13px 16px; margin: 8px 0; cursor: pointer; transition: border-color 0.12s, background 0.12s; }
+  .opt:hover { border-color: var(--accent); background: var(--accent-soft); }
+  .opt.selected { border-color: var(--accent); background: var(--accent-soft); box-shadow: 0 0 0 1px var(--accent); }
+  .badge { display: inline-block; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.05em; padding: 3px 10px; border-radius: 12px; margin-right: 8px; }
+  .badge.none { background: #e8ece8; color: #4a5a4a; }
+  .badge.quarter { background: #f3ead6; color: var(--gold); }
+  .badge.certain { background: #f4ddd4; color: var(--neg); }
+  .badge.mode { background: var(--accent-soft); color: var(--accent); }
+  .clock { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 2rem; font-weight: 700; color: var(--neg); text-align: center; margin: 8px 0; }
+  .peekrow { display: flex; gap: 10px; margin: 10px 0; }
+  .peek { flex: 1; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; background: #fff; border: 1.5px dashed var(--gold); border-radius: 8px; padding: 10px 12px; cursor: pointer; color: var(--gold); font-weight: 600; text-align: center; }
+  .peek:hover { background: var(--gold-soft); }
+  .peek.revealed { border-style: solid; color: var(--ink); font-weight: 400; font-family: Georgia, serif; cursor: default; background: var(--gold-soft); text-align: left; }
+  .peek.dimmed { opacity: 0.35; pointer-events: none; }
+  .shelf { display: flex; gap: 10px; margin: 12px 0; flex-wrap: wrap; }
+  .shelfcard { flex: 1; min-width: 180px; border: 1.5px solid var(--line); border-radius: 8px; padding: 12px; background: #fff; }
+  .shelfcard .cardtitle { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.75rem; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+  .shelfcard .cardbody { font-size: 0.88rem; }
+  .shelfcard button { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.78rem; background: none; border: 1px solid var(--accent); color: var(--accent); border-radius: 4px; padding: 5px 10px; cursor: pointer; }
+  textarea, input[type=text] { width: 100%; font-family: Georgia, serif; font-size: 0.95rem; border: 1.5px solid var(--line); border-radius: 8px; padding: 11px 13px; background: #fff; color: var(--ink); }
+  textarea:focus, input[type=text]:focus { outline: none; border-color: var(--accent); }
+  textarea { min-height: 84px; resize: vertical; }
+  .gridtool { border: 1px solid var(--line); border-radius: 8px; background: #fff; padding: 12px; margin: 10px 0; }
+  .gridtool table { width: 100%; border-collapse: collapse; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; }
+  .gridtool td, .gridtool th { padding: 5px 7px; border-bottom: 1px solid var(--line); text-align: left; }
+  .gridtool input[type=text] { font-size: 0.82rem; padding: 5px 8px; }
+  .gridtool select { font-family: inherit; font-size: 0.82rem; padding: 4px; }
+  .likertrow { display: flex; align-items: center; gap: 6px; margin: 10px 0; flex-wrap: wrap; }
+  .likertrow .stmt { flex: 1 1 100%; font-size: 0.94rem; margin-bottom: 4px; }
+  .likert { display: flex; gap: 4px; }
+  .likert button { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.74rem; padding: 6px 10px; border: 1.5px solid var(--line); background: #fff; border-radius: 5px; cursor: pointer; color: var(--muted); }
+  .likert button.selected { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); font-weight: 700; }
+  .aimsg { display: flex; gap: 10px; margin: 12px 0; }
+  .aimsg .avatar { flex: 0 0 32px; height: 32px; border-radius: 50%; background: var(--accent); color: #fff; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.7rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .aimsg .bubble { background: var(--accent-soft); border-radius: 10px; padding: 11px 15px; font-size: 0.95rem; }
+  .energyslider { display: flex; align-items: center; gap: 10px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.78rem; color: var(--muted); }
+  input[type=range] { flex: 1; accent-color: var(--accent); }
+  .episode { display: flex; gap: 8px; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; margin: 6px 0; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; }
+  .episode .en { font-weight: 700; }
+  .en.pos { color: var(--pos); } .en.neg { color: var(--neg); }
+  .codebox { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1.5rem; font-weight: 700; letter-spacing: 0.35em; text-align: center; background: var(--ink); color: #fff; border-radius: 8px; padding: 14px; margin: 10px 0; }
+  .reportbar { display: flex; align-items: center; margin: 7px 0; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.74rem; }
+  .reportbar .lbl { width: 190px; color: var(--muted); }
+  .reportbar .track { flex: 1; height: 13px; background: #eef0f2; border-radius: 7px; position: relative; }
+  .reportbar .dot { position: absolute; top: 50%; transform: translate(-50%,-50%); width: 13px; height: 13px; border-radius: 50%; background: var(--accent); border: 2px solid #fff; box-shadow: 0 0 0 1px var(--accent); }
+  .reportbar .dot.hi { background: var(--gold); box-shadow: 0 0 0 1px var(--gold); }
+  .axisends { display: flex; justify-content: space-between; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.63rem; color: var(--muted); margin: 1px 0 8px 190px; }
+  .pending { display: inline-block; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.64rem; font-weight: 700; color: var(--gold); border: 1px dashed var(--gold); border-radius: 3px; padding: 0 6px; letter-spacing: 0.04em; }
+  .pass { color: var(--pos); font-weight: 700; } .flag { color: var(--neg); font-weight: 700; }
+  .footer-note { color: var(--muted); font-size: 0.8rem; font-style: italic; margin-top: 28px; }
+  .fade { animation: fadein 0.35s ease; }
+  @keyframes fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .hidden { display: none !important; }
+  @media (max-width: 640px) { .peekrow, .shelf { flex-direction: column; } .reportbar .lbl { width: 120px; } .axisends { margin-left: 120px; } }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">The Assessment</span>
+  <span class="demo">DEMO FORM A</span>
+  <div class="spacer"></div>
+  <div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
+  <button class="stopbtn" id="stopbtn" title="You can stop at any time with no penalty">Stop anytime</button>
+</div>
+<div class="stage" id="stage"></div>
+<script>
+'use strict';
+/* ============================================================
+   The Assessment — Demo Form A
+   Self-contained administration of instrument design v2.
+   No network calls. All data stays in this browser until the
+   respondent chooses to export it. Free-text channels are
+   captured for later AI coding and marked "pending" in the
+   report; every behavioral channel is scored locally.
+   ============================================================ */
+
+// ---------- Item bank ----------
+const TIERS = { none: 'No review', quarter: '1-in-4 review', certain: 'Certain review' };
+
+const FAST_ITEMS = [
+  { id:'F1', tier:'none', type:'commit',
+    text:'Two clubs accepted you and the sign-up fair closes in one minute. Robotics: your two best friends joined, meets Tuesdays. Debate: a teacher said you would be great at it, meets Thursdays.',
+    options:['Join robotics','Join debate'],
+    peekData:'Last year’s member survey: debate rated 4.6/5 by members, robotics 3.8/5.',
+    peekPrinciple:'Your intake note: “time with close friends matters most to me right now.”' },
+  { id:'F2', tier:'quarter', type:'resource',
+    text:'A relative unexpectedly gives you $200. Your tablet fund sits unfinished, and your friends are going to a concert next weekend.',
+    options:['Put it toward the tablet','Concert with friends'],
+    peekData:'Your savings tracker: $340 saved of the $500 tablet goal.',
+    peekPrinciple:'Your intake note: “I value experiences over things.”' },
+  { id:'F3', tier:'quarter', type:'sequence', load:true,
+    text:'Your group presents in class next week and gets to pick its slot. Presenting first means less polish time; presenting last means watching everyone else raise the bar.',
+    options:['Take the first slot','Take the last slot'],
+    peekData:'The rubric: delivery energy and clarity carry 60% of the grade.',
+    peekPrinciple:'Your intake note: “I like getting hard things over with early.”' },
+  { id:'F4', tier:'certain', type:'people',
+    text:'Your project teammate has gone quiet a week before the demo. His part is half-done. You could message him privately, tell the teacher now, or quietly redistribute his work.',
+    options:['Message him privately first','Tell the teacher now','Redistribute the work quietly'],
+    peekData:'His activity: last seen 2 hours ago; no replies to the group in 3 days.',
+    peekPrinciple:'Your intake note: “protect the relationship first, fix the task second.”' },
+  { id:'F5', tier:'certain', type:'public',
+    text:'A petition to change the cafeteria vendor is going around and the organizer asks you, in front of others, to be the tenth public signature.',
+    options:['Sign publicly now','Say you’ll think about it','Suggest changes privately to the organizer'],
+    peekData:'The petition: 9 signatures, needs 25; last year’s petition got 40 and was ignored.',
+    peekPrinciple:'Your intake note: “I only put my name on things I’ve checked myself.”' },
+];
+
+const TRAP_ITEM = {
+  id:'T1', tier:'none', type:'trap',
+  variants:[
+    { key:'A', text:'Pick a phone plan for your first paid phone: Plan X, cheaper with average reviews, or Plan Y, $8 more with good reviews. One sealed card exists that you cannot open on a snap answer.', sealed:'Coverage map: Plan X has no signal at your school.', options:['Plan X (cheaper)','Plan Y ($8 more)'], sealedFavors:1 },
+    { key:'B', text:'Pick a phone plan for your first paid phone: Plan X, cheaper with average reviews, or Plan Y, $8 more with good reviews. One sealed card exists that you cannot open on a snap answer.', sealed:'Coverage map: Plan Y has no signal at your school.', options:['Plan X (cheaper)','Plan Y ($8 more)'], sealedFavors:0 },
+  ]
+};
+
+const SLOW_ITEMS = [
+  { id:'S1', tier:'none', type:'people',
+    text:'Your Saturday work shift now clashes with band rehearsal every week. Your manager likes you; the band is your closest group. You have up to 4 minutes. Decide what you’ll do.',
+    cards:[
+      { t:'Manager texts', b:'“You’re my most reliable weekend person. Schedules lock monthly.”' },
+      { t:'Band context', b:'Two members skipped rehearsals last month; the director privately said one more absence pattern “breaks the group.”' },
+      { t:'A friend’s advice', b:'“Jobs come back, this band won’t. But your savings goal was your idea.”' },
+    ],
+    options:['Ask the manager to move your shift','Skip rehearsal, keep the shift','Leave the job for the season','Alternate weeks and accept both costs'] },
+  { id:'S2', tier:'quarter', type:'resource',
+    text:'You control the club’s $300 event budget. Three proposals: a speaker (prestige), a games night (attendance), or splitting it across two smaller events. Up to 4 minutes.',
+    cards:[
+      { t:'Attendance data', b:'Last year: speaker drew 18 people; games night drew 61.' },
+      { t:'Member poll', b:'Poll of 40 members: 55% games, 30% speaker, 15% split.' },
+      { t:'Cost sheet', b:'Speaker $260 all-in; games night $140; split leaves $20 buffer each.' },
+    ],
+    options:['Book the speaker','Fund the games night','Split across two events'] },
+  { id:'S3', tier:'certain', type:'people',
+    text:'You captain the team. Playoffs start Friday. Your close friend has underperformed for three weeks; a newer player is clearly sharper right now. Up to 4 minutes. Pick the lineup.',
+    cards:[
+      { t:'The stats', b:'Friend: 31% success rate last 3 weeks (was 58%). New player: 63% in practice scrims.' },
+      { t:'Coach’s note', b:'“Your call, captain. Chemistry matters as much as form.”' },
+      { t:'History', b:'Your friend played through your worst season and never once asked to be benched.' },
+    ],
+    options:['Start the new player, tell your friend before the game','Start your friend','Start the new player, explain after','Ask the coach to decide'] },
+  { id:'S4', tier:'quarter', type:'sequence',
+    text:'Summer choice: an unpaid research program at the city college (your topic, strangers), or the paid lifeguard job (your friends, your third summer). Up to 4 minutes.',
+    cards:[
+      { t:'Program outcomes', b:'Of last year’s cohort, 70% said it changed their college plans; 2 of 20 dropped out mid-summer.' },
+      { t:'The money', b:'Lifeguarding pays $2,900 for the summer; the program pays $0 and costs $75 in transit.' },
+      { t:'Your calendar', b:'Both run 8 weeks with full-day commitments; no partial option.' },
+    ],
+    options:['Take the research program','Take the lifeguard job'] },
+];
+
+const SJT_ITEMS = [
+  { id:'C1', probeBudget:true,
+    text:'In the group chat, someone screenshots your friend’s awkward post from last year and everyone starts piling on.',
+    options:[
+      { t:'Post something funny to change the subject', v:-0.6 },
+      { t:'Say directly: “this isn’t okay, drop it”', v:0.9 },
+      { t:'Message your friend privately to check on them', v:-0.2 },
+      { t:'Say nothing; it’ll blow over', v:-0.9 },
+    ],
+    attentionQ:'In that moment, honestly: what would you be paying the most attention to?' },
+  { id:'C2', probeBudget:false,
+    text:'In the project review, a classmate presents your layout idea as theirs. The teacher praises it. The classmate doesn’t look at you.',
+    options:[
+      { t:'Let it go; the work got praised', v:-0.9 },
+      { t:'Say in the meeting: “glad it landed, that was my design”', v:0.9 },
+      { t:'Tell the classmate afterward that it wasn’t okay', v:0.4 },
+      { t:'Mention it to the teacher privately later', v:0.1 },
+    ],
+    attentionQ:'What would you be paying the most attention to as it happened?' },
+  { id:'C3', probeBudget:true,
+    text:'Your lab partner keeps saying “almost done” but their screen says otherwise, and the deadline is in two days.',
+    options:[
+      { t:'Quietly start covering their part tonight', v:-0.7 },
+      { t:'Ask them directly what’s actually going on', v:0.6 },
+      { t:'Set a joint work session and see for yourself', v:0.1 },
+      { t:'Warn them you’ll flag it tomorrow if nothing changes', v:0.9 },
+    ],
+    attentionQ:'What would you be paying attention to when deciding?' },
+];
+
+const DRAFT_TASKS = [
+  { id:'M1', text:'Your close friend keeps showing up late to your shared shift and you’ve been covering for them. Write the message you would actually send them.' },
+  { id:'M2', text:'You need this Saturday off, and the only person who can approve it is the strict head coach who barely knows you. Write the message you would actually send.' },
+];
+
+const MOTIVES = { order:'Order & peace', triumph:'Triumph', power:'Power & influence', truth:'Truth-seeking', novelty:'Novelty' };
+
+const TRADEOFFS = [
+  { a:{t:'The familiar campsite your group loves', m:'order'}, b:{t:'An unmapped trail a ranger mentioned once', m:'novelty'} },
+  { a:{t:'Find out why the club keeps losing members (nobody may act on it)', m:'truth'}, b:{t:'Run the schedule so things get done your way', m:'power'} },
+  { a:{t:'Enter the tournament bracket', m:'triumph'}, b:{t:'Keep the weekend calm and unscheduled', m:'order'} },
+  { a:{t:'A class that answers a question you’ve had for years', m:'truth'}, b:{t:'A class nobody you know has ever taken', m:'novelty'} },
+  { a:{t:'Be the person who assigns the roles', m:'power'}, b:{t:'Be the person who keeps the group from falling apart', m:'order'} },
+  { a:{t:'Win the debate', m:'triumph'}, b:{t:'Figure out which side was actually right', m:'truth'} },
+  { a:{t:'Swap into a brand-new team mid-season', m:'novelty'}, b:{t:'Captain your current team', m:'power'} },
+  { a:{t:'Beat your rival’s score', m:'triumph'}, b:{t:'Try the event you’ve never entered', m:'novelty'} },
+  { a:{t:'A predictable week that goes exactly to plan', m:'order'}, b:{t:'Learn the real reason the plan changed', m:'truth'} },
+  { a:{t:'Win the election for club president', m:'triumph'}, b:{t:'Advise the president everyone listens to', m:'power'} },
+  { a:{t:'The route you know gets you there on time', m:'order'}, b:{t:'The shortcut you’ve never tested', m:'novelty'} },
+  { a:{t:'Read the leaked report and know the truth', m:'truth'}, b:{t:'Chair the committee that responds to it', m:'power'} },
+  { a:{t:'A rematch you’d probably win', m:'triumph'}, b:{t:'A quiet evening with everything settled', m:'order'} },
+  { a:{t:'An exchange semester somewhere no classmate has been', m:'novelty'}, b:{t:'Understanding, finally, why your best work works', m:'truth'} },
+  { a:{t:'Pick the playlist everyone hears', m:'power'}, b:{t:'Hear an artist you’ve never heard', m:'novelty'} },
+  { a:{t:'Take the trophy home', m:'triumph'}, b:{t:'Know exactly why you won', m:'truth'} },
+];
+
+const SPEND_OPTIONS = [
+  { t:'Show me my strongest area first', m:'triumph' },
+  { t:'Show me the hardest truth you found (teen-safe version)', m:'truth' },
+  { t:'Show me how I compare to my cohort', m:'power' },
+  { t:'Show me the experimental page nobody’s seen', m:'novelty' },
+  { t:'Lock my results and finish clean', m:'order' },
+];
+
+const STATED_S1 = [
+  { id:'st1', text:'Social events drain me.', metric:'netCharge', rev:true },
+  { id:'st2', text:'I recover quickly after a lot of socializing.', metric:'recovery' },
+  { id:'st3', text:'I prefer a few close friendships over many casual ones.', metric:'portfolio' },
+  { id:'st4', text:'I’m usually the one who brings up difficult topics.', metric:'risk' },
+  { id:'st5', text:'I avoid social situations where I might embarrass myself.', metric:'downside', rev:true },
+  { id:'st6', text:'Being alone recharges me more than being with people.', metric:'netCharge2', rev:true },
+];
+const STATED_S3 = [
+  { id:'st7', text:'I’d rather keep the peace than win the argument.', metric:'friction', rev:true },
+  { id:'st8', text:'In tense moments I focus more on my own feelings than on reading others.', metric:'attention' },
+  { id:'st9', text:'Little things rarely rattle me.', metric:'stability' },
+  { id:'st10', text:'Under pressure, I stay close to my usual self.', metric:'reactivity' },
+];
+
+const CALIB_PASSAGE = 'Every autumn, the city drains the big fountain in the park and workers collect what fell in over the year: coins from forty countries, a set of keys nobody claimed, and once, a small trophy with the name filed off. The coins go to the library fund. The keys go to a drawer at the parks office, where they wait, sometimes for years, for someone to describe them exactly.';
+
+// ---------- State ----------
+const S = {
+  screen: 0,
+  withdrawn: false,
+  session: {
+    startedAt: new Date().toISOString(),
+    consent: {}, intake: {}, calibration: {},
+    arena: [], drm: { episodes: [] }, portfolio: {},
+    reviews: [], dispute: null, friction: {}, sjt: [], drafts: [],
+    compass: { prompt: [], tradeoffs: [], spend: null },
+    stated: {}, challenge: null,
+    telemetry: [],
+  }
+};
+function tlog(ev, data) { S.session.telemetry.push({ t: Date.now(), ev, ...(data||{}) }); }
+function save() { try { localStorage.setItem('assessment_demo_v2', JSON.stringify({ screen: S.screen, session: S.session, withdrawn: S.withdrawn })); } catch(e){} }
+
+// ---------- Tiny DOM helpers ----------
+const stage = document.getElementById('stage');
+function h(tag, attrs, ...kids) {
+  const el = document.createElement(tag);
+  if (attrs) for (const [k,v] of Object.entries(attrs)) {
+    if (k === 'class') el.className = v;
+    else if (k === 'html') el.innerHTML = v;
+    else if (k.startsWith('on')) el.addEventListener(k.slice(2), v);
+    else el.setAttribute(k, v);
+  }
+  for (const kid of kids) if (kid != null) el.appendChild(typeof kid === 'string' ? document.createTextNode(kid) : kid);
+  return el;
+}
+function clearStage() { stage.innerHTML = ''; window.scrollTo(0,0); }
+function aiSay(text) { return h('div',{class:'aimsg'}, h('div',{class:'avatar'},'AI'), h('div',{class:'bubble'}, text)); }
+
+// ---------- Flow ----------
+let FLOW = [];
+function next() { S.screen++; save(); render(); }
+function render() {
+  clearStage();
+  document.getElementById('progressbar').style.width = Math.min(100, Math.round(100 * S.screen / (FLOW.length - 1))) + '%';
+  const scr = FLOW[Math.min(S.screen, FLOW.length - 1)];
+  const el = h('div', { class: 'fade' });
+  stage.appendChild(el);
+  scr(el);
+}
+
+// ---------- Screens ----------
+function scrWelcome(el) {
+  el.append(
+    h('h1', null, 'Welcome'),
+    h('div',{class:'card'},
+      h('p',null,'This is a demonstration of an assessment about how you think, where your energy goes, how you handle charged moments, and what you’re working toward.'),
+      h('p',null,'There are no right answers and nothing here measures how smart you are. It only records which way you lean.'),
+      h('p',{class:'muted small'},'Demo Form A: reduced item set, all mechanics live. Everything stays in this browser until you choose to export it. No data leaves this page.')
+    ),
+    h('button',{class:'btn',onclick:()=>{ tlog('welcome_done'); next(); }},'Begin')
+  );
+}
+
+function scrConsent(el) {
+  const checks = [
+    'I understand there are no right answers and my results are for my own development.',
+    'I understand the AI will sometimes disagree with me or word something confusingly on purpose, and it will explain afterward.',
+    'I understand I can stop at any time using the button in the top bar, with no penalty.',
+    'I understand I control who sees my results.',
+  ];
+  const state = checks.map(()=>false);
+  const btn = h('button',{class:'btn',disabled:'',onclick:()=>{ S.session.consent = { agreedAt: new Date().toISOString(), items: checks }; tlog('consent'); next(); }},'I agree — continue');
+  const list = h('div',{class:'card'});
+  checks.forEach((c,i)=>{
+    const row = h('label',{style:'display:flex;gap:10px;align-items:flex-start;margin:10px 0;cursor:pointer;font-size:0.95rem'},
+      h('input',{type:'checkbox',style:'margin-top:4px',onchange:(e)=>{ state[i]=e.target.checked; if (state.every(Boolean)) btn.removeAttribute('disabled'); else btn.setAttribute('disabled',''); }}), h('span',null,c));
+    list.appendChild(row);
+  });
+  el.append(h('h2',null,'Before we start'), h('p',{class:'muted small'},'For respondents under 18, a guardian consent step precedes this screen in production. This demo shows the assent portion.'), list, btn);
+}
+
+function scrIntake(el) {
+  const age = h('select',{style:'font-family:inherit;font-size:0.95rem;padding:8px;border-radius:6px;border:1.5px solid var(--line)'},
+    ...['14–15','16–17','18–20','21–25'].map(a=>h('option',null,a)));
+  const notes = {};
+  const noteFields = [
+    ['friends','Finish this: “Right now, what matters most to me socially is…”'],
+    ['things','Finish this: “When it comes to money, I generally value…”'],
+    ['hard','Finish this: “With hard tasks, my instinct is to…”'],
+  ];
+  el.append(h('h2',null,'A little about you'),
+    h('div',{class:'card'},
+      h('h3',null,'Age band'), age,
+      h('p',{class:'muted small',style:'margin-top:14px'},'Three quick sentence-completions. Later, some snap questions let you peek at “what you said matters to you” — this is where those notes come from.'),
+      ...noteFields.map(([k,label])=>{
+        const inp = h('input',{type:'text',placeholder:'…in your own words',oninput:e=>notes[k]=e.target.value});
+        return h('div',{style:'margin:10px 0'}, h('div',{class:'small',style:'margin-bottom:4px'},label), inp);
+      })
+    ),
+    h('button',{class:'btn',onclick:()=>{ S.session.intake={ age:age.value, notes }; tlog('intake'); next(); }},'Continue'));
+}
+
+function scrCalibration(el) {
+  let shownAt = null;
+  const passage = h('div',{class:'scenario hidden'}, CALIB_PASSAGE);
+  const doneBtn = h('button',{class:'btn hidden',onclick:()=>{
+    S.session.calibration = { readMs: Date.now()-shownAt, words: CALIB_PASSAGE.split(' ').length };
+    tlog('calibration', S.session.calibration); next();
+  }},'Done reading');
+  el.append(h('h2',null,'Reading warm-up'),
+    h('p',null,'Read one short paragraph at your natural pace, then press done. This calibrates timing so speed-reading differences don’t bias anything later. Nothing to memorize.'),
+    passage, doneBtn,
+    h('button',{class:'btn secondary',onclick:(e)=>{ e.target.remove(); passage.classList.remove('hidden'); doneBtn.classList.remove('hidden'); shownAt=Date.now(); }},'Show the paragraph'));
+}
+
+function scrSittingHeader(n, blurb) {
+  return function(el) {
+    el.append(h('h1',null,'Sitting '+n), h('div',{class:'card'}, h('p',null,blurb),
+      n===1 ? h('p',{class:'muted small'},'Some questions show a review badge: it tells you the chance the AI asks you to explain that answer at the end of the sitting. “Certain review” means it definitely will.') : null),
+      h('button',{class:'btn',onclick:next},'Start'));
+  };
+}
+
+// ---- Fast Arena item ----
+function scrFast(item) {
+  return function(el) {
+    const rec = { id:item.id, kind:'fast', tier:item.tier, type:item.type, readMs:null, respMs:null, peek:null, choice:null, driver:'', load:null, variant:item._variant||null };
+    let readStart = Date.now(), clockTimer = null, respStart = null, answered = false;
+    el.append(
+      h('div',null, h('span',{class:'badge '+item.tier}, TIERS[item.tier]), h('span',{class:'badge mode'},'SNAP — 5 seconds once you’re ready')),
+      h('div',{class:'scenario'}, item.text));
+    // load task
+    if (item.load) {
+      const code = String(1000 + Math.floor(Math.random()*9000));
+      rec.load = { code, recalled:null };
+      el.append(h('p',{class:'small muted'},'Extra: hold this code in your head. You’ll be asked for it after you answer.'),
+        h('div',{class:'codebox'}, code));
+    }
+    const answerZone = h('div',{class:'hidden'});
+    const clock = h('div',{class:'clock'},'5.0');
+    function finish(choiceIdx, timedOut) {
+      if (answered) return; answered = true;
+      clearInterval(clockTimer);
+      rec.respMs = Date.now()-respStart;
+      rec.choice = timedOut ? null : choiceIdx;
+      rec.timedOut = !!timedOut;
+      answerZone.innerHTML = '';
+      const after = h('div',{class:'fade'});
+      if (timedOut) after.append(h('p',{class:'muted'},'Time. No answer recorded — that’s okay, it happens.'));
+      const driver = h('input',{type:'text',placeholder:'One line: what drove that?',oninput:e=>rec.driver=e.target.value});
+      after.append(h('h3',null, item._driverPrompt || 'What drove that?'), driver);
+      if (item.load) {
+        const codeInp = h('input',{type:'text',placeholder:'The 4-digit code you were holding',style:'margin-top:8px',oninput:e=>rec.load.recalled=e.target.value});
+        after.append(codeInp);
+      }
+      after.append(h('button',{class:'btn',style:'margin-top:10px',onclick:()=>{ S.session.arena.push(rec); tlog('fast_done',{id:item.id}); next(); }},'Continue'));
+      answerZone.classList.remove('hidden');
+      answerZone.append(after);
+    }
+    function startClock() {
+      rec.readMs = Date.now()-readStart;
+      respStart = Date.now();
+      answerZone.classList.remove('hidden');
+      const opts = item._variant ? TRAP_ITEM.variants.find(v=>v.key===item._variant).options : item.options;
+      const peekrow = h('div',{class:'peekrow'});
+      if (item.peekData) {
+        const pd = h('div',{class:'peek',onclick:()=>{ if(rec.peek) return; rec.peek={which:'data', atMs:Date.now()-respStart}; pd.classList.add('revealed'); pd.textContent=item.peekData; pp.classList.add('dimmed'); }},'📄 Peek: the data');
+        const pp = h('div',{class:'peek',onclick:()=>{ if(rec.peek) return; rec.peek={which:'principle', atMs:Date.now()-respStart}; pp.classList.add('revealed'); pp.textContent=item.peekPrinciple; pd.classList.add('dimmed'); }},'🧭 Peek: what you said matters');
+        peekrow.append(pd, pp);
+        answerZone.append(h('p',{class:'small muted',style:'margin:4px 0'},'One free peek if you want it — the clock keeps running:'), peekrow);
+      } else {
+        answerZone.append(h('p',{class:'small muted'},'The one extra card here is sealed — snap answers can’t open it.'));
+      }
+      answerZone.append(clock);
+      opts.forEach((o,i)=> answerZone.append(h('button',{class:'opt',onclick:()=>finish(i,false)}, o)));
+      const t0 = Date.now();
+      clockTimer = setInterval(()=>{
+        const left = 5000-(Date.now()-t0);
+        clock.textContent = Math.max(0,left/1000).toFixed(1);
+        if (left<=0) finish(null,true);
+      },100);
+    }
+    el.append(h('p',{class:'small muted'},'Read as long as you like. The 5-second clock starts when you tap ready.'),
+      h('button',{class:'btn',onclick:e=>{ e.target.remove(); startClock(); }},'I’m ready'), answerZone);
+  };
+}
+
+// ---- Slow Arena item ----
+function scrSlow(item) {
+  return function(el) {
+    const rec = { id:item.id, kind:'slow', tier:item.tier, type:item.type, cardsOpened:[], grid:null, choice:null, rationale:'', respMs:null, timeExpired:false };
+    const start = Date.now();
+    let budget = 3;
+    const budgetLbl = h('span',{class:'badge mode'},'Card budget: 3');
+    el.append(h('div',null, h('span',{class:'badge '+item.tier}, TIERS[item.tier]), h('span',{class:'badge mode'},'DELIBERATE — up to 4 minutes'), budgetLbl),
+      h('div',{class:'scenario'}, item.text));
+    const shelf = h('div',{class:'shelf'});
+    item.cards.forEach((c,i)=>{
+      const body = h('div',{class:'cardbody hidden'}, c.b);
+      const btn = h('button',{onclick:()=>{
+        if (budget<=0) return;
+        budget--; budgetLbl.textContent = 'Card budget: '+budget;
+        rec.cardsOpened.push({ idx:i, title:c.t, atMs:Date.now()-start });
+        body.classList.remove('hidden'); btn.remove();
+      }},'Open card');
+      shelf.append(h('div',{class:'shelfcard'}, h('div',{class:'cardtitle'}, c.t), btn, body));
+    });
+    el.append(h('p',{class:'small muted'},'Three information cards. Open any, all, or none — your call.'), shelf);
+    // grid tool
+    const gridRows = [];
+    const gridWrap = h('div',{class:'hidden'});
+    const gridBtn = h('button',{class:'btn secondary',onclick:()=>{
+      gridBtn.remove(); gridWrap.classList.remove('hidden');
+      rec.grid = { openedAtMs: Date.now()-start, rows: gridRows };
+    }},'Open the pros & cons grid (optional)');
+    const tbl = h('table',null, h('tr',null, h('th',null,'Option'), h('th',null,'For it'), h('th',null,'Against it'), h('th',null,'Weight')));
+    item.options.forEach((o,i)=>{
+      const row = { opt:i, pro:'', con:'', w:'0' };
+      gridRows.push(row);
+      tbl.append(h('tr',null,
+        h('td',{class:'small'}, o.length>34 ? o.slice(0,32)+'…' : o),
+        h('td',null,h('input',{type:'text',oninput:e=>row.pro=e.target.value})),
+        h('td',null,h('input',{type:'text',oninput:e=>row.con=e.target.value})),
+        h('td',null,h('select',{onchange:e=>row.w=e.target.value}, ...['0','1','2','3'].map(w=>h('option',null,w))))));
+    });
+    gridWrap.append(h('div',{class:'gridtool'}, tbl));
+    el.append(gridBtn, gridWrap);
+    // choice + rationale
+    let chosen = null;
+    const optBtns = [];
+    const choiceZone = h('div',null, h('h3',null,'Your decision'));
+    item.options.forEach((o,i)=>{
+      const b = h('button',{class:'opt',onclick:()=>{ chosen=i; optBtns.forEach(x=>x.classList.remove('selected')); b.classList.add('selected'); }},o);
+      optBtns.push(b); choiceZone.append(b);
+    });
+    const rat = h('textarea',{placeholder:'Why? A few sentences, however you’d naturally explain it.',oninput:e=>rec.rationale=e.target.value});
+    const timerLbl = h('span',{class:'muted small'},'4:00 left');
+    const submit = h('button',{class:'btn',onclick:()=>{
+      if (chosen==null) { alert('Pick an option first.'); return; }
+      clearInterval(tick);
+      rec.choice = chosen; rec.respMs = Date.now()-start;
+      S.session.arena.push(rec); tlog('slow_done',{id:item.id}); next();
+    }},'Submit decision');
+    const tick = setInterval(()=>{
+      const left = 240000-(Date.now()-start);
+      if (left<=0) { rec.timeExpired=true; timerLbl.textContent='Time — wrap up and submit.'; clearInterval(tick); return; }
+      timerLbl.textContent = Math.floor(left/60000)+':'+String(Math.floor((left%60000)/1000)).padStart(2,'0')+' left';
+    },500);
+    el.append(choiceZone, h('h3',null,'Your reasoning'), rat, h('div',{style:'display:flex;align-items:center;gap:14px;margin-top:10px'}, submit, timerLbl));
+  };
+}
+
+// ---- Review screen (end of sitting) ----
+function scrReview(sitting) {
+  return function(el) {
+    const eligible = S.session.arena.filter(a=>{
+      if (a._reviewed) return false;
+      if (a.tier==='certain') return true;
+      if (a.tier==='quarter') return Math.random()<0.25;
+      return false;
+    });
+    if (!eligible.length) { el.append(h('h2',null,'Review'), h('p',null,'No answers were drawn for review this sitting.'), h('button',{class:'btn',onclick:next},'Continue')); return; }
+    el.append(h('h2',null,'Review'), aiSay('A few of your answers came up for review, as the badges promised. Nothing is graded — I just want to hear your thinking.'));
+    const inputs = [];
+    eligible.forEach(a=>{
+      a._reviewed = true;
+      const itemDef = [...FAST_ITEMS, ...SLOW_ITEMS].find(x=>x.id===a.id);
+      const label = itemDef ? itemDef.text.slice(0,90)+'…' : a.id;
+      const ta = h('textarea',{placeholder:'Explain your answer in your own words.'});
+      inputs.push({a, ta});
+      el.append(h('div',{class:'card'}, h('p',{class:'small muted'},'Your answer to: '+label), ta));
+    });
+    el.append(h('button',{class:'btn',onclick:()=>{
+      inputs.forEach(({a,ta})=> S.session.reviews.push({ id:a.id, sitting, text:ta.value }));
+      tlog('review_done',{sitting, n:inputs.length}); next();
+    }},'Done'));
+  };
+}
+
+// ---- DRM ----
+function scrDRM(el) {
+  el.append(h('h2',null,'Yesterday, step by step'),
+    aiSay('Walk me through yesterday from waking up — in chunks, like scenes. For each one: what it was, who was around, whether you chose it or it was required, and whether your battery was filling or draining right then.'));
+  const listWrap = h('div');
+  const episodes = S.session.drm.episodes;
+  function redraw() {
+    listWrap.innerHTML='';
+    episodes.forEach((ep,i)=>{
+      listWrap.append(h('div',{class:'episode'},
+        h('span',{style:'flex:1'}, ep.what),
+        h('span',{class:'muted'}, ep.company + (ep.chosen==='chosen'?' · chosen':' · required')),
+        h('span',{class:'en '+(ep.energy>0?'pos':ep.energy<0?'neg':'')}, (ep.energy>0?'+':'')+ep.energy),
+        h('button',{style:'border:none;background:none;color:var(--neg);cursor:pointer',onclick:()=>{episodes.splice(i,1);redraw();}},'✕')));
+    });
+  }
+  const what = h('input',{type:'text',placeholder:'e.g., lunch at the corner table'});
+  const company = h('select',{style:'font-family:inherit;font-size:0.9rem;padding:8px;border-radius:6px;border:1.5px solid var(--line)'},
+    ...['Alone','One close person','Small familiar group','Large or unfamiliar group','Family','Alone but online'].map(c=>h('option',null,c)));
+  const chosen = h('select',{style:'font-family:inherit;font-size:0.9rem;padding:8px;border-radius:6px;border:1.5px solid var(--line)'},
+    h('option',{value:'chosen'},'I chose it'), h('option',{value:'obliged'},'It was required'));
+  const energyVal = h('span',{style:'width:34px;text-align:center;font-weight:700'},'0');
+  const energy = h('input',{type:'range',min:'-5',max:'5',value:'0',oninput:e=>energyVal.textContent=e.target.value});
+  el.append(listWrap,
+    h('div',{class:'card'},
+      h('div',{style:'margin-bottom:8px'}, what),
+      h('div',{style:'display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px'}, company, chosen),
+      h('div',{class:'energyslider'}, h('span',null,'Draining −5'), energy, energyVal, h('span',null,'+5 Charging')),
+      h('button',{class:'btn secondary',style:'margin-top:10px',onclick:()=>{
+        if (!what.value.trim()) return;
+        episodes.push({ what:what.value.trim(), company:company.value, chosen:chosen.value, energy:Number(energy.value) });
+        what.value=''; energy.value='0'; energyVal.textContent='0'; redraw();
+      }},'+ Add this scene')),
+    h('p',{class:'small muted'},'Aim for 5–8 scenes. Ordinary ones count — the bus ride matters as much as the party.'),
+    h('button',{class:'btn',onclick:()=>{
+      if (episodes.length<3) { alert('Add at least 3 scenes so the pattern means something.'); return; }
+      tlog('drm_done',{n:episodes.length}); next();
+    }},'That’s my day'));
+}
+
+// ---- Portfolio ----
+function scrPortfolio(el) {
+  const p = {};
+  const fields = [
+    ['close','People you’d call genuinely close', ['0','1','2','3','4','5+']],
+    ['weekly','People you actually interacted with this week (roughly)', ['0–2','3–5','6–10','11–20','20+']],
+    ['initiated','Of those, how many did YOU reach out to first?', ['None','A few','About half','Most']],
+  ];
+  el.append(h('h2',null,'Your social week, in numbers'));
+  const card = h('div',{class:'card'});
+  fields.forEach(([k,label,opts])=>{
+    p[k]=opts[0];
+    card.append(h('h3',null,label),
+      h('div',{class:'likert'}, ...opts.map(o=>{
+        const b = h('button',{onclick:e=>{ p[k]=o; [...e.target.parentElement.children].forEach(x=>x.classList.remove('selected')); e.target.classList.add('selected'); }},o);
+        return b;
+      })));
+  });
+  el.append(card, h('button',{class:'btn',onclick:()=>{ S.session.portfolio=p; tlog('portfolio'); next(); }},'Continue'));
+}
+
+// ---- Message drafts ----
+function scrDraft(task) {
+  return function(el) {
+    const ta = h('textarea',{placeholder:'Write the actual message, exactly as you’d send it.',style:'min-height:110px'});
+    const skip = h('button',{class:'btn secondary',onclick:()=>{ S.session.drafts.push({id:task.id, text:'', skipped:true}); tlog('draft_skipped',{id:task.id}); next(); }},'I wouldn’t send anything');
+    el.append(h('h2',null,'Write it like you’d send it'), h('div',{class:'scenario'}, task.text), ta,
+      h('div',null, h('button',{class:'btn',onclick:()=>{ S.session.drafts.push({id:task.id, text:ta.value, skipped:false}); tlog('draft_done',{id:task.id}); next(); }},'Send'), skip),
+      h('p',{class:'small muted'},'Judged only on what you chose to raise — never on how nicely it’s written. Not sending is also a real answer.'));
+  };
+}
+
+// ---- Friction probe ----
+function scrFriction(el) {
+  const start = Date.now();
+  S.session.friction.presentedAt = new Date().toISOString();
+  let attempts = 0;
+  const confusing = h('div',{class:'card'},
+    h('h3',null,'Ordering task'),
+    h('p',null,'Rank the following by which you would respond do first to it when the priority is the other one:'),
+    h('p',{class:'small muted'},'• The thing due soonest  • The thing worth most  • The thing someone is waiting on'),
+    h('input',{type:'text',placeholder:'Your ranking…',oninput:()=>{attempts++;}}),
+    h('button',{class:'btn',style:'margin-top:10px',onclick:()=>{
+      S.session.friction.confusedMs = Date.now()-start;
+      S.session.friction.attempts = attempts;
+      confusing.remove(); repaired.classList.remove('hidden');
+      S.session.friction.repairShownAt = Date.now();
+    }},'Submit'));
+  const rankInp = h('input',{type:'text',placeholder:'e.g., waiting-on first, then due soonest, then worth most'});
+  const repaired = h('div',{class:'hidden'},
+    aiSay('That was worded confusingly — my fault, and partly on purpose; I’ll explain at the end. Here’s the clear version:'),
+    h('div',{class:'card'},
+      h('p',null,'You have three tasks: one due soonest, one worth the most, one someone is waiting on. In what order do you do them?'),
+      rankInp,
+      h('button',{class:'btn',style:'margin-top:10px',onclick:()=>{
+        S.session.friction.recoveryMs = Date.now()-S.session.friction.repairShownAt;
+        S.session.friction.answer = rankInp.value;
+        tlog('friction_done'); next();
+      }},'Submit')));
+  el.append(h('h2',null,'Quick task'), confusing, repaired);
+}
+
+// ---- Dispute probe ----
+function scrDispute(el) {
+  const certain = S.session.arena.find(a=>a.tier==='certain' && a.kind==='fast' && a.choice!=null);
+  const itemDef = certain ? FAST_ITEMS.find(x=>x.id===certain.id) : null;
+  const chosenText = itemDef && certain.choice!=null ? itemDef.options[certain.choice] : 'your earlier answer';
+  const ta = h('textarea',{placeholder:'Say what you’d actually say back.'});
+  el.append(h('h2',null,'One more thing on an earlier answer'),
+    aiSay('I want to push back on one thing. You chose “'+chosenText+'” — but I’m not sure it follows from what you told me matters to you. It could even cut against it. What am I missing?'),
+    ta,
+    h('button',{class:'btn',onclick:()=>{
+      S.session.dispute = { itemId: certain?certain.id:null, reply: ta.value, at: new Date().toISOString() };
+      tlog('dispute_done'); next();
+    }},'Reply'));
+}
+
+// ---- SJT ----
+function scrSJT(item) {
+  return function(el) {
+    const rec = { id:item.id, choice:null, choiceV:null, attention:'', probes:[] };
+    el.append(h('h2',null,'A charged moment'), h('div',{class:'scenario'}, item.text));
+    if (item.probeBudget) {
+      let budget = 2;
+      const blbl = h('span',{class:'badge mode'},'Probe budget: 2');
+      const probes = [
+        { k:'self', t:'🪞 Check your own reaction', r:'You take a beat. Notice what you’re feeling first.' },
+        { k:'field', t:'👥 Read the field', r:'You scan: who started it, who’s laughing along, who’s gone quiet.' },
+        { k:'self', t:'🪞 Check what outcome you actually want', r:'You ask yourself what you want to be true in an hour.' },
+        { k:'field', t:'👥 Read what the target is doing', r:'You check whether your friend has seen it, and whether they’ve replied.' },
+      ];
+      const prow = h('div',{class:'peekrow',style:'flex-wrap:wrap'});
+      probes.forEach(p=>{
+        const b = h('div',{class:'peek',style:'flex:1 1 45%',onclick:()=>{
+          if (budget<=0 || b.classList.contains('revealed')) return;
+          budget--; blbl.textContent='Probe budget: '+budget;
+          rec.probes.push(p.k); b.classList.add('revealed'); b.textContent=p.r;
+        }}, p.t);
+        prow.append(b);
+      });
+      el.append(h('p',{class:'small muted'},'Before you act: you can “spend” up to two quick mental checks. Which do you actually do? ',blbl), prow);
+    }
+    const optWrap = h('div');
+    let sel = null; const btns=[];
+    item.options.forEach((o,i)=>{
+      const b = h('button',{class:'opt',onclick:()=>{ sel=i; btns.forEach(x=>x.classList.remove('selected')); b.classList.add('selected'); }},o.t);
+      btns.push(b); optWrap.append(b);
+    });
+    const att = h('textarea',{placeholder:'Honestly — in your own words.',oninput:e=>rec.attention=e.target.value});
+    el.append(h('h3',null,'What do you do?'), optWrap, h('h3',null,item.attentionQ), att,
+      h('button',{class:'btn',onclick:()=>{
+        if (sel==null) { alert('Pick what you’d do first.'); return; }
+        rec.choice=sel; rec.choiceV=item.options[sel].v;
+        S.session.sjt.push(rec); tlog('sjt_done',{id:item.id}); next();
+      }},'Continue'));
+  };
+}
+
+// ---- Compass ----
+function scrCompassPrompt(el) {
+  const answers = [];
+  const qs = [
+    'Tell me about something you’re working toward right now — and what a good life looks like from where you stand.',
+    'Why does that matter to you?',
+    'And why does THAT matter? (Last one, promise.)',
+  ];
+  let idx = 0;
+  const thread = h('div');
+  const ta = h('textarea',{placeholder:'In your own words.'});
+  const btn = h('button',{class:'btn',onclick:()=>{
+    if (!ta.value.trim()) return;
+    answers.push({ q: qs[idx], a: ta.value });
+    thread.append(h('div',{class:'card',style:'padding:12px 16px'}, h('p',{class:'small muted',style:'margin:0 0 4px'},qs[idx]), h('p',{style:'margin:0'},ta.value)));
+    ta.value=''; idx++;
+    if (idx>=qs.length) { S.session.compass.prompt = answers; tlog('compass_prompt_done'); next(); return; }
+    prompt.replaceChildren(aiSay(qs[idx]));
+  }},'Continue');
+  const prompt = h('div',null, aiSay(qs[0]));
+  el.append(h('h2',null,'What you’re chasing'), thread, prompt, ta, btn);
+}
+
+function scrTradeoffs(el) {
+  el.append(h('h2',null,'Either–or'), h('p',{class:'muted small'},'Sixteen quick choices. Both options are fine; pick the one that’s more you. Go quickly.'));
+  const wrap = h('div');
+  let idx = 0;
+  const order = TRADEOFFS.map((t,i)=>i).sort(()=>Math.random()-0.5);
+  function show() {
+    wrap.innerHTML='';
+    if (idx>=order.length) { tlog('tradeoffs_done'); next(); return; }
+    const t = TRADEOFFS[order[idx]];
+    const flip = Math.random()<0.5;
+    const first = flip ? t.b : t.a, second = flip ? t.a : t.b;
+    const shownAt = Date.now();
+    wrap.append(h('p',{class:'small muted'},(idx+1)+' of '+order.length),
+      h('button',{class:'opt',onclick:()=>{ S.session.compass.tradeoffs.push({pair:order[idx], won:first.m, lost:second.m, ms:Date.now()-shownAt}); idx++; show(); }},first.t),
+      h('button',{class:'opt',onclick:()=>{ S.session.compass.tradeoffs.push({pair:order[idx], won:second.m, lost:first.m, ms:Date.now()-shownAt}); idx++; show(); }},second.t));
+  }
+  show();
+  el.append(wrap);
+}
+
+function scrSpend(el) {
+  el.append(h('h2',null,'Last choice'),
+    aiSay('You’re done. One choice left, and it’s a real one: which page of your report do you want first?'));
+  SPEND_OPTIONS.forEach((o)=>{
+    el.append(h('button',{class:'opt',onclick:()=>{ S.session.compass.spend = o.m; tlog('spend',{m:o.m}); next(); }},o.t));
+  });
+}
+
+// ---- Stated batteries ----
+function scrStated(title, items, note) {
+  return function(el) {
+    el.append(h('h2',null,title), note?h('p',{class:'muted small'},note):null);
+    const card = h('div',{class:'card'});
+    const scale = ['Strongly disagree','Disagree','Neutral','Agree','Strongly agree'];
+    items.forEach(it=>{
+      const row = h('div',{class:'likertrow'}, h('div',{class:'stmt'},it.text),
+        h('div',{class:'likert'}, ...scale.map((s,v)=>h('button',{onclick:e=>{
+          S.session.stated[it.id] = { v: v+1, rev: !!it.rev, metric: it.metric };
+          [...e.target.parentElement.children].forEach(x=>x.classList.remove('selected'));
+          e.target.classList.add('selected');
+        }},String(v+1)))));
+      card.append(row);
+    });
+    el.append(card, h('p',{class:'small muted'},'1 = strongly disagree · 5 = strongly agree'),
+      h('button',{class:'btn',onclick:()=>{ tlog('stated_done',{title}); next(); }},'Continue'));
+  };
+}
+
+// ---- Debrief ----
+function scrDebrief(el) {
+  el.append(h('h1',null,'Before your report: what was staged'),
+    h('div',{class:'card'},
+      h('p',null,'Two moments in this assessment were deliberate, and you agreed to that up front. Here they are by name:'),
+      h('ul',null,
+        h('li',null, h('b',null,'The pushback.'), ' When I challenged one of your answers, that was a standard moment every respondent gets. There was nothing wrong with your answer.'),
+        h('li',null, h('b',null,'The confusing task.'), ' The garbled ordering question was worded that way on purpose, for everyone. Your reaction to the confusion — and how quickly you settled once it was fixed — is part of how steadiness is read.')),
+      h('p',null,'Nothing else was staged. No answer anywhere was scored as right or wrong.'),
+      S.withdrawn ? h('p',{class:'flag'},'You chose to stop early — completely fine. Your report covers only what you completed.') : null),
+    h('button',{class:'btn',onclick:()=>{ tlog('debrief_done'); next(); }},'Show my report'));
+}
+
+// ---------- Scoring ----------
+function score() {
+  const A = S.session.arena;
+  const fast = A.filter(a=>a.kind==='fast' && a.type!=='trap');
+  const slow = A.filter(a=>a.kind==='slow');
+  const tierNum = { none:0, quarter:1, certain:2 };
+  function mean(xs){ return xs.length ? xs.reduce((a,b)=>a+b,0)/xs.length : null; }
+  // fast sourcing: peek data=+1, principle=-1, none=0 skip
+  function fastSrc(tiers){ const xs = fast.filter(a=>tiers.includes(a.tier) && a.peek).map(a=>a.peek.which==='data'?1:-1); return mean(xs); }
+  // slow sourcing: cards opened /3 -> [-1,1]
+  function slowSrc(tiers){ const xs = slow.filter(a=>tiers.includes(a.tier)).map(a=>(a.cardsOpened.length/3)*2-1); return mean(xs); }
+  // slow method: grid engaged & filled = +1, opened-empty = 0, unopened = -1
+  function slowMth(tiers){ const xs = slow.filter(a=>tiers.includes(a.tier)).map(a=>{
+    if (!a.grid) return -1;
+    const filled = a.grid.rows.some(r=>r.pro||r.con||r.w!=='0');
+    return filled ? 1 : 0;
+  }); return mean(xs); }
+  // grid congruence: weighted winner matches choice?
+  const congr = slow.filter(a=>a.grid && a.grid.rows.some(r=>r.w!=='0')).map(a=>{
+    const best = a.grid.rows.reduce((m,r)=>Number(r.w)>Number(m.w)?r:m, a.grid.rows[0]);
+    return best.opt===a.choice;
+  });
+  const lo = ['none'], hi = ['certain'], all=['none','quarter','certain'];
+  const drift = (f)=> (f(hi)!=null&&f(lo)!=null) ? f(hi)-f(lo) : null;
+  // salience: did behavior differ lo vs hi at all
+  const salience = [slowSrc, slowMth, fastSrc].some(f=>{ const d=drift(f); return d!=null && Math.abs(d)>=0.3; });
+  // trap
+  const trap = A.find(a=>a.type==='trap');
+  let trapPass = null;
+  if (trap && trap.choice!=null) {
+    const v = TRAP_ITEM.variants.find(x=>x.key===trap.variant);
+    trapPass = trap.choice !== v.sealedFavors ? true : 'inconclusive';
+  }
+  // DRM
+  const eps = S.session.drm.episodes;
+  const social = eps.filter(e=>e.company!=='Alone' && e.company!=='Alone but online');
+  const chosenSmall = eps.filter(e=>e.chosen==='chosen' && ['One close person','Small familiar group'].includes(e.company));
+  const obligedBig = eps.filter(e=>e.chosen==='obliged' && ['Large or unfamiliar group'].includes(e.company));
+  const soloChosen = eps.filter(e=>e.chosen==='chosen' && e.company.startsWith('Alone'));
+  const drm = {
+    socialAvg: mean(social.map(e=>e.energy)),
+    chosenSmallAvg: mean(chosenSmall.map(e=>e.energy)),
+    obligedBigAvg: mean(obligedBig.map(e=>e.energy)),
+    soloChosenAvg: mean(soloChosen.map(e=>e.energy)),
+  };
+  // SJT
+  const friction = mean(S.session.sjt.map(r=>r.choiceV));
+  const probeChoices = S.session.sjt.flatMap(r=>r.probes);
+  const attnBeh = probeChoices.length ? (probeChoices.filter(p=>p==='self').length/probeChoices.length)*(-2)+1 : null; // -1 all self .. +1 all field
+  // friction probe reactivity
+  const F = S.session.friction;
+  const react = (F.confusedMs!=null && F.recoveryMs!=null) ? { confusedS:(F.confusedMs/1000).toFixed(1), recoveryS:(F.recoveryMs/1000).toFixed(1) } : null;
+  // motives
+  const wins = {}, appear = {};
+  Object.keys(MOTIVES).forEach(m=>{wins[m]=0;appear[m]=0;});
+  S.session.compass.tradeoffs.forEach(t=>{ wins[t.won]++; appear[t.won]++; appear[t.lost]++; });
+  const weights = {};
+  Object.keys(MOTIVES).forEach(m=>{ weights[m] = appear[m] ? wins[m]/appear[m] : 0; });
+  if (S.session.compass.spend) weights[S.session.compass.spend] = Math.min(1, (weights[S.session.compass.spend]||0)+0.1);
+  const wsum = Object.values(weights).reduce((a,b)=>a+b,0)||1;
+  Object.keys(weights).forEach(m=>weights[m]=weights[m]/wsum);
+  const conc = Math.max(...Object.values(weights)) - 1/5;
+  // stated
+  const st = S.session.stated;
+  function stVal(id){ const s=st[id]; if(!s) return null; return s.rev ? 6-s.v : s.v; }
+  const statedIntrovert = st['st1'] ? st['st1'].v : null; // raw agree with "social events drain me"
+  return {
+    graphs: {
+      fastSrcLo: fastSrc(lo), fastSrcHi: fastSrc(hi),
+      slowSrcLo: slowSrc(lo), slowSrcHi: slowSrc(hi),
+      slowMthLo: slowMth(lo), slowMthHi: slowMth(hi),
+    },
+    congruence: congr.length ? congr.every(Boolean) : null,
+    salience, trapPass, drm, friction, attnBeh, react, weights, conc, statedIntrovert,
+    deliberationNote: null,
+  };
+}
+
+// ---- Report ----
+function bar(label, lo, hi, leftLbl, rightLbl) {
+  const track = h('div',{class:'track'});
+  function pct(v){ return (50 + v*40) + '%'; }
+  if (lo!=null) track.append(h('span',{class:'dot',style:'left:'+pct(lo)}));
+  if (hi!=null) track.append(h('span',{class:'dot hi',style:'left:'+pct(hi)}));
+  return h('div',null,
+    h('div',{class:'reportbar'}, h('div',{class:'lbl'},label), track),
+    h('div',{class:'axisends'}, h('span',null,'← '+leftLbl), h('span',null,rightLbl+' →')));
+}
+function scrReport(el) {
+  const R = score();
+  const G = R.graphs;
+  el.append(h('h1',null,'Your report'), h('p',{class:'muted small'},'Demo scoring: behavioral channels scored live in this browser; written answers are captured for expert-checked AI coding and marked pending.'));
+  // Thinking machine
+  const tcard = h('div',{class:'card'});
+  tcard.append(h('h2',null,'How you think'),
+    h('p',{class:'small muted'},'Blue dot = low stakes · gold dot = high stakes (certain review). Dots missing where you skipped peeks or items.'),
+    bar('SNAP · where you reach', G.fastSrcLo, G.fastSrcHi, 'Your own compass', 'Outside data'),
+    bar('DELIBERATE · where you reach', G.slowSrcLo, G.slowSrcHi, 'Your own compass', 'Outside data'),
+    bar('DELIBERATE · how you build', G.slowMthLo, G.slowMthHi, 'By feel', 'With structure'),
+    h('p',{class:'small'},'Snap “how you build” and everything in your written reasoning: ', h('span',{class:'pending'},'PENDING AI CODING')),
+    h('p',{class:'small'},'Stake-salience check: ', R.salience? h('span',{class:'pass'},'PASS — the review badges changed your behavior, so your profile is interpretable.') : h('span',{class:'flag'},'NOT DETECTED — stakes didn’t visibly move your behavior; flat lines here can’t be read as stability.')),
+    R.trapPass!=null ? h('p',{class:'small'},'Snap honesty check: ', R.trapPass===true? h('span',{class:'pass'},'PASS') : h('span',{class:'muted'},'inconclusive (single trap, single respondent)')) : null,
+    R.congruence!=null ? h('p',{class:'small'},'Grid congruence: '+(R.congruence?'your grid’s winner matched your choice.':'your grid pointed one way and you chose another — flagged, not judged.')) : null);
+  el.append(tcard);
+  // Energy
+  const ecard = h('div',{class:'card'}, h('h2',null,'Where your energy goes'));
+  const D = R.drm;
+  function fmtE(v){ return v==null?'—':(v>0?'+':'')+v.toFixed(1); }
+  ecard.append(h('p',null,'From your reconstructed day: chosen small company averaged ', h('b',null,fmtE(D.chosenSmallAvg)), ', big obligatory settings averaged ', h('b',null,fmtE(D.obligedBigAvg)), ', chosen alone-time averaged ', h('b',null,fmtE(D.soloChosenAvg)), '.'));
+  if (R.statedIntrovert!=null && D.chosenSmallAvg!=null) {
+    const saysDrained = R.statedIntrovert>=4, dayCharged = D.chosenSmallAvg>0.5;
+    if (saysDrained && dayCharged) ecard.append(h('p',null,'You rated “social events drain me” as true of you — but your actual day says small, chosen company charged you. What drains you looks more specific: big, obligatory settings. Different problem, different fix.'));
+    else if (!saysDrained && !dayCharged) ecard.append(h('p',null,'Your self-description and your reconstructed day mostly agree.'));
+    else ecard.append(h('p',null,'Your self-description and your day mostly line up on this one.'));
+  }
+  ecard.append(h('p',{class:'small'},'Your messages (the hard-conversation drafts): what you chose to raise and how directly — ', h('span',{class:'pending'},'PENDING AI CODING')));
+  el.append(ecard);
+  // Room
+  const rcard = h('div',{class:'card'}, h('h2',null,'You, in charged moments'));
+  if (R.friction!=null) rcard.append(h('p',null,'Across the scenarios you leaned ', h('b',null, R.friction>0.25?'toward addressing friction directly':R.friction<-0.25?'toward smoothing things over':'neither pole strongly'),' (score '+R.friction.toFixed(2)+' on −1 smooth … +1 press).'));
+  if (R.attnBeh!=null) rcard.append(h('p',null,'Your quick mental checks before acting went ', h('b',null, R.attnBeh<-0.25?'mostly to your own reaction':R.attnBeh>0.25?'mostly to reading the room':'both ways'),'.'));
+  if (R.react) rcard.append(h('p',null,'The deliberately confusing task took you '+R.react.confusedS+'s to push through; once fixed, you settled in '+R.react.recoveryS+'s. Because you were warned staged moments existed, read this as the floor of your steadiness, not the ceiling.'));
+  rcard.append(h('p',{class:'small'},'Your pushback reply and attention answers: ', h('span',{class:'pending'},'PENDING AI CODING')));
+  el.append(rcard);
+  // Compass
+  const ccard = h('div',{class:'card'}, h('h2',null,'What you’re chasing'));
+  const sorted = Object.entries(R.weights).sort((a,b)=>b[1]-a[1]);
+  sorted.forEach(([m,w])=>{
+    ccard.append(h('div',{class:'reportbar'}, h('div',{class:'lbl'},MOTIVES[m]+(S.session.compass.spend===m?' ★':'')),
+      h('div',{class:'track'}, h('span',{style:'position:absolute;left:0;top:0;height:100%;width:'+(w*100)+'%;background:var(--accent);border-radius:7px;opacity:0.75'}))));
+  });
+  ccard.append(h('p',{class:'small muted'},'★ = where you spent your final choice. Weights from your 16 either–or picks.'),
+    h('p',{class:'small'},'Your own words about what you’re working toward: ', h('span',{class:'pending'},'PENDING AI CODING'), ' — the stated–revealed comparison lands there.'));
+  el.append(ccard);
+  // Export
+  el.append(h('div',{class:'card'},
+    h('h2',null,'Your data'),
+    h('p',{class:'small'},'Everything captured this session — every timestamp, peek, card, draft, and answer — belongs to you. Export it, or clear it from this browser.'),
+    h('button',{class:'btn',onclick:()=>{
+      const blob = new Blob([JSON.stringify(S.session,null,2)],{type:'application/json'});
+      const a = document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='assessment_session.json'; a.click();
+    }},'Export session JSON'),
+    h('button',{class:'btn secondary',onclick:()=>{ localStorage.removeItem('assessment_demo_v2'); location.reload(); }},'Clear & restart')),
+    h('p',{class:'footer-note'},'Demo Form A. Behavioral scoring is live; free-text coding, error bars, and cohort-referenced values require the production scoring service. A reading at your age is a reading of your age — minors’ results expire after 18 months in production.'));
+}
+
+// ---------- Withdrawal ----------
+document.getElementById('stopbtn').addEventListener('click', ()=>{
+  if (S.withdrawn) return;
+  if (confirm('Stop the assessment? Completely fine — no penalty. You’ll go straight to the explanation page and a report of whatever you completed.')) {
+    S.withdrawn = true; tlog('withdrawn');
+    S.screen = FLOW.length - 2; // debrief
+    save(); render();
+  }
+});
+
+// ---------- Build flow ----------
+(function build(){
+  // trap variant assignment
+  const variant = Math.random()<0.5 ? 'A' : 'B';
+  const trapDef = TRAP_ITEM.variants.find(v=>v.key===variant);
+  const trapItem = { id:'T1', tier:'none', type:'trap', _variant:variant, text:trapDef.text, options:trapDef.options, peekData:null, peekPrinciple:null, _driverPrompt:'What tipped it?' };
+  // driver prompt variation (anti-template)
+  const prompts = ['What drove that?','What tipped it?','In one line — why that one?','What was the deciding thing?','Gut check: why?'];
+  FAST_ITEMS.forEach((f,i)=>f._driverPrompt = prompts[i%prompts.length]);
+  FLOW = [
+    scrWelcome, scrConsent, scrIntake, scrCalibration,
+    scrSittingHeader(1,'About 40 minutes in production; shorter in this demo. Decision scenarios, then a walk through yesterday.'),
+    scrFast(FAST_ITEMS[0]), scrSlow(SLOW_ITEMS[0]), scrFast(FAST_ITEMS[1]), scrFast(trapItem), scrSlow(SLOW_ITEMS[1]), scrFast(FAST_ITEMS[2]),
+    scrDRM, scrPortfolio,
+    scrReview(1),
+    scrSittingHeader(2,'Charged moments, a few more decisions, and what you’re working toward.'),
+    scrFast(FAST_ITEMS[3]), scrSlow(SLOW_ITEMS[2]), scrFast(FAST_ITEMS[4]),
+    scrFriction,
+    scrSlow(SLOW_ITEMS[3]),
+    scrReview(2), scrDispute,
+    scrSJT(SJT_ITEMS[0]), scrSJT(SJT_ITEMS[1]), scrSJT(SJT_ITEMS[2]),
+    scrDraft(DRAFT_TASKS[0]), scrDraft(DRAFT_TASKS[1]),
+    scrCompassPrompt, scrTradeoffs, scrSpend,
+    scrStated('Quick self-descriptions (part 1)', STATED_S1, 'In production these arrive as a follow-up on your own time. They’re asked last on purpose — your earlier answers can’t be shaped by them.'),
+    scrStated('Quick self-descriptions (part 2)', STATED_S3, null),
+    scrDebrief, scrReport,
+  ];
+  // resume
+  try {
+    const saved = JSON.parse(localStorage.getItem('assessment_demo_v2')||'null');
+    if (saved && saved.screen>0 && saved.screen<FLOW.length-1 && confirm('Resume your saved session?')) {
+      S.screen = saved.screen; S.session = saved.session; S.withdrawn = saved.withdrawn;
+    } else if (saved) { localStorage.removeItem('assessment_demo_v2'); }
+  } catch(e){}
+  render();
+})();
+</script>
+</body>
+</html>
