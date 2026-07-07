@@ -156,6 +156,10 @@ independence.
    ability, language, or culture, especially in a young and diverse population.
 5. **Consequential use on minors.** High-stakes assessment of high schoolers demands fairness
    evidence and a clear account of what decisions the score may and may not inform.
+6. **Novelty vs. the social-cognitive tradition.** A reviewer will note that situation-contingent
+   personality (persons as if-then trajectories) is a decades-old result. The framework must not
+   present it as new; the honest novelty is the one-session, auditable parameterization and the
+   AI-coded instrument, not the underlying idea. Chapter 3 is written to concede this up front.
 
 ## Internal: novelty watch (NOT for the manuscript)
 
@@ -167,6 +171,12 @@ this appears in the working paper.
 - System 2's Internal/External and Formal/Informal axes brush a known perception axis and a known
   need-for-cognition construct; the differentiator is the two-graph reliance picture under stakes,
   by mode. Keep the stake-conditioned graphs load-bearing.
+- The "person as trajectory, not point" framing is NOT ours to claim: it is the social-cognitive
+  tradition (Mischel & Shoda 1995 situation-behavior signatures; Fleeson 2001 density
+  distributions; Fleeson & Jayawickreme 2015 whole-trait theory; Moskowitz & Zuroff 2004
+  flux/pulse/spin; Minbashian, Wood & Beckmann 2010 task-contingent conscientiousness). Chapter 3
+  now credits this lineage explicitly and states the narrower instrument claim. Do not let the
+  manuscript reintroduce trajectory-not-point as a founding discovery.
 - System 3 now spans three well-known broad factors (agreeableness, an attention split, and
   emotional stability), and System 4 a fourth. De novo presentation is a stylistic choice, not a
   claim of unprecedented constructs; the reviewer will see the lineage, so our novelty must live in

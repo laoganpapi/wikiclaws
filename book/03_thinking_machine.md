@@ -4,10 +4,18 @@
 
 This is the central system of the theory and the one the assessment is built around. It governs
 how a person thinks: where they source their thinking, how rigorously they form it, and how that
-reliance shifts as the stakes of a task rise. Most accounts of thinking style fix a person at a
-point. The claim here is that a person is not a point. A person leans on different kinds of
-thinking under different conditions, and the shape of that shift under pressure is more telling
-than any single coordinate.
+reliance shifts as the stakes of a task rise.
+
+That a person is not a fixed point, but a set of if-then responses that shift with the situation,
+is not our discovery. Social-cognitive personality research established it decades ago: Mischel
+and Shoda's situation-behavior signatures, Fleeson's density distributions, and the whole-trait
+program that followed all measured personality as situation-contingent variability, not as a
+single score. We inherit that result and do not claim it. Our contribution is narrower and
+practical: a one-session, auditable way to parameterize how a specific person's cognitive
+reliance moves across two axes (sourcing and method) as mode and stakes change, in a plane the
+thinking-style literature has mostly measured only as static points, and to do it in ninety
+minutes rather than the weeks of repeated sampling the older work required. The claim is an
+instrument claim, not a claim to have discovered that people are situation-dependent.
 
 We are explicit about what we do not measure. We do not measure the strength of a person's
 thinking, fast or slow. Strength is capacity, capacity is the province of intelligence, and this
