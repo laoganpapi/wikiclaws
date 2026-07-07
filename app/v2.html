@@ -17,9 +17,9 @@
   .topbar .brand { font-weight: 700; font-size: 0.85rem; letter-spacing: 0.04em; }
   .topbar .demo { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em; background: var(--neg); padding: 2px 8px; border-radius: 3px; }
   .topbar .spacer { flex: 1; }
-  .progresswrap { flex: 1; max-width: 340px; height: 6px; background: rgba(255,255,255,0.22); border-radius: 3px; overflow: hidden; }
+  .progresswrap { flex: 1; max-width: 340px; height: 10px; background: rgba(255,255,255,0.22); border-radius: 5px; overflow: hidden; }
   .progressbar { height: 100%; width: 0%; background: #9cc0e4; transition: width 0.4s; }
-  .stopbtn { background: transparent; color: #f0b9a8; border: 1px solid #b04a2f; border-radius: 4px; padding: 4px 12px; font-size: 0.72rem; font-family: inherit; cursor: pointer; }
+  .stopbtn { background: transparent; color: #f0b9a8; border: 1px solid #b04a2f; border-radius: 4px; padding: 4px 12px; font-size: 0.8rem; font-family: inherit; cursor: pointer; }
   .stopbtn:hover { background: #b04a2f; color: #fff; }
   .stage { max-width: 760px; margin: 0 auto; padding: 36px 22px 90px; }
   h1 { font-size: 1.6rem; margin: 0 0 8px; }
@@ -38,17 +38,17 @@
   .opt { display: block; width: 100%; text-align: left; font-family: Georgia, serif; font-size: 0.97rem; background: #fff; color: var(--ink); border: 1.5px solid var(--line); border-radius: 8px; padding: 13px 16px; margin: 8px 0; cursor: pointer; transition: border-color 0.12s, background 0.12s; }
   .opt:hover { border-color: var(--accent); background: var(--accent-soft); }
   .opt.selected { border-color: var(--accent); background: var(--accent-soft); box-shadow: 0 0 0 1px var(--accent); }
-  .badge { display: inline-block; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.05em; padding: 3px 10px; border-radius: 12px; margin-right: 8px; }
-  .badge.none { background: #e8ece8; color: #4a5a4a; }
-  .badge.quarter { background: #f3ead6; color: var(--gold); }
-  .badge.certain { background: #f4ddd4; color: var(--neg); }
+  .badge { display: inline-block; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; padding: 3px 10px; border-radius: 12px; margin-right: 8px; }
+  .badge.none { background: #e8ece8; color: #3d4b3d; }
+  .badge.quarter { background: #f3ead6; color: #6b5a20; }
+  .badge.certain { background: #f4ddd4; color: #8f3a22; }
   .badge.mode { background: var(--accent-soft); color: var(--accent); }
   .clock { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 2rem; font-weight: 700; color: var(--neg); text-align: center; margin: 8px 0; }
   .peekrow { display: flex; gap: 10px; margin: 10px 0; }
-  .peek { flex: 1; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; background: #fff; border: 1.5px dashed var(--gold); border-radius: 8px; padding: 10px 12px; cursor: pointer; color: var(--gold); font-weight: 600; text-align: center; }
+  .peek { flex: 1; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.82rem; background: #fff; border: 1.5px solid #6b5a20; border-radius: 8px; padding: 10px 12px; cursor: pointer; color: #6b5a20; font-weight: 600; text-align: center; }
   .peek:hover { background: var(--gold-soft); }
-  .peek.revealed { border-style: solid; color: var(--ink); font-weight: 400; font-family: Georgia, serif; cursor: default; background: var(--gold-soft); text-align: left; }
-  .peek.dimmed { opacity: 0.35; pointer-events: none; }
+  .peek.revealed { color: var(--ink); font-weight: 400; font-family: Georgia, serif; cursor: default; background: var(--gold-soft); text-align: left; }
+  .peek.dimmed { pointer-events: none; color: #6a6f76; border-color: #c9cdd2; background: #f2f2f0; }
   .shelf { display: flex; gap: 10px; margin: 12px 0; flex-wrap: wrap; }
   .shelfcard { flex: 1; min-width: 180px; border: 1.5px solid var(--line); border-radius: 8px; padding: 12px; background: #fff; }
   .shelfcard .cardtitle { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.75rem; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
@@ -76,12 +76,12 @@
   .episode .en { font-weight: 700; }
   .en.pos { color: var(--pos); } .en.neg { color: var(--neg); }
   .codebox { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1.5rem; font-weight: 700; letter-spacing: 0.35em; text-align: center; background: var(--ink); color: #fff; border-radius: 8px; padding: 14px; margin: 10px 0; }
-  .reportbar { display: flex; align-items: center; margin: 7px 0; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.74rem; }
+  .reportbar { display: flex; align-items: center; margin: 7px 0; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.8rem; }
   .reportbar .lbl { width: 190px; color: var(--muted); }
   .reportbar .track { flex: 1; height: 13px; background: #eef0f2; border-radius: 7px; position: relative; }
   .reportbar .dot { position: absolute; top: 50%; transform: translate(-50%,-50%); width: 13px; height: 13px; border-radius: 50%; background: var(--accent); border: 2px solid #fff; box-shadow: 0 0 0 1px var(--accent); }
-  .reportbar .dot.hi { background: var(--gold); box-shadow: 0 0 0 1px var(--gold); }
-  .axisends { display: flex; justify-content: space-between; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.63rem; color: var(--muted); margin: 1px 0 8px 190px; }
+  .reportbar .dot.hi { background: #fff; border: 3px solid var(--gold); box-shadow: none; }
+  .axisends { display: flex; justify-content: space-between; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.8rem; color: var(--ink); margin: 1px 0 8px 190px; }
   .pending { display: inline-block; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.64rem; font-weight: 700; color: var(--gold); border: 1px dashed var(--gold); border-radius: 3px; padding: 0 6px; letter-spacing: 0.04em; }
   .pass { color: var(--pos); font-weight: 700; } .flag { color: var(--neg); font-weight: 700; }
   .footer-note { color: var(--muted); font-size: 0.8rem; font-style: italic; margin-top: 28px; }
@@ -95,7 +95,8 @@
   .chiprow { display: flex; gap: 6px; flex-wrap: wrap; margin: 6px 0; }
   .gridtool { overflow-x: auto; }
   .gridtool input[type=text] { min-width: 110px; }
-  .proglabel { font-size: 0.66rem; color: rgba(255,255,255,0.75); white-space: nowrap; }
+  .proglabel { font-size: 0.78rem; color: rgba(255,255,255,0.85); white-space: nowrap; }
+  .opt:disabled { opacity: 0.55; cursor: default; }
   @media (max-width: 640px) {
     .peekrow, .shelf { flex-direction: column; }
     .reportbar .lbl { width: 120px; } .axisends { margin-left: 120px; }
@@ -113,7 +114,7 @@
   <div class="spacer"></div>
   <div class="progresswrap"><div class="progressbar" id="progressbar"></div></div>
   <span class="proglabel" id="proglabel"></span>
-  <button class="stopbtn" id="stopbtn" title="You can stop at any time with no penalty">Stop anytime</button>
+  <button class="stopbtn" id="stopbtn" title="You can stop at any time with no penalty">Stop anytime — no penalty</button>
 </div>
 <div class="stage" id="stage"></div>
 <script>
@@ -139,7 +140,7 @@ const FAST_ITEMS = [
   { id:'F2', tier:'quarter', type:'resource',
     text:'A relative unexpectedly gives you $200. Your tablet fund sits unfinished, and your friends are going to a concert next weekend.',
     options:['Put it toward the tablet','Concert with friends'],
-    peekData:'Your savings tracker: $340 saved of the $500 tablet goal.',
+    peekData:'Your savings tracker: $210 saved of the $500 tablet goal.',
     noteKey:'things' },
   { id:'F3', tier:'quarter', type:'sequence', load:true,
     text:'Your group presents in class next week and gets to pick its slot. Presenting first means less polish time; presenting last means the class sees strong presentations before yours.',
@@ -337,8 +338,8 @@ const S = {
     telemetry: [],
   }
 };
-function tlog(ev, data) { S.session.telemetry.push({ t: Date.now(), ev, ...(data||{}) }); }
-function save() { try { localStorage.setItem('assessment_v2_app', JSON.stringify({ screen: S.screen, session: S.session, withdrawn: S.withdrawn })); } catch(e){} }
+function tlog(ev, data) { if (S.importedView) return; /* never mutate an imported record */ S.session.telemetry.push({ t: Date.now(), ev, ...(data||{}) }); }
+function save() { if (S.importedView) return; /* imported sessions are read-only views — never overwrite this browser's own save */ try { localStorage.setItem('assessment_v2_app', JSON.stringify({ screen: S.screen, session: S.session, withdrawn: S.withdrawn })); } catch(e){} }
 
 // ---------- Tiny DOM helpers ----------
 const stage = document.getElementById('stage');
@@ -367,6 +368,11 @@ function render() {
   const el = h('div', { class: 'fade' });
   stage.appendChild(el);
   scr(el);
+  if (S._resumeNote) {
+    S._resumeNote = false;
+    el.prepend(h('div',{class:'card',style:'border-left:4px solid var(--gold)'},
+      h('p',{class:'small',style:'margin:0'},h('b',null,'Welcome back. '),'Your saved progress was restored. If you were in the middle of this screen, it restarts fresh (anything typed but not submitted here was not saved) — everything before it was kept.')));
+  }
   stage.setAttribute('tabindex', '-1');
   stage.focus({ preventScroll: true });
 }
@@ -377,38 +383,46 @@ function scrWelcome(el) {
     h('h1', null, 'Welcome'),
     h('div',{class:'card'},
       h('p',null,'This is a demonstration of an assessment about how you think, where your energy goes, how you handle charged moments, and what you’re working toward.'),
-      h('p',null,'There are no right answers and nothing here measures how smart you are. It records what you do — your choices, your timing, and what you choose to open — never scores of right and wrong.'),
+      h('p',null,'There are no right answers and nothing here measures how smart you are. It records what you do: your choices, your timing, what you choose to open, and what you type — including how much you retype. It never gives scores for right or wrong answers.'),
       h('p',null,'It takes about 25–35 minutes, in two short parts with a break between.'),
+      h('p',{class:'small muted'},'One thing to know before you start: the flow moves forward only. There is no Back button, and on some screens a single tap records your answer and moves on.'),
       h('p',{class:'muted small'},'Demo Form A, version 2: reduced item set, all mechanics live. Everything stays in this browser until you choose to export it. No data leaves this page.')
     ),
     h('button',{class:'btn',onclick:()=>{ tlog('welcome_done'); next(); }},'Begin'),
-    h('div',{class:'card',style:'margin-top:26px'},
-      h('h3',{style:'margin-top:0'},'Reviewers: load an exported session'),
-      h('p',{class:'small muted'},'Drop in a session JSON exported from this app to view its report without retaking the test.'),
-      h('input',{type:'file',accept:'.json,application/json','aria-label':'Load exported session JSON',onchange:(e)=>{
-        const f = e.target.files[0]; if (!f) return;
-        const r = new FileReader();
-        r.onload = () => {
-          try {
-            const data = JSON.parse(r.result);
-            if (!data || !Array.isArray(data.arena)) throw new Error('not a session file');
+    h('details',{style:'margin-top:26px'},
+      h('summary',{class:'small muted',style:'cursor:pointer'},'For reviewers only — not part of taking the test'),
+      h('div',{class:'card'},
+        h('h3',{style:'margin-top:0'},'Load an exported session'),
+        h('p',{class:'small muted'},'If someone gave you a session file exported from this app, load it here to view its report without retaking the test. If you’re here to take the assessment, you don’t need a file — just press Begin above.'),
+        h('input',{type:'file',accept:'.json,application/json','aria-label':'Load exported session JSON',onchange:(e)=>{
+          const f = e.target.files[0]; if (!f) return;
+          const r = new FileReader();
+          r.onload = () => {
+            let data = null;
+            try { data = JSON.parse(r.result); } catch(err) { alert('That file couldn’t be read as a session export (it isn’t valid JSON).'); return; }
+            const ok = data && typeof data==='object'
+              && Array.isArray(data.arena) && Array.isArray(data.telemetry)
+              && data.drm && Array.isArray(data.drm.episodes)
+              && data.compass && Array.isArray(data.compass.tradeoffs)
+              && data.intake && typeof data.intake==='object'
+              && data.stated && typeof data.stated==='object';
+            if (!ok) { alert('That file is missing required session fields — it doesn’t look like a complete export from this app.'); return; }
             S.session = data; S.withdrawn = false;
+            S.importedView = true; // read-only view: never log into or overwrite the imported record
             S.screen = FLOW.length - 1;
-            tlog('session_imported');
             render();
-          } catch(err) { alert('That file doesn’t look like an exported session: ' + err.message); }
-        };
-        r.readAsText(f);
-      }}))
+          };
+          r.readAsText(f);
+        }})))
   );
 }
 
 function scrConsent(el) {
   const checks = [
     'I understand there are no right answers and my results are for my own development.',
-    'I understand the AI will sometimes disagree with me or word something confusingly on purpose, and it will explain afterward.',
+    'I understand that sometimes the AI will disagree with me, or will ask a question in a confusing way. It does this on purpose, and it will explain why at the end.',
     'I understand I can stop at any time using the button in the top bar, with no penalty.',
-    'I understand I control who sees my results: nothing is shared unless I export it and share it myself. In production, results for under-18s expire after 18 months.',
+    'I understand I control who sees my results: nothing is shared unless I export it and share it myself. In the real (non-demo) version, results of anyone under 18 are automatically deleted after 18 months.',
   ];
   const state = checks.map(()=>false);
   const btn = h('button',{class:'btn',disabled:'',onclick:()=>{ S.session.consent = { agreedAt: new Date().toISOString(), items: checks }; tlog('consent'); next(); }},'I agree — continue');
@@ -418,13 +432,13 @@ function scrConsent(el) {
       h('input',{type:'checkbox',style:'margin-top:4px',onchange:(e)=>{ state[i]=e.target.checked; if (state.every(Boolean)) btn.removeAttribute('disabled'); else btn.setAttribute('disabled',''); }}), h('span',null,c));
     list.appendChild(row);
   });
-  el.append(h('h2',null,'Before we start'), h('p',{class:'muted small'},'For respondents under 18, a guardian consent step precedes this screen in production. This demo shows the assent portion.'), list, btn);
+  el.append(h('h2',null,'Before we start'), h('p',{class:'muted small'},'If the test-taker is under 18, a parent or guardian must agree first. In the real version, that parent step comes before this page; this demo shows only the part where the young person agrees.'), list, h('p',{class:'small muted'},'The continue button turns on once all four statements are checked.'), btn);
 }
 
 function scrIntake(el) {
   const age = h('select',{'aria-label':'Age band',style:'font-family:inherit;font-size:0.95rem;padding:8px;border-radius:6px;border:1.5px solid var(--line)'},
     ...['14–15','16–17','18–20','21–25'].map(a=>h('option',null,a)));
-  const nick = h('input',{type:'text','aria-label':'Nickname (optional)',placeholder:'optional — used to name your export file'});
+  const nick = h('input',{type:'text','aria-label':'Nickname (optional)',placeholder:'optional — saved with your session and used to name your export file'});
   const notes = {};
   const noteFields = [
     ['friends','Finish this: “Right now, what matters most to me socially is…”'],
@@ -438,6 +452,7 @@ function scrIntake(el) {
       h('h3',null,'Age band'), age,
       h('h3',null,'Nickname'), nick,
       h('p',{style:'margin-top:14px'},h('b',null,'Five quick sentence-completions — these matter. '),'Some later snap questions will quote your exact words back to you as a “your note” card. Blank notes mean blank cards.'),
+      h('p',{class:'small muted'},'There’s no good answer here — write what’s true for you, not what sounds good. Nobody grades these.'),
       ...noteFields.map(([k,label])=>{
         const inp = h('input',{type:'text','aria-label':label,placeholder:'…in your own words',oninput:e=>notes[k]=e.target.value.trim()});
         return h('div',{style:'margin:10px 0'}, h('div',{class:'small',style:'margin-bottom:4px'},label), inp);
@@ -466,31 +481,33 @@ function scrCalibration(el) {
 function scrSittingHeader(n, blurb) {
   return function(el) {
     el.append(h('h1',null,'Sitting '+n), h('div',{class:'card'}, h('p',null,blurb),
-      n===1 ? h('p',{class:'muted small'},'Some questions show a review badge: it tells you the chance the AI asks you to explain that answer at the end of the sitting. “Certain review” means it definitely will.') : null),
+      n===1 ? h('p',{class:'muted small'},'Some questions show a review badge: it tells you the chance the AI asks you to explain that answer at the end of a sitting — sometimes the sitting after the one you answered it in. “Certain review” means it definitely will.') : null),
       h('button',{class:'btn',onclick:next},'Start'));
   };
 }
 
 // ---- Fast Arena item ----
-let firstFastSeen = false;
 function scrFast(item) {
   return function(el) {
     const rec = { id:item.id, kind:'fast', tier:item.tier, type:item.type, readMs:null, respMs:null, peek:null, choice:null, driver:'', load:null, variant:item._variant||null };
     let readStart = Date.now(), clockTimer = null, respStart = null, answered = false;
     el.append(
       h('div',null, h('span',{class:'badge '+item.tier}, TIERS[item.tier]), h('span',{class:'badge mode'},'SNAP — 5 seconds once you’re ready')));
-    if (!firstFastSeen) {
-      firstFastSeen = true;
+    if (!S.session.fastExplainerSeen) {
+      S.session.fastExplainerSeen = true;
       el.append(h('div',{class:'card',style:'border-left:4px solid var(--accent)'},
         h('p',{style:'margin:0'},h('b',null,'How snap questions work: '),'read the situation below for as long as you want. The answer choices stay hidden. When you press the button, they appear and you get 5 seconds to pick one. If time runs out, that’s recorded and it’s fine.')));
     }
     el.append(h('div',{class:'scenario'}, item.text));
     // load task
+    let loadWrap = null;
     if (item.load) {
       const code = String(1000 + Math.floor(Math.random()*9000));
       rec.load = { code, recalled:null };
-      el.append(h('p',{class:'small muted'},'Extra: hold this code in your head. You’ll be asked for it after you answer.'),
+      loadWrap = h('div',null,
+        h('p',{class:'small muted'},'Extra: hold this code in your head. It disappears when the choices appear, and you’ll be asked for it after you answer.'),
         h('div',{class:'codebox'}, code));
+      el.append(loadWrap);
     }
     const answerZone = h('div',{class:'hidden'});
     const clock = h('div',{class:'clock'},'5.0');
@@ -517,14 +534,17 @@ function scrFast(item) {
     function startClock() {
       rec.readMs = Date.now()-readStart;
       respStart = Date.now();
+      if (loadWrap) loadWrap.classList.add('hidden'); // the held code must actually be held from memory
       answerZone.classList.remove('hidden');
       const opts = item._variant ? TRAP_ITEM.variants.find(v=>v.key===item._variant).options : item.options;
       const peekrow = h('div',{class:'peekrow'});
       if (item.peekData) {
         const noteText = (S.session.intake.notes||{})[item.noteKey];
-        const principleReveal = noteText ? 'Your note: “'+noteText+'”' : 'You left this note blank at intake — nothing to show.';
-        const pd = h('button',{type:'button',class:'peek',onclick:()=>{ if(rec.peek) return; rec.peek={which:'data', atMs:Date.now()-respStart}; pd.classList.add('revealed'); pd.textContent=item.peekData; pp.classList.add('dimmed'); }},'Peek: the facts');
-        const pp = h('button',{type:'button',class:'peek',onclick:()=>{ if(rec.peek) return; rec.peek={which:'principle', atMs:Date.now()-respStart, blank:!noteText}; pp.classList.add('revealed'); pp.textContent=principleReveal; pd.classList.add('dimmed'); }},'Peek: your own note');
+        const lock = (b)=>{ b.classList.add('dimmed'); b.textContent = b.textContent + ' — locked (peek used)'; };
+        const pd = h('button',{type:'button',class:'peek',onclick:()=>{ if(rec.peek) return; rec.peek={which:'data', atMs:Date.now()-respStart}; pd.classList.add('revealed'); pd.textContent=item.peekData; if(!pp.hasAttribute('disabled')) lock(pp); }},'Peek: the facts');
+        const pp = noteText
+          ? h('button',{type:'button',class:'peek',onclick:()=>{ if(rec.peek) return; rec.peek={which:'principle', atMs:Date.now()-respStart, blank:false}; pp.classList.add('revealed'); pp.textContent='Your note: “'+noteText+'”'; lock(pd); }},'Peek: your own note')
+          : h('button',{type:'button',class:'peek dimmed',disabled:''},'Your own note — left blank at intake');
         peekrow.append(pd, pp);
         answerZone.append(h('p',{class:'small muted',style:'margin:4px 0'},'One free peek if you want it — the clock keeps running:'), peekrow);
       } else {
@@ -549,7 +569,8 @@ function scrSlow(item) {
   return function(el) {
     const rec = { id:item.id, kind:'slow', tier:item.tier, type:item.type, cardsOpened:[], grid:null, choice:null, rationale:'', respMs:null, timeExpired:false };
     const start = Date.now();
-    el.append(h('div',null, h('span',{class:'badge '+item.tier}, TIERS[item.tier]), h('span',{class:'badge mode'},'DELIBERATE — up to 4 minutes')),
+    const timerLbl = h('span',{class:'muted small',style:'font-family:Helvetica,Arial,sans-serif'},'4:00 left');
+    el.append(h('div',{style:'display:flex;align-items:center;flex-wrap:wrap;gap:4px'}, h('span',{class:'badge '+item.tier}, TIERS[item.tier]), h('span',{class:'badge mode'},'DELIBERATE — up to 4 minutes'), timerLbl),
       h('div',{class:'scenario'}, item.text));
     const shelf = h('div',{class:'shelf'});
     item.cards.forEach((c,i)=>{
@@ -585,11 +606,10 @@ function scrSlow(item) {
     const optBtns = [];
     const choiceZone = h('div',null, h('h3',null,'Your decision'));
     item.options.forEach((o,i)=>{
-      const b = h('button',{class:'opt',onclick:()=>{ chosen=i; optBtns.forEach(x=>x.classList.remove('selected')); b.classList.add('selected'); }},o);
+      const b = h('button',{class:'opt',onclick:()=>{ if (chosen!=null && chosen!==i) tlog('option_changed',{id:item.id, from:chosen, to:i}); chosen=i; optBtns.forEach(x=>x.classList.remove('selected')); b.classList.add('selected'); }},o);
       optBtns.push(b); choiceZone.append(b);
     });
     const rat = h('textarea',{placeholder:'Why? A few sentences, however you’d naturally explain it.',oninput:e=>rec.rationale=e.target.value});
-    const timerLbl = h('span',{class:'muted small'},'4:00 left');
     const submit = h('button',{class:'btn',onclick:()=>{
       if (chosen==null) { alert('Pick an option first.'); return; }
       clearInterval(tick);
@@ -598,10 +618,11 @@ function scrSlow(item) {
     }},'Submit decision');
     const tick = setInterval(()=>{
       const left = 240000-(Date.now()-start);
-      if (left<=0) { rec.timeExpired=true; timerLbl.textContent='Time — wrap up and submit.'; clearInterval(tick); return; }
-      timerLbl.textContent = Math.floor(left/60000)+':'+String(Math.floor((left%60000)/1000)).padStart(2,'0')+' left';
+      if (left<=0) { rec.timeExpired=true; timerLbl.textContent='Time — wrap up and submit.'; timerLbl.style.color='var(--neg)'; clearInterval(tick); return; }
+      timerLbl.textContent = Math.floor(left/60000)+':'+String(Math.floor((left%60000)/1000)).padStart(2,'0')+' left' + (left<=60000 ? ' — under a minute' : '');
+      if (left<=60000) timerLbl.style.color = 'var(--neg)';
     },500);
-    el.append(choiceZone, h('h3',null,'Your reasoning'), rat, h('div',{style:'display:flex;align-items:center;gap:14px;margin-top:10px'}, submit, timerLbl));
+    el.append(choiceZone, h('h3',null,'Your reasoning'), rat, h('div',{style:'display:flex;align-items:center;gap:14px;margin-top:10px'}, submit));
   };
 }
 
@@ -611,7 +632,7 @@ function scrFree(item) {
     el.append(
       h('div',null, h('span',{class:'badge '+item.tier}, TIERS[item.tier]), h('span',{class:'badge mode'},'YOUR CALL — snap or take your time')),
       h('div',{class:'scenario'}, item.text),
-      h('p',null,'This one is your call. Answer it on instinct with the 5-second clock, or take up to 4 minutes with the information cards. Neither is better.'));
+      h('p',null,'This one is your call. Answer it on instinct with the 5-second clock, or take up to 4 minutes with the information cards. Neither is better — and which one you pick is itself part of what’s recorded.'));
     function delegate(mode) {
       S.session.deliberation.push({ id:item.id, mode });
       tlog('free_mode',{id:item.id, mode});
@@ -620,22 +641,24 @@ function scrFree(item) {
       el.append(inner);
       if (mode==='fast') scrFast(item)(inner); else scrSlow(item)(inner);
     }
-    el.append(
-      h('button',{class:'btn',onclick:()=>delegate('fast')},'Answer on instinct'),
-      h('button',{class:'btn secondary',onclick:()=>delegate('slow')},'Take my time'));
+    const bFast = h('button',{class:'btn',onclick:()=>delegate('fast')},'Answer on instinct');
+    const bSlow = h('button',{class:'btn',onclick:()=>delegate('slow')},'Take my time');
+    el.append(...(Math.random()<0.5 ? [bFast,bSlow] : [bSlow,bFast]));
   };
 }
 
 // ---- Mid-assessment summary + challenge election ----
 function scrChallenge(el) {
   const A = S.session.arena;
-  const peeks = A.filter(a=>a.kind==='fast' && a.peek);
-  const dataShare = peeks.length ? peeks.filter(a=>a.peek.which==='data').length/peeks.length : null;
+  // blank-note peeks reveal nothing, so they don't count toward sourcing; one peek is too few to characterize
+  const peeks = A.filter(a=>a.kind==='fast' && a.peek && !a.peek.blank);
+  const dataShare = peeks.length >= 2 ? peeks.filter(a=>a.peek.which==='data').length/peeks.length : null;
   const slows = A.filter(a=>a.kind==='slow');
   const avgCards = slows.length ? slows.reduce((n,a)=>n+a.cardsOpened.length,0)/slows.length : null;
   const bits = [];
-  if (dataShare!=null) bits.push(dataShare>=0.5 ? 'when rushed, you reached for the facts more than your own notes' : 'when rushed, you reached for your own notes more than the facts');
-  if (avgCards!=null) bits.push('given time, you opened '+(avgCards>=2?'most of':'only some of')+' the information cards');
+  if (dataShare!=null) bits.push(dataShare===0.5 ? 'when rushed, you split evenly between the facts and your own notes'
+    : dataShare>0.5 ? 'when rushed, you reached for the facts more than your own notes' : 'when rushed, you reached for your own notes more than the facts');
+  if (avgCards!=null) bits.push('given time, you opened '+(avgCards===0?'none of':avgCards>=2?'most of':'only some of')+' the information cards');
   const summary = bits.length ? 'Here’s my read so far: '+bits.join(', and ')+'.' : 'I don’t have enough from the first sitting to summarize you yet.';
   const rec = { summary, response:null, text:'' };
   const ta = h('textarea',{class:'hidden','aria-label':'What’s off about the summary',placeholder:'What’s off about that read? (optional)'});
@@ -655,7 +678,9 @@ function scrChallenge(el) {
     ta,
     h('button',{class:'btn',style:'margin-top:10px',onclick:()=>{
       if (!rec.response) { alert('Pick one first — disagreeing is a completely valid answer.'); return; }
-      rec.text = ta.value;
+      // if the final selection hides the text box, the typed objection was retracted — keep it labeled as such, never as the reply
+      if (rec.response==='agree') { rec.text=''; if (ta.value.trim()) rec.retractedDraft = ta.value; }
+      else rec.text = ta.value;
       S.session.challenge = rec; tlog('challenge',{response:rec.response}); next();
     }},'Continue'));
 }
@@ -670,16 +695,18 @@ function scrReview(sitting) {
       if (a.tier==='quarter') return Math.random()<0.25;
       return false;
     });
-    if (!eligible.length) { el.append(h('h2',null,'Review'), h('p',null,'No answers were drawn for review this sitting.'), h('button',{class:'btn',onclick:next},'Continue')); return; }
+    if (!eligible.length) { el.append(h('h2',null,'Review'), h('p',null,'No answers were drawn for review this sitting. (1-in-4 answers can still be drawn at the end of a later sitting.)'), h('button',{class:'btn',onclick:next},'Continue')); return; }
     el.append(h('h2',null,'Review'), aiSay('A few of your answers came up for review, as the badges promised. Nothing is graded — I just want to hear your thinking.'));
     const inputs = [];
     eligible.forEach(a=>{
       a._reviewed = true;
       const itemDef = [...FAST_ITEMS, ...SLOW_ITEMS, ...FREE_ITEMS].find(x=>x.id===a.id);
       const label = itemDef ? itemDef.text.slice(0,90)+'…' : a.id;
+      const choiceText = itemDef && a.choice!=null && itemDef.options && itemDef.options[a.choice] ? itemDef.options[a.choice] : null;
       const ta = h('textarea',{placeholder:'Explain your answer in your own words.'});
       inputs.push({a, ta});
-      el.append(h('div',{class:'card'}, h('p',{class:'small muted'},'Your answer to: '+label), ta));
+      el.append(h('div',{class:'card'}, h('p',{class:'small muted'},'Your answer to: '+label),
+        choiceText ? h('p',{class:'small'},h('b',null,'You picked: '),'“'+choiceText+'”') : null, ta));
     });
     el.append(h('button',{class:'btn',onclick:()=>{
       if (inputs.every(({ta})=>!ta.value.trim()) && !confirm('Leave the explanations blank? That’s allowed, but the review is the one place your reasoning gets heard.')) return;
@@ -692,7 +719,7 @@ function scrReview(sitting) {
 // ---- DRM ----
 function scrDRM(el) {
   el.append(h('h2',null,'Yesterday, step by step'),
-    aiSay('Walk me through yesterday from waking up — in scenes. A scene is one chunk of your day: same place, same people. A class is a scene. The bus ride is a scene. Lunch is a scene. For each: what it was, who was around, whether you chose it, and whether your battery was filling or draining right then.'));
+    aiSay('Walk me through yesterday from waking up — in scenes. A scene is one chunk of your day: same place, same people. A class or a shift is a scene. The ride there is a scene. A meal with the same people is a scene. For each: what it was, who was around, whether you chose it, and whether your battery was filling or draining right then.'));
   const listWrap = h('div');
   const episodes = S.session.drm.episodes;
   function redraw() {
@@ -702,7 +729,7 @@ function scrDRM(el) {
         h('span',{style:'flex:1'}, ep.what),
         h('span',{class:'muted'}, ep.company + (ep.chosen==='chosen'?' · chosen':' · required')),
         h('span',{class:'en '+(ep.energy>0?'pos':ep.energy<0?'neg':'')}, (ep.energy>0?'+':'')+ep.energy),
-        h('button',{'aria-label':'Remove scene: '+ep.what,style:'border:none;background:none;color:var(--neg);cursor:pointer',onclick:()=>{episodes.splice(i,1);redraw();}},'✕')));
+        h('button',{'aria-label':'Remove scene: '+ep.what,style:'border:none;background:none;color:var(--neg);cursor:pointer',onclick:()=>{tlog('drm_scene_removed',{what:ep.what,company:ep.company,chosen:ep.chosen,energy:ep.energy});episodes.splice(i,1);redraw();save();}},'✕')));
     });
   }
   const what = h('input',{type:'text','aria-label':'What was the scene',placeholder:'e.g., lunch at the corner table'});
@@ -720,8 +747,10 @@ function scrDRM(el) {
   const companyRow = chiprow(['Alone','One close person','Small familiar group','Large or unfamiliar group','Family','Alone but online'], v=>companyVal=v, 'company');
   const chosenRow = chiprow(['I chose it','It was required'], v=>chosenVal=(v==='I chose it'?'chosen':'obliged'), 'chosen');
   const energyVal = h('span',{style:'width:34px;text-align:center;font-weight:700'},'0');
-  const energy = h('input',{type:'range','aria-label':'Battery, minus 5 draining to plus 5 charging',min:'-5',max:'5',value:'0',oninput:e=>energyVal.textContent=e.target.value});
+  let energyTouched = false;
+  const energy = h('input',{type:'range','aria-label':'Battery, minus 5 draining to plus 5 charging',min:'-5',max:'5',value:'0',oninput:e=>{energyVal.textContent=e.target.value;energyTouched=true;}});
   const hint = h('p',{class:'hint'},'');
+  redraw();
   el.append(listWrap,
     h('div',{class:'card'},
       h('div',{style:'margin-bottom:8px'}, what),
@@ -734,11 +763,16 @@ function scrDRM(el) {
         if (!companyVal) { hint.textContent='Pick who was around.'; return; }
         if (!chosenVal) { hint.textContent='Pick whether you chose it or it was required.'; return; }
         hint.textContent='';
-        episodes.push({ what:what.value.trim(), company:companyVal, chosen:chosenVal, energy:Number(energy.value) });
-        what.value=''; energy.value='0'; energyVal.textContent='0'; redraw();
+        episodes.push({ what:what.value.trim(), company:companyVal, chosen:chosenVal, energy:Number(energy.value), energyTouched });
+        // full reset — company and chosen chips must not silently carry over to the next scene
+        what.value=''; energy.value='0'; energyVal.textContent='0'; energyTouched=false;
+        companyVal=null; chosenVal=null;
+        [...companyRow.children, ...chosenRow.children].forEach(c=>c.classList.remove('selected'));
+        redraw(); save();
       }},'+ Add this scene')),
     h('p',{class:'small muted'},'At least 3 scenes; aim for 5–8. Ordinary ones count — the bus ride matters as much as the party.'),
     h('button',{class:'btn',onclick:()=>{
+      if (what.value.trim() && !confirm('You typed a scene (“'+what.value.trim()+'”) but didn’t press “+ Add this scene” — it is NOT saved yet. Discard it and finish anyway? (Cancel to go back and add it.)')) return;
       if (episodes.length<3) { alert('Add at least 3 scenes so the pattern means something (aim for 5–8).'); return; }
       tlog('drm_done',{n:episodes.length}); next();
     }},'That’s my day'));
@@ -765,6 +799,10 @@ function scrPortfolio(el) {
   el.append(card, h('button',{class:'btn',onclick:()=>{
     const missing = fields.filter(([k])=>p[k]==null).length;
     if (missing) { alert(missing+' of 3 questions still need an answer — tap one option in each row.'); return; }
+    if (p.close==='5+' && p.weekly==='0–2') {
+      if (!confirm('Quick check: 5+ genuinely close people, but you interacted with 0–2 people this week — does that sound right? (OK to keep it; Cancel to change.)')) return;
+      p.crossCheckKept = true;
+    }
     S.session.portfolio=p; tlog('portfolio'); next();
   }},'Continue'));
 }
@@ -801,7 +839,7 @@ function scrFriction(el) {
     h('button',{class:'btn',style:'margin-top:10px',onclick:()=>{
       if (!attemptInp.value.trim()) { fhint.textContent='Give it your best attempt first — even a guess counts.'; return; }
       S.session.friction.confusedMs = Date.now()-start;
-      S.session.friction.attempts = attempts;
+      S.session.friction.editEvents = attempts; // per-input edit count, named for what it is
       S.session.friction.attemptText = attemptInp.value;
       confusing.remove(); repaired.classList.remove('hidden');
       S.session.friction.repairShownAt = Date.now();
@@ -900,7 +938,7 @@ function scrCompassPrompt(el) {
 }
 
 function scrTradeoffs(el) {
-  el.append(h('h2',null,'Either–or'), h('p',{class:'muted small'},'Sixteen quick choices. Both options are fine; pick the one that’s more you. Go quickly.'));
+  el.append(h('h2',null,'Either–or'), h('p',{class:'muted small'},'Twenty quick choices. Both options are fine; pick the one that’s more you. Go quickly.'));
   const wrap = h('div');
   let idx = 0;
   const order = TRADEOFFS.map((t,i)=>i).sort(()=>Math.random()-0.5);
@@ -911,14 +949,16 @@ function scrTradeoffs(el) {
     const flip = Math.random()<0.5;
     const first = flip ? t.b : t.a, second = flip ? t.a : t.b;
     const shownAt = Date.now();
-    function pick(won, lost) {
+    function pick(won, lost, pos) {
       if (Date.now()-shownAt < 350) return; // swallow double-clicks landing on the next pair
-      S.session.compass.tradeoffs.push({pair:order[idx], won:won.m, lost:lost.m, ms:Date.now()-shownAt});
+      S.session.compass.tradeoffs.push({pair:order[idx], won:won.m, lost:lost.m, ms:Date.now()-shownAt, pos});
       idx++; show();
     }
-    wrap.append(h('p',{class:'small muted'},(idx+1)+' of '+order.length),
-      h('button',{class:'opt',onclick:()=>pick(first,second)},first.t),
-      h('button',{class:'opt',onclick:()=>pick(second,first)},second.t));
+    const b1 = h('button',{class:'opt',disabled:'',onclick:()=>pick(first,second,0)},first.t);
+    const b2 = h('button',{class:'opt',disabled:'',onclick:()=>pick(second,first,1)},second.t);
+    // buttons are visibly disabled during the brief double-click guard, so an ignored tap looks intentional
+    setTimeout(()=>{ b1.removeAttribute('disabled'); b2.removeAttribute('disabled'); }, 360);
+    wrap.append(h('p',{class:'small muted'},(idx+1)+' of '+order.length), b1, b2);
   }
   show();
   el.append(wrap);
@@ -937,6 +977,7 @@ function scrStated(title, items, note) {
   return function(el) {
     el.append(h('h2',null,title));
     if (note) el.append(h('p',{class:'muted small'},note));
+    el.append(h('p',{class:'small'},h('b',null,'The scale: '),'1 = strongly disagree · 3 = neutral · 5 = strongly agree.'));
     const card = h('div',{class:'card'});
     const scale = ['Strongly disagree','Disagree','Neutral','Agree','Strongly agree'];
     items.forEach(it=>{
@@ -948,7 +989,7 @@ function scrStated(title, items, note) {
         }},String(v+1)))));
       card.append(row);
     });
-    el.append(card, h('p',{class:'small muted'},'1 = strongly disagree · 5 = strongly agree. Every statement needs an answer.'),
+    el.append(card, h('p',{class:'small muted'},'Every statement needs an answer.'),
       h('button',{class:'btn',onclick:()=>{
         const missing = items.filter(it=>!S.session.stated[it.id]).length;
         if (missing) { alert(missing+' of '+items.length+' statements still need an answer.'); return; }
@@ -964,8 +1005,9 @@ function scrDebrief(el) {
       h('p',null,'Three things in this assessment were deliberate, and you agreed to staged moments up front. Here they are by name:'),
       h('ul',null,
         h('li',null, h('b',null,'The pushback.'), ' When I challenged one of your answers, that was a standard moment every respondent gets. There was nothing wrong with your answer.'),
-        h('li',null, h('b',null,'The confusing task.'), ' The garbled ordering question was worded that way on purpose, for everyone. Your reaction to the confusion — and how quickly you settled once it was fixed — is part of how steadiness is read.'),
-        h('li',null, h('b',null,'The sealed card.'), ' One snap question mentioned a card nobody could open. It exists to verify that snap answers really are snap — it checks the test, not you.')),
+        h('li',null, h('b',null,'The confusing task.'), ' The garbled ordering question was worded that way on purpose, for everyone. How you reacted to the confusion, and how quickly you got back on track after we fixed it, is one way we measure how steady you stay.'),
+        h('li',null, h('b',null,'The sealed card.'), ' One snap question mentioned a card nobody could open. It exists to verify that snap answers really are snap — it checks the test, not you.'),
+        h('li',null, h('b',null,'The filler pairs.'), ' Four of the twenty either–or choices had no scoring contrast. They make answer patterns harder to game and never touch your motive weights.')),
       h('p',null,'Nothing else was staged. No answer anywhere was scored as right or wrong.'),
       S.withdrawn ? h('p',{class:'muted'},h('b',null,'You chose to stop early — completely fine. '),'Your report covers only what you completed.') : null),
     h('button',{class:'btn',onclick:()=>{ tlog('debrief_done'); next(); }},'Show my report'));
@@ -1022,9 +1064,12 @@ function score() {
   const friction = mean(S.session.sjt.map(r=>r.choiceV));
   const probeChoices = S.session.sjt.flatMap(r=>r.probes);
   const attnBeh = probeChoices.length ? (probeChoices.filter(p=>p==='self').length/probeChoices.length)*(-2)+1 : null; // -1 all self .. +1 all field
-  // friction probe reactivity
+  // friction probe reactivity — sub-3s "confusion" or trivially short answers mean the wording was never wrestled with
   const F = S.session.friction;
-  const react = (F.confusedMs!=null && F.recoveryMs!=null) ? { confusedS:(F.confusedMs/1000).toFixed(1), recoveryS:(F.recoveryMs/1000).toFixed(1) } : null;
+  const react = (F.confusedMs!=null && F.recoveryMs!=null) ? {
+    confusedS: F.confusedMs/1000, recoveryS: F.recoveryMs/1000,
+    minimal: F.confusedMs < 3000 || ((F.answer||'').trim().length < 8 && (F.attemptText||'').trim().length < 12),
+  } : null;
   // motives (filler pairs are camouflage; they never touch the weights)
   const wins = {}, appear = {};
   Object.keys(MOTIVES).forEach(m=>{wins[m]=0;appear[m]=0;});
@@ -1039,6 +1084,29 @@ function score() {
   const st = S.session.stated;
   function stVal(id){ const s=st[id]; if(!s) return null; return s.rev ? 6-s.v : s.v; }
   const statedIntrovert = st['st1'] ? st['st1'].v : null; // raw agree with "social events drain me"
+  // ---- engagement screens: honest low-signal detection, never a judgment ----
+  const flags = [];
+  const cal = S.session.calibration;
+  if (cal && cal.readMs!=null && cal.words) {
+    const wpm = cal.words / (cal.readMs/60000);
+    if (wpm > 900) flags.push('the warm-up passage was closed faster than it could plausibly be read');
+  }
+  const stVals = Object.values(st).map(s=>s.v);
+  const straightline = stVals.length >= 6 && stVals.every(v=>v===stVals[0]);
+  if (straightline) flags.push('every self-description got the same rating, including opposite-keyed statements');
+  const tos = S.session.compass.tradeoffs;
+  const tms = tos.map(t=>t.ms).slice().sort((a,b)=>a-b);
+  const tMed = tms.length ? tms[Math.floor(tms.length/2)] : null;
+  const tooFastPicks = tMed!=null && tos.length>=10 && tMed < 600;
+  if (tooFastPicks) flags.push('the either–or picks came faster than the options could be read');
+  const poss = tos.map(t=>t.pos).filter(p=>p===0||p===1);
+  const posConstant = poss.length >= 15 && poss.every(p=>p===poss[0]);
+  if (posConstant) flags.push('every either–or pick was the same on-screen position across shuffled pairs');
+  if (eps.length>=3 && eps.every(e=>Math.abs(e.energy)===5)) flags.push('every day scene was rated at the extreme ±5');
+  if (S.session.portfolio && S.session.portfolio.close==='5+' && S.session.portfolio.weekly==='0–2') flags.push('the social-week numbers contradict each other (5+ close people, 0–2 contacts)');
+  const drmEnergyTouched = eps.some(e=>e.energyTouched===true || (e.energyTouched===undefined && e.energy!==0));
+  const totalCards = slow.reduce((n,a)=>n+a.cardsOpened.length,0);
+  const totalPeeks = A.filter(a=>a.kind==='fast' && a.peek && !a.peek.blank).length;
   return {
     graphs: {
       fastSrcLo: fastSrc(lo), fastSrcHi: fastSrc(hi),
@@ -1048,6 +1116,11 @@ function score() {
     congruence: congr.length ? congr.every(Boolean) : null,
     salience, trapPass, drm, friction, attnBeh, react, weights, conc, statedIntrovert,
     answeredArena,
+    flags, straightline, lowSignal: flags.length>0,
+    motivesLowConfidence: tooFastPicks || posConstant,
+    drmEnergyTouched, totalCards, totalPeeks,
+    deliberationN: (S.session.deliberation||[]).length,
+    deliberationSlowN: (S.session.deliberation||[]).filter(d=>d.mode==='slow').length,
     deliberation: (S.session.deliberation||[]).length ? S.session.deliberation.filter(d=>d.mode==='slow').length / S.session.deliberation.length : null,
     challenge: S.session.challenge,
     stGet: (id)=> st[id] ? st[id].v : null,
@@ -1073,11 +1146,15 @@ function leadCard(R) {
     const G = R.graphs;
     const leans = [['snap sourcing',G.fastSrcLo],['deliberate sourcing',G.slowSrcLo],['deliberate method',G.slowMthLo]].filter(x=>x[1]!=null);
     const strongest = leans.length ? leans.reduce((a,b)=>Math.abs(b[1])>Math.abs(a[1])?b:a) : null;
-    card.append(h('p',null, strongest ? 'Your clearest, most decided lean was in '+strongest[0]+'. Wherever you lean hardest is where you’re most predictable — and most yourself.' : 'Not enough answered items to name a strongest area this session.'));
+    const noEngagement = (R.totalCards + R.totalPeeks) === 0; // opening nothing is not a "lean" — it's an absence of behavior
+    card.append(h('p',null, (strongest && !noEngagement) ? 'Your clearest, most decided lean was in '+strongest[0]+'. Wherever you lean hardest is where you’re most predictable — and most yourself.'
+      : noEngagement ? 'Honestly: this session didn’t show enough behavior to name a strongest lean — no information cards were opened and no peeks were taken, so there’s nothing decided to point at yet.'
+      : 'Not enough answered items to name a strongest area this session.'));
   } else if (m==='truth') {
     let truth = 'The least flattering honest reading available from this session: ';
-    if (R.salience==='flat') truth += 'the stakes never visibly changed your behavior, so your steadiness here is unproven, not proven.';
-    else if (R.statedIntrovert!=null && R.drm.chosenSmallAvg!=null && R.statedIntrovert>=4 && R.drm.chosenSmallAvg>0.5) truth += 'your self-description (“social events drain me”) disagrees with your own reconstructed day.';
+    if (R.lowSignal) truth += 'the engagement checks flagged this session (see the note above), so the hardest honest truth is that these answers don’t yet show a considered you.';
+    else if (R.salience==='flat') truth += 'the stakes never visibly changed your behavior, so your steadiness here is unproven, not proven.';
+    else if (!R.straightline && R.statedIntrovert!=null && R.drm.chosenSmallAvg!=null && R.drmEnergyTouched && R.statedIntrovert>=4 && R.drm.chosenSmallAvg>0.5) truth += 'your self-description (“social events drain me”) disagrees with your own reconstructed day.';
     else if (R.congruence===false) truth += 'your pros-and-cons grid pointed one way and you chose another.';
     else truth += 'nothing in your behavioral data contradicted you this session — the harder truths, if any, sit in your written answers, which are still pending coding.';
     card.append(h('p',null,truth));
@@ -1096,23 +1173,38 @@ function leadCard(R) {
 function scrReport(el) {
   const R = score();
   const G = R.graphs;
-  el.append(h('h1',null,'Your report'), h('p',{class:'muted small'},'Demo scoring: behavioral channels scored live in this browser; written answers are captured for expert-checked AI coding and marked pending.'));
+  el.append(h('h1',null,'Your report'), h('p',{class:'muted small'},'Demo scoring: what you did (the behavioral channels) is scored live in this browser; written answers are captured for expert-checked AI coding and marked pending.'));
+  if (R.flags.length) {
+    el.append(h('div',{class:'card',style:'border:1.5px solid var(--neg)'},
+      h('h2',{style:'margin-top:0'},'Read this report with caution'),
+      h('p',{class:'small'},'This session tripped '+R.flags.length+' engagement check'+(R.flags.length>1?'s':'')+': '+R.flags.join('; ')+'.'),
+      h('p',{class:'small muted'},'That pattern usually means fast or uniform answering rather than considered responses. Nothing here is a judgment — but every reading below is low-confidence and shouldn’t be treated as a profile of you.')));
+  }
   const lead = leadCard(R);
   if (lead) el.append(lead);
   // Thinking machine
   const tcard = h('div',{class:'card'});
   tcard.append(h('h2',null,'How you think'),
-    h('p',{class:'small muted'},'Blue dot ● = low stakes · gold dot ● = high stakes (certain review). A missing dot means you skipped the peeks or items that feed it.'),
+    h('p',{class:'small muted'},
+      h('span',{style:'color:var(--accent);font-size:1.05rem'},'●'),' filled blue dot = low stakes · ',
+      h('span',{style:'color:var(--gold);font-size:1.05rem'},'○'),' hollow gold ring = high stakes (certain review). A missing dot means you skipped the peeks or items that feed it.'),
     bar('SNAP · where you reach', G.fastSrcLo, G.fastSrcHi, 'Your own compass', 'Outside data'),
     bar('DELIBERATE · where you reach', G.slowSrcLo, G.slowSrcHi, 'Your own compass', 'Outside data'),
     bar('DELIBERATE · how you build', G.slowMthLo, G.slowMthHi, 'By feel', 'With structure'),
     h('p',{class:'small'},'Snap “how you build” and everything in your written reasoning: ', h('span',{class:'pending'},'PENDING AI CODING')));
-  if (R.salience==='pass') tcard.append(h('p',{class:'small'},'Interpretability check: ', h('span',{class:'pass'},'passed'), ' — your profile here can be read as it stands.'));
-  else if (R.salience==='flat') tcard.append(h('p',{class:'small muted'},'Interpretability check: your behavior stayed the same at every stakes level. With a short demo that is common and not a flaw — it just means flat lines here are read cautiously rather than as proven steadiness.'));
-  else tcard.append(h('p',{class:'small muted'},'Interpretability check: not enough answered items this session to run it.'));
+  const trustLbl = 'Can this section be read as it stands? (interpretability check): ';
+  if (R.lowSignal) tcard.append(h('p',{class:'small'},trustLbl, h('span',{class:'flag'},'read with caution'), ' — the engagement checks flagged this session (see the note at the top), so these dots are low-confidence regardless of the other checks.'));
+  else if (R.salience==='pass') tcard.append(h('p',{class:'small'},trustLbl, h('span',{class:'pass'},'yes'), ' — your behavior visibly responded to the stakes, so this section can be read as it stands.'));
+  else if (R.salience==='flat') tcard.append(h('p',{class:'small muted'},trustLbl+'your behavior stayed the same at every stakes level. With a short demo that is common and not a flaw — it just means flat lines here are read cautiously rather than as proven steadiness.'));
+  else tcard.append(h('p',{class:'small muted'},trustLbl+'not enough answered items this session to run it.'));
   if (R.trapPass!=null) tcard.append(h('p',{class:'small'},'Snap honesty check (checks the test, not you): ', R.trapPass===true? h('span',{class:'pass'},'PASS') : h('span',{class:'muted'},'inconclusive (single item, single respondent)')));
-  if (R.congruence!=null) tcard.append(h('p',{class:'small'},'Grid congruence: '+(R.congruence?'your grid’s winner matched your choice.':'your grid pointed one way and you chose another — noted, not judged.')));
-  if (R.deliberation!=null) tcard.append(h('p',null,'When the mode was your call, you chose to take your time on ', h('b',null, Math.round(R.deliberation*100)+'%'), ' of the free-choice questions — your deliberation default, revealed rather than asked.'));
+  if (R.congruence!=null) tcard.append(h('p',{class:'small'},'Did your pros & cons match your pick? (grid congruence): '+(R.congruence?'yes — your grid’s winner matched your choice.':'your grid pointed one way and you chose another — noted, not judged.')));
+  const loadRec = S.session.arena.find(a=>a.load && a.load.code);
+  if (loadRec) {
+    const r = (loadRec.load.recalled||'').trim();
+    tcard.append(h('p',{class:'small muted'},'The 4-digit code you held during one snap question: '+(r ? (r===loadRec.load.code ? 'you recalled it correctly.' : 'your recall didn’t match the code shown.') : 'no recall was entered.')+' That’s recorded to check how the memory load affected your answer — it is not a score.'));
+  }
+  if (R.deliberation!=null) tcard.append(h('p',null,'When the mode was your call, you chose to take your time on ', h('b',null, R.deliberationSlowN+' of '+R.deliberationN), ' free-choice question'+(R.deliberationN===1?'':'s')+' — a hint at your deliberation default, though '+R.deliberationN+' item'+(R.deliberationN===1?' is':'s are')+' far too few to call it a settled default.'));
   el.append(tcard);
   // Energy
   const ecard = h('div',{class:'card'}, h('h2',null,'Where your energy goes'));
@@ -1121,9 +1213,10 @@ function scrReport(el) {
   if (D.chosenSmallAvg!=null) parts.push('small chosen company averaged '+(D.chosenSmallAvg>0?'+':'')+D.chosenSmallAvg.toFixed(1));
   if (D.obligedBigAvg!=null) parts.push('big obligatory settings averaged '+(D.obligedBigAvg>0?'+':'')+D.obligedBigAvg.toFixed(1));
   if (D.soloChosenAvg!=null) parts.push('chosen alone-time averaged '+(D.soloChosenAvg>0?'+':'')+D.soloChosenAvg.toFixed(1));
-  if (parts.length) ecard.append(h('p',null,'From your reconstructed day: '+parts.join('; ')+'. (Scale: −5 draining to +5 charging.)'));
+  if (parts.length && !R.drmEnergyTouched) ecard.append(h('p',null,'You never moved the battery slider, so every scene sits at the default 0. That isn’t a “neutral energy” reading — it means no energy pattern was actually recorded this session.'));
+  else if (parts.length) ecard.append(h('p',null,'From your reconstructed day: '+parts.join('; ')+'. (Scale: −5 draining to +5 charging.)'));
   else ecard.append(h('p',null,'Your reconstructed day didn’t include enough varied scenes for an energy pattern — no scenes of some kinds were recorded. More scenes, more signal.'));
-  if (R.statedIntrovert!=null && D.chosenSmallAvg!=null) {
+  if (R.statedIntrovert!=null && D.chosenSmallAvg!=null && R.drmEnergyTouched && !R.straightline) {
     const saysDrained = R.statedIntrovert>=4, dayCharged = D.chosenSmallAvg>0.5;
     if (saysDrained && dayCharged) ecard.append(h('p',null,'You rated “social events drain me” as true of you — but your actual day says small, chosen company charged you. What drains you looks more specific: big, obligatory settings. Different problem, different fix.'));
     else if (!saysDrained && !dayCharged) ecard.append(h('p',null,'Your self-description and your reconstructed day mostly agree.'));
@@ -1135,42 +1228,53 @@ function scrReport(el) {
   const rcard = h('div',{class:'card'}, h('h2',null,'You, in charged moments'));
   if (R.friction!=null) rcard.append(h('p',null,'Across the scenarios you leaned ', h('b',null, R.friction>0.25?'toward addressing friction directly':R.friction<-0.25?'toward smoothing things over':'neither pole strongly'),' (score '+R.friction.toFixed(2)+' on −1 smooth … +1 press).'));
   if (R.attnBeh!=null) rcard.append(h('p',null,'Your quick mental checks before acting went ', h('b',null, R.attnBeh<-0.25?'mostly to your own reaction':R.attnBeh>0.25?'mostly to reading the room':'both ways'),'.'));
-  if (R.react) rcard.append(h('p',null, Number(R.react.confusedS)<3
-    ? 'You pushed through the deliberately confusing task almost immediately and settled in '+R.react.recoveryS+'s once it was fixed. Because you were warned staged moments existed, read this as the floor of your steadiness, not the ceiling.'
-    : 'The deliberately confusing task took you '+R.react.confusedS+'s to push through; once fixed, you settled in '+R.react.recoveryS+'s. Because you were warned staged moments existed, read this as the floor of your steadiness, not the ceiling.'));
+  if (R.react) {
+    const fmt = s => s<1 ? 'under a second' : s.toFixed(1)+'s';
+    rcard.append(h('p',null, R.react.minimal
+      ? 'You moved through the deliberately confusing task in '+fmt(R.react.confusedS)+' and re-answered '+fmt(R.react.recoveryS)+' after it was fixed — too quickly (or with too short an answer) to tell whether the wording was actually wrestled with. It’s recorded as-is, but it isn’t read as steadiness.'
+      : 'The deliberately confusing task took you '+fmt(R.react.confusedS)+' to push through; once fixed, you settled in '+fmt(R.react.recoveryS)+'. Because you were warned staged moments existed, read this as the floor of your steadiness, not the ceiling.'));
+  }
   if (R.challenge && R.challenge.response) {
     const c = R.challenge.response;
-    rcard.append(h('p',null, c==='contest' ? 'When I summarized you mid-way, you pushed back outright. Contesting a machine’s read of you is a small real risk — you took it.'
+    rcard.append(h('p',null, c==='contest' ? 'When I summarized you mid-way, you pushed back outright — what you wrote goes to coding as-is.'
       : c==='partly' ? 'When I summarized you mid-way, you corrected me partway rather than accepting or rejecting wholesale.'
-      : 'When I summarized you mid-way, you accepted the read as given.'));
+      : R.challenge.retractedDraft ? 'When I summarized you mid-way, you considered pushing back, then confirmed the read matched. (Your unfinished note was kept, labeled as retracted.)'
+      : 'When I summarized you mid-way, you confirmed the read matched.'));
   }
   rcard.append(h('p',{class:'small'},'Your pushback reply and attention answers: ', h('span',{class:'pending'},'PENDING AI CODING')));
   el.append(rcard);
   // Stated vs revealed
   const gcard = h('div',{class:'card'}, h('h2',null,'What you said vs what you did'),
     h('p',{class:'small muted'},'A difference here is information, not an accusation — sometimes the behavior sample is the thing that’s wrong. Both readings are yours.'));
+  if (R.straightline) gcard.append(h('p',{class:'small',style:'color:var(--neg)'},'Caveat: you gave every self-description the same rating, including statements that point in opposite directions. The “you said” side below is therefore low-confidence — it may reflect quick answering rather than an actual stance.'));
   const gaps = [];
+  // a middle answer (3 = neutral) is not a stance — those comparisons are skipped rather than put in your mouth
   const st1v = R.stGet('st1');
-  if (st1v!=null && R.drm.chosenSmallAvg!=null) {
+  if (st1v!=null && st1v!==3 && R.drm.chosenSmallAvg!=null && R.drmEnergyTouched) {
     const saidDrain = st1v>=4, sawCharge = R.drm.chosenSmallAvg>0.5;
-    gaps.push(['Social energy', 'You said social events '+(saidDrain?'drain you':'don’t particularly drain you')+'.', 'Your day showed small chosen company at '+(R.drm.chosenSmallAvg>0?'+':'')+R.drm.chosenSmallAvg.toFixed(1)+'.', saidDrain===!sawCharge ? 'aligned' : 'daylight']);
+    gaps.push(['Social energy', 'You '+(saidDrain?'said social events drain you':'didn’t endorse “social events drain me”')+'.', 'Your day showed small chosen company at '+(R.drm.chosenSmallAvg>0?'+':'')+R.drm.chosenSmallAvg.toFixed(1)+'.', saidDrain===!sawCharge ? 'aligned' : 'daylight']);
   }
   const st7v = R.stGet('st7');
-  if (st7v!=null && R.friction!=null) {
+  if (st7v!=null && st7v!==3 && R.friction!=null) {
     const saidPeace = st7v>=4, sawPress = R.friction>0.25;
-    gaps.push(['Handling friction', 'You said you’d rather '+(saidPeace?'keep the peace':'win the argument')+'.', 'In the scenarios you leaned '+(sawPress?'toward pressing':'toward smoothing')+' ('+R.friction.toFixed(2)+').', (saidPeace&&sawPress)||(!saidPeace&&!sawPress&&R.friction<-0.25) ? 'daylight' : 'aligned']);
+    gaps.push(['Handling friction', 'You '+(saidPeace?'said you’d rather keep the peace':'didn’t endorse keeping the peace over winning the argument')+'.', 'In the scenarios you leaned '+(sawPress?'toward pressing':'toward smoothing')+' ('+R.friction.toFixed(2)+').', (saidPeace&&sawPress)||(!saidPeace&&!sawPress&&R.friction<-0.25) ? 'daylight' : 'aligned']);
   }
   const st8v = R.stGet('st8');
-  if (st8v!=null && R.attnBeh!=null) {
+  if (st8v!=null && st8v!==3 && R.attnBeh!=null) {
     const saidSelf = st8v>=4, sawSelf = R.attnBeh<-0.25, sawField = R.attnBeh>0.25;
-    gaps.push(['Where attention goes', 'You said you focus '+(saidSelf?'more on your own feelings':'more on reading others')+'.', 'Your quick checks went '+(sawSelf?'mostly to yourself':sawField?'mostly to the room':'both ways')+'.', (saidSelf&&sawField)||(!saidSelf&&sawSelf) ? 'daylight' : 'aligned']);
+    gaps.push(['Where attention goes', 'You '+(saidSelf?'said you focus more on your own feelings':'leaned toward reading others over your own feelings')+'.', 'Your quick checks went '+(sawSelf?'mostly to yourself':sawField?'mostly to the room':'both ways')+'.', (saidSelf&&sawField)||(!saidSelf&&sawSelf) ? 'daylight' : 'aligned']);
   }
   if (gaps.length) {
     gaps.forEach(([label, said, saw, verdict])=>{
       gcard.append(h('p',{class:'small'}, h('b',null,label+': '), said+' ', saw+' ',
-        h('span',{class: verdict==='aligned'?'pass':'flag', style:'font-family:Helvetica,Arial,sans-serif;font-size:0.7rem'}, verdict==='aligned'?'ALIGNED':'WORTH A LOOK')));
+        verdict==='aligned'
+          ? h('span',{class:'pass',style:'font-family:Helvetica,Arial,sans-serif;font-size:0.7rem'},'ALIGNED')
+          : h('span',{style:'font-family:Helvetica,Arial,sans-serif;font-size:0.7rem;font-weight:700;color:#6b5a20;border:1px solid #6b5a20;border-radius:3px;padding:0 5px'},'WORTH A LOOK')));
     });
-    gcard.append(h('p',{class:'small muted'},'Steadiness said-vs-did lives in your written answers and probe telemetry — ', h('span',{class:'pending'},'PENDING AI CODING')));
+    gcard.append(h('p',{class:'small muted'},'“Worth a look” is interesting, not bad — a gap often means the situations differed, not that anyone lied. Steadiness said-vs-did lives in your written answers and probe telemetry — ', h('span',{class:'pending'},'PENDING AI CODING')));
+    el.append(gcard);
+  } else {
+    gcard.append(h('p',{class:'small muted'},'Your middle-of-the-scale answers didn’t state a stance either way, so there’s nothing to compare honestly here.'));
     el.append(gcard);
   }
   // Compass
@@ -1180,29 +1284,34 @@ function scrReport(el) {
     ccard.append(h('div',{class:'reportbar'}, h('div',{class:'lbl'},MOTIVES[m]+(S.session.compass.spend===m?' ★':'')),
       h('div',{class:'track'}, h('span',{style:'position:absolute;left:0;top:0;height:100%;width:'+(w*100)+'%;background:var(--accent);border-radius:7px;opacity:0.75'}))));
   });
-  ccard.append(h('p',{class:'small muted'},'★ = where you spent your final choice. Weights from your 16 either–or picks.'),
+  if (R.motivesLowConfidence) ccard.append(h('p',{class:'small',style:'color:var(--neg)'},'Caution: these picks came too fast or too patterned to be confident the options were read — treat this ranking as low-confidence.'));
+  ccard.append(h('p',{class:'small muted'},'★ = where you spent your final choice. Weights from the 16 scored either–or picks (4 of the 20 shown were fillers that never touch the weights).'),
     h('p',{class:'small'},'Your own words about what you’re working toward: ', h('span',{class:'pending'},'PENDING AI CODING'), ' — the stated–revealed comparison lands there.'));
   el.append(ccard);
   // Export
   el.append(h('div',{class:'card'},
     h('h2',null,'Your data'),
-    h('p',{class:'small'},'Everything captured this session — every timestamp, peek, card, draft, and answer — belongs to you. Export it, or clear it from this browser.'),
+    S.importedView
+      ? h('p',{class:'small'},'You are viewing an imported session (read-only — nothing was added to it). Closing this report doesn’t touch this browser’s own saved session.')
+      : h('p',{class:'small'},'Everything captured this session — every timestamp, peek, card, draft, and answer — belongs to you. Export it, or clear it from this browser.'),
     h('button',{class:'btn',onclick:()=>{
       const nick = (S.session.intake.nickname||'anon').replace(/[^a-z0-9_-]/gi,'').slice(0,24) || 'anon';
       const stamp = new Date().toISOString().slice(0,10);
       const blob = new Blob([JSON.stringify(S.session,null,2)],{type:'application/json'});
       const a = document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='assessment_'+nick+'_'+stamp+'.json'; a.click();
     }},'Export session JSON'),
-    h('button',{class:'btn secondary',onclick:()=>{
-      if (!confirm('Erase this session from the browser? If you haven’t exported, the data is gone for good.')) return;
-      localStorage.removeItem('assessment_v2_app'); location.reload();
-    }},'Clear & restart')),
-    h('p',{class:'footer-note'},'Demo Form A · version 2. Behavioral scoring is live; free-text coding, error bars, and cohort-referenced values require the production scoring service. A reading at your age is a reading of your age — minors’ results expire after 18 months in production.'));
+    S.importedView
+      ? h('button',{class:'btn secondary',onclick:()=>{ location.reload(); }},'Close imported report (keeps this browser’s own save)')
+      : h('button',{class:'btn secondary',onclick:()=>{
+          if (!confirm('Erase this browser’s saved session (the one you just took, plus any backup copy)? If you haven’t exported, the data is gone for good.')) return;
+          localStorage.removeItem('assessment_v2_app'); localStorage.removeItem('assessment_v2_app_prev'); location.reload();
+        }},'Clear & restart')),
+    h('p',{class:'footer-note'},'Demo Form A · version 2. Behavioral scoring is live; free-text coding, error bars, and cohort-referenced values require the production scoring service. These results describe you now, at this age — people change, which is why results of anyone under 18 are automatically deleted after 18 months in the real (non-demo) version.'));
 }
 
 // ---------- Withdrawal ----------
 document.getElementById('stopbtn').addEventListener('click', ()=>{
-  if (S.withdrawn) return;
+  if (S.withdrawn || S.importedView) return;
   if (confirm('Stop the assessment? Completely fine — no penalty. You’ll go straight to the explanation page and a report of whatever you completed.')) {
     S.withdrawn = true; tlog('withdrawn');
     S.screen = FLOW.length - 2; // debrief
@@ -1242,9 +1351,16 @@ document.getElementById('stopbtn').addEventListener('click', ()=>{
   ];
   // resume — declining does NOT delete the save (a stray reload must never destroy data)
   try {
-    const saved = JSON.parse(localStorage.getItem('assessment_v2_app')||'null');
-    if (saved && saved.screen>0 && saved.screen<=FLOW.length-1 && confirm('Resume your saved session? (Choosing Cancel starts fresh but keeps the save until you finish or clear it.)')) {
-      S.screen = saved.screen; S.session = saved.session; S.withdrawn = saved.withdrawn;
+    const raw = localStorage.getItem('assessment_v2_app');
+    const saved = JSON.parse(raw||'null');
+    if (saved && saved.screen>0 && saved.screen<=FLOW.length-1) {
+      if (confirm('Resume your saved session? (Choosing Cancel starts fresh — the old session is kept as a backup copy in this browser until you clear your data.)')) {
+        S.screen = saved.screen; S.session = saved.session; S.withdrawn = saved.withdrawn;
+        S._resumeNote = true;
+      } else {
+        // the fresh run will overwrite the main save; keep the declined session under a backup key so the promise above is true
+        try { localStorage.setItem('assessment_v2_app_prev', raw); } catch(e2){}
+      }
     }
   } catch(e){}
   render();
