@@ -65,6 +65,38 @@ reading level, and fairness across groups are first-order design constraints, no
 5. **Stated versus revealed.** Where stated and revealed preference diverge, the theory privileges
    revealed preference for prediction and treats the gap as itself informative.
 
+## Purpose and validity stance
+
+This framework is built for self-understanding, not prediction. It does not forecast what a person
+will do, and it refuses that goal on principle. A predictive reading handed to a young person
+tends to become self-fulfilling, and a measure that shapes the outcome it claims to foresee has
+already surrendered the neutrality that made it worth trusting. The instrument's value is that it
+gives the subject a structured account of their own tendencies, stated and revealed, to understand
+in the pursuit of their own ends. The subject need not be able to predict themselves; they need
+only understand what they want.
+
+This choice reassigns the validity burden; it does not remove it.
+
+- **Not criterion validity.** We make no claim that any metric predicts a job, grade, or life
+  outcome, and no score may be used to select, hire, admit, rank, or screen out any person. Any
+  such use is a misuse the framework disowns: the instrument was never built to predict.
+- **No valence, no compliments.** Every metric is a neutral, bipolar observation of tendency,
+  neither pole better than the other. The report carries no praise and no deficit language, which
+  forecloses the flattering form of the Barnum effect by construction.
+- **The burden we carry is discrimination, not universality.** A neutral observation can still be
+  near-universal ("sometimes you trust your gut, sometimes you deliberate") and feel personal while
+  describing everyone. The instrument owes evidence that its readings discriminate: two different
+  people receive meaningfully different profiles, and a person's own profile fits them better than a
+  stranger's. This is smaller and more honest than prediction, and it is what the validation study
+  must establish.
+- **Nothing is valuable in a vacuum.** No single tendency is presented as the finding. The unit of
+  insight is the configuration across systems and, above all, the stated-revealed gaps, which are
+  computed from a person's own two data streams and so cannot be generic. The report must never
+  hang an insight on one isolated tendency.
+- **Descriptive, never prophetic.** Report language stays past-tense and about the session: "here
+  is how your thinking moved today, when it counted," never "under pressure you will retreat to your
+  models."
+
 ## The system template
 
 Every chapter that defines a system follows this structure. Uniformity is what makes separate
