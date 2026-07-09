@@ -96,6 +96,15 @@ This choice reassigns the validity burden; it does not remove it.
 - **Descriptive, never prophetic.** Report language stays past-tense and about the session: "here
   is how your thinking moved today, when it counted," never "under pressure you will retreat to your
   models."
+- **The gap is a starting point, not a verdict.** Self-reported preference often conflicts with
+  revealed behavior, because what a person wants or believes they are differs from what the evidence
+  shows. That is expected and carries no judgment. The stated-revealed gap is the most actionable
+  reading in the report: it is the distance between the self a person wants and the self their
+  behavior reveals, and because people are plastic and trainable, that distance is movable. A person
+  who wants to think or act differently can be helped to train toward it. This makes reliability a
+  safeguard for the person, not a formality: a gap may be reported, and may become a training
+  target, only when it clears a stated reliability bar, because training someone to close a gap that
+  was measurement noise asks them to change themselves to fix a phantom.
 
 ## The system template
 
