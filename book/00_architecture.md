@@ -96,6 +96,11 @@ This choice reassigns the validity burden; it does not remove it.
 - **Descriptive, never prophetic.** Report language stays past-tense and about the session: "here
   is how your thinking moved today, when it counted," never "under pressure you will retreat to your
   models."
+- **Clean or silent (hard rule).** No difference score (any stated-revealed gap) and no slope (any
+  stake-response) is shown unless it clears a pre-specified reliability threshold. Below the
+  threshold the report shows nothing on that reading, or says "no clear gap" / "no clear shift." It
+  never displays a shaky number softened by a caveat. A reading the instrument cannot stand behind
+  does not appear. This is a hard constraint on the report, not a preference.
 - **The gap is a starting point, not a verdict.** Self-reported preference often conflicts with
   revealed behavior, because what a person wants or believes they are differs from what the evidence
   shows. That is expected and carries no judgment. The stated-revealed gap is the most actionable
@@ -105,6 +110,24 @@ This choice reassigns the validity burden; it does not remove it.
   safeguard for the person, not a formality: a gap may be reported, and may become a training
   target, only when it clears a stated reliability bar, because training someone to close a gap that
   was measurement noise asks them to change themselves to fix a phantom.
+
+## Permitted and prohibited uses (per metric)
+
+The self-understanding stance is enforced metric by metric, not only in principle. Every score
+carries a use label with the same normative weight as the system register. The default for all
+metrics is developmental and reflective use by the subject. On top of that default, the following
+metrics are barred outright from any use that sorts, ranks, screens, places, selects, hires, or
+admits a person, whether by a school, an employer, or the assessing company itself:
+
+- **Social risk tolerance** (System 1)
+- **Reactivity under load** and **Baseline stability** (System 3)
+- **Every stated-revealed gap** and the cross-cutting divergence metric
+
+These are the readings most open to misuse against a young person and least defensible as selection
+inputs. Their prohibition is a framework obligation, not implementer discretion. No such metric may
+be exported, aggregated, or written to a student information system for a sorting purpose. The
+prohibition holds regardless of intent, because any delivered number tends to drift toward the
+decision it can influence.
 
 ## The system template
 
