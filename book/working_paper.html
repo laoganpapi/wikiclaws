@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A New Theory of Personality — Working Paper</title>
+<style>
+  :root {
+    --ink:#1a1d21; --muted:#5b6470; --line:#e3e6ea; --accent:#2f5d8a; --accent-soft:#eef3f8;
+    --gold:#8a7330; --gold-soft:#f7f5ef; --bg:#fbfbfa; --pos:#3f6e3a; --neg:#b04a2f;
+  }
+  *{box-sizing:border-box}
+  body{font-family:Georgia,'Times New Roman',serif;color:var(--ink);background:var(--bg);margin:0;line-height:1.55}
+  .page{max-width:960px;margin:0 auto;padding:48px 28px 90px}
+  header{border-bottom:3px solid var(--ink);padding-bottom:22px}
+  h1{font-size:2.1rem;margin:0 0 6px;letter-spacing:-0.01em}
+  .subtitle{color:var(--muted);font-style:italic;margin:0;font-size:1.02rem}
+  h2{font-size:1.35rem;margin:52px 0 6px}
+  h2 .n{display:inline-block;background:var(--ink);color:#fff;font-family:'Helvetica Neue',Arial,sans-serif;font-size:.78rem;font-weight:700;padding:2px 10px;border-radius:3px;margin-right:10px;vertical-align:2px}
+  .kicker{color:var(--muted);font-size:.95rem;margin:0 0 18px}
+  p,li{font-size:.97rem}
+  .lede{background:var(--accent-soft);border-left:4px solid var(--accent);padding:16px 20px;margin:26px 0 0;font-size:1.05rem}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px 20px}
+  .card h3{margin:0 0 6px;font-size:1.05rem}
+  .card .tag{font-family:'Helvetica Neue',Arial,sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.06em;color:var(--accent);text-transform:uppercase}
+  .lanes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+  .lane{border:2px dashed var(--line);border-radius:10px;padding:16px;text-align:center;color:var(--muted);background:#fff}
+  .lane.active{border:2.5px solid var(--accent);color:var(--ink);background:var(--accent-soft)}
+  .lane b{display:block;font-size:1.05rem;margin-bottom:4px}
+  .lane .who{font-family:'Helvetica Neue',Arial,sans-serif;font-size:.72rem;letter-spacing:.03em}
+  .rules{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+  .rule{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .rule .ico{font-size:1.3rem}
+  .rule b{display:block;font-size:.95rem;margin:4px 0 2px}
+  .rule span{font-size:.85rem;color:var(--muted)}
+  .flow{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;margin:16px 0}
+  .fstep{flex:1;min-width:130px;background:#fff;border:1.5px solid var(--accent);border-radius:10px;padding:12px 14px;text-align:center;font-size:.88rem;position:relative}
+  .fstep b{display:block;font-size:.92rem}
+  .fstep small{color:var(--muted);font-size:.78rem}
+  .farrow{align-self:center;padding:0 8px;color:var(--accent);font-size:1.4rem;font-family:'Helvetica Neue',Arial,sans-serif}
+  .quad{margin:14px auto;display:block}
+  svg text{font-family:'Helvetica Neue',Arial,sans-serif}
+  .motives{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+  .motive{background:#fff;border:1.5px solid var(--gold);border-radius:20px;padding:8px 16px;font-size:.9rem;color:var(--gold);font-weight:600;font-family:'Helvetica Neue',Arial,sans-serif}
+  .gapviz{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;margin:18px 0}
+  .stream{background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:14px 16px;text-align:center}
+  .stream b{display:block}
+  .stream small{color:var(--muted)}
+  .gapmark{font-family:'Helvetica Neue',Arial,sans-serif;text-align:center;color:var(--gold);font-weight:700}
+  table{width:100%;border-collapse:collapse;font-family:'Helvetica Neue',Arial,sans-serif;font-size:.85rem;background:#fff;border:1px solid var(--line);margin:14px 0}
+  th{text-align:left;font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:#f4f5f6;padding:9px 12px;border-bottom:2px solid var(--line)}
+  td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  .check{color:var(--pos);font-weight:700}
+  .bar{height:10px;border-radius:5px;background:linear-gradient(90deg,var(--accent-soft),var(--accent));margin:6px 0}
+  .polelbls{display:flex;justify-content:space-between;font-family:'Helvetica Neue',Arial,sans-serif;font-size:.72rem;color:var(--muted)}
+  .callout{background:var(--gold-soft);border:1px solid #e0d9c8;border-left:4px solid var(--gold);border-radius:8px;padding:13px 17px;margin:14px 0;font-size:.93rem}
+  .owe{list-style:none;padding:0}
+  .owe li{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 15px;margin:8px 0;font-size:.92rem}
+  .owe b{font-family:'Helvetica Neue',Arial,sans-serif;font-size:.8rem;text-transform:uppercase;letter-spacing:.04em;color:var(--accent)}
+  footer{margin-top:60px;border-top:3px solid var(--ink);padding-top:16px;color:var(--muted);font-size:.85rem;font-style:italic}
+  @media(max-width:720px){.grid2,.grid3,.rules,.lanes{grid-template-columns:1fr}.gapviz{grid-template-columns:1fr}.gapmark{transform:rotate(90deg)}}
+  @media print{body{background:#fff}.page{padding:0}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <h1>A New Theory of Personality</h1>
+  <p class="subtitle">Working paper &middot; with Steven Pham</p>
+  <div class="lede"><b>The idea in one line:</b> personality is the set of preferences — stated and revealed — that steer how a person meets the world; we measure them so the person can understand themselves, never so anyone can judge them.</div>
+</header>
+
+<h2><span class="n">1</span>What this measures — and what it refuses to</h2>
+<p class="kicker">A person can be described in three separate lanes. This framework lives in exactly one.</p>
+<div class="lanes">
+  <div class="lane active"><b>Preference</b><span class="who">WHAT YOU TEND TOWARD</span><br><small>this framework — likes, leanings, tendencies</small></div>
+  <div class="lane"><b>Capability</b><span class="who">WHAT YOU CAN DO</span><br><small>separate, established instruments</small></div>
+  <div class="lane"><b>Pathology</b><span class="who">WHAT'S CLINICALLY WRONG</span><br><small>qualified clinicians only</small></div>
+</div>
+<p>If a reading here ever <i>resembles</i> a skill score or a symptom, the resemblance is not a claim. Nothing in this framework says what you're good at or whether anything is wrong with you.</p>
+
+<h2><span class="n">2</span>Six rules everything obeys</h2>
+<div class="rules">
+  <div class="rule"><span class="ico">🔮</span><b>No prediction</b><span>We never forecast what you'll do. Forecasts handed to young people become self-fulfilling.</span></div>
+  <div class="rule"><span class="ico">📸</span><b>Snapshot, not verdict</b><span>Every reading describes one day. People change; retakes build a moving portrait.</span></div>
+  <div class="rule"><span class="ico">⚖️</span><b>No good or bad poles</b><span>Every measure is two-sided and neutral. A shift under pressure is a change of instruments, not a breakdown.</span></div>
+  <div class="rule"><span class="ico">🤫</span><b>Clean or silent</b><span>A gap or shift appears only if the data can stand behind it. No shaky numbers with caveats.</span></div>
+  <div class="rule"><span class="ico">🚪</span><b>Opens doors only</b><span>Results may point you toward what fits. They may never rank, sort, screen, or exclude anyone.</span></div>
+  <div class="rule"><span class="ico">🔒</span><b>Yours alone</b><span>Offered only in our own program. Never shared with schools or employers. Minors' results expire.</span></div>
+</div>
+
+<h2><span class="n">3</span>The two streams — and the gap between them</h2>
+<p class="kicker">Everything is measured twice where possible: what you say, and what you do.</p>
+<div class="gapviz">
+  <div class="stream"><b>Stated</b><small>what you want, or believe you are</small></div>
+  <div class="gapmark">⟷<br>THE GAP</div>
+  <div class="stream"><b>Revealed</b><small>what your choices showed, on one occasion</small></div>
+</div>
+<div class="flow">
+  <div class="fstep"><b>Measure both streams</b><small>same trait, two angles</small></div>
+  <div class="farrow">→</div>
+  <div class="fstep"><b>Is the gap clean?</b><small>clears the reliability bar?</small></div>
+  <div class="farrow">→</div>
+  <div class="fstep" style="border-color:var(--pos)"><b>Yes → show it</b><small>a starting point, never a verdict; trainable if the person wants</small></div>
+  <div class="farrow">→</div>
+  <div class="fstep" style="border-color:var(--muted)"><b>No → silence</b><small>"no clear gap" — nothing invented</small></div>
+</div>
+<div class="callout">Neither stream is the "truer you." A gap is expected and judgment-free: it's the distance between the self you describe and the self one day's evidence showed. Because people are plastic and trainable, that distance can move — if <i>you</i> decide it should.</div>
+
+<h2><span class="n">4</span>The four systems</h2>
+<p class="kicker">Personality splits into four separable systems. Each is a lens, not a score.</p>
+
+<div class="card" style="margin-bottom:16px">
+  <span class="tag">System 1</span>
+  <h3>Social Energy Economy</h3>
+  <div class="flow">
+    <div class="fstep"><b>Gain</b><small>where energy comes from — which company charges you, which drains</small></div>
+    <div class="farrow">→</div>
+    <div class="fstep"><b>Spend</b><small>which interactions you choose — few &amp; deep vs many &amp; light</small></div>
+    <div class="farrow">→</div>
+    <div class="fstep"><b>Risk</b><small>how much standing you'll stake — raise the hard thing, or protect the peace</small></div>
+  </div>
+  <p style="margin:6px 0 0"><small style="color:var(--muted)">Read from a reconstructed real day and staked choices — not from "are you an introvert?"</small></p>
+</div>
+
+<div class="card" style="margin-bottom:16px">
+  <span class="tag">System 2 · the centerpiece</span>
+  <h3>The Thinking Machine</h3>
+  <p style="font-size:.92rem">Where you reach when you think (your own compass vs outside facts), how you build the thought (feel vs structure) — read twice: on instinct, and given time. Then the stakes go up, and we watch whether you move.</p>
+  <svg class="quad" viewBox="0 0 460 300" width="100%" style="max-width:460px">
+    <line x1="230" y1="20" x2="230" y2="280" stroke="#c8cdd3" stroke-width="1.5"/>
+    <line x1="30" y1="150" x2="430" y2="150" stroke="#c8cdd3" stroke-width="1.5"/>
+    <text x="230" y="12" text-anchor="middle" font-size="11" fill="#5b6470">WITH STRUCTURE</text>
+    <text x="230" y="296" text-anchor="middle" font-size="11" fill="#5b6470">BY FEEL</text>
+    <text x="26" y="146" text-anchor="end" font-size="11" fill="#5b6470" transform="rotate(-90 26 146)">OWN COMPASS</text>
+    <text x="440" y="154" font-size="11" fill="#5b6470" transform="rotate(90 440 154)">OUTSIDE FACTS</text>
+    <text x="120" y="80" text-anchor="middle" font-size="11" fill="#8a95a1">first principles</text>
+    <text x="340" y="80" text-anchor="middle" font-size="11" fill="#8a95a1">rigor with data</text>
+    <text x="120" y="230" text-anchor="middle" font-size="11" fill="#8a95a1">intuition</text>
+    <text x="340" y="230" text-anchor="middle" font-size="11" fill="#8a95a1">reading the room</text>
+    <circle cx="330" cy="200" r="9" fill="#2f5d8a" stroke="#fff" stroke-width="2"/>
+    <text x="330" y="222" text-anchor="middle" font-size="10" fill="#2f5d8a" font-weight="bold">low stakes</text>
+    <circle cx="165" cy="95" r="9" fill="none" stroke="#8a7330" stroke-width="3"/>
+    <text x="165" y="76" text-anchor="middle" font-size="10" fill="#8a7330" font-weight="bold">high stakes</text>
+    <path d="M 318 190 Q 240 130 180 105" fill="none" stroke="#8a7330" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arr)"/>
+    <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#8a7330"/></marker></defs>
+  </svg>
+  <p style="margin:0"><small style="color:var(--muted)">One person's example: at low stakes they read the room by feel; as stakes rise they move toward their own principles, with structure. The <i>path</i> is the reading — and a shift is drawn only when it's big enough to trust. Moving is not worse than staying put; they're different styles.</small></p>
+</div>
+
+<div class="card" style="margin-bottom:16px">
+  <span class="tag">System 3</span>
+  <h3>Emotional &amp; Social Disposition</h3>
+  <div class="grid3">
+    <div>
+      <div class="polelbls"><span>smooth it over</span><span>press the point</span></div>
+      <div class="bar"></div>
+      <small style="color:var(--muted)">How you handle friction</small>
+    </div>
+    <div>
+      <div class="polelbls"><span>your own reaction</span><span>reading the room</span></div>
+      <div class="bar"></div>
+      <small style="color:var(--muted)">Where attention goes in charged moments</small>
+    </div>
+    <div>
+      <div class="polelbls"><span>settings move</span><span>settings hold</span></div>
+      <div class="bar"></div>
+      <small style="color:var(--muted)">How much pressure moves your baseline — a tendency, never a diagnosis</small>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <span class="tag">System 4</span>
+  <h3>Objectives — what you're actually chasing</h3>
+  <div class="motives">
+    <span class="motive">Order &amp; peace</span><span class="motive">Triumph</span><span class="motive">Power &amp; influence</span><span class="motive">Truth-seeking</span><span class="motive">Novelty</span>
+  </div>
+  <div class="flow">
+    <div class="fstep"><b>Pick from a catalogue</b><small>concrete objectives — nobody articulates their motives from a blank page</small></div>
+    <div class="farrow">→</div>
+    <div class="fstep"><b>One easy "why?"</b><small>open words, about something you just chose</small></div>
+    <div class="farrow">→</div>
+    <div class="fstep"><b>Either–or choices</b><small>motives in disguise, revealed by picks</small></div>
+    <div class="farrow">→</div>
+    <div class="fstep"><b>Motive profile</b><small>weights, not labels — most people carry several</small></div>
+  </div>
+  <p style="margin:6px 0 0"><small style="color:var(--muted)">Elicitation rule for the whole instrument: open text only where answering is easy; a menu wherever a menu reduces noise.</small></p>
+</div>
+
+<h2><span class="n">5</span>How a sitting works</h2>
+<div class="flow">
+  <div class="fstep"><b>Consent &amp; intake</b><small>plain-language assent; quick picks that feed later questions</small></div>
+  <div class="farrow">→</div>
+  <div class="fstep"><b>Decisions</b><small>snap (5s) and deliberate (4min) scenarios; stakes = chance you'll explain your answer</small></div>
+  <div class="farrow">→</div>
+  <div class="fstep"><b>Your day, rebuilt</b><small>scene by scene, with an energy reading on each</small></div>
+  <div class="farrow">→</div>
+  <div class="fstep"><b>Charged moments</b><small>including two disclosed, staged ones — always explained after</small></div>
+  <div class="farrow">→</div>
+  <div class="fstep"><b>Compass</b><small>objectives, whys, either–ors</small></div>
+  <div class="farrow">→</div>
+  <div class="fstep" style="border-color:var(--gold)"><b>Your report</b><small>mirror only: past-tense, session-scoped, no coaching, no forecasts</small></div>
+</div>
+<div class="callout"><b>What the report never does:</b> praise, warn, diagnose, rank, or predict. It says what happened today, shows only what it can stand behind, and belongs to the person who took it.</div>
+
+<h2><span class="n">6</span>Where the ideas come from — honestly</h2>
+<table>
+  <tr><th>Claim</th><th>Whose it is</th></tr>
+  <tr><td>People aren't fixed points; behavior shifts with the situation</td><td>Established research (situation-behavior signatures, whole-trait work) — inherited, credited, not claimed</td></tr>
+  <tr><td>A one-session, auditable way to map how one person's thinking moves with mode and stakes</td><td><span class="check">Ours</span> — an instrument claim, not a discovery claim</td></tr>
+  <tr><td>The stated–revealed gap as a first-class, judgment-free, trainable reading</td><td><span class="check">Ours</span> — with the clean-or-silent bar as its safeguard</td></tr>
+  <tr><td>Preference kept strictly apart from capability and pathology, with use rules per metric</td><td><span class="check">Ours</span> — the framework's spine</td></tr>
+</table>
+
+<h2><span class="n">7</span>What we still owe (before anyone calls this validated)</h2>
+<ul class="owe">
+  <li><b>Discrimination study</b> — does a person's own profile fit them better than a stranger's profile does? If not, the readings are horoscope-generic and we say so.</li>
+  <li><b>Format-swap check</b> — does a gap survive when the "said" and "did" sides are asked the same way? A gap that vanishes was measuring the questionnaire, not the person.</li>
+  <li><b>Stated-stream check</b> — are the "wants" people pick stable across phrasings and a short interval, or one-off stories?</li>
+</ul>
+
+<footer>
+  Working paper. The set of systems is open — more will be added as they're uncovered. Companion documents: metrics catalogue (33 measures), instrument design v2, adversarial panel reports, and a working demo of the assessment.
+</footer>
+
+</div>
+</body>
+</html>
