@@ -48,8 +48,10 @@ Demonstrating that separation is one of the validity tasks we owe a reviewer.
 system tends to be, and how that steadiness changes under pressure. We read it as two related
 quantities. The first is baseline: even and steady at one pole, easily and strongly moved at the
 other, when nothing in particular is wrong. The second, and the more consequential, is reactivity
-under load: how far and how fast the baseline degrades as the stakes of a situation climb. Two
-people with the same calm baseline can diverge sharply under stress; one holds, the other spikes.
+under load: how far and how fast the baseline shifts as the stakes of a situation climb. Two
+people with the same calm baseline can diverge sharply under stress; one stays near their settings,
+the other moves far from them. Neither response is the better one: a large shift is a change of
+instruments, not a breakdown, and whether it serves the person is not this framework's question.
 This is a tendency, read through revealed reactivity rather than self-report, since people are
 unreliable narrators of their own steadiness.
 

@@ -88,8 +88,12 @@ This choice reassigns the validity burden; it does not remove it.
   outcome, and no score may be used to select, hire, admit, rank, or screen out any person. Any
   such use is a misuse the framework disowns: the instrument was never built to predict.
 - **No valence, no compliments.** Every metric is a neutral, bipolar observation of tendency,
-  neither pole better than the other. The report carries no praise and no deficit language, which
-  forecloses the flattering form of the Barnum effect by construction.
+  neither pole better than the other. The report carries no praise and no deficit language. This
+  binds the stake response above all: a shift in thinking or emotional settings as stakes rise is a
+  migration, not a degradation. Nobody is "collapsing under pressure"; they are changing
+  instruments, and the change may serve them well or badly — a question this framework does not
+  answer, because performance belongs to the capability lane. Words like collapse, degrade,
+  volatile, and spike are barred from every system description and every report sentence.
 - **The burden we carry is discrimination, not universality.** A neutral observation can still be
   near-universal ("sometimes you trust your gut, sometimes you deliberate") and feel personal while
   describing everyone. The instrument owes evidence that its readings discriminate: two different
@@ -141,7 +145,7 @@ carry a further prohibition: they may not be used to diagnose, screen for, or fl
 mental-health condition. Their behavioral signature resembles what a clinician reads as a symptom,
 but this framework measures preference, not pathology (see the three-lane scope), and a preference
 reading is not a clinical one. The report states these as dated, session-scoped observations ("on
-the higher-stakes items today, steadiness dropped"), never as a trait label or a diagnosis, and no
+the higher-stakes items today, your settings shifted"), never as a trait label or a diagnosis, and no
 downstream reader may treat them as a mental-health signal.
 
 ## The system template
@@ -190,7 +194,7 @@ Candidates not yet adopted are logged in open questions.
   tendency to accommodate versus to contest. (b) Introspection versus Situational awareness: which
   a person tends to orient by, their own emotional state versus the field of others (target of
   attention, not accuracy of reading it). (c) Emotional stability: baseline steadiness, and
-  reactivity under load (how far and fast the baseline degrades as stakes rise). The stability
+  reactivity under load (how far and fast the baseline shifts as stakes rise). The stability
   measure moderates the other systems' stake responses.
 - **System 4, Objectives.** An open prompt of what motivates a person, coded into a motive profile
   over: order and peace; triumph; power and influence (absorbing the earlier control motive);

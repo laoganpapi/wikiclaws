@@ -46,7 +46,7 @@ strength.
 | Slow method baseline | How rigorous slow thinking is, at low stakes | Informal ↔ Formal | Signed position | Revealed |
 | Slow method slope | How slow-mode method shifts as stakes rise | Toward Informal ↔ Toward Formal | Signed slope | Revealed |
 | Mode divergence | How different fast and slow reliance are | Same in both ↔ Two different thinkers | Distance | Revealed |
-| Total stake-sensitivity | Total migration across the plane as stakes rise | Stable ↔ Highly volatile | Magnitude | Revealed |
+| Total stake-sensitivity | Total migration across the plane as stakes rise | Stays put ↔ Wide-ranging | Magnitude | Revealed |
 | Deliberation default | Which mode a person reaches for when free to choose | Gut default ↔ Deliberate default | Scale | Either |
 
 The first eight metrics are the two graphs made numeric: four numbers per mode. Total
@@ -64,8 +64,8 @@ Preferences and tendencies in emotional and social situations, not competence or
 | Friction handling | Tendency to accommodate or contest | Agreeable ↔ Confrontational | Signed scale | Either |
 | Attention target | Which a person orients by | Introspective (self) ↔ Situationally aware (room) | Signed scale | Either |
 | Attention engagement | How much a person attends to the emotional channel at all | Disengaged (low on both) ↔ Fully engaged (high on both) | Magnitude | Revealed |
-| Baseline stability | Steadiness when nothing is wrong | Volatile ↔ Even | Scale | Either |
-| Reactivity under load | How far and fast stability degrades as stakes rise | Flat (holds) ↔ Steep (spikes) | Slope | Revealed |
+| Baseline stability | Steadiness when nothing is wrong | Easily moved ↔ Even | Scale | Either |
+| Reactivity under load | How far and fast the baseline shifts as stakes rise | Flat (stays near settings) ↔ Steep (moves far) | Slope | Revealed |
 
 Reactivity under load is also the moderator of the other systems' stake responses, so it can be
 read both directly and through the steepness of System 2's slopes.
