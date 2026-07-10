@@ -90,6 +90,10 @@
   .fade { animation: fadein 0.35s ease; }
   @keyframes fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
   .hidden { display: none !important; }
+  .ovl{position:fixed;inset:0;background:rgba(26,29,33,0.45);display:flex;align-items:center;justify-content:center;z-index:200;padding:20px}
+  .ovlbox{background:#fff;border-radius:10px;max-width:460px;width:100%;padding:20px 22px;box-shadow:0 10px 40px rgba(0,0,0,0.25);font-size:0.95rem}
+  .ovlbox .btnrow{margin-top:14px;display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+  .chip[data-rank]:not([data-rank=""])::after{content:" #" attr(data-rank);font-weight:800}
   button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
   .hint { color: var(--neg); font-size: 0.85rem; font-family: 'Helvetica Neue', Arial, sans-serif; margin: 6px 0; min-height: 1.2em; }
   .chip { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.8rem; padding: 7px 12px; border: 1.5px solid var(--line); background: #fff; border-radius: 16px; cursor: pointer; color: var(--muted); }
@@ -151,7 +155,7 @@ const FAST_ITEMS = [
     peekData:'The rubric: delivery energy and clarity carry 60% of the grade.',
     noteKey:'hard' },
   { id:'F4', tier:'certain', type:'people',
-    text:'Your project teammate has gone quiet a week before the demo. His part is half-done. You could message him privately, tell the teacher now, or quietly redistribute his work.',
+    text:'Your teammate went quiet a week before the demo, and his part of the project is half-done. What do you do?',
     options:['Message him privately first','Tell the teacher now','Redistribute the work quietly'],
     peekData:'His activity: last seen 2 hours ago; no replies to the group in 3 days.',
     noteKey:'rel' },
@@ -165,14 +169,14 @@ const FAST_ITEMS = [
 const TRAP_ITEM = {
   id:'T1', tier:'none', type:'trap',
   variants:[
-    { key:'A', text:'Pick a phone plan for your first paid phone: Plan X, cheaper with average reviews, or Plan Y, $8 more with good reviews. One information card on this question is sealed shut — nobody can open it here.', sealed:'Coverage map: Plan X has no signal at your school.', options:['Plan X (cheaper)','Plan Y ($8 more)'], sealedFavors:1 },
-    { key:'B', text:'Pick a phone plan for your first paid phone: Plan X, cheaper with average reviews, or Plan Y, $8 more with good reviews. One information card on this question is sealed shut — nobody can open it here.', sealed:'Coverage map: Plan Y has no signal at your school.', options:['Plan X (cheaper)','Plan Y ($8 more)'], sealedFavors:0 },
+    { key:'A', text:'Pick a phone plan: Plan X is cheaper with so-so reviews; Plan Y costs $8 more with good reviews. (One info card here is sealed — nobody can open it.)', sealed:'Coverage map: Plan X has no signal at your school.', options:['Plan X (cheaper)','Plan Y ($8 more)'], sealedFavors:1 },
+    { key:'B', text:'Pick a phone plan: Plan X is cheaper with so-so reviews; Plan Y costs $8 more with good reviews. (One info card here is sealed — nobody can open it.)', sealed:'Coverage map: Plan Y has no signal at your school.', options:['Plan X (cheaper)','Plan Y ($8 more)'], sealedFavors:0 },
   ]
 };
 
 const SLOW_ITEMS = [
   { id:'S1', tier:'none', type:'people',
-    text:'Your Saturday work shift now clashes with band rehearsal every week. Your manager likes you; the band is your closest group. You have up to 4 minutes. Decide what you’ll do.',
+    text:'Your Saturday shift now clashes with band practice every week. Your boss likes you; the band is your people. What do you do?',
     cards:[
       { t:'Manager texts', b:'“You’re my most reliable weekend person. Schedules lock monthly.”' },
       { t:'Band context', b:'Two members skipped rehearsals last month; the director privately said one more absence pattern “breaks the group.”' },
@@ -180,7 +184,7 @@ const SLOW_ITEMS = [
     ],
     options:['Ask the manager to move your shift','Skip rehearsal, keep the shift','Leave the job for the season','Alternate weeks and accept both costs'] },
   { id:'S2', tier:'quarter', type:'resource',
-    text:'You control the club’s $300 event budget. Three proposals: a speaker (prestige), a games night (attendance), or splitting it across two smaller events. Up to 4 minutes.',
+    text:'You control the club’s $300 for one event. A speaker (impressive), a games night (popular), or split it into two smaller things?',
     cards:[
       { t:'Attendance data', b:'Last year: speaker drew 18 people; games night drew 61.' },
       { t:'Member poll', b:'Poll of 40 members: 55% games, 30% speaker, 15% split.' },
@@ -188,7 +192,7 @@ const SLOW_ITEMS = [
     ],
     options:['Book the speaker','Fund the games night','Split across two events'] },
   { id:'S3', tier:'certain', type:'people',
-    text:'You captain the team. Playoffs start Friday. Your close friend has underperformed for three weeks; a newer player is clearly sharper right now. Up to 4 minutes. Pick the lineup.',
+    text:'You’re team captain and playoffs are Friday. Your close friend has been off their game for weeks; a newer player is sharper right now. Pick the lineup.',
     cards:[
       { t:'The stats', b:'Friend: 31% success rate last 3 weeks (was 58%). New player: 63% in practice matches.' },
       { t:'Coach’s note', b:'“Your call, captain. Team trust matters as much as current form.”' },
@@ -196,7 +200,7 @@ const SLOW_ITEMS = [
     ],
     options:['Start the new player, tell your friend before the game','Start your friend','Start the new player, explain after','Ask the coach to decide'] },
   { id:'S4', tier:'quarter', type:'sequence',
-    text:'Summer choice: an unpaid research program at the city college (your topic, strangers), or the paid lifeguard job (your friends, your third summer). Up to 4 minutes.',
+    text:'Summer choice: an unpaid research program about your favorite topic (with strangers), or the paid lifeguard job (with your friends, third year in a row).',
     cards:[
       { t:'Program outcomes', b:'Of last year’s cohort, 70% said it changed their college plans; 2 of 20 dropped out mid-summer.' },
       { t:'The money', b:'Lifeguarding pays $2,900 for the summer; the program pays $0 and costs $75 in transit.' },
@@ -362,6 +366,32 @@ function h(tag, attrs, ...kids) {
 function clearStage() { stage.innerHTML = ''; window.scrollTo(0,0); }
 function aiSay(text) { return h('div',{class:'aimsg'}, h('div',{class:'avatar'},'AI'), h('div',{class:'bubble'}, text)); }
 
+// ---------- In-page dialogs (native popups are blocked in some embedded viewers) ----------
+function dialogUI(msg, buttons) {
+  return new Promise(res=>{
+    const row = h('div',{class:'btnrow'});
+    const box = h('div',{class:'ovlbox',role:'dialog','aria-modal':'true'}, h('p',{style:'margin:0'},msg), row);
+    const ovl = h('div',{class:'ovl'},box);
+    buttons.forEach(b=>row.append(h('button',{class:'btn'+(b.sec?' secondary':''),onclick:()=>{ ovl.remove(); res(b.v); }},b.l)));
+    document.body.append(ovl);
+    const f = row.querySelector('button'); if (f) f.focus();
+  });
+}
+function confirmUI(msg, okLabel, cancelLabel){ return dialogUI(msg,[{l:cancelLabel||'Cancel',v:false,sec:true},{l:okLabel||'OK',v:true}]); }
+function alertUI(msg){ return dialogUI(msg,[{l:'OK',v:true}]); }
+// a crash must show itself — a blank page is the one unacceptable failure mode
+function showFatal(detail){
+  try {
+    stage.innerHTML='';
+    stage.append(h('div',{class:'card',style:'border-left:4px solid var(--neg)'},
+      h('h2',null,'Something broke — this is a bug, not you'),
+      h('p',null,'The page hit an error instead of showing the next screen. Your progress up to the last completed screen is saved.'),
+      h('p',{class:'small muted'},'Details for the developers: '+detail)));
+  } catch(_){ }
+}
+window.addEventListener('error', e=>showFatal(String(e.message||e.error||'unknown error')));
+window.addEventListener('unhandledrejection', e=>showFatal(String(e.reason&&e.reason.message||e.reason||'unhandled rejection')));
+
 // ---------- Flow ----------
 let FLOW = [];
 function next() { S.screen++; save(); render(); }
@@ -385,6 +415,26 @@ function render() {
 
 // ---------- Screens ----------
 function scrWelcome(el) {
+  if (S._pendingResume) {
+    const { raw, saved } = S._pendingResume;
+    const savedNick = (saved.session && saved.session.intake && saved.session.intake.nickname || '').trim();
+    const who = savedNick ? '“'+savedNick+'”' : 'someone (no nickname was saved)';
+    const finished = saved.withdrawn || saved.screen >= FLOW.length-1;
+    el.append(h('div',{class:'card',style:'border-left:4px solid var(--gold)'},
+      h('h3',{style:'margin-top:0'},'A saved session was found'),
+      h('p',{class:'small'}, finished
+        ? 'This browser has a finished or stopped session belonging to '+who+'. Reopen its report, or start fresh — the old session is kept as a backup until data is cleared.'
+        : 'A session belonging to '+who+' is saved at step '+Math.min(saved.screen+1,FLOW.length)+' of '+FLOW.length+'. If it isn’t yours, start fresh — the old session is kept as a backup.'),
+      h('button',{class:'btn',onclick:()=>{
+        S.screen = saved.screen; S.session = saved.session; S.withdrawn = saved.withdrawn; S._resumeNote = true; delete S._pendingResume;
+        if (!finished) { tlog('resumed',{atScreen:saved.screen}); save(); }
+        render();
+      }}, finished ? 'Reopen its report' : 'Resume that session'),
+      h('button',{class:'btn secondary',onclick:(e)=>{
+        try { localStorage.setItem('assessment_v2_app_prev', raw); } catch(_){ }
+        delete S._pendingResume; e.target.closest('.card').remove();
+      }},'Start fresh')));
+  }
   el.append(
     h('h1', null, 'Welcome'),
     h('div',{class:'card'},
@@ -406,14 +456,14 @@ function scrWelcome(el) {
           const r = new FileReader();
           r.onload = () => {
             let data = null;
-            try { data = JSON.parse(r.result); } catch(err) { alert('That file couldn’t be read as a session export (it isn’t valid JSON).'); e.target.value=''; return; }
+            try { data = JSON.parse(r.result); } catch(err) { alertUI('That file couldn’t be read as a session export (it isn’t valid JSON).'); e.target.value=''; return; }
             const ok = data && typeof data==='object'
               && Array.isArray(data.arena) && Array.isArray(data.telemetry)
               && data.drm && Array.isArray(data.drm.episodes)
               && data.compass && Array.isArray(data.compass.tradeoffs)
               && data.intake && typeof data.intake==='object'
               && data.stated && typeof data.stated==='object';
-            if (!ok) { alert('That file is missing required session fields — it doesn’t look like a complete export from this app.'); e.target.value=''; return; }
+            if (!ok) { alertUI('That file is missing required session fields — it doesn’t look like a complete export from this app.'); e.target.value=''; return; }
             S.session = data; S.withdrawn = false;
             S.importedView = true; // read-only view: never log into or overwrite the imported record
             S.screen = FLOW.length - 1;
@@ -431,7 +481,7 @@ function showEndedEarly() {
     h('div',{class:'card'},
       h('p',null,'Not agreeing, or stopping before agreeing, is a legitimate answer — and this is the whole of what happens: the assessment ends. Nothing was scored, no report is made, and nothing left this browser.'),
       h('p',{class:'small muted'},'This browser kept only what these first screens stored. You can erase that now, or just close the tab.')),
-    h('button',{class:'btn secondary',onclick:()=>{ localStorage.removeItem('assessment_v2_app'); localStorage.removeItem('assessment_v2_app_prev'); location.reload(); }},'Erase what was stored and reset')));
+    h('button',{class:'btn secondary',onclick:async ()=>{ if (!(await confirmUI('Erase everything this app stored in this browser?','Erase','Cancel'))) return; try { localStorage.removeItem('assessment_v2_app'); localStorage.removeItem('assessment_v2_app_prev'); } catch(_){} location.reload(); }},'Erase what was stored and reset')));
 }
 
 function scrConsent(el) {
@@ -458,7 +508,7 @@ function scrIntake(el) {
   // drafts persist to the save as you type, so an interruption mid-screen doesn't wipe six personal answers
   const D = S.session._intakeDraft || (S.session._intakeDraft = { age:null, nick:'', notes:{} });
   const age = h('select',{'aria-label':'Age band',style:'font-family:inherit;font-size:0.95rem;padding:8px;border-radius:6px;border:1.5px solid var(--line)',onchange:e=>{ D.age=e.target.value; save(); }},
-    ...['14–15','16–17','18–20','21–25'].map(a=>h('option',null,a)));
+    ...['14–15','16–17','18–20','21–25','26–30','31–40','41+'].map(a=>h('option',null,a)));
   if (D.age) age.value = D.age;
   const nick = h('input',{type:'text','aria-label':'Nickname (optional)',value:D.nick||'',placeholder:'optional — saved with your session and used to name your export file',oninput:e=>{ D.nick=e.target.value; save(); }});
   const notes = D.notes;
@@ -478,27 +528,42 @@ function scrIntake(el) {
     h('div',{class:'card'},
       h('h3',null,'Age band'), age,
       h('h3',null,'Nickname'), nick,
-      h('p',{style:'margin-top:14px'},h('b',null,'Five quick picks — these matter. '),'Some later snap questions will quote your choice back to you as a “your note” card. Pick the closest one, or say it your own way instead.'),
+      h('p',{style:'margin-top:14px'},h('b',null,'Five quick picks — these matter. '),'Some later snap questions will quote your picks back to you as a “your note” card. Pick as many as fit, in the order they matter to you — tap again to unpick — or add your own words.'),
       h('p',{class:'small muted'},'There’s no good answer here — pick what’s true for you, not what sounds good. Nobody grades these.'),
       ...noteFields.map(([k,label,opts])=>{
-        const custom = h('input',{type:'text','aria-label':label+' — say it your own way',value:(notes[k] && !opts.includes(notes[k]))?notes[k]:'',placeholder:'…or say it your own way',style:'margin-top:6px'});
+        D.order = D.order || {}; D.customNote = D.customNote || {};
+        const ord = D.order[k] = (D.order[k]||[]).filter(o=>opts.includes(o));
+        const custom = h('input',{type:'text','aria-label':label+' — add it in your own words',value:D.customNote[k]||'',placeholder:'…or add it in your own words',style:'margin-top:6px'});
         const row = h('div',{class:'chiprow',role:'group','aria-label':label});
+        const chipEls = [];
+        function syncNote(){
+          const c = custom.value.trim();
+          notes[k] = ord.concat(c?[c]:[]).join('; ');
+          chipEls.forEach(({el,o})=>{
+            const i = ord.indexOf(o);
+            el.classList.toggle('selected', i>=0);
+            el.setAttribute('data-rank', i>=0 ? String(i+1) : '');
+            el.setAttribute('aria-pressed', i>=0 ? 'true' : 'false');
+          });
+          D.customNote[k] = c;
+          save();
+        }
         opts.forEach(o=>{
-          const c = h('button',{type:'button',class:'chip','data-group':'note-'+k,onclick:()=>{
-            notes[k]=o; custom.value=''; [...row.children].forEach(x=>x.classList.remove('selected')); c.classList.add('selected'); save();
+          const c = h('button',{type:'button',class:'chip','data-group':'note-'+k,'aria-pressed':'false',onclick:()=>{
+            const i = ord.indexOf(o);
+            if (i>=0) ord.splice(i,1); else ord.push(o);
+            syncNote();
           }},o);
-          if (notes[k]===o) c.classList.add('selected');
-          row.append(c);
+          chipEls.push({el:c,o}); row.append(c);
         });
-        custom.addEventListener('input',e=>{
-          notes[k]=e.target.value.trim(); [...row.children].forEach(x=>x.classList.remove('selected')); save();
-        });
+        custom.addEventListener('input', syncNote);
+        syncNote();
         return h('div',{style:'margin:12px 0'}, h('div',{class:'small',style:'margin-bottom:4px'},label), row, custom);
       })
     ),
-    h('button',{class:'btn',onclick:()=>{
+    h('button',{class:'btn',onclick:async ()=>{
       const blanks = noteFields.filter(([k])=>!notes[k]).length;
-      if (blanks>0 && !confirm(blanks+' of 5 notes are blank. Later questions quote these back to you — blank notes show as blank cards. Continue anyway?')) return;
+      if (blanks>0 && !(await confirmUI(blanks+' of 5 notes are blank. Later questions quote these back to you — blank notes show as blank cards. Continue anyway?','Continue anyway','Go back'))) return;
       S.session.intake={ age:age.value, nickname:nick.value.trim(), notes: Object.assign({}, notes) }; delete S.session._intakeDraft; tlog('intake'); next();
     }},'Continue'));
 }
@@ -535,7 +600,7 @@ function scrFast(item) {
     if (!S.session.fastExplainerSeen) {
       S.session.fastExplainerSeen = true;
       el.append(h('div',{class:'card',style:'border-left:4px solid var(--accent)'},
-        h('p',{style:'margin:0'},h('b',null,'How snap questions work: '),'read the situation below for as long as you want. The answer choices stay hidden. When you press the button, they appear and you get 5 seconds to pick one. Your first tap on an option is final — it records instantly and ends the question, even with time still on the clock. If time runs out, that’s recorded and it’s fine.')));
+        h('p',{style:'margin:0'},h('b',null,'How quick questions work: '),'read the story as long as you want. Press the button, the choices appear, and you get 5 seconds to pick. Your first tap is your answer — no changing it. Run out of time? Totally fine — it just gets noted.')));
     }
     el.append(h('div',{class:'scenario'}, item.text));
     // load task
@@ -654,9 +719,9 @@ function scrSlow(item) {
       optBtns.push(b); choiceZone.append(b);
     });
     const rat = h('textarea',{placeholder:'Why? A few sentences, however you’d naturally explain it.',oninput:e=>rec.rationale=e.target.value});
-    const submit = h('button',{class:'btn',onclick:()=>{
-      if (chosen==null) { alert('Pick an option first.'); return; }
-      if (!rec.rationale.trim() && !confirm('Leave the reasoning blank? That’s allowed — it just records this decision with no written reasoning at all.')) return;
+    const submit = h('button',{class:'btn',onclick:async ()=>{
+      if (chosen==null) { alertUI('Pick an option first.'); return; }
+      if (!rec.rationale.trim() && !(await confirmUI('Leave the reasoning blank? That’s allowed — it just records this decision with no written reasoning at all.','Leave blank','Go back'))) return;
       clearInterval(tick);
       rec.choice = chosen; rec.respMs = Date.now()-start;
       S.session.arena.push(rec); tlog('slow_done',{id:item.id}); next();
@@ -731,7 +796,7 @@ function scrChallenge(el) {
     mk('No — that’s off, and I’ll say why','contest',true),
     ta,
     h('button',{class:'btn',style:'margin-top:10px',onclick:()=>{
-      if (!rec.response) { alert('Pick one first — disagreeing is a completely valid answer.'); return; }
+      if (!rec.response) { alertUI('Pick one first — disagreeing is a completely valid answer.'); return; }
       // if the final selection hides the text box, the typed objection was retracted — keep it labeled as such, never as the reply
       if (rec.response==='agree') { rec.text=''; if (ta.value.trim()) rec.retractedDraft = ta.value; }
       else rec.text = ta.value;
@@ -762,8 +827,8 @@ function scrReview(sitting) {
       el.append(h('div',{class:'card'}, h('p',{class:'small muted'},'Your answer to: '+label),
         choiceText ? h('p',{class:'small'},h('b',null,'You picked: '),'“'+choiceText+'”') : null, ta));
     });
-    el.append(h('button',{class:'btn',onclick:()=>{
-      if (inputs.every(({ta})=>!ta.value.trim()) && !confirm('Leave the explanations blank? That’s allowed, but the review is the one place your reasoning gets heard.')) return;
+    el.append(h('button',{class:'btn',onclick:async ()=>{
+      if (inputs.every(({ta})=>!ta.value.trim()) && !(await confirmUI('Leave the explanations blank? That’s allowed, but the review is the one place your reasoning gets heard.','Leave blank','Go back'))) return;
       inputs.forEach(({a,ta})=> S.session.reviews.push({ id:a.id, sitting, text:ta.value }));
       tlog('review_done',{sitting, n:inputs.length}); next();
     }},'Done'));
@@ -773,7 +838,7 @@ function scrReview(sitting) {
 // ---- DRM ----
 function scrDRM(el) {
   el.append(h('h2',null,'Yesterday, step by step'),
-    aiSay('Walk me through yesterday from waking up — in scenes. A scene is one chunk of your day: same place, same people. A class or a shift is a scene. The ride there is a scene. A meal with the same people is a scene. For each: what it was, who was around, whether you chose it, and whether your battery was filling or draining right then.'));
+    aiSay('Walk me through yesterday in scenes. A scene = one chunk of your day, same place, same people. A class counts. The bus ride counts. Lunch counts. For each one: what it was, who was there, did you choose it, and was your battery filling or draining.'));
   const listWrap = h('div');
   const episodes = S.session.drm.episodes;
   function redraw() {
@@ -834,14 +899,14 @@ function scrDRM(el) {
         redraw(); save();
       }},'+ Add this scene')),
     h('p',{class:'small muted'},'At least 3 scenes; aim for 5–8. Ordinary ones count — the bus ride matters as much as the party.'),
-    h('button',{class:'btn',onclick:()=>{
-      if (what.value.trim() && !confirm('You typed a scene (“'+what.value.trim()+'”) but didn’t press “+ Add this scene” — it is NOT saved yet. Discard it and finish anyway? (Cancel to go back and add it.)')) return;
-      if (episodes.length<3) { alert('Add at least 3 scenes so the pattern means something (aim for 5–8) — or use “I’d rather not do this section” below to skip it honestly.'); return; }
+    h('button',{class:'btn',onclick:async ()=>{
+      if (what.value.trim() && !(await confirmUI('You typed a scene (“'+what.value.trim()+'”) but didn’t press “+ Add this scene” — it is NOT saved yet. Discard it and finish anyway?','Discard & finish','Go back'))) return;
+      if (episodes.length<3) { alertUI('Add at least 3 scenes so the pattern means something (aim for 5–8) — or use “I’d rather not do this section” below to skip it honestly.'); return; }
       delete S.session.drm.draft;
       tlog('drm_done',{n:episodes.length}); next();
     }},'That’s my day'),
-    h('button',{class:'btn secondary',onclick:()=>{
-      if (!confirm('Skip reconstructing your day? It will be recorded as declined — no energy pattern will be read, and none will be invented. Skip it?')) return;
+    h('button',{class:'btn secondary',onclick:async ()=>{
+      if (!(await confirmUI('Skip reconstructing your day? It will be recorded as declined — no energy pattern will be read, and none will be invented.','Skip it','Go back'))) return;
       S.session.drm.declined = true; delete S.session.drm.draft; tlog('drm_declined'); next();
     }},'I’d rather not do this section'));
 }
@@ -864,11 +929,11 @@ function scrPortfolio(el) {
         return b;
       })));
   });
-  el.append(card, h('button',{class:'btn',onclick:()=>{
+  el.append(card, h('button',{class:'btn',onclick:async ()=>{
     const missing = fields.filter(([k])=>p[k]==null).length;
-    if (missing) { alert(missing+' of 3 questions still need an answer — tap one option in each row.'); return; }
+    if (missing) { alertUI(missing+' of 3 questions still need an answer — tap one option in each row.'); return; }
     if (p.close==='5+' && p.weekly==='0–2') {
-      if (!confirm('Quick check: 5+ genuinely close people, but you interacted with 0–2 people this week — does that sound right? (OK to keep it; Cancel to change.)')) return;
+      if (!(await confirmUI('Quick check: 5+ genuinely close people, but you interacted with 0–2 people this week — does that sound right?','Keep it','Change it'))) return;
       p.crossCheckKept = true;
     }
     S.session.portfolio=p; tlog('portfolio'); next();
@@ -879,13 +944,13 @@ function scrPortfolio(el) {
 function scrDraft(task) {
   return function(el) {
     const ta = h('textarea',{'aria-label':'Your message',placeholder:'Write the actual message, exactly as you’d send it.',style:'min-height:110px'});
-    const skip = h('button',{class:'btn secondary',onclick:()=>{
-      if (ta.value.trim() && !confirm('You typed a message — throw it away and record “wouldn’t send anything” instead?')) return;
+    const skip = h('button',{class:'btn secondary',onclick:async ()=>{
+      if (ta.value.trim() && !(await confirmUI('You typed a message — throw it away and record “wouldn’t send anything” instead?','Discard & skip','Keep writing'))) return;
       S.session.drafts.push({id:task.id, text:'', skipped:true}); tlog('draft_skipped',{id:task.id}); next();
     }},'I wouldn’t send anything');
     el.append(h('h2',null,'Write it like you’d send it'), h('div',{class:'scenario'}, task.text), ta,
-      h('div',null, h('button',{class:'btn',onclick:()=>{
-        if (!ta.value.trim()) { if (confirm('Send nothing? If you really wouldn’t message them, use the “I wouldn’t send anything” button instead. Send empty anyway?')) { S.session.drafts.push({id:task.id, text:'', skipped:false}); next(); } return; }
+      h('div',null, h('button',{class:'btn',onclick:async ()=>{
+        if (!ta.value.trim()) { if (await confirmUI('Send nothing? If you really wouldn’t message them, use the “I wouldn’t send anything” button instead. Send empty anyway?','Send empty','Go back')) { S.session.drafts.push({id:task.id, text:'', skipped:false}); next(); } return; }
         S.session.drafts.push({id:task.id, text:ta.value, skipped:false}); tlog('draft_done',{id:task.id}); next();
       }},'Send'), skip),
       h('p',{class:'small muted'},'What matters is what you chose to raise — nothing is graded on how nicely it’s written. Not sending is also a real answer.'));
@@ -939,8 +1004,8 @@ function scrDispute(el) {
     aiSay('I want to push back on one thing. You chose “'+chosenText+'” — but I’m not sure it follows from what you told me matters to you. It could even work against it. What am I missing?'),
     h('p',{class:'small muted'},'This is a standard moment — every respondent gets one. Nothing is wrong with your answer, and there’s no correct reply.'),
     ta,
-    h('button',{class:'btn',onclick:()=>{
-      if (!ta.value.trim() && !confirm('Reply with nothing? Letting the pushback stand unanswered is allowed — record that?')) return;
+    h('button',{class:'btn',onclick:async ()=>{
+      if (!ta.value.trim() && !(await confirmUI('Reply with nothing? Letting the pushback stand unanswered is allowed — record that?','Record no reply','Go back'))) return;
       S.session.dispute = { itemId: certain?certain.id:null, reply: ta.value, at: new Date().toISOString() };
       tlog('dispute_done'); next();
     }},'Reply'));
@@ -975,10 +1040,10 @@ function scrSJT(item) {
     });
     const att = h('textarea',{placeholder:'Honestly — in your own words.',oninput:e=>rec.attention=e.target.value});
     el.append(h('h3',null,'What do you do?'), optWrap, h('h3',null,item.attentionQ), att,
-      h('button',{class:'btn',onclick:()=>{
-        if (sel==null) { alert('Pick what you’d do first.'); return; }
+      h('button',{class:'btn',onclick:async ()=>{
+        if (sel==null) { alertUI('Pick what you’d do first.'); return; }
         if (!rec.attention.trim() && !S._sjtBlankOk) {
-          if (!confirm('Skip the honesty question (“what would you be paying attention to”)? That’s allowed — it’s recorded as unanswered. (You won’t be asked again this session.)')) return;
+          if (!(await confirmUI('Skip the honesty question (“what would you be paying attention to”)? That’s allowed — it’s recorded as unanswered, and you won’t be asked again this session.','Skip it','Go back'))) return;
           S._sjtBlankOk = true;
         }
         rec.choice=sel; rec.choiceV=item.options[sel].v;
@@ -1045,8 +1110,8 @@ function scrCompassPrompt(el) {
       if (idx>=qs.length) { S.session.compass.prompt = answers; tlog('compass_prompt_done'); next(); return; }
       prompt.replaceChildren(aiSay(qs[idx]));
     }},'Continue');
-    const decline = h('button',{class:'btn secondary',onclick:()=>{
-      if (!confirm('Skip the “why” questions? Your choice not to answer is recorded as-is — a real answer, not a blank to be filled in.')) return;
+    const decline = h('button',{class:'btn secondary',onclick:async ()=>{
+      if (!(await confirmUI('Skip the “why” questions? Your choice not to answer is recorded as-is — a real answer, not a blank to be filled in.','Skip them','Go back'))) return;
       answers.push({ q: qs[idx], a: '', declined: true });
       S.session.compass.prompt = answers; tlog('compass_prompt_declined',{atQuestion:idx}); next();
     }},'I’d rather not answer');
@@ -1124,7 +1189,7 @@ function scrStated(title, items, note) {
     el.append(card, h('p',{class:'small muted'},'Every statement needs an answer.'),
       h('button',{class:'btn',onclick:()=>{
         const missing = items.filter(it=>!S.session.stated[it.id]).length;
-        if (missing) { alert(missing+' of '+items.length+' statements still need an answer.'); return; }
+        if (missing) { alertUI(missing+' of '+items.length+' statements still need an answer.'); return; }
         tlog('stated_done',{title}); next();
       }},'Continue'));
   };
@@ -1390,7 +1455,7 @@ function scrReport(el) {
   tcard.append(h('h2',null,'How you think'),
     h('p',{class:'small muted'},
       h('span',{style:'color:var(--accent);font-size:1.05rem'},'●'),' filled blue dot = low stakes · ',
-      h('span',{style:'color:var(--gold);font-size:1.05rem'},'○'),' hollow gold ring = high stakes (certain review). A missing dot means you skipped the peeks or items that feed it — the track says “no data recorded” when a whole row is empty. Each dot lists how many items it rests on; a dot on one or two items is a hint, not an estimate.'),
+      h('span',{style:'color:var(--gold);font-size:1.05rem'},'○'),' hollow gold ring = high-pressure questions. No dot = not enough to go on. Each dot says how many answers it rests on — one or two is just a hint.'),
     bar('SNAP · where you reach', G.fastSrcLo, gateShift(G.fastSrcLo, G.fastSrcHi), 'Your own compass', 'Outside data', G.fastSrcLoN, G.fastSrcHiN),
     bar('DELIBERATE · where you reach', G.slowSrcLo, gateShift(G.slowSrcLo, G.slowSrcHi), 'Your own compass', 'Outside data', G.slowLoN, G.slowHiN),
     bar('DELIBERATE · how you build', G.slowMthLo, gateShift(G.slowMthLo, G.slowMthHi), 'By feel', 'With structure', G.slowLoN, G.slowHiN),
@@ -1526,30 +1591,32 @@ function scrReport(el) {
     }},'Export session JSON'),
     S.importedView
       ? h('button',{class:'btn secondary',onclick:()=>{ location.reload(); }},'Close imported report (keeps this browser’s own save)')
-      : h('button',{class:'btn secondary',onclick:()=>{
-          if (!confirm('Erase this browser’s saved session (the one you just took, plus any backup copy)? If you haven’t exported, the data is gone for good. One honest note: you’ve now seen what was staged, so a retaken run reflects that knowledge — treat any second report differently from a first one.')) return;
-          localStorage.removeItem('assessment_v2_app'); localStorage.removeItem('assessment_v2_app_prev'); location.reload();
+      : h('button',{class:'btn secondary',onclick:async ()=>{
+          if (!(await confirmUI('Erase this browser’s saved session (the one you just took, plus any backup copy)? If you haven’t exported, the data is gone for good. One honest note: you’ve now seen what was staged, so a retaken run reflects that knowledge — treat any second report differently from a first one.','Erase it','Keep it'))) return;
+          try { localStorage.removeItem('assessment_v2_app'); localStorage.removeItem('assessment_v2_app_prev'); } catch(_){}
+          location.reload();
         }},'Clear & restart'),
-    (!S.importedView && localStorage.getItem('assessment_v2_app_prev'))
-      ? h('button',{class:'btn secondary',onclick:(e)=>{
-          if (!confirm('Erase only the earlier backup session (a previous run left on this device)? Your current session stays.')) return;
-          localStorage.removeItem('assessment_v2_app_prev'); e.target.remove();
+    (!S.importedView && (function(){try{return localStorage.getItem('assessment_v2_app_prev')}catch(_){return null}})())
+      ? h('button',{class:'btn secondary',onclick:async (e)=>{
+          if (!(await confirmUI('Erase only the earlier backup session (a previous run left on this device)? Your current session stays.','Erase backup','Keep it'))) return;
+          try { localStorage.removeItem('assessment_v2_app_prev'); } catch(_){}
+          e.target.remove();
         }},'Clear the earlier backup session only')
       : null),
     h('p',{class:'footer-note'},'Demo Form A · version 2. Behavioral scoring is live; free-text coding, error bars, and cohort-referenced values require the production scoring service. These results describe likes and tendencies, never ability, and never anything medical. They are yours alone: never shared with schools or employers, never used to sort or screen anyone, and only ever used to offer you things that fit — never to close a door. They describe you now, at this age — people change, which is why results of anyone under 18 are automatically deleted after 18 months in the real (non-demo) version.'));
 }
 
 // ---------- Withdrawal ----------
-document.getElementById('stopbtn').addEventListener('click', ()=>{
+document.getElementById('stopbtn').addEventListener('click', async ()=>{
   if (S.withdrawn || S.importedView) return;
   // before consent, nothing has been completed and nothing was agreed to — don't frame stopping as quitting a test mid-way
   if (!S.session.consent || !S.session.consent.agreedAt) {
-    if (confirm('Stop here, before agreeing? Completely fine — nothing has been completed yet, so there’s no report to make. This just ends the demo.')) {
+    if (await confirmUI('Stop here, before agreeing? Completely fine — nothing has been completed yet, so there’s no report to make. This just ends the demo.','Stop','Keep going')) {
       S.withdrawn = true; tlog('stopped_preconsent'); save(); showEndedEarly();
     }
     return;
   }
-  if (confirm('Stop the assessment? Completely fine — no penalty. You’ll go straight to the explanation page and a report of whatever you completed.')) {
+  if (await confirmUI('Stop the assessment? Completely fine — no penalty. You’ll go straight to the explanation page and a report of whatever you completed.','Stop — no penalty','Keep going')) {
     S.withdrawn = true; tlog('withdrawn');
     S.screen = FLOW.length - 2; // debrief
     save(); render();
@@ -1586,27 +1653,11 @@ document.getElementById('stopbtn').addEventListener('click', ()=>{
     scrStated('Quick self-descriptions (part 2)', STATED_S3, null),
     scrDebrief, scrReport,
   ];
-  // resume — declining does NOT delete the save (a stray reload must never destroy data)
+  // resume — never a blocking popup; the choice is offered as a banner on the welcome screen
   try {
     const raw = localStorage.getItem('assessment_v2_app');
     const saved = JSON.parse(raw||'null');
-    if (saved && saved.screen>0 && saved.screen<=FLOW.length-1) {
-      // on a shared device the next person must be able to tell whose session this is before opening it
-      const savedNick = (saved.session && saved.session.intake && saved.session.intake.nickname || '').trim();
-      const who = savedNick ? '“'+savedNick+'”' : 'someone (no nickname was saved)';
-      const finished = saved.withdrawn || saved.screen >= FLOW.length-1;
-      const msg = finished
-        ? 'This browser has a finished or stopped session saved, belonging to '+who+'. There is nothing left to resume — pressing OK reopens its report. If that session isn’t yours, press Cancel. (Resume prompt; Cancel starts fresh and keeps the old session as a backup copy until data is cleared.)'
-        : 'Resume the saved session belonging to '+who+', at step '+Math.min(saved.screen+1, FLOW.length)+' of '+FLOW.length+'? If that session isn’t yours, press Cancel. (Cancel starts fresh — the old session is kept as a backup copy in this browser until you clear your data.)';
-      if (confirm(msg)) {
-        S.screen = saved.screen; S.session = saved.session; S.withdrawn = saved.withdrawn;
-        S._resumeNote = true;
-        if (!finished) { tlog('resumed',{atScreen:saved.screen}); save(); } // reopening a finished report isn't an interruption
-      } else {
-        // the fresh run will overwrite the main save; keep the declined session under a backup key so the promise above is true
-        try { localStorage.setItem('assessment_v2_app_prev', raw); } catch(e2){}
-      }
-    }
+    if (saved && saved.screen>0 && saved.screen<=FLOW.length-1) S._pendingResume = { raw, saved };
   } catch(e){}
   render();
 })();
