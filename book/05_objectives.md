@@ -35,7 +35,7 @@ eloquence.
 
 ## The decision rule
 
-When a person faces a choice among ends, the motive profile predicts which end they reach for.
+When a person faces a choice among ends, the motive profile describes which end they tend to reach for.
 Where two motives conflict within a person, the heavier weight tends to govern, though context can
 invert this, and the gap between what a person states they are motivated by and what their choices
 reveal is, here as elsewhere, itself informative. A person who states truth-seeking but

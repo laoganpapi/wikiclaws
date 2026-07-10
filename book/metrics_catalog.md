@@ -7,7 +7,13 @@ revealed behavior, self-report, or either, not the instrument.
 
 A note that runs across all four systems: for any metric observable both ways, the **gap between
 the self-reported value and the revealed value is itself a metric** (see the cross-cutting section
-at the end). Our definition of personality privileges revealed preference where the two diverge.
+at the end). Neither side is the truer self: stated is what the person wants or believes, revealed
+is what one occasion showed, and the gap is the finding.
+
+Use restrictions (see the architecture's prohibited-use register): social risk tolerance,
+reactivity under load, baseline stability, and every stated-revealed gap may never be used to sort,
+rank, screen, place, select, or diagnose anyone. No gap or stake-slope is shown at all unless it
+clears a reliability threshold: clean or silent.
 
 ---
 

@@ -41,7 +41,8 @@ meeting risk appetite. A depleted supply narrows the portfolio and dampens risk-
 safe move; an ample supply widens the portfolio and frees a person to stake more. Where stated and
 revealed preference diverge, a person who says they value many friendships but invests deeply in
 two is read by the investment, and a person who claims boldness but never risks a relationship is
-read by the caution. The reading privileges where the energy goes and what is actually staked.
+read by the caution. The reading records both sides: what the person says, and where the energy
+actually went; when they differ, the difference itself is the finding, not a fault.
 
 ## The dynamic layer
 

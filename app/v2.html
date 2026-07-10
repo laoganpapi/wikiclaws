@@ -391,6 +391,7 @@ function scrWelcome(el) {
       h('p',null,'This is a demonstration of an assessment about how you think, where your energy goes, how you handle charged moments, and what you’re working toward.'),
       h('p',null,'There are no right answers and nothing here measures how smart you are. It records what you do: your choices, your timing, what you choose to open, and what you type — including how much you retype. That recording exists for one reason: it helps tell care from guessing. None of it is graded, and it never gives scores for right or wrong answers.'),
       h('p',null,'It takes about 25–35 minutes, in two short parts with a break between.'),
+      h('p',null,'Your results are yours alone. They are never shared with schools or employers, and they are never used to decide anything about you — they can only point you toward things that fit you. What you get is a snapshot of today, not a verdict: people change, and retaking the test over time builds a fuller picture, not a contradiction.'),
       h('p',{class:'small muted'},'One thing to know before you start: the flow moves forward only. There is no Back button, and on some screens a single tap records your answer and moves on.'),
       h('p',{class:'muted small'},'Demo Form A, version 2: reduced item set, all mechanics live. Everything stays in this browser until you choose to export it. No data leaves this page.')
     ),
@@ -1252,6 +1253,7 @@ function score() {
 }
 
 // ---- Report ----
+function gateShift(lo, hi) { return (lo!=null && hi!=null && Math.abs(hi-lo) < 0.3) ? null : hi; }
 function bar(label, lo, hi, leftLbl, rightLbl, loN, hiN) {
   const track = h('div',{class:'track'});
   function pct(v){ return (50 + v*40) + '%'; }
@@ -1275,13 +1277,13 @@ function leadCard(R) {
     const leans = [['snap sourcing',G.fastSrcLo],['deliberate sourcing',G.slowSrcLo],['deliberate method',G.slowMthLo]].filter(x=>x[1]!=null);
     const strongest = leans.length ? leans.reduce((a,b)=>Math.abs(b[1])>Math.abs(a[1])?b:a) : null;
     const noEngagement = (R.totalCards + R.totalPeeks) === 0; // opening nothing is not a "lean" — it's an absence of behavior
-    card.append(h('p',null, (strongest && !noEngagement) ? 'Your clearest, most decided lean was in '+strongest[0]+'. Wherever you lean hardest is where you’re most predictable — and most yourself.'
+    card.append(h('p',null, (strongest && !noEngagement) ? 'Your clearest, most decided lean today was in '+strongest[0]+' — the place your choices pointed the same way most consistently this session.'
       : noEngagement ? 'Honestly: this session didn’t show enough behavior to name a strongest lean — no information cards were opened and no peeks were taken, so there’s nothing decided to point at yet.'
       : 'Not enough answered items to name a strongest area this session.'));
   } else if (m==='truth') {
     let truth = 'The least flattering honest reading available from this session: ';
     if (R.lowSignal) truth += 'the engagement checks flagged this session (see the note above), so the hardest honest truth is that these answers don’t yet show a considered you.';
-    else if (R.salience==='flat') truth += 'the stakes never visibly changed your behavior, so your steadiness here is unproven, not proven.';
+    else if (R.salience==='flat') truth += 'the stakes never visibly changed your behavior this session, so nothing can be said either way about how you respond when more is on the line.';
     else if (!R.straightline && R.statedIntrovert!=null && R.drm.chosenSmallAvg!=null && R.drmEnergyTouched && R.statedIntrovert>=4 && R.drm.chosenSmallAvg>0.5) truth += 'your self-description (“social events drain me”) disagrees with the one day you reconstructed.';
     else if (R.congruence===false) truth += 'your pros-and-cons grid pointed one way and you chose another.';
     else truth += 'nothing in your behavioral data contradicted you this session — the harder truths, if any, sit in your written answers, which are still pending coding.';
@@ -1335,15 +1337,17 @@ function scrReport(el) {
     h('p',{class:'small muted'},
       h('span',{style:'color:var(--accent);font-size:1.05rem'},'●'),' filled blue dot = low stakes · ',
       h('span',{style:'color:var(--gold);font-size:1.05rem'},'○'),' hollow gold ring = high stakes (certain review). A missing dot means you skipped the peeks or items that feed it — the track says “no data recorded” when a whole row is empty. Each dot lists how many items it rests on; a dot on one or two items is a hint, not an estimate.'),
-    bar('SNAP · where you reach', G.fastSrcLo, G.fastSrcHi, 'Your own compass', 'Outside data', G.fastSrcLoN, G.fastSrcHiN),
-    bar('DELIBERATE · where you reach', G.slowSrcLo, G.slowSrcHi, 'Your own compass', 'Outside data', G.slowLoN, G.slowHiN),
-    bar('DELIBERATE · how you build', G.slowMthLo, G.slowMthHi, 'By feel', 'With structure', G.slowLoN, G.slowHiN),
+    bar('SNAP · where you reach', G.fastSrcLo, gateShift(G.fastSrcLo, G.fastSrcHi), 'Your own compass', 'Outside data', G.fastSrcLoN, G.fastSrcHiN),
+    bar('DELIBERATE · where you reach', G.slowSrcLo, gateShift(G.slowSrcLo, G.slowSrcHi), 'Your own compass', 'Outside data', G.slowLoN, G.slowHiN),
+    bar('DELIBERATE · how you build', G.slowMthLo, gateShift(G.slowMthLo, G.slowMthHi), 'By feel', 'With structure', G.slowLoN, G.slowHiN),
     h('p',{class:'small'},'Snap “how you build” and everything in your written reasoning: ', h('span',{class:'pending'},'PENDING AI CODING')));
+  if ([[G.fastSrcLo,G.fastSrcHi],[G.slowSrcLo,G.slowSrcHi],[G.slowMthLo,G.slowMthHi]].some(([lo,hi])=>lo!=null&&hi!=null&&gateShift(lo,hi)==null))
+    tcard.append(h('p',{class:'small muted'},'Where the high-stakes reading sat too close to the low-stakes one to mean anything, the gold ring is simply not drawn: no clear shift. This report shows a shift only when it can stand behind it. A shift, when shown, is a change of approach — not better or worse, just different.'));
   if ((R.totalCards + R.totalPeeks) === 0 && R.answeredArena > 0) tcard.append(h('p',{class:'small muted'},'No information cards or peeks were opened this session, so leftmost dots here reflect zero information-seeking. That can be a genuine own-compass style — or simply a fast run; read them alongside the session notes above.'));
   const trustLbl = 'Can this section be read as it stands? (interpretability check): ';
   if (R.lowSignal) tcard.append(h('p',{class:'small'},trustLbl, h('span',{class:'flag'},'read with caution'), ' — the engagement checks flagged this session (see the note at the top), so these dots are low-confidence regardless of the other checks.'));
   else if (R.salience==='pass') tcard.append(h('p',{class:'small'},trustLbl, h('span',{class:'pass'},'yes, cautiously'), ' — your behavior differed between the low- and high-stakes items, so stakes registered. That rests on just '+R.salienceN.lo+' low-stakes and '+R.salienceN.hi+' high-stakes items, so it’s a supported reading, not proof.'));
-  else if (R.salience==='flat') tcard.append(h('p',{class:'small muted'},trustLbl+'your behavior stayed the same at every stakes level (across '+R.salienceN.lo+' low-stakes and '+R.salienceN.hi+' high-stakes items). With a short demo that is common and not a flaw — it just means flat lines here are read cautiously rather than as proven steadiness.'));
+  else if (R.salience==='flat') tcard.append(h('p',{class:'small muted'},trustLbl+'your behavior stayed the same at every stakes level (across '+R.salienceN.lo+' low-stakes and '+R.salienceN.hi+' high-stakes items). With a short demo that is common and not a flaw — it just means flat lines here are left unread: staying put and shifting are both ordinary styles, and this session can’t tell which is yours.'));
   else tcard.append(h('p',{class:'small muted'},trustLbl+'not enough answered items this session to run it.'));
   if (R.trapPass!=null) tcard.append(h('p',{class:'small'},'Sealed-card design check (checks the test, not you): ', R.trapPass===true? h('span',{class:'pass'},'PASS') : h('span',{class:'muted'},'this run couldn’t verify it either way — a limit of a single item and a single respondent, not a question about you')));
   if (R.congruence!=null) tcard.append(h('p',{class:'small'},'Did your pros & cons match your pick? (grid congruence): '+(R.congruence?'yes — your grid’s winner matched your choice.':'your grid pointed one way and you chose another — noted, not judged.')));
@@ -1386,7 +1390,7 @@ function scrReport(el) {
     const fmt = s => s<1 ? 'under a second' : s.toFixed(1)+'s';
     rcard.append(h('p',null, R.react.minimal
       ? 'You moved through the deliberately confusing task in '+fmt(R.react.confusedS)+' and re-answered '+fmt(R.react.recoveryS)+' after it was fixed — too quickly (or with too short an answer) to tell whether the wording was actually wrestled with. It’s recorded as-is, but it isn’t read as steadiness.'
-      : 'The deliberately confusing task took you '+fmt(R.react.confusedS)+' to push through; once fixed, you settled in '+fmt(R.react.recoveryS)+'. Because you were warned staged moments existed, read this as the floor of your steadiness, not the ceiling.'));
+      : 'The deliberately confusing task took you '+fmt(R.react.confusedS)+' to push through; once fixed, you settled in '+fmt(R.react.recoveryS)+'. This is a note about how today went, nothing more — it is not a mental-health reading, and no one may treat it as one.'));
   }
   if (R.challenge && R.challenge.response) {
     const c = R.challenge.response;
@@ -1476,7 +1480,7 @@ function scrReport(el) {
           localStorage.removeItem('assessment_v2_app_prev'); e.target.remove();
         }},'Clear the earlier backup session only')
       : null),
-    h('p',{class:'footer-note'},'Demo Form A · version 2. Behavioral scoring is live; free-text coding, error bars, and cohort-referenced values require the production scoring service. These results describe you now, at this age — people change, which is why results of anyone under 18 are automatically deleted after 18 months in the real (non-demo) version.'));
+    h('p',{class:'footer-note'},'Demo Form A · version 2. Behavioral scoring is live; free-text coding, error bars, and cohort-referenced values require the production scoring service. These results describe likes and tendencies, never ability, and never anything medical. They are yours alone: never shared with schools or employers, never used to sort or screen anyone, and only ever used to offer you things that fit — never to close a door. They describe you now, at this age — people change, which is why results of anyone under 18 are automatically deleted after 18 months in the real (non-demo) version.'));
 }
 
 // ---------- Withdrawal ----------

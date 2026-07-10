@@ -40,17 +40,29 @@ individual makes decisions and responds to any and every stimulus in their consc
 Two words carry weight. **Preferences** keeps us, by design, on the preference side of the
 preference-and-capacity line. **Stated or revealed** admits that a person's account of their own
 preferences and the preferences their behavior exposes are not always the same. When the two
-agree, measurement is easy. When they diverge, the divergence is itself a finding, and for
-predicting what a person will actually do, we privilege the preference their behavior reveals.
+agree, measurement is easy. When they diverge, neither side is treated as the truer self: the
+stated side is what the person wants or believes they are, the revealed side is what the evidence
+of one occasion showed, and the distance between them is itself the finding. That distance is
+expected, carries no judgment, and, because people change and learn, it is movable.
+
+This theory does not predict. It makes no claim about what a person will do tomorrow, and it
+refuses that goal on purpose: a forecast handed to a young person tends to become the thing it
+foretold. What the theory offers instead is self-understanding: a structured account of a person's
+tendencies, on a given day, for that person to use in pursuit of their own ends. Every reading is a
+snapshot of a day, not a verdict on a life, and taking the assessment again over time builds a
+fuller, moving portrait rather than a fixed label.
 
 ## What the theory is for
 
-This framework is the basis for an assessment. It is meant to be administered, with the help of an
-AI that can present situations and read responses, to high school students, college students, and
-young people entering the workforce. That purpose disciplines the theory. Every system has to be
-measurable by something a young person can be asked or shown, and every result has to be
-defensible to a trained reviewer. We name the objections we expect a cognitive scientist or
-psychologist to raise, and we answer them in the open rather than wait to be caught.
+This framework is the basis for an assessment administered with the help of an AI that can present
+situations and read responses, to high school students, college students, and young people entering
+the workforce. The assessment is offered only inside the authors' own program. Results belong to
+the subject, are never disclosed to schools or employers, and are never used to decide anything
+about the subject: they may open doors suited to a person's leanings, never close one. That purpose
+disciplines the theory. Every system has to be measurable by something a young person can be asked
+or shown, and every result has to be defensible to a trained reviewer. We name the objections we
+expect a cognitive scientist or psychologist to raise, and we answer them in the open rather than
+wait to be caught.
 
 ## The shape of the book
 

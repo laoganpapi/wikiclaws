@@ -15,8 +15,11 @@ A new theory of personality. With Steven Pham.
 2. A formal, AI-enabled assessment built on the framework.
 3. A second opinion on both from an academic, cognitive scientist, or psychologist.
 
-The assessment is for a company evaluating high school students, college students, and young
-people entering the workforce. Two consequences follow and bind the writing:
+The assessment serves high school students, college students, and young people entering the
+workforce, and is offered only inside the authors' own venture and program. It is not an
+evaluation product: results are for the subject's own self-understanding, are never disclosed to
+schools or employers, and never decide anything about the subject (see Distribution and custody
+below). Two consequences follow and bind the writing:
 
 - **Operationalizable.** Every measure must be administrable. A later instrument should read a
   system's chapter and know what it asks a person and what it does with the answer.
@@ -69,8 +72,10 @@ reading level, and fairness across groups are first-order design constraints, no
 4. **Instrumentable and AI-liaisoned.** See the deliverable sequence. No measure without a
    conceivable administration, and the administration may use an AI to present adaptive scenarios
    and to code free-text responses, provided the coding is rigorous and auditable.
-5. **Stated versus revealed.** Where stated and revealed preference diverge, the theory privileges
-   revealed preference for prediction and treats the gap as itself informative.
+5. **Stated versus revealed.** Where stated and revealed preference diverge, neither is treated as
+   the truer self. The stated side is what the person wants or believes they are; the revealed side
+   is what one occasion's evidence showed; the gap between them is itself the finding, expected and
+   without judgment, and movable because people change.
 
 ## Purpose and validity stance
 
@@ -217,7 +222,7 @@ These are real and should be modeled, not hidden. They are also where a reviewer
 independence.
 
 - **System 3's reactivity under load moderates the thinking machine's stake response.** High
-  reactivity likely predicts steeper trend lines in System 2's two graphs as stakes rise. Stability
+  reactivity is expected to move with steeper trend lines in System 2's two graphs as stakes rise. Stability
   is therefore read partly through the steepness of System 2's graphs, not only on its own
   scenarios. This is the reason neuroticism was folded into System 3 rather than left standing
   alone.

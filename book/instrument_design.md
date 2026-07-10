@@ -93,15 +93,26 @@ of flat profiles (2, 17).
   description, enter the cohort comparison view, lock and finish) (32). *Hardest-truths page is
   adult-only (22).
 
-## 5. Use policy (binding, finding 20)
+## 5. Use policy (binding; supersedes the finding-20 version)
 
-1. Until criterion validity exists, scores are for developmental feedback only.
-2. Reactivity, stability, and stated-revealed gap metrics are never released for selection use.
-3. Respondent controls release; minors' scores expire after 18 months.
-4. For minors, gaps are reported at system level only, above a pre-registered difference-score
-   reliability floor, framed symmetrically (24); gap magnitudes never appear in third-party
-   report versions.
-5. The ethics reader signs off on this policy before any minor cohort.
+1. The instrument does not predict and is never validated for prediction. Scores exist for the
+   subject's own self-understanding. Selection use (hiring, admission, ranking, screening,
+   placement) is a misuse the instrument disowns, permanently, not pending validation.
+2. The assessment is offered only inside the authors' own venture and program. Results are never
+   disclosed to schools or employers; there is no institutional copy. The subject holds the report
+   and controls any sharing. Inside the program, readings may tailor and offer, never deny, rank,
+   or gate.
+3. Reactivity and stability carry a clinical bar as well: never used to diagnose, screen for, or
+   flag a mental-health condition; reported only as dated, session-scoped observations.
+4. Clean or silent: no stated-revealed gap and no stake-slope appears unless it clears a
+   pre-specified reliability threshold. Below threshold the report says "no clear gap" or "no
+   clear shift" — never a shaky number softened by a caveat.
+5. Minors' scores expire after 18 months and never enter a permanent record. For minors, gaps are
+   reported at system level only, framed symmetrically.
+6. Report language is neutral and descriptive: past-tense, session-scoped, no valence (collapse,
+   degrade, volatile, and spike are barred words), no praise, no deficit, no forecast, and no
+   performance speculation in either direction.
+7. The ethics reader signs off on this policy before any minor cohort.
 
 ## 6. Coding operations (finding 31)
 
@@ -151,24 +162,37 @@ Gate: prototype timing with real teenagers before build-out. If the budget break
 - **Pilot total, order of magnitude: $40k–80k** plus internal build labor.
 
 **Deferred to phase 2** (affordability): EMA companion, second DRM day, leaderboard and cohort
-mechanics, challenge round, experimental module, continuous per-person slopes, full DIF program,
-criterion study.
+mechanics, challenge round, experimental module, continuous per-person slopes, full DIF program.
+There is no criterion study, deferred or otherwise: the instrument does not predict outcomes and
+is never validated as if it did.
 
-## 9. Validation plan (rescoped)
+## 9. Validation plan (rescoped; the burden is truth-of-description, not prediction)
 
 1. Mode elicitation check, now against Type-1 markers (load-task interference patterns, probe
    choices), not latency compression (10; the latency check is kept as constraint enforcement
    only, per the dismissed objection).
 2. Discriminant vs ICAR-16 on baselines, |r| < .20 prespecified with reliability-corrected
-   bounds (29).
+   bounds (29): the empirical proof that this measures preference, not intelligence.
 3. Convergent battery unchanged (BFI-2, NFC, REI, values), plus an MTMM model with a coded-prose
    method factor for the S2-sourcing vs S3-attention separation (18).
 4. Retest on parallel Form B at 4–6 weeks; slope categories below r = .4 revert to cohort-level
-   reporting, prespecified (19).
+   reporting, prespecified (19). Retest is read against the snapshot stance: agreement is
+   consistency of the instrument, and change over time is not failure.
 5. AI-human ICC ≥ .75; fairness battery adds report-precision-by-language-group (33) and the
    election invariance tests (23).
 6. Attrition analysis pre-registered: early-behavior predictors of dropout, because dropout is
    endogenous to the constructs (30).
+7. **Discrimination study (owed by the self-understanding stance).** Each participant rates their
+   own profile and a matched stranger's profile, blinded. Own-profile fit must beat stranger-profile
+   fit by a prespecified margin, and the analysis reports the reliability of the gap difference
+   scores themselves, not just their components. Without this, no claim that the reading is about
+   the person rather than about everyone.
+8. **Format-swap check on the gap.** For a subsample, the stated side is re-elicited in the same
+   scenario-choice format as the revealed side. A gap that shrinks under matched formats was
+   measuring the difference between a questionnaire and a scenario, not the person; only gaps that
+   survive the swap may be shown or treated as training-relevant.
+9. **Stated-stream validation.** Evidence that the open-prompt "wants" are stable enough across a
+   short interval and across phrasings to be read as wants rather than one-off stories.
 
 ## 10. What v2 gives up, stated plainly
 
