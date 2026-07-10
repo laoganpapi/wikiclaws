@@ -136,6 +136,14 @@ be exported, aggregated, or written to a student information system for a sortin
 prohibition holds regardless of intent, because any delivered number tends to drift toward the
 decision it can influence.
 
+A second bar, on the pathology lane. **Reactivity under load** and **baseline stability** (System 3)
+carry a further prohibition: they may not be used to diagnose, screen for, or flag any
+mental-health condition. Their behavioral signature resembles what a clinician reads as a symptom,
+but this framework measures preference, not pathology (see the three-lane scope), and a preference
+reading is not a clinical one. The report states these as dated, session-scoped observations ("on
+the higher-stakes items today, steadiness dropped"), never as a trait label or a diagnosis, and no
+downstream reader may treat them as a mental-health signal.
+
 ## The system template
 
 Every chapter that defines a system follows this structure. Uniformity is what makes separate
