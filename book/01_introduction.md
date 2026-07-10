@@ -7,13 +7,22 @@ something true about a person but cannot help that person aim their dispositions
 outside themselves is, for our purposes, idle. One system in this book, Objectives, is devoted to
 that external cause directly; the others describe how a person pursues it.
 
-This sets the theory apart from the study of intelligence. There is a large and capable
-literature on intelligence, and we do not add to it. Intelligence concerns capacity: what a mind
-can do. This theory concerns preference: what a person tends to do, would rather do, and in fact
-does when faced with the world. The two are independent, and we hold that line in every system.
-The thinking machine is where it was most at risk, since it deals with how a person reasons; there
-we are careful to measure which kinds of thinking a person leans on, never how strong any of them
-is.
+This is where scope has to be stated plainly, because a reader will otherwise assume the book
+claims more than it does. A person can be described along three separate lanes: **preference**
+(what they tend toward), **capability** (what they are able to do), and **pathology** (what, if
+anything, is clinically wrong). This framework measures the first lane only. It says nothing about
+capability and nothing about pathology, and it is not an instrument for either. Capability is the
+province of the large existing literature on intelligence and aptitude, measured by separate,
+established tools; pathology is the province of clinical assessment, done by qualified people with
+different instruments. Where this framework's data happens to resemble something from another lane,
+that resemblance is not a claim. A reading of how steadily a person handles pressure is a
+preference reading; it is not a measure of how capable they are and not a sign of any disorder.
+
+The line between preference and capability is the one most at risk inside the book, and we hold it
+in every system. Intelligence concerns capacity: what a mind can do. This theory concerns
+preference: what a person tends to do, would rather do, and in fact does when faced with the world.
+The thinking machine is where the two came closest, since it deals with how a person reasons; there
+we measure which kinds of thinking a person leans on, never how strong any of them is.
 
 We are also deliberately silent on where preferences come from. Whether a disposition is
 inherited, learned, or built by circumstance is a real question, and not ours. The origin of a

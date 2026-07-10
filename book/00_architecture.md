@@ -39,6 +39,13 @@ reading level, and fairness across groups are first-order design constraints, no
 - Personality is **distinct from intelligence**. Intelligence concerns capacity. This theory
   concerns preference. We hold this line across every system, including the thinking machine, which
   measures reliance on kinds of thinking and not the strength of any of them.
+- **Three lanes: preference, capability, pathology.** A person can be described along three
+  separate lanes: preference (what they tend toward), capability (what they can do), and pathology
+  (what is clinically wrong, if anything). This framework occupies the preference lane only. It
+  does not measure capability (the province of intelligence and aptitude instruments) and does not
+  measure pathology (the province of clinical assessment). Where a preference reading resembles
+  data from another lane, the resemblance is not a claim. This scope statement belongs in the
+  prologue, and every system inherits it.
 
 ## Design axioms
 
