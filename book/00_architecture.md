@@ -140,6 +140,15 @@ be exported, aggregated, or written to a student information system for a sortin
 prohibition holds regardless of intent, because any delivered number tends to drift toward the
 decision it can influence.
 
+**Distribution and custody.** The assessment is offered only inside the venture's own program.
+Results are never disclosed to schools or employers; there is no institutional copy. The subject
+holds the report and controls any sharing; minors' results expire after 18 months and are never
+written to a permanent record. The readings carry no signal about what a person is good at, only
+what they tend to like and dislike, which caring parents and teachers already infer constantly and
+noisily; the instrument formalizes that inference, and a formalized inference needs a custody rule
+an informal one does not. Inside the program, readings may tailor and offer — never deny, rank, or
+gate. Preference data may open doors suited to a person's leanings; it may not close one.
+
 A second bar, on the pathology lane. **Reactivity under load** and **baseline stability** (System 3)
 carry a further prohibition: they may not be used to diagnose, screen for, or flag any
 mental-health condition. Their behavioral signature resembles what a clinician reads as a symptom,
