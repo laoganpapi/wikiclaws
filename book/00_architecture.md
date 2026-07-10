@@ -210,11 +210,14 @@ Candidates not yet adopted are logged in open questions.
   attention, not accuracy of reading it). (c) Emotional stability: baseline steadiness, and
   reactivity under load (how far and fast the baseline shifts as stakes rise). The stability
   measure moderates the other systems' stake responses.
-- **System 4, Objectives.** An open prompt of what motivates a person, coded into a motive profile
+- **System 4, Objectives.** A catalogue of concrete objectives the person selects from (with room
+  to name their own), followed by a laddered "why" in their own words, coded into a motive profile
   over: order and peace; triumph; power and influence (absorbing the earlier control motive);
   truth-seeking; novelty. Multi-label with weights; people carry more than one motive. A
   validation-and-excellence motive was dropped as orthogonal to motivation rather than a motive in
-  its own right.
+  its own right. Elicitation rule, which binds every stated measure in every system: open text only
+  where answering is easy (the "why" about a thing just chosen); structured choice wherever it can
+  reduce noise (the "what").
 
 ## Cross-system links we have noticed
 

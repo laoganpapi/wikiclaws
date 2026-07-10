@@ -9,9 +9,14 @@ Without it, the rest of the framework would be a fine description of a mechanism
 of where the mechanism is pointed.
 
 Because what motivates a person is not well captured by a slider, this system is measured
-differently from the others. It begins with an open prompt: the person says, in their own words,
-what they are working toward, what they want, what would count as a life well spent. The richness
-of motivation is preserved in the response, and the structure is applied afterward.
+differently from the others. It does not open with a blank page: asked "what are you working
+toward," most people, and nearly all young people, cannot answer cogently from a standing start,
+and the noise swamps the signal. It opens instead with a catalogue of concrete, recognizable
+objectives spanning the motive space, from which the person picks the one or two closest, with
+room to name their own. Only then comes the open question, and only the easy one: not "what do you
+want" but "why does that one matter to you," asked about something the person just chose. Open
+text is reserved for where it is easy to give; structured choice is used wherever it can reduce
+noise. The richness of motivation is preserved in the "why"; the structure is applied up front.
 
 ## The measures
 

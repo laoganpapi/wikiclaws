@@ -85,7 +85,14 @@ of flat profiles (2, 17).
 
 ## 4. Module D: The Compass (objectives)
 
-- Laddered open prompt unchanged.
+- Elicitation rule (binds every stated measure, all modules): open text only where answering is
+  easy; structured choice wherever it reduces noise. Nobody is asked to articulate their
+  objectives from a blank page.
+- The opening prompt is a catalogue: ten concrete, kid-legible objectives spanning the five
+  motives, pick one or two, with room to name your own. The laddered open "why" follows the pick,
+  where it is easy to answer. Intake notes follow the same rule: pick-from-options with an
+  optional say-it-your-way override, never a bare completion like "when it comes to money, I
+  value…".
 - Tradeoffs: 16 pairs, motive contrasts **disguised in scenario texture** with filler dimensions
   and rotated framings; cross-framing inconsistency is the Module D integrity signal (27).
 - The spend: no points. One end-of-assessment choice among five **report-deliverable** options

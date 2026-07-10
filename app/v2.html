@@ -463,21 +463,37 @@ function scrIntake(el) {
   const nick = h('input',{type:'text','aria-label':'Nickname (optional)',value:D.nick||'',placeholder:'optional — saved with your session and used to name your export file',oninput:e=>{ D.nick=e.target.value; save(); }});
   const notes = D.notes;
   const noteFields = [
-    ['friends','Finish this: “Right now, what matters most to me socially is…”'],
-    ['things','Finish this: “When it comes to money, I generally value…”'],
-    ['hard','Finish this: “With hard tasks, my instinct is to…”'],
-    ['rel','Finish this: “When a task and a friendship conflict, I lean toward…”'],
-    ['name','Finish this: “I put my name on something publicly only when…”'],
+    ['friends','Right now, what matters most to me socially is…', [
+      'a few close friends I can count on','meeting new people','being part of a group that does things together','time to myself','keeping my group drama-free']],
+    ['things','If unexpected money landed in my hands, my instinct would be to…', [
+      'save it toward something big','spend it on an experience with people','spend it on something I’ve wanted for a while','keep it, just in case']],
+    ['hard','With hard tasks, my instinct is to…', [
+      'start early and get them over with','wait until it feels urgent, then push','break them into small pieces','pull someone in and do it together']],
+    ['rel','When a task and a friendship conflict, I lean toward…', [
+      'protecting the friendship first','getting the task done first','carrying both, even if it costs me']],
+    ['name','I put my name on something publicly only when…', [
+      'I’ve checked it myself','people I trust are behind it','the cause matters, even if the details aren’t perfect','almost never — I’d rather help from behind the scenes']],
   ];
   el.append(h('h2',null,'A little about you'),
     h('div',{class:'card'},
       h('h3',null,'Age band'), age,
       h('h3',null,'Nickname'), nick,
-      h('p',{style:'margin-top:14px'},h('b',null,'Five quick sentence-completions — these matter. '),'Some later snap questions will quote your exact words back to you as a “your note” card. Blank notes mean blank cards.'),
-      h('p',{class:'small muted'},'There’s no good answer here — write what’s true for you, not what sounds good. Nobody grades these.'),
-      ...noteFields.map(([k,label])=>{
-        const inp = h('input',{type:'text','aria-label':label,value:notes[k]||'',placeholder:'…in your own words',oninput:e=>{ notes[k]=e.target.value.trim(); save(); }});
-        return h('div',{style:'margin:10px 0'}, h('div',{class:'small',style:'margin-bottom:4px'},label), inp);
+      h('p',{style:'margin-top:14px'},h('b',null,'Five quick picks — these matter. '),'Some later snap questions will quote your choice back to you as a “your note” card. Pick the closest one, or say it your own way instead.'),
+      h('p',{class:'small muted'},'There’s no good answer here — pick what’s true for you, not what sounds good. Nobody grades these.'),
+      ...noteFields.map(([k,label,opts])=>{
+        const custom = h('input',{type:'text','aria-label':label+' — say it your own way',value:(notes[k] && !opts.includes(notes[k]))?notes[k]:'',placeholder:'…or say it your own way',style:'margin-top:6px'});
+        const row = h('div',{class:'chiprow',role:'group','aria-label':label});
+        opts.forEach(o=>{
+          const c = h('button',{type:'button',class:'chip','data-group':'note-'+k,onclick:()=>{
+            notes[k]=o; custom.value=''; [...row.children].forEach(x=>x.classList.remove('selected')); c.classList.add('selected'); save();
+          }},o);
+          if (notes[k]===o) c.classList.add('selected');
+          row.append(c);
+        });
+        custom.addEventListener('input',e=>{
+          notes[k]=e.target.value.trim(); [...row.children].forEach(x=>x.classList.remove('selected')); save();
+        });
+        return h('div',{style:'margin:12px 0'}, h('div',{class:'small',style:'margin-bottom:4px'},label), row, custom);
       })
     ),
     h('button',{class:'btn',onclick:()=>{
@@ -972,34 +988,72 @@ function scrSJT(item) {
 }
 
 // ---- Compass ----
+const OBJECTIVE_CATALOG = [
+  { t:'A calm, drama-free stretch — school, home, friends all steady', m:'order' },
+  { t:'Getting my routine and grades under control', m:'order' },
+  { t:'Winning something specific — a competition, a spot, a title', m:'triumph' },
+  { t:'Beating my own best at something I train or practice for', m:'triumph' },
+  { t:'Running something — a club, a team, a project people join', m:'power' },
+  { t:'Having a real say in what happens around me', m:'power' },
+  { t:'Getting genuinely good at a craft or subject — understanding it deeply', m:'truth' },
+  { t:'Figuring out a question I keep coming back to', m:'truth' },
+  { t:'Trying things I’ve never done — new places, people, skills', m:'novelty' },
+  { t:'A big change of scene', m:'novelty' },
+];
 function scrCompassPrompt(el) {
-  const answers = [];
-  const qs = [
-    'Tell me about something you’re working toward right now — and what a good life looks like from where you stand.',
-    'Why does that matter to you?',
-    'And why does THAT matter? (Last one, promise.)',
-  ];
-  let idx = 0;
-  const thread = h('div');
-  const ta = h('textarea',{'aria-label':'Your answer',placeholder:'In your own words.'});
+  // stage 1: pick from a catalogue (open text only where answering is easy — the "why", not the "what")
+  const picked = [];
   const chint = h('p',{class:'hint'},'');
-  const btn = h('button',{class:'btn',onclick:()=>{
-    if (!ta.value.trim()) { chint.textContent='Write something first — even one sentence counts.'; return; }
-    chint.textContent='';
-    answers.push({ q: qs[idx], a: ta.value });
-    thread.append(h('div',{class:'card',style:'padding:12px 16px'}, h('p',{class:'small muted',style:'margin:0 0 4px'},qs[idx]), h('p',{style:'margin:0'},ta.value)));
-    ta.value=''; idx++;
-    if (idx>=qs.length) { S.session.compass.prompt = answers; tlog('compass_prompt_done'); next(); return; }
-    prompt.replaceChildren(aiSay(qs[idx]));
-  }},'Continue');
-  const prompt = h('div',null, aiSay(qs[0]));
-  // refusing to answer is a recorded stance, not something to be interrogated past
-  const decline = h('button',{class:'btn secondary',onclick:()=>{
-    if (!confirm('Skip the rest of this interview? Your choice not to answer is recorded as-is — a real answer, not a blank to be filled in.')) return;
-    answers.push({ q: qs[idx], a: '', declined: true });
-    S.session.compass.prompt = answers; tlog('compass_prompt_declined',{atQuestion:idx}); next();
-  }},'I’d rather not answer');
-  el.append(h('h2',null,'What you’re chasing'), thread, prompt, ta, chint, btn, decline);
+  const custom = h('input',{type:'text','aria-label':'Something else you are working toward',placeholder:'…or name something else you’re working toward'});
+  const optWrap = h('div');
+  OBJECTIVE_CATALOG.forEach(o=>{
+    const b = h('button',{class:'opt',onclick:()=>{
+      const i = picked.findIndex(p=>p.t===o.t);
+      if (i>=0) { picked.splice(i,1); b.classList.remove('selected'); return; }
+      if (picked.length>=2) { chint.textContent='Two picks max — unpick one first.'; return; }
+      chint.textContent=''; picked.push(o); b.classList.add('selected');
+    }},o.t);
+    optWrap.append(b);
+  });
+  const stage1 = h('div',null,
+    aiSay('Which of these are you actually working toward right now? Pick one or two that come closest — or name your own.'),
+    optWrap, custom, chint,
+    h('button',{class:'btn',onclick:()=>{
+      const customText = custom.value.trim();
+      if (!picked.length && !customText) { chint.textContent='Pick at least one, or name your own.'; return; }
+      const objectives = picked.slice();
+      if (customText) objectives.push({ t: customText, m:'custom' });
+      S.session.compass.objectives = objectives;
+      tlog('compass_objectives',{n:objectives.length});
+      stage1.remove(); showWhy(objectives);
+    }},'Continue'));
+  const answers = [];
+  function showWhy(objectives) {
+    const qs = [
+      'Take your top pick — “'+objectives[0].t+'”. Why does that one matter to you?',
+      'And why does THAT matter? (Last one, promise.)',
+    ];
+    let idx = 0;
+    const ta = h('textarea',{'aria-label':'Your answer',placeholder:'In your own words — one sentence counts.'});
+    const whint = h('p',{class:'hint'},'');
+    const prompt = h('div',null, aiSay(qs[0]));
+    const btn = h('button',{class:'btn',onclick:()=>{
+      if (!ta.value.trim()) { whint.textContent='Write something first — even one sentence counts.'; return; }
+      whint.textContent='';
+      answers.push({ q: qs[idx], a: ta.value });
+      ta.value=''; idx++;
+      if (idx>=qs.length) { S.session.compass.prompt = answers; tlog('compass_prompt_done'); next(); return; }
+      prompt.replaceChildren(aiSay(qs[idx]));
+    }},'Continue');
+    const decline = h('button',{class:'btn secondary',onclick:()=>{
+      if (!confirm('Skip the “why” questions? Your choice not to answer is recorded as-is — a real answer, not a blank to be filled in.')) return;
+      answers.push({ q: qs[idx], a: '', declined: true });
+      S.session.compass.prompt = answers; tlog('compass_prompt_declined',{atQuestion:idx}); next();
+    }},'I’d rather not answer');
+    whyWrap.append(prompt, ta, whint, btn, decline);
+  }
+  const whyWrap = h('div');
+  el.append(h('h2',null,'What you’re chasing'), stage1, whyWrap);
 }
 
 function scrTradeoffs(el) {
@@ -1442,6 +1496,8 @@ function scrReport(el) {
   }
   // Compass
   const ccard = h('div',{class:'card'}, h('h2',null,'What you’re chasing'));
+  if (S.session.compass.objectives && S.session.compass.objectives.length)
+    ccard.append(h('p',null,'You named what you’re working toward: ', h('b',null, S.session.compass.objectives.map(o=>o.t).join(' · ')), '. Below is what your quick either–or picks leaned toward — two readings of the same compass, yours to compare.'));
   const sorted = Object.entries(R.weights).sort((a,b)=>b[1]-a[1]);
   sorted.forEach(([m,w])=>{
     ccard.append(h('div',{class:'reportbar'}, h('div',{class:'lbl'},MOTIVES[m]+(S.session.compass.spend===m?' ★':'')),
