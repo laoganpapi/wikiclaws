@@ -152,11 +152,16 @@ diverse.
   attention of System 3?
 - How stable are the two graphs over time, given that personality is not static?
 - **Experience transfers across domains unevenly; the instrument reads one domain at a time.**
-  Grounding built in one field can seed intuition in an unrelated one, and formalized knowledge
-  tends to transfer more readily than raw, never-formalized experience, since abstraction is what
-  makes a pattern portable. The Arena presents specific scenario domains, and a person's informal,
-  unarticulated reading in one of them may be grounding imported from somewhere else entirely,
-  formally built or not. The instrument cannot currently distinguish a person with no grounding
-  anywhere from a person whose grounding was built elsewhere and now surfaces as domain-general
-  informal judgment; both would read
+  Grounding built in one field can seed intuition in a related one, and formalized knowledge tends
+  to transfer more readily than raw, never-formalized experience, since abstraction is what makes
+  a pattern portable. The transfer literature bounds this claim tightly: transfer between
+  structurally similar problems is real and runs through abstracted schemas (Gick & Holyoak 1983;
+  Gentner's structure-mapping), while transfer to genuinely unrelated domains largely fails
+  (Thorndike & Woodworth's common-elements result, 1901; Sala & Gobet's meta-analyses, 2017-2019,
+  across chess, music, and working-memory training). Related, not unrelated, is the honest scope.
+  The Arena presents specific scenario domains, and a person's informal, unarticulated reading in
+  one of them may be grounding imported from a structurally similar domain, formally built or not.
+  The instrument cannot currently distinguish a person with no grounding anywhere from a person
+  whose grounding was built elsewhere and now surfaces as transferred informal judgment; both would
+  read
   identically on this axis. Whether that distinction is worth pursuing, and how, is open.
