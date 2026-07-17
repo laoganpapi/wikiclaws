@@ -11,7 +11,17 @@ export const meta = {
   ],
 }
 
-const A = args || {}
+// args sometimes arrives as a JSON-encoded string rather than a parsed object (a caller mistake,
+// not this script's). Recover it if so; fail LOUDLY rather than silently falling through to the
+// all-systems default, which is expensive enough that a silent wrong-scope run is a real cost, not
+// a cosmetic bug. Never mistake a caller's stringified-args bug for a legitimate empty-args run.
+let A = args
+if (typeof A === 'string') {
+  try { A = JSON.parse(A) } catch (e) {
+    throw new Error(`book-harness: args arrived as a string that is not valid JSON (${A.length} chars, starts "${A.slice(0, 120)}"). Pass args as an actual JSON object/array in the tool call, not a JSON.stringify'd string.`)
+  }
+}
+A = A || {}
 const REPO = '/home/user/wikiclaws'
 const SYSTEMS = {
   s1: { name: 'Social Energy Economy', doc: REPO + '/book/02_social_energy.md' },
@@ -19,10 +29,22 @@ const SYSTEMS = {
   s3: { name: 'Emotional and Social Disposition', doc: REPO + '/book/04_emotional_social_disposition.md' },
   s4: { name: 'Objectives', doc: REPO + '/book/05_objectives.md' },
 }
+if (A.system && A.system !== 'all' && !SYSTEMS[A.system]) {
+  throw new Error(`book-harness: args.system "${A.system}" is not one of s1|s2|s3|s4|all.`)
+}
 const chosen = (A.system && A.system !== 'all') ? [A.system] : ['s1', 's2', 's3', 's4']
+const VALID_TASKS = ['research', 'develop', 'write', 'full']
+if (A.task && !VALID_TASKS.includes(A.task)) {
+  throw new Error(`book-harness: args.task "${A.task}" is not one of ${VALID_TASKS.join('|')}.`)
+}
 const task = A.task || 'research'
 const claims = Array.isArray(A.claims) ? A.claims : []
 const focus = A.focus || ''
+
+// Surface the resolved scope immediately, before any agent spends a token, so a wrong-scope run
+// (all systems when one was intended, wrong task tier) is visible within seconds via Monitor/
+// /workflows instead of only at completion.
+log(`book-harness resolved scope: system(s)=${chosen.join(',')} task=${task} claims=${claims.length ? claims.length + ' supplied' : 'none supplied (will scan)'} focus=${focus ? 'set' : 'none'}`)
 
 // ---- Context discipline helpers ----
 // Every agent gets ONE bounded job. Anything inlined into a prompt is capped; anything long lives
