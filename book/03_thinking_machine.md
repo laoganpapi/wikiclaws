@@ -38,24 +38,33 @@ about where reasoning draws its raw material, not about where emotional attentio
 **Axis B. Method: Formal versus Informal.** In the moment, does a person put a thought into a
 communicable structure, language and logic that could be handed to someone else, or leave it as
 visualization, feel, or simulation that stays unarticulated? This is a real-time preference for
-externalizing, not a measure of how grounded the thought is. Formal knowledge is often the
-foundation intuition is built from: a chess player's snap recognition of the right move, a
-clinician's sense that something is off, a craftsperson's feel for a material are commonly
-compiled formal training, rehearsed until it no longer needs to be spelled out. Landing on the
-informal pole says nothing about whether that foundation exists; it says only that, on this
-occasion, the person did not re-derive or narrate it. Two people with the same depth of formal
-grounding can land on opposite poles, because the axis records whether a person chose to show the
-work on this occasion, not whether the work was ever done. Kahneman and Klein's later account of
-when intuition can be trusted makes the same point from the other direction: expert intuition is
-reliable exactly when it rests on extensive formal or deliberate practice, and unreliable when it
-does not; informal is not the absence of formal, it is frequently formal in a compiled state.
+externalizing, not a measure of how grounded the thought is or how it got that way.
+
+What grounds informal judgment is accumulated experience, retained over time: a memory substrate
+that this framework assumes and does not measure, for the same reason it measures no other
+capability. Formal training is one route to building that substrate, and an efficient one, because
+formalized knowledge is abstracted and tends to transfer across domains. It is not the only route.
+Experience without formalization builds the same kind of grounded intuition: a craftsperson who
+never took a class, an autodidact, someone who learned a trade the hard way through years of
+trial and correction, can arrive at intuition as reliable as anyone's, carried in a looser,
+never-articulated framework rather than a formal one. Kahneman and Klein's account of when
+intuition can be trusted turns on exactly this, extensive experience with real feedback, not on
+whether that experience was formally structured. A chess player's snap recognition of the right
+move, a clinician's sense that something is off, a firefighter's read of a structure about to
+fail, can each be built by formal study or by years of unstructured exposure, and the two can be
+equally sound. Landing on the informal pole says nothing about whether a foundation exists or
+which route built it; it says only that, on this occasion, the person did not put it into words.
+Two people with the same depth of grounding, formally built or not, can land on opposite poles,
+because the axis records whether a person chose to show the work on this occasion, not whether the
+work was ever done or how.
 
 Together the axes define a plane with four corners, which the assessment can name back to a person
 in plain terms:
 
 - **Internal and Formal:** building from first principles; deductive theory, spelled out.
 - **Internal and Informal:** intuition, imagination, private simulation from one's own models, left
-  unspoken, often the compiled residue of prior formal training rather than its absence.
+  unspoken, grounded in experience however it was accumulated, formal study or years of exposure,
+  not its absence.
 - **External and Formal:** empirical and statistical structure; a data reading spelled out.
 - **External and Informal:** situational reading; a practical, in-the-moment sense of the world,
   left unspoken.
@@ -142,11 +151,12 @@ diverse.
 - Does the Internal-External cognitive-sourcing axis separate cleanly from the emotional and social
   attention of System 3?
 - How stable are the two graphs over time, given that personality is not static?
-- **Formal foundation transfers across domains; the instrument reads one domain at a time.**
-  Abstracted formal knowledge from one field can seed intuition in an unrelated one: a habit of
-  rigorous thinking, once built, tends to generalize past the domain where it was formed. The Arena
-  presents specific scenario domains, and a person's informal, unarticulated reading in one of them
-  may be compiled formal training imported from somewhere else entirely. The instrument cannot
-  currently distinguish a person with no formal foundation anywhere from a person whose foundation
-  was built elsewhere and now surfaces as domain-general informal judgment; both would read
+- **Experience transfers across domains unevenly; the instrument reads one domain at a time.**
+  Grounding built in one field can seed intuition in an unrelated one, and formalized knowledge
+  tends to transfer more readily than raw, never-formalized experience, since abstraction is what
+  makes a pattern portable. The Arena presents specific scenario domains, and a person's informal,
+  unarticulated reading in one of them may be grounding imported from somewhere else entirely,
+  formally built or not. The instrument cannot currently distinguish a person with no grounding
+  anywhere from a person whose grounding was built elsewhere and now surfaces as domain-general
+  informal judgment; both would read
   identically on this axis. Whether that distinction is worth pursuing, and how, is open.

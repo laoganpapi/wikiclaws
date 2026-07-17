@@ -37,8 +37,9 @@ clears a reliability threshold: clean or silent.
 
 Two axes, each signed: **Cognitive sourcing** runs External (−) ↔ Internal (+); **Method** runs
 Informal (−) ↔ Formal (+), a real-time preference to externalize a thought into communicable
-structure, not a measure of whether the thought is grounded (informal expression is frequently
-compiled formal training, not its absence). A person is observed under two elicited conditions,
+structure, not a measure of whether the thought is grounded (informal expression draws on
+accumulated experience, formally built or not, rather than the absence of grounding). A person is
+observed under two elicited conditions,
 the **fast** mode and the **slow** mode. For each mode we record a **baseline** (position at low
 stakes) and a **stake-slope** (how the position moves per increase in stakes). We measure
 reliance, never strength.
