@@ -3,8 +3,8 @@
 ## The phenomenon
 
 This is the central system of the theory and the one the assessment is built around. It governs
-how a person thinks: where they source their thinking, how rigorously they form it, and how that
-reliance shifts as the stakes of a task rise.
+how a person thinks: where they source their thinking, how much they externalize it into structure
+in the moment, and how that reliance shifts as the stakes of a task rise.
 
 That a person is not a fixed point, but a set of if-then responses that shift with the situation,
 is not our discovery. Social-cognitive personality research established it decades ago: Mischel
@@ -35,19 +35,30 @@ the world? We frame this as theory versus evidence. We call it cognitive sourcin
 boundary against the emotional and social attention measured in the next system; this axis is
 about where reasoning draws its raw material, not about where emotional attention points.
 
-**Axis B. Method: Formal versus Informal.** Does a person commit a thought to a rigorous,
-dimension-reductive framework expressed in language and logic, or work informally, in
-visualization and mental simulation not reduced to communicable form? Informal thinking spans the
-simple and the complex; what makes it informal is that it is not made rigorous and not made
-transmissible.
+**Axis B. Method: Formal versus Informal.** In the moment, does a person put a thought into a
+communicable structure, language and logic that could be handed to someone else, or leave it as
+visualization, feel, or simulation that stays unarticulated? This is a real-time preference for
+externalizing, not a measure of how grounded the thought is. Formal knowledge is often the
+foundation intuition is built from: a chess player's snap recognition of the right move, a
+clinician's sense that something is off, a craftsperson's feel for a material are commonly
+compiled formal training, rehearsed until it no longer needs to be spelled out. Landing on the
+informal pole says nothing about whether that foundation exists; it says only that, on this
+occasion, the person did not re-derive or narrate it. Two people with the same depth of formal
+grounding can land on opposite poles, because the axis records whether a person chose to show the
+work on this occasion, not whether the work was ever done. Kahneman and Klein's later account of
+when intuition can be trusted makes the same point from the other direction: expert intuition is
+reliable exactly when it rests on extensive formal or deliberate practice, and unreliable when it
+does not; informal is not the absence of formal, it is frequently formal in a compiled state.
 
 Together the axes define a plane with four corners, which the assessment can name back to a person
 in plain terms:
 
-- **Internal and Formal:** building from first principles; deductive theory.
-- **Internal and Informal:** intuition, imagination, private simulation from one's own models.
-- **External and Formal:** empirical and statistical rigor; structured reading of data.
-- **External and Informal:** situational reading; practical, in-the-moment sense of the world.
+- **Internal and Formal:** building from first principles; deductive theory, spelled out.
+- **Internal and Informal:** intuition, imagination, private simulation from one's own models, left
+  unspoken, often the compiled residue of prior formal training rather than its absence.
+- **External and Formal:** empirical and statistical structure; a data reading spelled out.
+- **External and Informal:** situational reading; a practical, in-the-moment sense of the world,
+  left unspoken.
 
 A person does not own a corner. A person leans somewhere in this plane, and the lean moves.
 
@@ -99,9 +110,9 @@ slow, and how both leanings travel as the cost of the task climbs. Some characte
 The instrument presents scenarios and varies the stakes within them, raising what the person
 stands to gain or lose. It elicits responses under both conditions: a fast condition that demands a
 quick answer, and a slow condition that invites deliberation. From each response, an AI codes two
-things that are otherwise hard to score at scale: whether the response is formal (does it build a
-rigorous, communicable framework?) or informal (does it rest on simulation and feel?), and whether
-it is internal (does it argue from the person's own model?) or external (does it seek, cite, or
+things that are otherwise hard to score at scale: whether the response is formal (does it build an
+explicit, communicable framework?) or informal (does it rest on unarticulated simulation and
+feel?), and whether it is internal (does it argue from the person's own model?) or external (does it seek, cite, or
 defer to data?). Plotting those codes against stakes, for each mode, produces the two graphs. The
 coding must be auditable and checked for bias, since coding free text by writing quality rather
 than by thinking style is a real failure mode, and the population is young and linguistically
@@ -131,3 +142,11 @@ diverse.
 - Does the Internal-External cognitive-sourcing axis separate cleanly from the emotional and social
   attention of System 3?
 - How stable are the two graphs over time, given that personality is not static?
+- **Formal foundation transfers across domains; the instrument reads one domain at a time.**
+  Abstracted formal knowledge from one field can seed intuition in an unrelated one: a habit of
+  rigorous thinking, once built, tends to generalize past the domain where it was formed. The Arena
+  presents specific scenario domains, and a person's informal, unarticulated reading in one of them
+  may be compiled formal training imported from somewhere else entirely. The instrument cannot
+  currently distinguish a person with no formal foundation anywhere from a person whose foundation
+  was built elsewhere and now surfaces as domain-general informal judgment; both would read
+  identically on this axis. Whether that distinction is worth pursuing, and how, is open.

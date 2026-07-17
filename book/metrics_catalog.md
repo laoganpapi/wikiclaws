@@ -36,21 +36,23 @@ clears a reliability threshold: clean or silent.
 ## System 2. The Thinking Machine
 
 Two axes, each signed: **Cognitive sourcing** runs External (−) ↔ Internal (+); **Method** runs
-Informal (−) ↔ Formal (+). A person is observed under two elicited conditions, the **fast** mode
-and the **slow** mode. For each mode we record a **baseline** (position at low stakes) and a
-**stake-slope** (how the position moves per increase in stakes). We measure reliance, never
-strength.
+Informal (−) ↔ Formal (+), a real-time preference to externalize a thought into communicable
+structure, not a measure of whether the thought is grounded (informal expression is frequently
+compiled formal training, not its absence). A person is observed under two elicited conditions,
+the **fast** mode and the **slow** mode. For each mode we record a **baseline** (position at low
+stakes) and a **stake-slope** (how the position moves per increase in stakes). We measure
+reliance, never strength.
 
 | Metric | What it captures | Scale | Output | Observable via |
 |---|---|---|---|---|
 | Fast sourcing baseline | Where fast thinking sources, at low stakes | External ↔ Internal | Signed position | Revealed |
 | Fast sourcing slope | How fast-mode sourcing shifts as stakes rise | Toward External ↔ Toward Internal | Signed slope | Revealed |
-| Fast method baseline | How rigorous fast thinking is, at low stakes | Informal ↔ Formal | Signed position | Revealed |
-| Fast method slope | How fast-mode method shifts as stakes rise | Toward Informal ↔ Toward Formal | Signed slope | Revealed |
+| Fast method baseline | How much fast thinking is externalized into structure, at low stakes | Informal ↔ Formal | Signed position | Revealed |
+| Fast method slope | How fast-mode externalization shifts as stakes rise | Toward Informal ↔ Toward Formal | Signed slope | Revealed |
 | Slow sourcing baseline | Where slow thinking sources, at low stakes | External ↔ Internal | Signed position | Revealed |
 | Slow sourcing slope | How slow-mode sourcing shifts as stakes rise | Toward External ↔ Toward Internal | Signed slope | Revealed |
-| Slow method baseline | How rigorous slow thinking is, at low stakes | Informal ↔ Formal | Signed position | Revealed |
-| Slow method slope | How slow-mode method shifts as stakes rise | Toward Informal ↔ Toward Formal | Signed slope | Revealed |
+| Slow method baseline | How much slow thinking is externalized into structure, at low stakes | Informal ↔ Formal | Signed position | Revealed |
+| Slow method slope | How slow-mode externalization shifts as stakes rise | Toward Informal ↔ Toward Formal | Signed slope | Revealed |
 | Mode divergence | How different fast and slow reliance are | Same in both ↔ Two different thinkers | Distance | Revealed |
 | Total stake-sensitivity | Total migration across the plane as stakes rise | Stays put ↔ Wide-ranging | Magnitude | Revealed |
 | Deliberation default | Which mode a person reaches for when free to choose | Gut default ↔ Deliberate default | Scale | Either |

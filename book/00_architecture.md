@@ -198,8 +198,10 @@ Candidates not yet adopted are logged in open questions.
 - **System 2, The thinking machine.** A plane defined by two axes of reliance, observed under two
   modes, driven by a modulator. Axis A, cognitive sourcing: Internal versus External (reasoning
   from one's own theory and models versus from empirical data and the world). Axis B, method:
-  Formal versus Informal (rigorous, communicable frameworks versus non-rigorous thought such as
-  visualization and simulation). Modes: the Fast system and the Slow system (Kahneman), elicited as
+  Formal versus Informal (put into an explicit, communicable structure in the moment versus left
+  as unarticulated simulation and feel; not a claim about whether the thought is grounded, since
+  informal expression is frequently compiled formal training rather than its absence). Modes: the
+  Fast system and the Slow system (Kahneman), elicited as
   conditions, not scored for strength. Modulator: stakes. The output is two graphs, one per mode,
   each plotting the person's weight on the two axes as stakes rise. We measure reliance, not
   strength.
@@ -260,6 +262,13 @@ independence.
    personality (persons as if-then trajectories) is a decades-old result. The framework must not
    present it as new; the honest novelty is the one-session, auditable parameterization and the
    AI-coded instrument, not the underlying idea. Chapter 3 is written to concede this up front.
+7. **Formal and informal are not opposed.** An earlier draft implied informal thinking is
+   unrigorous, which is false: expert intuition is frequently compiled formal training, and a
+   reviewer will ask why the axis is bipolar at all if the two are not alternatives. Chapter 3 now
+   states plainly that the axis measures a real-time preference to externalize, not whether the
+   underlying thought is grounded, and credits Kahneman and Klein's account of when intuition is
+   trustworthy. The open transfer question (formal foundation built in one domain surfacing as
+   informal judgment in another) is logged in Chapter 3 rather than resolved.
 
 ## Internal: novelty watch (NOT for the manuscript)
 
