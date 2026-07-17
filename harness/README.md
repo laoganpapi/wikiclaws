@@ -62,6 +62,30 @@ Every agent gets one bounded job, and nothing unbounded is ever inlined into a p
 - **Hard caps.** Any text inlined into a prompt passes through a truncation helper (`cap`), so a
   runaway agent output cannot flood the next agent's context.
 
+## Token policy
+
+Each agent runs on the cheapest model that can do its one job; nothing inherits an expensive
+session model (Fable/Opus) by accident. The routing lives in the `MODELS`/`EFFORT` constants at
+the top of the script:
+
+| Agent | Model | Effort | Why |
+|---|---|---|---|
+| Claim scanner | haiku | low | extraction against a rubric — no judgment |
+| Literature checkers | sonnet | medium | search + reading comprehension |
+| Novelty watcher | sonnet | medium | same profile as the checkers |
+| Citation verifiers | haiku | low | existence lookups — mechanical |
+| Framework constructor | *inherits session model* | high | keep/revise/add/retire calls — the one step worth the cost |
+| Writer | sonnet | medium | prose to a fixed template, decisions already made |
+| Canon keeper (per system) | sonnet | low | checklist enforcement |
+| Red team (per system) | sonnet | high | adversarial judgment, but bounded to one digest |
+| Cross-system canon | sonnet | high | spans systems, still digest-only |
+| Impact assessors | sonnet | low | change-to-edit mapping against one artifact |
+| Editor-in-chief | sonnet | high | consolidation of already-compressed digests |
+
+The constructor only runs on `develop`/`full`, so a `research` run never touches the session model
+at all. Override per run via args: `models: {construct: "sonnet"}` to make even a full run
+frugal, or `effort: {redteam: "max"}` to push harder on one seat.
+
 ## Usage
 
 Invoke via the Workflow tool with `scriptPath: harness/book_harness.js` and `args`:

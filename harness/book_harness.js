@@ -1,7 +1,7 @@
 export const meta = {
   name: 'book-harness',
   description: 'Per-system research, construction, and writing harness for the personality framework, with canon, citation, and red-team guards',
-  whenToUse: 'Run with args {system, task, claims, focus}. system: s1|s2|s3|s4|all. task: research|develop|write|full. claims: array of claim strings to check (research/full). focus: free-text steer for the constructor/writer.',
+  whenToUse: 'Run with args {system, task, claims, focus, models, effort}. system: s1|s2|s3|s4|all. task: research|develop|write|full. claims: array of claim strings to check (research/full). focus: free-text steer for the constructor/writer. models/effort: optional per-seat overrides of the token-policy routing (e.g. models: {construct: "sonnet"}).',
   phases: [
     { title: 'Literature', detail: 'claim scan, supporting and contradicting checks in small batches, citation verification' },
     { title: 'Construct', detail: 'framework proposals reconciled with the evidence, written to proposals/' },
@@ -38,6 +38,29 @@ const chunk = (arr, n) => {
 }
 const CLAIMS_PER_CHECKER = 3   // a literature checker examines at most this many claims
 const CITES_PER_VERIFIER = 8   // a citation verifier examines at most this many citations
+
+// ---- Token policy ----
+// Route each agent to the cheapest model that can do its one job; escalate only where the job is
+// genuine multi-step judgment. Omitted model = inherit the session model (reserved for the
+// constructor alone). Override per run with args.models, e.g. {construct: 'sonnet'}.
+const MODELS = {
+  scan: 'haiku',      // extraction against a rubric — no judgment
+  lit: 'sonnet',      // literature search + reading comprehension
+  novelty: 'sonnet',  // same profile as lit
+  cite: 'haiku',      // existence lookups — mechanical
+  construct: undefined, // keep/revise/add/retire calls — the ONE place the session model earns its cost
+  write: 'sonnet',    // prose to a fixed template with the proposal already decided
+  guard: 'sonnet',    // canon checklist + red team + cross-system pass
+  impact: 'sonnet',   // change-to-edit mapping against one artifact
+  editor: 'sonnet',   // consolidation of already-compressed digests
+  ...(A.models || {}),
+}
+const EFFORT = {
+  scan: 'low', lit: 'medium', novelty: 'medium', cite: 'low',
+  construct: 'high', write: 'medium', canon: 'low', redteam: 'high',
+  cross: 'high', impact: 'low', editor: 'high',
+  ...(A.effort || {}),
+}
 
 const CANON = `Read ${REPO}/book/00_architecture.md FIRST. Its axioms bind every output you produce:
 preference not ability (three lanes: preference / capability / pathology — this framework is preference only);
@@ -141,7 +164,7 @@ const packages = await pipeline(
     if (!sysClaims.length) {
       const scanned = await agent(
         CANON + `Your system: ${S.name}. You are the CLAIM SCANNER. Read the chapter at ${S.doc} and extract the 3-6 load-bearing empirical claims it makes — the ones the framework fails without. Each claim one self-contained sentence, checkable against research literature. Do NOT check them; extraction only.`,
-        { label: `claims:${sys}`, phase: 'Literature', schema: CLAIMS_SCHEMA, effort: 'low' })
+        { label: `claims:${sys}`, phase: 'Literature', schema: CLAIMS_SCHEMA, model: MODELS.scan, effort: EFFORT.scan })
       sysClaims = scanned ? scanned.claims : []
     }
     if (!sysClaims.length) { log(`${sys}: no claims to check, package dropped`); return null }
@@ -151,15 +174,15 @@ const packages = await pipeline(
     const litThunks = []
     for (let i = 0; i < batches.length; i++) {
       const b = batches[i]
-      litThunks.push(() => agent(checkerBase(b) + 'You are the SUPPORTING-CASE literature checker. Search the actual research literature (use web search) for the strongest evidence FOR each claim above. Report only what named sources actually show.', { label: `lit-support:${sys}:b${i + 1}`, phase: 'Literature', schema: LIT_SCHEMA }))
+      litThunks.push(() => agent(checkerBase(b) + 'You are the SUPPORTING-CASE literature checker. Search the actual research literature (use web search) for the strongest evidence FOR each claim above. Report only what named sources actually show.', { label: `lit-support:${sys}:b${i + 1}`, phase: 'Literature', schema: LIT_SCHEMA, model: MODELS.lit, effort: EFFORT.lit }))
     }
     for (let i = 0; i < batches.length; i++) {
       const b = batches[i]
-      litThunks.push(() => agent(checkerBase(b) + 'You are the CONTRADICTING-CASE literature checker. Search the actual research literature (use web search) for the strongest evidence AGAINST each claim above, boundary conditions, and failed replications. Do not soften. Report only what named sources actually show.', { label: `lit-contra:${sys}:b${i + 1}`, phase: 'Literature', schema: LIT_SCHEMA }))
+      litThunks.push(() => agent(checkerBase(b) + 'You are the CONTRADICTING-CASE literature checker. Search the actual research literature (use web search) for the strongest evidence AGAINST each claim above, boundary conditions, and failed replications. Do not soften. Report only what named sources actually show.', { label: `lit-contra:${sys}:b${i + 1}`, phase: 'Literature', schema: LIT_SCHEMA, model: MODELS.lit, effort: EFFORT.lit }))
     }
     litThunks.push(() => agent(
       CANON + `Your system: ${S.name}. You are the NOVELTY WATCHER. Read the chapter at ${S.doc} and, with web search, flag any construct in it that risks relabeling an established construct in the literature (name the established construct and tradition). This is your ONLY job; do not evaluate the claims.`,
-      { label: `novelty:${sys}`, phase: 'Literature', schema: NOVELTY_SCHEMA }))
+      { label: `novelty:${sys}`, phase: 'Literature', schema: NOVELTY_SCHEMA, model: MODELS.novelty, effort: EFFORT.novelty }))
     const litResults = await parallel(litThunks)
     const nB = batches.length
     const supporting = litResults.slice(0, nB).filter(Boolean).flatMap(r => r.verdicts)
@@ -177,7 +200,7 @@ const packages = await pipeline(
     const citePairs = Object.keys(useMap).map(c => ({ citation: c, usedFor: useMap[c] }))
     const citeResults = await parallel(chunk(citePairs, CITES_PER_VERIFIER).map((batch, i) => () => agent(
       `You are the CITATION VERIFIER. For each citation below, verify with web search that the work exists (author, year, venue) and that it supports the use recorded next to it. "Stretched" means real paper, claim pushed past what it shows. Verify ONLY these pairs.\nPAIRS: ${JSON.stringify(batch)}`,
-      { label: `cite-verify:${sys}:b${i + 1}`, phase: 'Literature', schema: CITE_SCHEMA })))
+      { label: `cite-verify:${sys}:b${i + 1}`, phase: 'Literature', schema: CITE_SCHEMA, model: MODELS.cite, effort: EFFORT.cite })))
     const citecheck = { checks: citeResults.filter(Boolean).flatMap(r => r.checks) }
 
     // The digest is the ONLY form of this evidence that downstream prompts ever inline.
@@ -197,7 +220,7 @@ const packages = await pipeline(
     const out = `${REPO}/book/proposals/${sys}_construction.md`
     const summary = await agent(
       CANON + STYLE + `Your system: ${pkg.S.name} (chapter at ${pkg.S.doc} — read it). ${focus ? 'Author focus: ' + focus + '. ' : ''}You are the FRAMEWORK CONSTRUCTOR. Given the verified evidence digest below, propose how this system's constructs should change: keep / revise / add / retire, each with the evidence that motivates it and the axiom it must respect. Present options with a preliminary lean where a call is genuinely open; decide plainly where evidence is one-sided. Write the FULL proposal as markdown to ${out} using the Write tool (create the directory if needed). Return ONLY a summary of at most 15 lines.\n\nEVIDENCE DIGEST: ${JSON.stringify(pkg.digest)}`,
-      { label: `construct:${sys}`, phase: 'Construct', effort: 'high' })
+      { label: `construct:${sys}`, phase: 'Construct', model: MODELS.construct, effort: EFFORT.construct })
     return { ...pkg, constructionSummary: cap(summary, 2000), constructionPath: out }
   },
   // Stage 3: writer (write/full). Gets file PATHS (chapter + construction proposal), reads them
@@ -207,7 +230,7 @@ const packages = await pipeline(
     const out = `${REPO}/book/proposals/${sys}_draft.md`
     await agent(
       CANON + STYLE + `Your system: ${pkg.S.name}. You are the WRITER. Read the current chapter at ${pkg.S.doc}${pkg.constructionPath ? ' and the constructor proposal at ' + pkg.constructionPath : ''}, then draft the revised chapter text. Write the complete draft to ${out} using the Write tool (create the directory if needed). NEVER edit ${pkg.S.doc} itself — proposals only, the author decides what merges. Keep the chapter template: phenomenon, measures, decision rule, dynamic layer, illustrations, open questions. Return a 5-line summary of what changed and why.`,
-      { label: `write:${sys}`, phase: 'Write' })
+      { label: `write:${sys}`, phase: 'Write', model: MODELS.write, effort: EFFORT.write })
     return { ...pkg, proposalPath: out }
   },
   // Stage 4a: per-system guards. Each canon keeper / red team pair sees ONE system's digest plus
@@ -217,8 +240,8 @@ const packages = await pipeline(
     const fileNote = files.length ? `Also read and check these output files: ${files.join(', ')}. ` : ''
     const guardBase = CANON + `Scope: ONLY the system "${pkg.S.name}" (chapter at ${pkg.S.doc}). ${fileNote}`
     const [canon, redteam] = await parallel([
-      () => agent(guardBase + `You are the CANON KEEPER. Check this system's evidence digest and output files against the axioms and word bans. Report violations only.\n\nDIGEST: ${JSON.stringify(pkg.digest)}`, { label: `guard-canon:${sys}`, phase: 'Guard', schema: GUARD_SCHEMA }),
-      () => agent(guardBase + `You are the RED TEAM. Attack this system's evidence digest and output files as a hostile psychometrician and a hostile domain expert would: weakest evidence, circular constructs, claims outrunning citations, anything a real reviewer would land. Report the hits that would actually land, as violations.\n\nDIGEST: ${JSON.stringify(pkg.digest)}`, { label: `guard-redteam:${sys}`, phase: 'Guard', schema: GUARD_SCHEMA }),
+      () => agent(guardBase + `You are the CANON KEEPER. Check this system's evidence digest and output files against the axioms and word bans. Report violations only.\n\nDIGEST: ${JSON.stringify(pkg.digest)}`, { label: `guard-canon:${sys}`, phase: 'Guard', schema: GUARD_SCHEMA, model: MODELS.guard, effort: EFFORT.canon }),
+      () => agent(guardBase + `You are the RED TEAM. Attack this system's evidence digest and output files as a hostile psychometrician and a hostile domain expert would: weakest evidence, circular constructs, claims outrunning citations, anything a real reviewer would land. Report the hits that would actually land, as violations.\n\nDIGEST: ${JSON.stringify(pkg.digest)}`, { label: `guard-redteam:${sys}`, phase: 'Guard', schema: GUARD_SCHEMA, model: MODELS.guard, effort: EFFORT.redteam }),
     ])
     return { ...pkg, canon: canon || { violations: [], clean: true }, redteam: redteam || { violations: [], clean: true } }
   }
@@ -234,7 +257,7 @@ const allDigests = done.map(p => p.digest)
 // Cross-system canon pass: only boundaries between systems, only when more than one system ran.
 const crossCanon = done.length > 1 ? await agent(
   CANON + `You are the CROSS-SYSTEM CANON KEEPER. Per-system checks are already done — do NOT repeat them. Check ONLY defects that span systems: boundary bleed (S2 cognitive sourcing vs S3 attention; S3 reactivity as moderator of S2 stake-slopes), one construct measured twice under two names, contradictory required changes between systems, and any cross-system claim the digests below jointly break.\n\nDIGESTS: ${JSON.stringify(allDigests)}`,
-  { label: 'guard-cross', phase: 'Guard', schema: GUARD_SCHEMA }) : { violations: [], clean: true }
+  { label: 'guard-cross', phase: 'Guard', schema: GUARD_SCHEMA, model: MODELS.guard, effort: EFFORT.cross }) : { violations: [], clean: true }
 
 // Instrument impact: one agent PER ARTIFACT (catalog / design doc / app), each reading only its
 // own file and receiving only the compressed change list — never all three files in one context.
@@ -249,7 +272,7 @@ const ARTIFACTS = [
 ]
 const impacts = changeList.length ? await parallel(ARTIFACTS.map(a => () => agent(
   CANON + `You are the INSTRUMENT IMPACT ASSESSOR for ${a.desc} at ${a.file}. For each proposed framework change below, name exactly what must change in THIS artifact (and nothing else) so book and test stay consistent. Read the artifact. Report each needed change as a violation entry (where=location in the file, axiom=consistency, detail=what is now inconsistent, fix=the change). If a change does not touch this artifact, skip it.\n\nPROPOSED CHANGES: ${JSON.stringify(changeList)}`,
-  { label: `guard-impact:${a.key}`, phase: 'Guard', schema: GUARD_SCHEMA }))) : []
+  { label: `guard-impact:${a.key}`, phase: 'Guard', schema: GUARD_SCHEMA, model: MODELS.impact, effort: EFFORT.impact }))) : []
 const impact = { violations: impacts.filter(Boolean).flatMap(g => g.violations), clean: impacts.filter(Boolean).every(g => g.clean) }
 
 // ---- Phase 5: editor-in-chief. Consolidates DIGESTS and guard verdicts, reading proposal files
@@ -264,7 +287,7 @@ const editorInput = done.map(p => ({
 }))
 const memo = await agent(
   STYLE + `You are the EDITOR-IN-CHIEF. Consolidate the harness run into one markdown memo for the authors: 1) per system, the claim verdicts with any flagged citations; 2) the construction proposals worth the authors' attention (read the constructionPath files for detail where the summary is thin); 3) guard findings (per-system canon and red team, cross-system, instrument impact), deduplicated, ordered by consequence; 4) proposal files written, if any, and what awaits author decision. Plain English. Return ONLY the markdown.\n\nSYSTEMS: ${JSON.stringify(editorInput)}\nCROSS-SYSTEM: ${JSON.stringify(crossCanon.violations)}\nINSTRUMENT IMPACT: ${JSON.stringify(impact.violations)}`,
-  { label: 'editor-in-chief', phase: 'Synthesize', effort: 'high' })
+  { label: 'editor-in-chief', phase: 'Synthesize', model: MODELS.editor, effort: EFFORT.editor })
 
 const guardViolations = done.reduce((n, p) => n + p.canon.violations.length + p.redteam.violations.length, 0)
   + crossCanon.violations.length + impact.violations.length
