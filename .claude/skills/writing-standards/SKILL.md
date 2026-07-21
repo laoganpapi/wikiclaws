@@ -1,11 +1,11 @@
 ---
 name: writing-standards
-description: Alex's prose and document conventions. Load before drafting any prose deliverable — any answer delivered as a file, or any in-chat prose answer over 300 words. Covers the full banned vocabulary list, tone, and document formatting (.docx, .md, filenames).
+description: Alex's prose and document conventions. Load before drafting any prose deliverable — any answer delivered as a file, or any in-chat prose answer over 300 words. Covers the full banned vocabulary list, tone, document formatting (.docx, .md, filenames), and the required structure for decision documents and handoffs.
 ---
 
 # Writing standards
 
-Deployed copy of master §2 and §7 (`master/claude-master-v7.md`, home repo) — one of its two sanctioned copies. Never edit here; amend the master and regenerate (master §10).
+Deployed copy of master §2, §7, and §11 (`master/claude-master-v7.md`, home repo) — one of its two sanctioned copies. Never edit here; amend the master and regenerate (master §10).
 
 ## Banned vocabulary (master §2)
 
@@ -91,6 +91,19 @@ furthermore, moreover, additionally — restructure or just start the sentence. 
 - "the key takeaway is"
 - em-dash contrast tic: repeated "X — not Y — Z" interjections and "It's not X — it's Y" sentences; at most one em-dash aside per response, or per ~500 words in a document
 - hedge-opener padding: "generally speaking", "it is important to consider", "while it is true that" — commit to the claim or cut it
+
+## Decision documents and handoffs (master §11)
+
+Applies to any deliverable whose readers act on the decisions it records — specs, story documents, plans, briefs handed to agents or collaborators. Missing information here is a kinds problem, not a volume problem: a longer document in the same style fixes nothing.
+
+1. Carry the why. Every recorded decision states, in 1–2 sentences, what was rejected and what the decision protects — rationale is what lets a reader resolve micro-decisions the document does not cover. Highest-value field in the document.
+2. Observable done. Completion criteria are statements an outside checker could verify — what a finished version demonstrably does, not what exists. If no failing test could be written against a criterion, rewrite it until one could.
+3. Mark epistemic status. Decided ("ratified — do not relitigate") and undecided ("open — ask before building") are labeled explicitly. An Open list is mandatory so readers ask instead of invent.
+4. States and events. Anything with a lifecycle gets its states, transition triggers, and the event recorded per transition enumerated. When downstream work depends on an event log from day one, this cannot be deferred.
+5. Own knowledge only. Never fill downstream gaps (data models, API shapes, implementation) with guesses — a guess in a handoff gets read as a decision. Gaps go to the Open list.
+6. Edge rulings. Record the awkward cases actually discussed and how each was ruled — cheap now, unrecoverable later.
+7. Per-unit format when producing a handoff: Decision / Why / Done when (2–5 observable statements) / States & events / Edge rulings / Open / Out of scope.
+8. Ratification loop. Reader-side drafts of done-when and states-and-events come back for yes/no ratification — an interview loop, not a writing assignment.
 
 ## Formatting (master §7)
 
