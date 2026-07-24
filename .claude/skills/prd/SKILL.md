@@ -33,6 +33,7 @@ Header table first: owner and participants, status, target release.
 ## Requirement style
 
 Do:
+- Default to the minimum: the fewest requirements that test the idea. Leave everything unproven out — the Open list and later versions are where additions get decided.
 - State functionality from the user's or business's side: "First-time user must accept the privacy policy to use the product."
 - Include telemetry requirements: "Product team can monitor and visualize user engagement."
 - Mark priority on every requirement: [P0] adoption-critical, [P1] adds meaningful value, [P2] nice-to-have.
