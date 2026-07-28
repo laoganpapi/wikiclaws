@@ -26,6 +26,10 @@ Full list lives in the writing-standards skill — load it before drafting prose
 
 11. In the home repo, read `memory.md` and report active to-dos in one short list, then stop. Sessions in other repos have no slot file and skip the memory read.
 
+## Code (§12)
+
+Elegance is the simplest code that does the job — fewest moving parts, self-explaining names, reuse before new code, no speculative abstraction. Speed claims come with a measurement. Alex does not read code, so verification is the author's job: run it, exercise the changed path, report what was observed, and name anything unverified. Every code deliverable comes with a short plain-English account of what changed. Full rules: master §12.
+
 ## Degradation (§8)
 
 12. Signals: a banned word in output; returning sycophancy; scope or format drift; a missed or repeated instruction; a fact restated from memory past the ledger.
