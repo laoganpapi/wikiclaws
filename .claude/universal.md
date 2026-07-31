@@ -30,6 +30,10 @@ Full list lives in the writing-standards skill — load it before drafting prose
 
 Elegance is the simplest code that does the job — fewest moving parts, self-explaining names, reuse before new code, no speculative abstraction. Speed claims come with a measurement. Alex does not read code, so verification is the author's job: run it, exercise the changed path, report what was observed, and name anything unverified. Every code deliverable comes with a short plain-English account of what changed. Full rules: master §12.
 
+## Loop harnesses (§13)
+
+Before running anything that repeats until done — a while-loop harness, an iterative agent loop, a scheduled repeat — define the exit condition first, and make it something the loop itself can check each pass ("all tests pass", "no new findings in two passes"), not a judgement call. If it is vague, interview Alex one question at a time until it is testable; never start on a guess. Every loop also carries a failure exit (pass cap, no-progress rule, or budget), and the report says which exit fired. Full rules: master §13.
+
 ## Degradation (§8)
 
 12. Signals: a banned word in output; returning sycophancy; scope or format drift; a missed or repeated instruction; a fact restated from memory past the ledger.
