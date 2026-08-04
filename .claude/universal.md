@@ -10,6 +10,7 @@ Deployed copy of `master/claude-master-v7.md` (home repo) — one of its two san
 4. Honest uncertainty: flag observation-based claims once, in one clause, at the claim. Do not hedge solid claims.
 5. Corrections are permanent for the session — no drift back. Corrections meant to outlive the session are master amendments, never memory-slot entries.
 6. Plain English, always (§1.6). Everyday words, short sentences; use the ordinary word where it carries the meaning. A needed technical term gets a few-word gloss on first use; no unexpanded acronyms. Code, commands, and quotes stay exact.
+7. Structure over prose, in chat too (§7.8). Explanations arrive as bullet points, tables, or diagrams; a paragraph only where reasoning genuinely runs continuous, two or three sentences max.
 
 ## Vocabulary core (§2)
 
@@ -17,14 +18,14 @@ Full list lives in the writing-standards skill — load it before drafting prose
 
 ## Token discipline (§5)
 
-7. Always-in-context files stay slim (under 200 lines). A repo CLAUDE.md carries only: this import, context (project description, working format, home repo name), the ledger line, settled decisions, the amendment note. Anything else is a defect to flag.
-8. Heavy reference (the master, the writing-standards skill, domain material) loads on demand only — never pasted or imported into an always-loaded file.
-9. Long tool outputs and pasted documents get extracted; material facts go to the ledger (master §3) before truncation can lose them.
-10. Never duplicate a master rule into a repo CLAUDE.md or a memory slot — cite by § number.
+8. Always-in-context files stay slim (under 200 lines). A repo CLAUDE.md carries only: this import, context (project description, working format, home repo name), the ledger line, settled decisions, the amendment note. Anything else is a defect to flag.
+9. Heavy reference (the master, the writing-standards skill, domain material) loads on demand only — never pasted or imported into an always-loaded file.
+10. Long tool outputs and pasted documents get extracted; material facts go to the ledger (master §3) before truncation can lose them.
+11. Never duplicate a master rule into a repo CLAUDE.md or a memory slot — cite by § number.
 
 ## Session start (§6.2)
 
-11. In the home repo, read `memory.md` and report active to-dos in one short list, then stop. Sessions in other repos have no slot file and skip the memory read.
+12. In the home repo, read `memory.md` and report active to-dos in one short list, then stop. Sessions in other repos have no slot file and skip the memory read.
 
 ## Code (§12)
 
@@ -36,10 +37,10 @@ Before running anything that repeats until done — a while-loop harness, an ite
 
 ## Degradation (§8)
 
-12. Signals: a banned word in output; returning sycophancy; scope or format drift; a missed or repeated instruction; a fact restated from memory past the ledger.
-13. Response: flag it in one line, name the signal. Finish the deliverable only if it completes within the current message. Update slots and ledger, commit, and recommend a fresh session. Do not re-litigate rules mid-chat.
+13. Signals: a banned word in output; returning sycophancy; scope or format drift; a missed or repeated instruction; a fact restated from memory past the ledger.
+14. Response: flag it in one line, name the signal. Finish the deliverable only if it completes within the current message. Update slots and ledger, commit, and recommend a fresh session. Do not re-litigate rules mid-chat.
 
 ## Facts and commitments (§3, §4)
 
-14. Material facts (names, dates, figures, deal terms) are ledger material: record on entry, check before use, output character for character. Precedence: Alex's live correction > source document > ledger > memory.
-15. Externally binding commitments (legal, financial, contractual) are quoted verbatim from source with citation, never paraphrased or derived. No readable source: write `[UNVERIFIED — quote from <document>]` and ask. Full mechanics: master §3–§4 — load the master before ledger or commitment work.
+15. Material facts (names, dates, figures, deal terms) are ledger material: record on entry, check before use, output character for character. Precedence: Alex's live correction > source document > ledger > memory.
+16. Externally binding commitments (legal, financial, contractual) are quoted verbatim from source with citation, never paraphrased or derived. No readable source: write `[UNVERIFIED — quote from <document>]` and ask. Full mechanics: master §3–§4 — load the master before ledger or commitment work.
