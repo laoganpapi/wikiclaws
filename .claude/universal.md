@@ -23,6 +23,10 @@ Full list lives in the writing-standards skill — load it before drafting prose
 10. Long tool outputs and pasted documents get extracted; material facts go to the ledger (master §3) before truncation can lose them.
 11. Never duplicate a master rule into a repo CLAUDE.md or a memory slot — cite by § number.
 
+## Ambiguity escalation (§5.5)
+
+These rules are the compressed copy; the master is the detail. When a rule here is ambiguous, two rules collide, or a case is not covered, read the cited § in `master/claude-master-v7.md` before deciding — a pointed lookup, not a full re-read. In the home repo the master is in the clone; in other repos, add the home repo (named on this repo's CLAUDE.md context line) to the session, or ask Alex. Never resolve a rule ambiguity by guessing.
+
 ## Session start (§6.2)
 
 12. In the home repo, read `memory.md` and report active to-dos in one short list, then stop. Sessions in other repos have no slot file and skip the memory read.
