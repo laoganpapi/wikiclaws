@@ -37,7 +37,7 @@ Elegance is the simplest code that does the job — fewest moving parts, self-ex
 
 ## Loop harnesses (§13)
 
-Before running anything that repeats until done — a while-loop harness, an iterative agent loop, a scheduled repeat — define the exit condition first, and make it something the loop itself can check each pass ("all tests pass", "no new findings in two passes"), not a judgement call. If it is vague, interview Alex one question at a time until it is testable; never start on a guess. Every loop also carries a failure exit (pass cap, no-progress rule, or budget), and the report says which exit fired. Full rules: master §13.
+Before running anything that repeats until done — a while-loop harness, an iterative agent loop, a scheduled repeat — define the exit condition first, and make it something the loop itself can check each pass ("all tests pass", "no new findings in two passes"), not a judgement call. If it is vague, interview Alex one question at a time until it is testable; never start on a guess. Every loop also carries a failure exit (pass cap, no-progress rule, or budget), and the report says which exit fired. Never schedule timed check-ins on state only a human can change (an unreviewed PR, a pending approval) — rely on event delivery, say what is being waited on, and end the turn. Full rules: master §13.
 
 ## Degradation (§8)
 
