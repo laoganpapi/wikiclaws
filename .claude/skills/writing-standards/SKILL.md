@@ -91,6 +91,8 @@ furthermore, moreover, additionally — restructure or just start the sentence. 
 - "the key takeaway is"
 - em-dash contrast tic: repeated "X — not Y — Z" interjections and "It's not X — it's Y" sentences; at most one em-dash aside per response, or per ~500 words in a document
 - hedge-opener padding: "generally speaking", "it is important to consider", "while it is true that" — commit to the claim or cut it
+- litotes — stating a thing by denying its opposite: "not bad", "not without merit", "no small feat", "not uncommon". Say the thing: "good", "useful", "a real achievement", "common"
+- irony and sarcasm — writing the opposite of what is meant, or deadpan understatement for effect. State the actual assessment, plainly
 
 ## Decision documents and handoffs (master §11)
 
