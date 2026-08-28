@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metrics Catalog — A New Theory of Personality</title>
+<style>
+  :root {
+    --ink: #1a1d21;
+    --muted: #5b6470;
+    --line: #e3e6ea;
+    --accent: #2f5d8a;
+    --accent-soft: #eef3f8;
+    --tag-rev: #b04a2f;
+    --tag-self: #5a7a3a;
+    --tag-either: #6b5b95;
+    --bg: #fbfbfa;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--ink);
+    background: var(--bg);
+    margin: 0;
+    line-height: 1.55;
+  }
+  .page { max-width: 1000px; margin: 0 auto; padding: 48px 32px 80px; }
+  header { border-bottom: 3px solid var(--ink); padding-bottom: 20px; margin-bottom: 12px; }
+  h1 { font-size: 2rem; margin: 0 0 6px; letter-spacing: -0.01em; }
+  .subtitle { color: var(--muted); font-size: 1.05rem; margin: 0; font-style: italic; }
+  .note {
+    background: var(--accent-soft);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin: 24px 0 8px;
+    font-size: 0.95rem;
+  }
+  h2 {
+    font-size: 1.3rem;
+    margin: 44px 0 4px;
+    color: var(--ink);
+  }
+  h2 .sysnum {
+    display: inline-block;
+    background: var(--ink);
+    color: #fff;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 2px 9px;
+    border-radius: 3px;
+    margin-right: 10px;
+    vertical-align: 2px;
+  }
+  .sysdesc { color: var(--muted); font-size: 0.95rem; margin: 0 0 16px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.85rem;
+    background: #fff;
+    border: 1px solid var(--line);
+  }
+  th {
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    background: #f4f5f6;
+    padding: 9px 12px;
+    border-bottom: 2px solid var(--line);
+  }
+  td { padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  td.metric { font-weight: 600; white-space: nowrap; }
+  td.scale { color: var(--ink); }
+  .arrow { color: var(--muted); padding: 0 3px; }
+  .tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 1px 8px;
+    border-radius: 10px;
+    border: 1px solid;
+    white-space: nowrap;
+  }
+  .tag.rev    { color: var(--tag-rev);    border-color: var(--tag-rev);    background: #fdf3ef; }
+  .tag.self   { color: var(--tag-self);   border-color: var(--tag-self);   background: #f4f8ee; }
+  .tag.either { color: var(--tag-either); border-color: var(--tag-either); background: #f4f1fa; }
+  .tag.both   { color: var(--accent);     border-color: var(--accent);     background: var(--accent-soft); }
+  .derived td.metric::after {
+    content: "derived";
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: var(--muted);
+    border: 1px dashed var(--muted);
+    border-radius: 3px;
+    padding: 0 5px;
+    margin-left: 7px;
+  }
+  .syscount {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin: 8px 0 0;
+    text-align: right;
+  }
+  .footnote { font-size: 0.9rem; color: var(--muted); margin-top: 10px; }
+  .summary {
+    margin-top: 48px;
+    border-top: 3px solid var(--ink);
+    padding-top: 20px;
+  }
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin: 18px 0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .tile {
+    background: #fff;
+    border: 1px solid var(--line);
+    padding: 14px;
+    text-align: center;
+  }
+  .tile .num { font-size: 1.7rem; font-weight: 700; color: var(--accent); }
+  .tile .lbl { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-top: 2px; }
+  .openq {
+    background: #fff;
+    border: 1px dashed var(--muted);
+    padding: 14px 18px;
+    font-size: 0.92rem;
+    margin-top: 20px;
+  }
+  .openq strong { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  @media (max-width: 720px) {
+    .tiles { grid-template-columns: repeat(2, 1fr); }
+    td.metric { white-space: normal; }
+  }
+  @media print {
+    body { background: #fff; }
+    .page { padding: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <h1>Metrics Catalog</h1>
+  <p class="subtitle">A New Theory of Personality &middot; the four systems reduced to concrete, measurable variables &middot; with Steven Pham</p>
+</header>
+
+<div class="note">
+  <strong>Scope.</strong> This catalog says <em>what</em> we measure, not <em>how</em> we elicit it.
+  The &ldquo;Observable via&rdquo; tag records the nature of the metric &mdash; revealed behavior,
+  self-report, or either &mdash; not the instrument. For any metric observable both ways, the gap
+  between the self-reported and revealed value is itself a metric (see cross-cutting, below); where
+  they diverge, the theory privileges revealed preference.
+</div>
+
+<h2><span class="sysnum">SYSTEM 1</span>Social Energy Economy</h2>
+<p class="sysdesc">How social interaction is fueled (energy gain), chosen (game choice), and risked (risk appetite).</p>
+<table>
+  <thead><tr><th style="width:19%">Metric</th><th style="width:30%">What it captures</th><th style="width:27%">Scale (low &harr; high)</th><th style="width:12%">Output</th><th style="width:12%">Observable via</th></tr></thead>
+  <tbody>
+    <tr><td class="metric">Net social charge</td><td>Where social energy comes from</td><td class="scale">Solitude-replenished<span class="arrow">&harr;</span>Contact-replenished</td><td>Signed scale</td><td><span class="tag either">Either</span></td></tr>
+    <tr><td class="metric">Recovery rate</td><td>How fast depleted social energy restores</td><td class="scale">Slow<span class="arrow">&harr;</span>Fast</td><td>Magnitude</td><td><span class="tag either">Either</span></td></tr>
+    <tr><td class="metric">Source concentration</td><td>Whether gain depends on specific contexts or is broad</td><td class="scale">Broad (any contact)<span class="arrow">&harr;</span>Narrow (specific contexts)</td><td>Scale</td><td><span class="tag rev">Revealed</span></td></tr>
+    <tr><td class="metric">Portfolio breadth</td><td>Shape of where energy is spent</td><td class="scale">Few deep ties<span class="arrow">&harr;</span>Many shallow ties</td><td>Scale</td><td><span class="tag either">Either</span></td></tr>
+    <tr><td class="metric">Social allocation share</td><td>Fraction of total energy budget spent socially vs banked</td><td class="scale">Banks it<span class="arrow">&harr;</span>Spends it socially</td><td>Proportion</td><td><span class="tag rev">Revealed</span></td></tr>
+    <tr><td class="metric">Interaction selectivity</td><td>How discriminating about which interactions to enter</td><td class="scale">Indiscriminate<span class="arrow">&harr;</span>Highly selective</td><td>Scale</td><td><span class="tag rev">Revealed</span></td></tr>
+    <tr><td class="metric">Social risk tolerance</td><td>Willingness to stake standing or relationships</td><td class="scale">Protective<span class="arrow">&harr;</span>Willing to risk</td><td>Scale</td><td><span class="tag rev">Revealed</span></td></tr>
+    <tr><td class="metric">Initiation propensity</td><td>Readiness to make bold first moves, raise hard subjects</td><td class="scale">Reluctant<span class="arrow">&harr;</span>Ready</td><td>Scale</td><td><span class="tag either">Either</span></td></tr>
+    <tr><td class="metric">Downside sensitivity</td><td>How much potential loss deters engagement</td><td class="scale">Deterred easily<span class="arrow">&harr;</span>Undeterred</td><td>Scale</td><td><span class="tag rev">Revealed</span></td></tr>
+  </tbody>
+</table>
+<p class="syscount">9 metrics</p>
+
+<h2><span class="sysnum">SYSTEM 2</span>The Thinking Machine</h2>
+<p class="sysdesc">
+  Two signed axes &mdash; <strong>cognitive sourcing</strong>: External (&minus;) &harr; Internal (+);
+  <strong>method</strong>: Informal (&minus;) &harr; Formal (+) &mdash; observed under two elicited
+  conditions (fast mode, slow mode). Per mode: a <strong>baseline</strong> (position at low stakes)
+  and a <strong>stake-slope</strong> (movement per increase in stakes). Reliance is measured, never strength.
+</p>
+<table>
+  <thead><tr><th style="width:19%">Metric</th><th style="width:30%">What it captures</th><th style="width:27%">Scale</th><th style="width:12%">Output</th><th style="width:12%">Observable via</th></tr></thead>
+  <tbody>
+    <tr><td class="metric">Fast sourcing baseline</td><td>Where fast thinking sources, at low stakes</td><td class="scale">External<span class="arrow">&harr;</span>Internal</td><td>Signed position</td><td><span class="tag rev">Revealed</span></td></tr>
+    <tr><td class="metric">Fast sourcing slope</td><td>How fast-mode sourcing shifts as stakes rise</td><td class="scale">Toward External<span class="arrow">&harr;</span>Toward Internal</td><td>Signed slope</td><td><span class="tag rev">Revealed</span></td></tr>
+    <tr><td class="metric">Fast method baseline</td><td>How rigorous fast thinking is, at low stakes</td><td class="scale">Informal<span class="arrow">&harr;</span>Formal</td><td>Signed position</td><td><span class="tag rev">Revealed</span></td></tr>
+    <tr><td class="metric">Fast method slope</td><td>How fast-mode method shifts as stakes rise</td><td class="scale">Toward Informal<span class="arrow">&harr;</span>Toward Formal</td><td>Signed slope</td><td><span class="tag rev">Revealed</span></td></tr>
+    <tr><td class="metric">Slow sourcing baseline</td><td>Where slow thinking sources, at low stakes</td><td class="scale">External<span class="arrow">&harr;</span>Internal</td><td>Signed position</td><td><span class="tag rev">Revealed</span></td></tr>
+    <tr><td class="metric">Slow sourcing slope</td><td>How slow-mode sourcing shifts as stakes rise</td><td class="scale">Toward External<span class="arrow">&harr;</span>Toward Internal</td><td>Signed slope</td><td><span class="tag rev">Revealed</span></td></tr>
+    <tr><td class="metric">Slow method baseline</td><td>How rigorous slow thinking is, at low stakes</td><td class="scale">Informal<span class="arrow">&harr;</span>Formal</td><td>Signed position</td><td><span class="tag rev">Revealed</span></td></tr>
+    <tr><td class="metric">Slow method slope</td><td>How slow-mode method shifts as stakes rise</td><td class="scale">Toward Informal<span class="arrow">&harr;</span>Toward Formal</td><td>Signed slope</td><td><span class="tag rev">Revealed</span></td></tr>
+    <tr class="derived"><td class="metric">Mode divergence</td><td>How different fast and slow reliance are</td><td class="scale">Same in both<span class="arrow">&harr;</span>Two different thinkers</td><td>Distance</td><td><span class="tag rev">Revealed</span></td></tr>
+    <tr class="derived"><td class="metric">Total stake-sensitivity</td><td>Total migration across the plane as stakes rise</td><td class="scale">Stable<span class="arrow">&harr;</span>Highly volatile</td><td>Magnitude</td><td><span class="tag rev">Revealed</span></td></tr>
+    <tr><td class="metric">Deliberation default</td><td>Which mode a person reaches for when free to choose</td><td class="scale">Gut default<span class="arrow">&harr;</span>Deliberate default</td><td>Scale</td><td><span class="tag either">Either</span></td></tr>
+  </tbody>
+</table>
+<p class="syscount">11 metrics (8 core + 3 derived)</p>
+<p class="footnote">The first eight metrics are the two graphs made numeric: four numbers per mode.
+Total stake-sensitivity overlaps with System&nbsp;3&rsquo;s reactivity under load and should be read together with it.</p>
+
+<h2><span class="sysnum">SYSTEM 3</span>Emotional and Social Disposition</h2>
+<p class="sysdesc">Preferences and tendencies in emotional and social situations &mdash; not competence or skill.</p>
+<table>
+  <thead><tr><th style="width:19%">Metric</th><th style="width:30%">What it captures</th><th style="width:27%">Scale (low &harr; high)</th><th style="width:12%">Output</th><th style="width:12%">Observable via</th></tr></thead>
+  <tbody>
+    <tr><td class="metric">Friction handling</td><td>Tendency to accommodate or contest</td><td class="scale">Agreeable<span class="arrow">&harr;</span>Confrontational</td><td>Signed scale</td><td><span class="tag either">Either</span></td></tr>
+    <tr><td class="metric">Attention target</td><td>Which a person orients by</td><td class="scale">Introspective (self)<span class="arrow">&harr;</span>Situationally aware (room)</td><td>Signed scale</td><td><span class="tag either">Either</span></td></tr>
+    <tr class="derived"><td class="metric">Attention engagement</td><td>How much a person attends to the emotional channel at all</td><td class="scale">Disengaged<span class="arrow">&harr;</span>Fully engaged</td><td>Magnitude</td><td><span class="tag rev">Revealed</span></td></tr>
+    <tr><td class="metric">Baseline stability</td><td>Steadiness when nothing is wrong</td><td class="scale">Volatile<span class="arrow">&harr;</span>Even</td><td>Scale</td><td><span class="tag either">Either</span></td></tr>
+    <tr><td class="metric">Reactivity under load</td><td>How far and fast stability degrades as stakes rise</td><td class="scale">Flat (holds)<span class="arrow">&harr;</span>Steep (spikes)</td><td>Slope</td><td><span class="tag rev">Revealed</span></td></tr>
+  </tbody>
+</table>
+<p class="syscount">5 metrics</p>
+<p class="footnote">Reactivity under load also moderates the other systems&rsquo; stake responses, so it can be
+read both directly and through the steepness of System&nbsp;2&rsquo;s slopes.</p>
+
+<h2><span class="sysnum">SYSTEM 4</span>Objectives</h2>
+<p class="sysdesc">An open account of motivation reduced to a weighted profile over five motives; two derived metrics describe the profile&rsquo;s shape.</p>
+<table>
+  <thead><tr><th style="width:19%">Metric</th><th style="width:30%">What it captures</th><th style="width:27%">Scale</th><th style="width:12%">Output</th><th style="width:12%">Observable via</th></tr></thead>
+  <tbody>
+    <tr><td class="metric">Order and peace</td><td>Drive toward stability, harmony, absence of conflict</td><td class="scale">Absent<span class="arrow">&harr;</span>Dominant</td><td>Weight (0&ndash;1)</td><td><span class="tag either">Either</span></td></tr>
+    <tr><td class="metric">Triumph</td><td>Drive to win, to prevail, to come out ahead</td><td class="scale">Absent<span class="arrow">&harr;</span>Dominant</td><td>Weight (0&ndash;1)</td><td><span class="tag either">Either</span></td></tr>
+    <tr><td class="metric">Power and influence</td><td>Drive to move people and outcomes and command one&rsquo;s circumstances</td><td class="scale">Absent<span class="arrow">&harr;</span>Dominant</td><td>Weight (0&ndash;1)</td><td><span class="tag either">Either</span></td></tr>
+    <tr><td class="metric">Truth-seeking</td><td>Drive to know what is actually the case</td><td class="scale">Absent<span class="arrow">&harr;</span>Dominant</td><td>Weight (0&ndash;1)</td><td><span class="tag either">Either</span></td></tr>
+    <tr><td class="metric">Novelty</td><td>Drive toward the new, unexplored, not-yet-tried</td><td class="scale">Absent<span class="arrow">&harr;</span>Dominant</td><td>Weight (0&ndash;1)</td><td><span class="tag either">Either</span></td></tr>
+    <tr class="derived"><td class="metric">Motive concentration</td><td>Whether motivation is focused or diffuse</td><td class="scale">Single dominant motive<span class="arrow">&harr;</span>Spread evenly</td><td>Scale</td><td><span class="tag rev">Revealed</span></td></tr>
+    <tr class="derived"><td class="metric">Stated&ndash;revealed motive gap</td><td>Divergence of claimed motivation from revealed motivation</td><td class="scale">Aligned<span class="arrow">&harr;</span>Divergent</td><td>Magnitude</td><td><span class="tag both">Both required</span></td></tr>
+  </tbody>
+</table>
+<p class="syscount">7 metrics (5 motive weights + 2 derived)</p>
+
+<h2><span class="sysnum">&times;</span>Cross-Cutting</h2>
+<table>
+  <thead><tr><th style="width:19%">Metric</th><th style="width:30%">What it captures</th><th style="width:27%">Scale</th><th style="width:12%">Output</th><th style="width:12%">Observable via</th></tr></thead>
+  <tbody>
+    <tr><td class="metric">Stated&ndash;revealed divergence</td><td>Per metric or per system, how far self-report departs from behavior</td><td class="scale">Aligned<span class="arrow">&harr;</span>Divergent</td><td>Magnitude</td><td><span class="tag both">Both required</span></td></tr>
+  </tbody>
+</table>
+<p class="footnote">Computable for any metric tagged &ldquo;Either.&rdquo; A large divergence on a given metric is a
+finding about the person, not a measurement error.</p>
+
+<div class="summary">
+  <div class="tiles">
+    <div class="tile"><div class="num">9</div><div class="lbl">System 1</div></div>
+    <div class="tile"><div class="num">11</div><div class="lbl">System 2</div></div>
+    <div class="tile"><div class="num">5</div><div class="lbl">System 3</div></div>
+    <div class="tile"><div class="num">7</div><div class="lbl">System 4</div></div>
+    <div class="tile"><div class="num">33</div><div class="lbl">Total metrics</div></div>
+  </div>
+  <div class="openq">
+    <strong>Open question for the next pass.</strong> Some derived metrics (mode divergence, total
+    stake-sensitivity, attention engagement, motive concentration) are functions of the primary
+    metrics rather than independent measurements. Decide which are reported as headline results and
+    which are computed views.
+  </div>
+</div>
+
+</div>
+</body>
+</html>

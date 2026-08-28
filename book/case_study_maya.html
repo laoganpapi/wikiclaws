@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Study: Maya, 16 — Synthetic Walkthrough</title>
+<style>
+  :root {
+    --ink: #1a1d21;
+    --muted: #5b6470;
+    --line: #e3e6ea;
+    --accent: #2f5d8a;
+    --accent-soft: #eef3f8;
+    --gold: #8a7330;
+    --bg: #fbfbfa;
+    --ex-bg: #f7f5ef;
+    --pos: #3f6e3a;
+    --neg: #b04a2f;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: Georgia, 'Times New Roman', serif; color: var(--ink); background: var(--bg); margin: 0; line-height: 1.6; }
+  .page { max-width: 940px; margin: 0 auto; padding: 48px 32px 80px; }
+  header { border-bottom: 3px solid var(--ink); padding-bottom: 20px; margin-bottom: 8px; }
+  h1 { font-size: 1.85rem; margin: 0 0 6px; }
+  .subtitle { color: var(--muted); font-size: 1rem; margin: 0; font-style: italic; }
+  .synthetic { display: inline-block; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; color: #fff; background: var(--neg); padding: 3px 10px; border-radius: 3px; margin-left: 8px; vertical-align: 5px; }
+  h2 { font-size: 1.22rem; margin: 42px 0 10px; }
+  h2 .num { display: inline-block; background: var(--ink); color: #fff; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.75rem; font-weight: 600; padding: 2px 9px; border-radius: 3px; margin-right: 10px; vertical-align: 2px; }
+  p, li { font-size: 0.96rem; }
+  .lede { background: var(--accent-soft); border-left: 4px solid var(--accent); padding: 14px 18px; margin: 24px 0 8px; font-size: 0.94rem; }
+  table { width: 100%; border-collapse: collapse; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.8rem; background: #fff; border: 1px solid var(--line); margin: 12px 0; }
+  th { text-align: left; font-weight: 600; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); background: #f4f5f6; padding: 8px 10px; border-bottom: 2px solid var(--line); }
+  td { padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  td.k { font-weight: 600; white-space: nowrap; }
+  .pos { color: var(--pos); font-weight: 600; }
+  .neg { color: var(--neg); font-weight: 600; }
+  .transcript { background: var(--ex-bg); border: 1px solid #e0d9c8; border-left: 4px solid var(--gold); padding: 14px 18px; margin: 14px 0; }
+  .transcript h5 { margin: 0 0 8px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gold); }
+  .transcript p { font-size: 0.9rem; margin: 6px 0; }
+  .ai { color: var(--accent); }
+  .maya { }
+  .obs { color: var(--muted); font-size: 0.85rem; border-top: 1px dashed #d5cbb4; padding-top: 8px; margin-top: 10px; }
+  .graphbox { background: #fff; border: 1px solid var(--line); padding: 18px; margin: 14px 0; }
+  .graphbox h4 { margin: 0 0 12px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); }
+  .bar { display: flex; align-items: center; margin: 7px 0; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.75rem; }
+  .bar .lbl { width: 220px; color: var(--muted); }
+  .bar .track { flex: 1; height: 14px; background: #eef0f2; border-radius: 7px; position: relative; }
+  .bar .dot { position: absolute; top: 50%; transform: translate(-50%,-50%); width: 14px; height: 14px; border-radius: 50%; background: var(--accent); border: 2px solid #fff; box-shadow: 0 0 0 1px var(--accent); }
+  .bar .dot.g2 { background: var(--gold); box-shadow: 0 0 0 1px var(--gold); }
+  .bar .ends { display: flex; justify-content: space-between; font-size: 0.65rem; color: var(--muted); margin-top: 2px; }
+  .legend { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.7rem; color: var(--muted); margin-top: 10px; }
+  .legend .sw { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin: 0 4px 0 12px; vertical-align: -1px; }
+  .report { background: #fff; border: 1px solid var(--gold); padding: 18px 22px; margin: 14px 0; }
+  .report h4 { margin: 0 0 10px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--gold); }
+  .report p { font-size: 0.94rem; font-style: italic; margin: 8px 0; }
+  @media print { body { background: #fff; } .page { padding: 0; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <h1>Case Study: "Maya", 16 <span class="synthetic">SYNTHETIC DATA</span></h1>
+  <p class="subtitle">One hypothetical student through both sittings. Every response, timestamp, and score below is invented to illustrate the instrument; no real person exists behind it.</p>
+</header>
+
+<div class="lede">
+  <strong>Maya</strong> is a fictional high school junior: quiet in class, close with two friends,
+  runs the yearbook layout because nobody else will do it properly. She thinks she's "bad under
+  pressure" and calls herself "a full introvert." The test will partly agree with her, and twice
+  catch her self-image being wrong in interesting ways.
+</div>
+
+<h2><span class="num">A</span>Arena data — 15 scenarios across two sittings</h2>
+<p>Review probability is the stakes dial: none, 1-in-4, or certain that the AI asks her to explain
+that answer afterward. Sample of her item log:</p>
+<table>
+  <thead><tr><th>Item</th><th>Mode</th><th>Review odds</th><th>Response time</th><th>Behavior captured</th><th>Sourcing code</th><th>Method code</th></tr></thead>
+  <tbody>
+    <tr><td class="k">A03 club choice</td><td>Fast</td><td>None</td><td>2.9s</td><td>Peek: <strong>member survey</strong> (data)</td><td>External +0.6</td><td>Informal &minus;0.7</td></tr>
+    <tr><td class="k">A07 windfall</td><td>Fast</td><td>1-in-4</td><td>3.8s</td><td>Peek: <strong>own-priorities note</strong></td><td>Internal &minus;0.3</td><td>Informal &minus;0.5</td></tr>
+    <tr><td class="k">A11 quiet teammate</td><td>Fast</td><td>Certain</td><td>4.6s</td><td>Peek: <strong>own-priorities note</strong>; revised once</td><td>Internal &minus;0.6</td><td>Informal &minus;0.2</td></tr>
+    <tr><td class="k">A05 schedule clash</td><td>Slow</td><td>None</td><td>2m 10s</td><td>Opened 3/3 cards, dwell 12&ndash;28s each; grid unused</td><td>External +0.8</td><td>Informal &minus;0.4</td></tr>
+    <tr><td class="k">A09 budget split</td><td>Slow</td><td>1-in-4</td><td>3m 05s</td><td>Opened 2/3 cards; grid used, grid winner = her choice</td><td>External +0.5</td><td>Formal +0.6</td></tr>
+    <tr><td class="k">A14 lineup decision</td><td>Slow</td><td>Certain</td><td>3m 40s</td><td>Opened 1/3 cards; grid used fully; rationale from principle</td><td>Internal &minus;0.4</td><td>Formal +0.8</td></tr>
+    <tr><td class="k">T2 trap variant</td><td>Fast</td><td>None</td><td>3.1s</td><td>Answer did not track hidden card across variants</td><td colspan="2" class="pos">Pass: snap answers are genuinely snap</td></tr>
+  </tbody>
+</table>
+<p><strong>Pattern in the dummy data:</strong> fast at no stakes, Maya grabs outside facts and
+goes by feel. As review odds rise, both modes drift toward her own principles, and her slow mode
+picks up structure (grid use, formal rationale). Stake-salience check: <span class="pos">passed</span>
+(review odds measurably changed her card and grid behavior, so her profile is interpretable).</p>
+
+<div class="graphbox">
+  <h4>Her two graphs (baseline dots; arrow = drift as review odds rise)</h4>
+  <div class="bar"><div class="lbl">FAST &middot; sourcing</div><div class="track"><span class="dot" style="left:68%"></span><span class="dot g2" style="left:38%"></span></div></div>
+  <div class="ends" style="margin-left:220px; display:flex; justify-content:space-between; font-family:'Helvetica Neue',Arial,sans-serif; font-size:0.65rem; color:var(--muted);"><span>&larr; Internal (own models)</span><span>External (outside data) &rarr;</span></div>
+  <div class="bar"><div class="lbl">FAST &middot; method</div><div class="track"><span class="dot" style="left:26%"></span><span class="dot g2" style="left:32%"></span></div></div>
+  <div class="ends" style="margin-left:220px; display:flex; justify-content:space-between; font-family:'Helvetica Neue',Arial,sans-serif; font-size:0.65rem; color:var(--muted);"><span>&larr; Informal (feel)</span><span>Formal (structured) &rarr;</span></div>
+  <div class="bar"><div class="lbl">SLOW &middot; sourcing</div><div class="track"><span class="dot" style="left:74%"></span><span class="dot g2" style="left:44%"></span></div></div>
+  <div class="ends" style="margin-left:220px; display:flex; justify-content:space-between; font-family:'Helvetica Neue',Arial,sans-serif; font-size:0.65rem; color:var(--muted);"><span>&larr; Internal</span><span>External &rarr;</span></div>
+  <div class="bar"><div class="lbl">SLOW &middot; method</div><div class="track"><span class="dot" style="left:40%"></span><span class="dot g2" style="left:72%"></span></div></div>
+  <div class="ends" style="margin-left:220px; display:flex; justify-content:space-between; font-family:'Helvetica Neue',Arial,sans-serif; font-size:0.65rem; color:var(--muted);"><span>&larr; Informal</span><span>Formal &rarr;</span></div>
+  <div class="legend"><span class="sw" style="background:var(--accent)"></span>low stakes baseline<span class="sw" style="background:var(--gold)"></span>high stakes (certain review)</div>
+</div>
+<table>
+  <thead><tr><th>Metric</th><th>Value</th><th>Stake response (gated category)</th></tr></thead>
+  <tbody>
+    <tr><td class="k">Fast sourcing</td><td>+0.36 external</td><td class="neg">Falls toward internal &#9660;</td></tr>
+    <tr><td class="k">Fast method</td><td>&minus;0.48 informal</td><td>Flat &#9644;</td></tr>
+    <tr><td class="k">Slow sourcing</td><td>+0.48 external</td><td class="neg">Falls toward internal &#9660;</td></tr>
+    <tr><td class="k">Slow method</td><td>&minus;0.20 informal</td><td class="pos">Rises toward formal &#9650;</td></tr>
+    <tr><td class="k">Mode divergence</td><td colspan="2">Moderate (0.41 disattenuated): her instinct and her deliberation are related but distinct thinkers</td></tr>
+    <tr><td class="k">Deliberation default</td><td colspan="2">Deliberate-leaning: chose the slow phase on 2 of 2 free-choice items</td></tr>
+  </tbody>
+</table>
+
+<h2><span class="num">B</span>Ledger data — yesterday, reconstructed</h2>
+<table>
+  <thead><tr><th>Episode</th><th>Company</th><th>Chosen?</th><th>Energy (&minus;5..+5)</th></tr></thead>
+  <tbody>
+    <tr><td>Homeroom + classes</td><td>Large group</td><td>Obliged</td><td class="neg">&minus;2</td></tr>
+    <tr><td>Lunch, corner table</td><td>2 close friends</td><td>Chosen</td><td class="pos">+3</td></tr>
+    <tr><td>Yearbook layout session</td><td>1 friend</td><td>Chosen</td><td class="pos">+2</td></tr>
+    <tr><td>Bus home</td><td>Crowd, headphones on</td><td>Obliged</td><td class="neg">&minus;1</td></tr>
+    <tr><td>Room, sketching</td><td>Alone</td><td>Chosen</td><td class="pos">+2</td></tr>
+    <tr><td>Family dinner</td><td>Family</td><td>Obliged</td><td>0</td></tr>
+    <tr><td>Group-chat scrolling</td><td>Alone (online)</td><td>Chosen</td><td class="neg">&minus;1</td></tr>
+  </tbody>
+</table>
+<p><strong>Computed:</strong> net social charge is <em>not</em> "people drain her": small chosen
+company charges her (+2.5 avg), large obliged company drains her (&minus;1.5 avg). Recovery rate:
+one chosen-solo episode restores her. Portfolio: narrow and deep (2 close ties carry 80% of chosen
+social time). Her stated battery later says "social events drain me: strongly agree." Gap flagged.</p>
+
+<div class="transcript">
+  <h5>Risk moment: the message draft (verbatim dummy response)</h5>
+  <p class="ai">AI: Your close friend keeps arriving late to your shared shift and you've been covering. Write the message you'd actually send.</p>
+  <p class="maya">Maya: "hey so this is awkward but I've covered the last 3 lates and I'm getting stressed about it. can you switch your alarm or should we ask for different shifts? not mad, just can't keep doing it"</p>
+  <p class="obs">Coded: raised the hard thing directly, named a consequence, offered an exit; softened twice ("awkward", "not mad"). Risk tolerance with close ties: moderate-high. Her stranger-facing items were far more avoidant; risk appetite is tie-specific.</p>
+</div>
+
+<h2><span class="num">C</span>Room data — charged moments</h2>
+<div class="transcript">
+  <h5>The dispute probe</h5>
+  <p class="ai">AI: I'm not sure your answer on the teammate scenario follows. You said talk privately first, but you also said the demo can't slip. Those can conflict.</p>
+  <p class="maya">Maya: "I mean... they can. But if I go to the teacher first and I was wrong about why he went quiet, I've burned the friendship for nothing. I'd rather lose two days checking."</p>
+  <p class="obs">Held her position with a reason; no capitulation, no escalation. Friction handling: mild-agreeable with a floor. Attention answer on the group-chat vignette pointed inward ("what I'd be paying attention to is honestly whether I was about to make it worse") — introspective lean, consistent with her probe budget: 2 of 2 spent on check-your-own-reaction.</p>
+</div>
+<table>
+  <thead><tr><th>Metric</th><th>Reading</th></tr></thead>
+  <tbody>
+    <tr><td class="k">Friction handling</td><td>&minus;0.3 agreeable-leaning (contest when a reason is in hand)</td></tr>
+    <tr><td class="k">Attention target</td><td>&minus;0.5 introspective</td></tr>
+    <tr><td class="k">Baseline stability</td><td>Even (self-report and session telemetry agree)</td></tr>
+    <tr><td class="k">Reactivity under load</td><td>Friction probe: 40s of shortened answers, full recovery in 2 items. Reported as a <em>lower bound</em>: mildly reactive, settles fast.</td></tr>
+  </tbody>
+</table>
+
+<h2><span class="num">D</span>Compass data — motives</h2>
+<div class="transcript">
+  <h5>Open prompt, laddered (excerpt)</h5>
+  <p class="ai">AI: What are you working toward right now?</p>
+  <p class="maya">Maya: "Getting the yearbook done without it being a disaster, and art school eventually."</p>
+  <p class="ai">AI: Why art school, for you?</p>
+  <p class="maya">Maya: "Because I want to actually understand why some layouts work and some don't. Right now I just feel it and I hate that I can't explain it."</p>
+  <p class="obs">Coded spans: "without it being a disaster" &rarr; order; "actually understand why" &rarr; truth-seeking. Note the second answer is also a thinking-machine echo: she wants to formalize what she currently does informally.</p>
+</div>
+<table>
+  <thead><tr><th>Motive</th><th>Stated (prompt)</th><th>Revealed (16 tradeoffs)</th><th>Spend choice</th></tr></thead>
+  <tbody>
+    <tr><td class="k">Truth-seeking</td><td>0.35</td><td>0.38</td><td rowspan="5" style="vertical-align:middle">Chose: <strong>"the hardest truth we found"</strong>* &rarr; consistent with truth-seeking<br><span style="color:var(--muted);font-size:0.75rem">*adult-only page swapped for its teen-safe version</span></td></tr>
+    <tr><td class="k">Order &amp; peace</td><td>0.30</td><td>0.34</td></tr>
+    <tr><td class="k">Novelty</td><td>0.20</td><td>0.08</td></tr>
+    <tr><td class="k">Power &amp; influence</td><td>0.10</td><td>0.14</td></tr>
+    <tr><td class="k">Triumph</td><td>0.05</td><td>0.06</td></tr>
+  </tbody>
+</table>
+<p><strong>Gap:</strong> she states novelty ("I want to try new things") but her choices took the
+familiar option 7 of 8 times it was in play. System-level gap reported; per-metric gaps withheld
+(she's a minor).</p>
+
+<h2><span class="num">&#9993;</span>Her report (excerpt)</h2>
+<div class="report">
+  <h4>What Maya sees</h4>
+  <p>"On instinct, you read the situation and go by feel. When something's on the line, you switch:
+  you pull back to your own principles and get structured. That switch is your signature. It's
+  worth knowing you do it, because the pullback also means you stop taking in new information right
+  when stakes rise."</p>
+  <p>"You call yourself a full introvert. Your actual day disagrees in an interesting way: small,
+  chosen company charged you more than being alone did. What drains you is big, obligatory
+  company. Those are different problems with different fixes."</p>
+  <p>"You say you're bad under pressure. We watched you under pressure twice. You wobbled for
+  about forty seconds and then argued your position with a reason. That's not bad under pressure;
+  that's a slow start with a strong recovery."</p>
+  <p>"What you're chasing: understanding things properly, and things not falling apart, in that
+  order. You believe you're chasing new experiences; your choices mostly protected the good thing
+  you already had. Worth sitting with."</p>
+</div>
+
+<p style="color:var(--muted); font-size:0.85rem; font-style:italic; margin-top:28px;">Synthetic
+case study for design illustration. All names, quotes, timestamps, and values invented; profile
+coherence is authored, not observed. Real data will be noisier, and error bars (omitted here for
+readability) accompany every reported value.</p>
+
+</div>
+</body>
+</html>
